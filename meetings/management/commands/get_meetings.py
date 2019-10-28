@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.core.mail import send_mail
 import requests 
 from bs4 import BeautifulSoup 
+from meetings.models import Meeting
 
 
                 
@@ -25,8 +26,8 @@ class Command(BaseCommand):
         soup = BeautifulSoup(page.text, 'html.parser') 
         meetings=soup.find_all('marker')
         for meeting in meetings:
-            print(meeting)
-
+            
+            
             address = meeting.get('address')
             code = meeting.get('code')
             day = meeting.get('day')
@@ -40,5 +41,7 @@ class Command(BaseCommand):
             title = meeting.get('title')
             wheelchair = meeting.get('wheelchair')
             
-            print(address)
+            time = time.replace(".",":")
+            new_meeting = Meeting.objects.get_or_create(address=address,code=code,day=day,hearing=hearing,lat=lat,lng=lng,postcode=postcode,time=time,title=title,wheelchair=wheelchair)
+
 

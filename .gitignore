@@ -1,3 +1,7 @@
 .vscode/
-db.sqllite3
 venv/
+db.sqlite3
+*.pyc
+meetings/__pycache__/admin.cpython-37.pyc
+meetings/__pycache__/models.cpython-37.pyc
+meetings/management/commands/__pycache__/get_meetings.cpython-37.pyc
