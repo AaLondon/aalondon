@@ -5,3 +5,6 @@ db.sqlite3
 meetings/__pycache__/admin.cpython-37.pyc
 meetings/__pycache__/models.cpython-37.pyc
 meetings/management/commands/__pycache__/get_meetings.cpython-37.pyc
+/production
+
+home/__pycache__/models.cpython-37.pyc
