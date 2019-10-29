@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    max-width: 960px;
+    max-width: 1200px;
     min-height: 100vh;
     margin: 0 auto;
     padding: 0 15px;
@@ -41,7 +41,8 @@ ul {
 }
 
 main {
-    display: block; /* For IE11 support */
+    display: block;
+    /* For IE11 support */
 }
 
 svg:not(:root) {
@@ -86,7 +87,8 @@ svg:not(:root) {
 }
 
 @-webkit-keyframes pos {
-    0%, 100% {
+    0%,
+    100% {
         -webkit-transform: rotate(-6deg);
         transform: rotate(-6deg);
     }
@@ -97,7 +99,8 @@ svg:not(:root) {
 }
 
 @keyframes pos {
-    0%, 100% {
+    0%,
+    100% {
         -webkit-transform: rotate(-6deg);
         transform: rotate(-6deg);
     }
@@ -110,11 +113,11 @@ svg:not(:root) {
 .egg {
     fill: #43b1b0;
     -webkit-animation: pos 3s ease infinite;
-            animation: pos 3s ease infinite;
+    animation: pos 3s ease infinite;
     -webkit-transform: translateY(50px);
-            transform: translateY(50px);
+    transform: translateY(50px);
     -webkit-transform-origin: 50% 80%;
-            transform-origin: 50% 80%;
+    transform-origin: 50% 80%;
 }
 
 .main-text {
@@ -185,11 +188,9 @@ svg:not(:root) {
     .main {
         padding: 20px 0;
     }
-
     .figure-space {
         max-width: 200px;
     }
-
     .footer {
         display: block;
         width: 300px;
