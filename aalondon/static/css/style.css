@@ -263,7 +263,7 @@ img {
   position: absolute;
   height: 100%;
   width: 100%;
-  background: url("images/edinburgh-gardens-optim.jpg");
+  /*background: url("images/edinburgh-gardens-optim.jpg");*/
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -274,7 +274,7 @@ img {
 .hero-two {
   width: 100%;
   height: 535px;
-  background: url("images/noah-silliman-419976.jpg");
+  /*background: url("images/noah-silliman-419976.jpg");*/
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -410,7 +410,7 @@ img {
 }
 
 .professionals {
-  background: url("images/healthcare.jpg");
+  /*background: url("images/healthcare.jpg");*/
   background-color: #ffc107;
   background-repeat: no-repeat;
   background-position: center;
@@ -419,7 +419,7 @@ img {
 }
 
 .newcomers {
-  background: url("images/man-with-bottles.jpg");
+  /*background: url("images/man-with-bottles.jpg");*/
   background-color: #007bff;
   background-repeat: no-repeat;
   background-position: center;
@@ -427,7 +427,7 @@ img {
   background-blend-mode: multiply;
 }
 .meetings {
-  background: url("images/aa-group.jpg");
+  /*background: url("images/aa-group.jpg");*/
   background-color: #ef3340;
   background-repeat: no-repeat;
   background-position: center;
@@ -436,7 +436,7 @@ img {
 }
 
 .a-message-for-young-people {
-  background: url("images/group-image.jpg");
+ /* background: url("images/group-image.jpg");*/
   background-color: #2e9e49;
   background-repeat: no-repeat;
   background-position: center;
@@ -450,7 +450,6 @@ img {
   line-height: 50px;
   background: #a6e1ee;
   text-align: center;
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAASCAYAAACNdSR1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHhJREFUeNpiYQCCfW/fKgApEL7gJCz8gQEHYIIqPA/E+4H4PpAvgFMxECcAMUwBiDbAp/gAEh/khAc4FQPdCFLsCMSNQGwI5ONUTBJgopliFnyS6OHPSEDheWhwgkJJEZ8zMMIfn2KM8MepmOLwZxpEkUJs4gcIMADgKCjh4vix/QAAAABJRU5ErkJggg==");
   background-repeat: repeat;
   background-position: top left;
 }
@@ -665,7 +664,7 @@ img {
 
 .footer {
   height: 501px;
-  background: #464646 url("images/aa_logo_footer.png") no-repeat right 10px;
+  background: #464646 /*url("images/aa_logo_footer.png")*/ no-repeat right 10px;
   padding: 50px 100px;
 }
 
@@ -741,7 +740,7 @@ img {
 }
 
 .big-book-online {
-  background: #ffc107 url("images/big_book_bg.png") no-repeat center center;
+  background: #ffc107 /*url("images/big_book_bg.png")*/ no-repeat center center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -772,7 +771,7 @@ img {
 }
 
 .members-stories {
-  background: #e9e9e9 url("images/members-stories-quote.png") no-repeat right
+  background: #e9e9e9 /*url("images/members-stories-quote.png")*/ no-repeat right
     30px top 30px;
   display: flex;
   justify-content: center;
