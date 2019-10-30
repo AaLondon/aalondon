@@ -137,7 +137,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hero-text">
                     <h5>ALCOHOLICS ANONYMOUS</h5>
-                    <h2>Edinburgh <br>&amp; Midlothian</h2>
+                    <h2>London Region North</h2>
 
                     <a href="https://aa-edinburgh.org.uk/latest-news/" class="btn btn-aa yellow btn-lg">Latest News</a>
                     <a href="https://aa-edinburgh.org.uk/meetings" class="btn btn-aa orange btn-lg">Find a Meeting</a>
@@ -213,97 +213,63 @@
     <p style="text-align: center; padding-top: 20px;">Sorry this is temporarily unavailable, due to a network issue.</p>
         <a href="https://aa-edinburgh.org.uk/meetings/">A full list of meetings can be found here</a>
         </div>-->
-                        <div id="sidebar_meetings" class="reactapp">
+                        <div id="sidebar_meeting" class="reactap">
                             <div class="table-responsive">
                                 <table class="table table-sm table-striped">
+                                    {% if meetings_today|length > 0%}
                                     <thead>
                                         <tr>
-                                            <th>Friday</th>
+                                            <th>{{day_name_today}}</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for entry in meetings_today %}
+                                       
+
                                         <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/holy-corner-2/">Holy
-                                                    Corner</a></td>
-                                            <td class="text-right">9:30AM</td>
+                                            <td><a href="https://aa-edinburgh.org.uk/meetings/holy-corner-2/">{{entry.title}}
+                                                    </a></td>
+                                            <td class="text-right">{{entry.time}}</td>
                                         </tr>
-                                        <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/west-end-9/">West End</a>
-                                            </td>
-                                            <td class="text-right">1:00PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/as-bill-sees-it/">As Bill
-                                                    Sees It</a></td>
-                                            <td class="text-right">1:00PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/east-end-6/">East End</a>
-                                            </td>
-                                            <td class="text-right">6:00PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/west-end-10/">West End:
-                                                    Women's Group</a></td>
-                                            <td class="text-right">6:00PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/murrayfield-11th-step/">Murrayfield
-                                                    11th Step</a></td>
-                                            <td class="text-right">7:00PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/st-catherines/">St
-                                                    Catherine's</a></td>
-                                            <td class="text-right">7:45PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/1st-edinburgh-9/">1st
-                                                    Edinburgh</a></td>
-                                            <td class="text-right">8:00PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/longstone-friday/">Longstone
-                                                    Friday</a></td>
-                                            <td class="text-right">8:00PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/west-end-11/">West End</a>
-                                            </td>
-                                            <td class="text-right">8:00PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/bruntsfield-friday/">Bruntsfield
-                                                    Friday</a></td>
-                                            <td class="text-right">8:00PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a
-                                                    href="https://aa-edinburgh.org.uk/meetings/canonmills/">Canonmills</a>
-                                            </td>
-                                            <td class="text-right">8:00PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/1st-edinburgh-10/">1st
-                                                    Edinburgh</a></td>
-                                            <td class="text-right">10:30PM</td>
-                                        </tr>
+
+
+                                        {% endfor %}
+
+
                                     </tbody>
+                                    
+
+
+                                {% endif%}
+                                {% if meetings_tomorrow|length > 0%}
                                     <thead>
                                         <tr>
-                                            <th>Saturday</th>
+                                            <th>{{day_name_tomorrow}}</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for entry in meetings_tomorrow %}
+                                       
+
                                         <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/east-end-7/">East End</a>
-                                            </td>
-                                            <td class="text-right">8:30AM</td>
+                                            <td><a href="https://aa-edinburgh.org.uk/meetings/holy-corner-2/">{{entry.title}}
+                                                    </a></td>
+                                            <td class="text-right">{{entry.time}}</td>
                                         </tr>
+
+
+                                        {% endfor %}
+
+
                                     </tbody>
+                                    
+
+
+                                {% endif%}
                                 </table>
+                                
                             </div>
                         </div>
                     </div>
@@ -457,7 +423,13 @@
 
 </div>
 
-{% for entry in meetings %}
-    {{ entry.title }}
+<h1>{{day_name_tomorrow}}</h1>
+{% for entry in meetings_tomorrow %}
+<div>{{ entry.day }}</div>
+<div>{{ entry.title }}</div>
+<div>{{ entry.time }}</div>
+
+
+
 {% endfor %}
 </div>
