@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --config webpack.config.js --progress --colors --mode development",
+    "watch": "webpack --config webpack.config.js --watch --mode development",
+    "build-prod": "webpack --config webpack.config.js --progress --colors --mode production"
   },
   "repository": {
     "type": "git",
@@ -17,11 +19,27 @@
   },
   "homepage": "https://github.com/chriswedgwood/aalondon#readme",
   "devDependencies": {
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "browser-sync": "^2.26.7",
+    "del": "^2.2.2",
+    "run-sequence": "^1.2.2",
+    "webpack": "^4.30.0",
+    "webpack-bundle-tracker": "^0.4.2-beta",
+    "webpack-cli": "^3.3.1"
   },
   "dependencies": {
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0"
+    "@types/react": "^16.9.5",
+    "chart.js": "^2.8.0",
+    "chartjs-plugin-annotation": "^0.5.7",
+    "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.9",
+    "react-chartjs-2": "^2.7.6",
+    "react-dom": "^16.8.6"
   }
 }

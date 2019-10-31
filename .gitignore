@@ -351,6 +351,6 @@ production/
 postcodes.txt
 
 .gitignore
-pcndodger/static/bundles/*.js
+**/bundles/*
 
 db.sqlite3
