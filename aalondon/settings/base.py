@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'search',
     'meetings',
     'django_extensions',
+    'webpack_loader',
 
 
     'wagtail.contrib.forms',
@@ -164,3 +165,11 @@ WAGTAIL_SITE_NAME = "aalondon"
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}

@@ -3,6 +3,7 @@ from meetings.models import Meeting
 from wagtail.core.models import Page
 from datetime import datetime,timedelta
 from django.db.models import Q
+from django.core import serializers
 
 
 class HomePage(Page):
@@ -21,10 +22,14 @@ class HomePage(Page):
         meetings_today = Meeting.objects.filter((Q(day=day_name_today) & Q(time__gte=now.time()))).order_by('time')
         meetings_tomorrow = Meeting.objects.filter((Q(day=day_name_tomorrow) & Q(time__lte=now.time()))).order_by('time')
         
-        context['meetings_today'] = meetings_today 
+        data = serializers.serialize('json', list(meetings_today), fields=('title','time'))
+        context['meetings_today'] = data 
         context['meetings_tomorrow'] = meetings_tomorrow 
         context['day_name_tomorrow'] = day_name_tomorrow
         context['day_name_today'] = day_name_today
+
+        
+        
 
 
         return context
