@@ -354,3 +354,4 @@ postcodes.txt
 **/bundles/*
 
 db.sqlite3
+/static
