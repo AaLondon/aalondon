@@ -12,7 +12,7 @@ except ImportError:
 
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 DEBUG = False
-ALLOWED_HOSTS = ['206.189.30.197'] 
+ALLOWED_HOSTS = ['*'] 
 
 LOGGING = {
     'version': 1,
