@@ -34,6 +34,7 @@
     "webpack-cli": "^3.3.1"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@types/react": "^16.9.5",
     "chart.js": "^2.8.0",
     "chartjs-plugin-annotation": "^0.5.7",

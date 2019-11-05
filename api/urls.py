@@ -3,7 +3,7 @@ from rest_framework import routers
 from api import views
 
 router = routers.DefaultRouter()
-router.register(r'meetings  ', views.MeetingViewSet)
+router.register(r'meetings', views.MeetingViewSet)
 
 
 # Wire up our API using automatic URL routing.
