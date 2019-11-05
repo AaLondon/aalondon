@@ -3,22 +3,29 @@ import ReactDOM from 'react-dom';
 /*import Meetings from 'Meetings-api';*/
 import Pagination from './components/Pagination';
 import Meeting from './components/Meeting';
+import axios from 'axios';
 
 class MeetingApp extends Component {
 
   state = { allMeetings: [], currentMeetings: [], currentPage: null, totalPages: null }
 
   componentDidMount() {
-    const { data: allMeetings = [] } =[];
-    this.setState({ allMeetings });
-  }
+    const currentPage = 1;
+    //this.setState({ allMeetings, currentPage });
+    axios.get(`/api/meetings?page=${currentPage}`)
+      .then(response => {
+        const allMeetings = response.data.results;
+        
+        this.setState({  allMeetings: allMeetings , currentMeetings: allMeetings,currentPage: 1});
+      });
+    }
 
   onPageChanged = data => {
     const { currentPage, totalPages } = data;
-   
+   console.log(data);
     axios.get(`/api/meetings?page=${currentPage}`)
       .then(response => {
-        const currentMeetings = response.data.Meetings;
+        const currentMeetings = response.data.results;
         this.setState({ currentPage, currentMeetings, totalPages });
       });
    }
@@ -27,7 +34,9 @@ class MeetingApp extends Component {
 
     const { allMeetings, currentMeetings, currentPage, totalPages } = this.state;
     const totalMeetings = allMeetings.length;
-
+    console.log(totalMeetings);
+    console.log('currentMeetings');
+    console.log(currentMeetings);
     if (totalMeetings === 0) return null;
 
     const headerClass = ['text-dark py-2 pr-4 m-0', currentPage ? 'border-gray border-right' : ''].join(' ').trim();
