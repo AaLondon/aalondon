@@ -40,12 +40,13 @@ class Pagination extends Component {
   }
 
   componentDidMount() {
+    console.log('componentdidmount Pagination');
     this.gotoPage(1);
   }
 
   gotoPage = page => {
     const { onPageChanged = f => f } = this.props;
-
+    console.log('YYYYY');
     const currentPage = Math.max(0, Math.min(page, this.totalPages));
 
     const paginationData = {

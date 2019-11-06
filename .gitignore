@@ -355,3 +355,4 @@ postcodes.txt
 
 db.sqlite3
 /static
+webpack-stats.json

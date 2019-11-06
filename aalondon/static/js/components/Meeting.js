@@ -8,15 +8,17 @@ import PropTypes from 'prop-types';
 
 
 const Meeting = props => {
-  const { code=null,title = null, time = null  } = props.meeting || {};
+  const { code=null,title = null, time = null ,day = null } = props.meeting || {};
   
   return (
-    <div className="col-sm-6 col-md-4 meeting-info">
-      <div>
-          {props.title}
-      </div>
-      <div>{props.time}</div>
-    </div>
+    <tr>
+    <td><a href="https://aa-edinburgh.org.uk/meetings/holy-corner-2/">{props.title}
+              </a></td>
+  
+    <td>{props.day}</td>
+    <td >{props.time}</td>
+
+  </tr>
   )
 }
 

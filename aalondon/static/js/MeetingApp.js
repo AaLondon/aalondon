@@ -7,72 +7,81 @@ import axios from 'axios';
 
 class MeetingApp extends Component {
 
-  state = { allMeetings: [], currentMeetings: [], currentPage: null, totalPages: null }
+  state = { totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null }
 
   componentDidMount() {
     const currentPage = 1;
+    console.log("this.componentDidMount MeetingApp");
+
     //this.setState({ allMeetings, currentPage });
     axios.get(`/api/meetings?page=${currentPage}`)
       .then(response => {
-        const allMeetings = response.data.results;
-        
-        this.setState({  allMeetings: allMeetings , currentMeetings: allMeetings,currentPage: 1});
+        const totalMeetings = response.data.count;
+        const currentMeetings = response.data.results;
+        const totalPages = 5;
+        console.log(response);
+        this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages });
       });
-    }
+  }
 
   onPageChanged = data => {
-    const { currentPage, totalPages } = data;
-   console.log(data);
+    const { currentPage, totalPages, } = data;
+    console.log("this.componentDidMount");
+    console.log("xxx");
+    console.log(data);
+    console.log(currentPage);
+    console.log(totalPages);
     axios.get(`/api/meetings?page=${currentPage}`)
       .then(response => {
         const currentMeetings = response.data.results;
         this.setState({ currentPage, currentMeetings, totalPages });
       });
-   }
+  }
 
   render() {
 
-    const { allMeetings, currentMeetings, currentPage, totalPages } = this.state;
-    const totalMeetings = allMeetings.length;
+    const { totalMeetings, currentMeetings, currentPage, totalPages } = this.state;
     console.log(totalMeetings);
     console.log('currentMeetings');
     console.log(currentMeetings);
+    console.log('currentPage');
+    console.log(currentPage);
+    console.log('totalMeetings');
+    console.log(totalMeetings);
     if (totalMeetings === 0) return null;
 
     const headerClass = ['text-dark py-2 pr-4 m-0', currentPage ? 'border-gray border-right' : ''].join(' ').trim();
 
     return (
-      <div className="container mb-5">
-        <div className="row d-flex flex-row py-5">
 
-          <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between">
-            <div className="d-flex flex-row align-items-center">
 
-              <h2 className={headerClass}>
-                <strong className="text-secondary">{totalMeetings}</strong> Meetings
-              </h2>
 
-              { currentPage && (
-                <span className="current-page d-inline-block h-100 pl-4 text-secondary">
-                  Page <span className="font-weight-bold">{ currentPage }</span> / <span className="font-weight-bold">{ totalPages }</span>
-                </span>
-              ) }
+      <div className="table-responsive">
+        <table className="table table-sm table-striped">
+      
 
-            </div>
+          <tbody>
+            <tr><td><Pagination totalRecords={totalMeetings} pageLimit={18} pageNeighbours={1} onPageChanged={this.onPageChanged} /></td>
+              <td className="text-right"><strong>{totalMeetings}</strong> Meetings</td>
+              </tr>
+            {currentMeetings.map(meeting => <Meeting key={meeting.code} title={meeting.title} time={meeting.time} code={meeting.code} day={meeting.day} />)}
+          </tbody>
+        </table>
 
-            <div className="d-flex flex-row py-4 align-items-center">
-              <Pagination totalRecords={totalMeetings} pageLimit={18} pageNeighbours={1} onPageChanged={this.onPageChanged} />
-            </div>
-          </div>
 
-          { currentMeetings.map(meeting => <Meeting key={meeting.code} title={meeting.title} time={meeting.time} />) }
-
-        </div>
       </div>
+
+
+
+
+
+
+
+
     );
 
   }
-   
+
 }
 
 
