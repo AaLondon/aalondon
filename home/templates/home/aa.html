@@ -2,8 +2,6 @@
 {% load render_bundle from webpack_loader %}
 
 
-<div id="sidebar_meting"></div>
-<div class="wrap home-page">
 
 
 
@@ -12,123 +10,8 @@
 
 
 
-    <header class="container-fluid site-header">
-        <div class="row color-bar">
-            <div class="col block blue">
-            </div>
 
-            <div class="col block orange">
-            </div>
-
-            <div class="col block yellow">
-            </div>
-
-            <div class="col block green">
-            </div>
-        </div>
-
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="phone-icon" href="tel:0800 917 7650">
-                <img src="{% static 'images/phone-icon.png' %}" scale="0"> </a>
-            <a class="navbar-brand" href="https://aa-edinburgh.org.uk/">
-                <img src="{% static 'images/aa_logo.png' %}" id="Logo" scale="0">
-            </a>
-
-            <p class="header-helpline">Call our National Helpline for <span>FREE</span> on <span>0800 917 7650</span>
-            </p>
-            <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
-                class="navbar-toggler" data-target="#navbarNav" data-toggle="collapse" type="button"><span
-                    class="navbar-toggler-icon"></span></button>
-
-            <div id="navbarNav" class="collapse navbar-collapse justify-content-end">
-                <ul id="menu-top" class="navbar-nav">
-                    <li id="menu-item-3537"
-                        class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-3537 nav-item active">
-                        <a href="https://aa-edinburgh.org.uk/" class="nav-link active">Home</a></li>
-                    <li id="menu-item-4517"
-                        class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4517 nav-item"><a
-                            href="https://aa-edinburgh.org.uk/meetings" class="nav-link">Find a Meeting</a></li>
-                    <li id="menu-item-4578"
-                        class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-4578 nav-item dropdown">
-                        <a href="https://aa-edinburgh.org.uk/#" class="nav-link dropdown-toggle"
-                            data-toggle="dropdown">12 &amp; 12</a>
-                        <div class="dropdown-menu">
-                            <a href="https://aa-edinburgh.org.uk/12-steps-of-alcoholics-anonymous/"
-                                class=" dropdown-item">12 Steps</a><a
-                                href="https://aa-edinburgh.org.uk/12-traditions-of-alcoholics-anonymous/"
-                                class=" dropdown-item">12 Traditions</a></div>
-                    </li>
-                    <li id="menu-item-4543"
-                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-4543 nav-item dropdown">
-                        <a href="https://aa-edinburgh.org.uk/professionals/" class="nav-link dropdown-toggle"
-                            data-toggle="dropdown">Information For Professionals</a>
-                        <div class="dropdown-menu">
-                            <a href="https://aa-edinburgh.org.uk/professionals/trustees-view/" class=" dropdown-item">A
-                                Non-Alcoholic Trustee’s View</a><a
-                                href="https://aa-edinburgh.org.uk/professionals/about-a-a/" class=" dropdown-item">About
-                                A.A.</a><a href="https://aa-edinburgh.org.uk/professionals/armed-services/"
-                                class=" dropdown-item">Armed Services</a><a
-                                href="https://aa-edinburgh.org.uk/professionals/community-services/"
-                                class=" dropdown-item">Community Services</a><a
-                                href="https://aa-edinburgh.org.uk/professionals/counselling/"
-                                class=" dropdown-item">Counselling</a><a
-                                href="https://aa-edinburgh.org.uk/professionals/education/"
-                                class=" dropdown-item">Education</a><a
-                                href="https://aa-edinburgh.org.uk/professionals/frequently-asked-questions/"
-                                class=" dropdown-item">FAQ</a><a
-                                href="https://aa-edinburgh.org.uk/professionals/healthcare/"
-                                class=" dropdown-item">Healthcare</a><a
-                                href="https://aa-edinburgh.org.uk/professionals/interesting-statistics/"
-                                class=" dropdown-item">Interesting Statistics</a><a
-                                href="https://aa-edinburgh.org.uk/professionals/legal-criminal-justice/"
-                                class=" dropdown-item">Legal &amp; Criminal Justice</a><a
-                                href="https://aa-edinburgh.org.uk/professionals/public-information/"
-                                class=" dropdown-item">Public Information</a><a
-                                href="https://aa-edinburgh.org.uk/professionals/religious-organisations/"
-                                class=" dropdown-item">Religious Organisations</a><a
-                                href="https://aa-edinburgh.org.uk/professionals/ethnic-communities/"
-                                class=" dropdown-item">Ethnic Communities</a></div>
-                    </li>
-                    <li id="menu-item-4564"
-                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-4564 nav-item dropdown">
-                        <a href="https://aa-edinburgh.org.uk/newcomers/" class="nav-link dropdown-toggle"
-                            data-toggle="dropdown">Newcomers to AA</a>
-                        <div class="dropdown-menu">
-                            <a href="https://aa-edinburgh.org.uk/newcomers/about-alcoholism/"
-                                class=" dropdown-item">About Alcoholism</a><a
-                                href="https://aa-edinburgh.org.uk/newcomers/about-a-a-meetings/"
-                                class=" dropdown-item">About A.A. Meetings</a><a
-                                href="https://aa-edinburgh.org.uk/newcomers/is-aa-for-you/" class=" dropdown-item">Is AA
-                                For You?</a><a href="https://aa-edinburgh.org.uk/newcomers/frequently-asked-questions/"
-                                class=" dropdown-item">FAQ</a><a href="https://aa-edinburgh.org.uk/newcomers/who-me/"
-                                class=" dropdown-item">Who Me?</a><a
-                                href="https://aa-edinburgh.org.uk/newcomers/who-we-are/" class=" dropdown-item">Who We
-                                Are</a><a href="https://aa-edinburgh.org.uk/newcomers/get-help-now/"
-                                class=" dropdown-item">Get Help Now</a></div>
-                    </li>
-                    <li id="menu-item-4141"
-                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-4141 nav-item dropdown">
-                        <a href="https://aa-edinburgh.org.uk/newcomers/members-stories/"
-                            class="nav-link dropdown-toggle" data-toggle="dropdown">Members’ Stories</a>
-                        <div class="dropdown-menu">
-                            <a href="https://aa-edinburgh.org.uk/newcomers/a-message-for-young-people/"
-                                class=" dropdown-item">Grace’s Story (YPAA)</a><a
-                                href="https://aa-edinburgh.org.uk/newcomers/members-stories/annie/"
-                                class=" dropdown-item">Annie’s Story</a><a
-                                href="https://aa-edinburgh.org.uk/newcomers/members-stories/brian/"
-                                class=" dropdown-item">Brian’s Story</a><a
-                                href="https://aa-edinburgh.org.uk/newcomers/members-stories/george/"
-                                class=" dropdown-item">George’s Story</a><a
-                                href="https://aa-edinburgh.org.uk/newcomers/members-stories/kevin/"
-                                class=" dropdown-item">Kevin’s Story</a></div>
-                    </li>
-                    <li id="menu-item-3536"
-                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3536 nav-item"><a
-                            href="https://aa-edinburgh.org.uk/contact-us/" class="nav-link">Contact Us</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+    
     <section class="hero">
         <div class="bg">
 
@@ -289,150 +172,18 @@
         </div>
     </section>
 
-    <section class="hero-two">
-        <div class="overlay"></div>
-        <div class="container-fluid">
-            <div class="row hero-text-container">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hero-text">
-                    <h5>FREEDOM from Alcoholism</h5>
-                    <h2>"Our whole attitude and outlook upon life will change"</h2>
-                    <a href="https://aa-edinburgh.org.uk/newcomers/about-alcoholism/"
-                        class="btn btn-aa yellow btn-lg">About Alcoholism</a>
-                    <a href="https://aa-edinburgh.org.uk/newcomers/is-aa-for-you/" class="btn btn-aa orange btn-lg">Is
-                        AA for you?</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6 lg-cta big-book-online">
-                <div class="bb-image">
-                    <img src="{% static 'images/bigbook_cutout.png' %}" alt="Big Book Online" scale="0">
-                </div>
-                <a class="title" href="https://aa-edinburgh.org.uk/big-book-online">
-                    Big Book Online
-                </a>
-            </div>
-            <div class="col-lg-6 lg-cta members-stories">
-                <div class="content">
-                    <h6>Members Stories</h6>
-                    <strong>These are the stories of how a few of our members came to find a solution to their drinking
-                        problems in Alcoholics Anonymous.</strong>
-                    <br>
-                    <br>
-                    <p>In time this area will grow. If you are a member of the fellowship and would like to share your
-                        experience here, please contact the web
-                        team from the contact form.</p>
-
-                    <a href="https://aa-edinburgh.org.uk/members-stories" class="btn btn-aa orange btn-lg">Read all
-                        stories</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="container-fluid">
-        <div class="row info-phone">
-            <div class="col-9 align-self-center">
-                <h6>Call our National Helpline for <span>FREE</span> on <span>0800 917 7650</span></h6>
-                <p>AA Edinburgh and Midlothian is committed to providing safe venues for our meetings. We encourage
-                    group members to help keep AA safe by taking sensible precautions, both with personal belongings and
-                    by being mindful about giving out personal information.</p>
-            </div>
-        </div>
-    </section>
-    <footer class="container-fluid footer">
-        <div class="row">
-            <h6>Useful links and information.</h6>
-        </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                <div class="menu-footer-col-1-container">
-                    <ul id="menu-footer-col-1" class="menu">
-                        <li id="menu-item-4072"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4072"><a
-                                href="https://aa-edinburgh.org.uk/all-meetings/">Find a Meeting</a></li>
-                        <li id="menu-item-4074"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4074"><a
-                                href="https://aa-edinburgh.org.uk/newcomers/get-help-now/">Get Help Now</a></li>
-                        <li id="menu-item-4075"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4075"><a
-                                href="https://aa-edinburgh.org.uk/newcomers/who-we-are/">Who We Are</a></li>
-                        <li id="menu-item-4076"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4076"><a
-                                href="https://aa-edinburgh.org.uk/newcomers/about-alcoholism/">About Alcoholism</a></li>
-                        <li id="menu-item-4077"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4077"><a
-                                href="https://aa-edinburgh.org.uk/newcomers/is-aa-for-you/">Is AA For You?</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                <div class="menu-footer-col-2-container">
-                    <ul id="menu-footer-col-2" class="menu">
-                        <li id="menu-item-4078"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4078"><a
-                                href="https://aa-edinburgh.org.uk/newcomers/a-message-for-young-people/">Young
-                                People</a></li>
-                        <li id="menu-item-4079"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4079"><a
-                                href="https://aa-edinburgh.org.uk/professionals/about-a-a/">About A.A.</a></li>
-                        <li id="menu-item-4080"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4080"><a
-                                href="https://aa-edinburgh.org.uk/newcomers/about-a-a-meetings/">About A.A. Meetings</a>
-                        </li>
-                        <li id="menu-item-4081"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4081"><a
-                                href="https://aa-edinburgh.org.uk/newcomers/members-stories/">Members’ Stories</a></li>
-                        <li id="menu-item-4082"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4082"><a
-                                href="https://aa-edinburgh.org.uk/newcomers/starter-pack/">Starter Pack</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                <div class="menu-footer-col-3-container">
-                    <ul id="menu-footer-col-3" class="menu">
-                        <li id="menu-item-4083"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4083"><a
-                                href="https://aa-edinburgh.org.uk/professionals/frequently-asked-questions/">FAQ</a>
-                        </li>
-                        <li id="menu-item-4084"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4084"><a
-                                href="https://aa-edinburgh.org.uk/newcomers/roundabout/">Roundabout</a></li>
-                        <li id="menu-item-4085"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4085"><a
-                                href="https://aa-edinburgh.org.uk/newcomers/share/">Share Magazine</a></li>
-                        <li id="menu-item-4086"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4086"><a
-                                href="https://aa-edinburgh.org.uk/contact-us/">Contact Us</a></li>
-                        <li id="menu-item-4630"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4630"><a
-                                href="https://aa-edinburgh.org.uk/privacy-policy/">Privacy Policy</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-
-            </div>
-        </div>
-    </footer>
+    
+    
 
 
-    <div style="display:none">
-    </div>
-
-</div>
-
-<h1>{{day_name_tomorrow}}</h1>
-{% for entry in meetings_tomorrow %}
-<div>{{ entry.day }}</div>
-<div>{{ entry.title }}</div>
-<div>{{ entry.time }}</div>
+   
 
 
 
-{% endfor %}
+
+
+
+
 </div>
  
 <script>

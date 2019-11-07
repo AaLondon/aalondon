@@ -14,7 +14,7 @@ class MeetingApp extends Component {
     console.log("this.componentDidMount MeetingApp");
 
     //this.setState({ allMeetings, currentPage });
-    axios.get(`/api/meetings?page=${currentPage}`)
+    axios.get(`/api/meetings2?twentyfour=1&page=${currentPage}`)
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
@@ -31,7 +31,7 @@ class MeetingApp extends Component {
     console.log(data);
     console.log(currentPage);
     console.log(totalPages);
-    axios.get(`/api/meetings?page=${currentPage}`)
+    axios.get(`/api/meetings2?twentyfour=1&page=${currentPage}`)
       .then(response => {
         const currentMeetings = response.data.results;
         this.setState({ currentPage, currentMeetings, totalPages });
