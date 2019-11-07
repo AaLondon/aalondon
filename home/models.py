@@ -14,12 +14,12 @@ class HomePage(Page):
     pass
 
     def get_context(self, request):
-        context = super().get_context(request)
+        context = super().get_context(request)  
 
         # Add extra variables and return the updated context
         now = datetime.now() 
         day_name_today = now.strftime("%A")
-        tomorrow = now + timedelta(days=1) 
+        tomorrow = now + timedelta(days=1   ) 
         day_name_tomorrow = tomorrow.strftime("%A")
         #meetings = Meeting.objects.filter((Q(day=day_name_now) & Q(time__gte=now.time()))|(Q(day=day_name_tomorrow) & Q(time__lte=now.time())))
         
