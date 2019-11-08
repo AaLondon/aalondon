@@ -14,6 +14,7 @@ class Meeting(models.Model):
     duration = models.TextField(max_length=20)
     title = models.TextField()
     wheelchair = models.BooleanField()
+    day_number = models.IntegerField(null=False)
     
 
     def __str__(self):

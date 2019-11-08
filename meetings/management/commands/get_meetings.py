@@ -9,6 +9,8 @@ import requests
 from bs4 import BeautifulSoup 
 from meetings.models import Meeting
 
+import calendar
+days = dict(zip(calendar.day_name, range(7)));
 
                 
 
@@ -22,6 +24,8 @@ class Command(BaseCommand):
         #iterate over intergroups and import meetings into meeting model
 
         print('get meetings')
+        Meeting.objects.all().delete()
+
         ids = [117,36,123,124,118,51,64,63,62,119,120,75,55,122,121,77,42]    
         for id in ids:
             page = requests.get(f'https://www.alcoholics-anonymous.org.uk/markers.do?ig={id}') 
@@ -43,6 +47,9 @@ class Command(BaseCommand):
                 title = meeting.get('title')
                 wheelchair = meeting.get('wheelchair')
                 time = time.replace(".",":")
-                new_meeting = Meeting.objects.get_or_create(address=address,code=code,day=day,hearing=hearing,lat=lat,lng=lng,postcode=postcode,time=time,title=title,wheelchair=wheelchair)
+                weekday_as_int = days[day]
+                print(weekday_as_int)
+                new_meeting = Meeting.objects.get_or_create(address=address,code=code,day=day,hearing=hearing,lat=lat,\
+                day_number=weekday_as_int,lng=lng,postcode=postcode,time=time,title=title,wheelchair=wheelchair)
 
 

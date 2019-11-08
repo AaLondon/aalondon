@@ -53,21 +53,15 @@ class MeetingsList(generics.ListAPIView):
             
             meetings_today = Meeting.objects.filter((Q(day=day_name_today) & Q(time__gte=now.time())))#.order_by('time')
             meetings_tomorrow = Meeting.objects.filter((Q(day=day_name_tomorrow) & Q(time__lte=now.time())))#.order_by('time')
-            print(meetings_today.order_by('time'))
+            
 
-            xxx = meetings_tomorrow
-            return xxx
+            all = meetings_today | meetings_tomorrow
+            if day_name_today == 'sunday':
+                all_ordered = all.order_by('-day_number','time')
+            else:
+                all_ordered = all.order_by('day_number','time')
+            return all_ordered
         
         return Meeting.objects.all()
 
-    def list(self, request, *args, **kwargs):
-        response = super(MeetingsList, self).list(request, args, kwargs)
-            # ordering = request.query_params.get('ordering')
-        
-            # if "-" in ordering:      
-            #     response.data['results'] = sorted(response.data['results'], key=lambda k: (k[ordering.replace('-','')], ), reverse=True)
-            # else:
-        response.data['results'] = sorted(response.data['results'], key=lambda k: (k['actual_datetime'], ))
-
-        return response
-    
+ 
