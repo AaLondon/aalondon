@@ -1403,6 +1403,25 @@ p.asterix {
 #tsml #meetings .row.title {
   display: block !important;
 }
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: #ef3340;
+  border-color: red;
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: red;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+
 /************************************************ Chris media queries *****************************************/
 
 
