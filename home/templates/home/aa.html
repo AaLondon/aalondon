@@ -1,4 +1,4 @@
-{% load static %}
+{% load static wagtailcore_tags  %}
 {% load render_bundle from webpack_loader %}
 
 
@@ -9,7 +9,7 @@
 
 
 
-
+<a href="#sidebar_meeting">Jump to Chapter 4</a>
 
     
     <section class="hero">
@@ -23,8 +23,8 @@
                     <h5>ALCOHOLICS ANONYMOUS</h5>
                     <h2>London Region North</h2>
 
-                    <a href="https://aa-edinburgh.org.uk/latest-news/" class="btn btn-aa yellow btn-lg">Latest News</a>
-                    <a href="https://aa-edinburgh.org.uk/meetings" class="btn btn-aa orange btn-lg">Find a Meeting</a>
+                    <a href="{% slugurl 'chris-story' %}" class="btn btn-aa yellow btn-sm btn-lg home-btn">Latest News</a>
+                    <a href="#sidebar_meeting" class="btn btn-aa blue btn-sm home-btn">Find a meeting now</a>
                     <p class="helpline">Call our National Helpline for <span>FREE</span> on <span>0800 917 7650</span>
                     </p>
                 </div>
@@ -97,69 +97,8 @@
     <p style="text-align: center; padding-top: 20px;">Sorry this is temporarily unavailable, due to a network issue.</p>
         <a href="https://aa-edinburgh.org.uk/meetings/">A full list of meetings can be found here</a>
         </div>-->
-                        <div id="sidebar_meeting" class="reactap">
-                            <div class="table-responsive">
-                                <table class="table table-sm table-striped">
-                                    {% if meetings_toda|length > 0%}
-                                    <thead>
-                                        <tr>
-                                            <th>{{day_name_today}}</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for entry in meetings_toda %}
-                                       
-
-                                        <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/holy-corner-2/">{{entry.title}}
-                                                    </a></td>
-                                            <td class="text-right">{{entry.time}}</td>
-                                        </tr>
-
-
-                                        {% endfor %}
-
-
-                                    </tbody>
-                                    
-
-
-                                {% endif%}
-                                {% if meetings_tomorro|length > 0%}
-                                    <thead>
-                                        <tr>
-                                            <th>{{day_name_tomorrow}}</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for entry in meetings_tomorro %}
-                                       
-
-                                        <tr>
-                                            <td><a href="https://aa-edinburgh.org.uk/meetings/holy-corner-2/">{{entry.title}}
-                                                    </a></td>
-                                            <td class="text-right">{{entry.time}}</td>
-                                        </tr>
-
-
-                                        {% endfor %}
-
-
-                                    </tbody>
-                                    
-
-
-                                {% endif%}
-                                </table>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <a href="https://aa-edinburgh.org.uk/pdf/AA_WTF_OCTOBER_2019.pdf" class="pdf-download-button">
-                        click here to download full meeting list pdf
-                    </a>
+                        <div id="sidebar_meeting" class="reactap"></div>
+                   
                     <div class="form-row text-center">
                         <div class="col-12">
                             <a href="https://aa-edinburgh.org.uk/all-meetings"

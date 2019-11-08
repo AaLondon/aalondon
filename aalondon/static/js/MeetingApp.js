@@ -18,7 +18,7 @@ class MeetingApp extends Component {
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
-        const totalPages = 5;
+        const totalPages = response.data.count /10 ;
         console.log(response);
         this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages });
       });
@@ -26,11 +26,7 @@ class MeetingApp extends Component {
 
   onPageChanged = data => {
     const { currentPage, totalPages, } = data;
-    console.log("this.componentDidMount");
-    console.log("xxx");
-    console.log(data);
-    console.log(currentPage);
-    console.log(totalPages);
+    console.log("this.OnPageChanged");
     axios.get(`/api/meetings2?twentyfour=1&page=${currentPage}`)
       .then(response => {
         const currentMeetings = response.data.results;
@@ -61,7 +57,7 @@ class MeetingApp extends Component {
       
 
           <tbody>
-            <tr><td><Pagination totalRecords={totalMeetings} pageLimit={18} pageNeighbours={1} onPageChanged={this.onPageChanged} /></td>
+            <tr><td><Pagination totalRecords={totalMeetings} pageLimit={10} pageNeighbours={1} onPageChanged={this.onPageChanged} /></td>
               <td className="text-right"><strong>{totalMeetings}</strong> Meetings</td>
               </tr>
             {currentMeetings.map(meeting => <Meeting key={meeting.code} title={meeting.title} time={meeting.time} code={meeting.code} day={meeting.day} />)}
