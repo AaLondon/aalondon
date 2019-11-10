@@ -6,6 +6,8 @@ from datetime import datetime,timedelta
 from django.db.models import Q
 from django.db.models import IntegerField, Value
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 
 
@@ -37,6 +39,7 @@ class MeetingsList(generics.ListAPIView):
     """
     model = Meeting
     serializer_class = MeetingSerializer
+  
     
 
     def get_queryset(self):
@@ -65,3 +68,31 @@ class MeetingsList(generics.ListAPIView):
         return Meeting.objects.all()
 
  
+
+
+class MeetingSearch(generics.ListAPIView):
+    """
+    Return a list of all the products that the authenticated
+    user has ever purchased, with optional filtering.
+    """
+    model = Meeting
+    serializer_class = MeetingSerializer
+    filter_backends = [DjangoFilterBackend,filters.OrderingFilter, filters.SearchFilter]
+    filterset_fields = ['day']
+    ordering_fields = ['time']
+    
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = Meeting.objects.all()
+        postcode = self.request.query_params.get('search', None)
+        print(postcode)
+        if postcode is not None:
+            queryset = queryset.filter(postcode__istartswith=postcode)
+        return queryset
+    
+
+  

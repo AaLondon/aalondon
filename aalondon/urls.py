@@ -9,7 +9,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 from api import urls as api_urls
 
 from search import views as search_views
-
+from meetings.views import MeetingSearchView
 urlpatterns = [
     url(r'^django-admin/', admin.site.urls),
 
@@ -18,6 +18,7 @@ urlpatterns = [
 
     url(r'^search/$', search_views.search, name='search'),
     url(r'^api/', include(api_urls)),
+    path('meetingsearch/', MeetingSearchView.as_view(), name='meeting_search'),
     
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in

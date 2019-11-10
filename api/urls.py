@@ -13,5 +13,6 @@ router.register(r'meetings', views.MeetingViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('meetings2/',views.MeetingsList.as_view()),
+    path('meetingsearch/',views.MeetingSearch.as_view()),
     path('', include('rest_framework.urls', namespace='rest_framework'))
 ]
