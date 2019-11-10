@@ -1,6 +1,26 @@
 {% extends "base.html" %}
+{% load render_bundle from webpack_loader %}
 
 {% block content %}
     <h1>Meeting Search</h1>
     <div id="meeting_search"></div>
+  
 {% endblock %}
+
+
+
+
+
+{% block extra_js %}
+  <script>
+  
+  
+  
+  window.react_mount = document.getElementById('meeting_search');
+ 
+  
+</script>
+             {% render_bundle 'meetingsearch' %}
+
+{% endblock %}
+ 

@@ -7,6 +7,8 @@ module.exports = {
   mode: 'development',
   entry: {
     meeting: './aalondon/static/js/MeetingApp.js',
+    meetingsearch: './aalondon/static/js/MeetingSearch.js',
+    
 
 
   }
