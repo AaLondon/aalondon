@@ -63,7 +63,7 @@ class MeetingSearch extends Component {
 
     const { totalMeetings, currentMeetings, currentPage, totalPages } = this.state;
 
-    //if (totalMeetings === 0) return null;
+    if (totalMeetings === 0) return null;
 
     const headerClass = ['text-dark py-2 pr-4 m-0', currentPage ? 'border-gray border-right' : ''].join(' ').trim();
 
@@ -80,7 +80,7 @@ class MeetingSearch extends Component {
               <tr><td><Pagination totalRecords={totalMeetings} pageLimit={10} pageNeighbours={1} onPageChanged={this.onPageChanged} /></td>
                 <td className="text-right"><strong>{totalMeetings}</strong> Meetings</td>
               </tr>
-              {currentMeetings.map(meeting => <Meeting key={meeting.code} title={meeting.title} time={meeting.time} code={meeting.code} day={meeting.day} />)}
+              {currentMeetings.map(meeting => <Meeting key={meeting.code} title={meeting.title} time={meeting.time} code={meeting.code} day={meeting.day} slug={meeting.slug}/>)}
             </tbody>
           </table>
 

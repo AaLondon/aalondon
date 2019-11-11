@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.text import slugify
+from django_extensions.db.fields import AutoSlugField
 
 # Create your models here.
 
@@ -15,8 +17,15 @@ class Meeting(models.Model):
     title = models.TextField()
     wheelchair = models.BooleanField()
     day_number = models.IntegerField(null=False)
+    slug = AutoSlugField(populate_from='title')
+
     
 
     def __str__(self):
+
         return self.title
     
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Meeting, self).save(*args, **kwargs)

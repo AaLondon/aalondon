@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load render_bundle from webpack_loader %}
+
+{% block content %}
+    <h1>Meeting Detail</h1>
+    {{object.title}}
+    <a href="https://citymapper.com/directions?endcoord={{object.lat}}%2C{{object.lng}}&endname={{object.title}}">Take me there with city mapper</a>
+{% endblock %}
+
+
+
+
+
+
+ 

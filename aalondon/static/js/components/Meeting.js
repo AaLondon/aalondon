@@ -8,11 +8,11 @@ import PropTypes from 'prop-types';
 
 
 const Meeting = props => {
-  const { code=null,title = null, time = null ,day = null } = props.meeting || {};
+  const { code=null,title = null, time = null ,day = null,slug = null } = props.meeting || {};
   
   return (
     <tr>
-    <td><a href="https://aa-edinburgh.org.uk/meetings/holy-corner-2/">{props.title}
+    <td><a href={'/meetings/'+props.slug}>{props.title}
               </a></td>
   
     <td>{props.day}</td>
