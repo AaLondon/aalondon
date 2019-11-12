@@ -2,9 +2,14 @@
 {% load render_bundle from webpack_loader %}
 
 {% block content %}
-    <h1>Meeting Detail</h1>
-    {{object.title}}
-    <a href="https://citymapper.com/directions?endcoord={{object.lat}}%2C{{object.lng}}&endname={{object.title}}">Take me there with city mapper</a>
+    <h1>{{object.title}} Details</h1>
+    <div class="container">
+    <div class="row"><div>title: </div><div>{{object.title}}</div></div>
+
+    <div class="row"><a href="https://citymapper.com/directions?endcoord={{object.lat}}%2C{{object.lng}}&endname={{object.title}}">Take me there with city mapper</a></div>
+    <div class="row"><a href="https://citymapper.com/directions?endcoord={{object.lat}}%2C{{object.lng}}&endname={{object.title}}" target="_blank"><img src="https://static.citymapper.com/img/embed/GetMeThere_Citymapper.png" alt="Get directions with Citymapper" /></a></div>
+    
+    </div>
 {% endblock %}
 
 
