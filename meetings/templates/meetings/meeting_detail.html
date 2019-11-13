@@ -9,9 +9,27 @@
     <div class="row"><a href="https://citymapper.com/directions?endcoord={{object.lat}}%2C{{object.lng}}&endname={{object.title}}">Take me there with city mapper</a></div>
     <div class="row"><a href="https://citymapper.com/directions?endcoord={{object.lat}}%2C{{object.lng}}&endname={{object.title}}" target="_blank"><img src="https://static.citymapper.com/img/embed/GetMeThere_Citymapper.png" alt="Get directions with Citymapper" /></a></div>
     
-    </div>
-{% endblock %}
+    <div id='map' style='width: 400px; height: 300px;'></div>
+<script>
+var lat = {{ object.lat }};
+var lng = {{object.lng}};
+console.log(lat);
+mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3ZWRnd29vZCIsImEiOiJjazJ3M2xyOGkwYXppM29xbGlreGxtZWk1In0.wB4JKWEScmQogF0I9aSNoA';
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center:[lng,lat],
+zoom: 14
+});
 
+var marker = new mapboxgl.Marker()
+  .setLngLat([lng, lat])
+  .addTo(map);
+</script>
+    </div>
+
+
+{% endblock %}
 
 
 

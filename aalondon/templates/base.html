@@ -53,6 +53,10 @@
         <link rel="stylesheet" type="text/css" id="gravatar-card-css" href="{% static 'css/hovercard.min.css' %}"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="{% static 'css/services.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/stg6sru.css' %}">
 
+
+        <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+
         {% block extra_css %}
             {# Override this in templates to add extra stylesheets #}
         {% endblock %}
