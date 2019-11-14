@@ -28,12 +28,13 @@ class Command(BaseCommand):
 
         ids = [117,36,123,124,118,51,64,63,62,119,120,75,55,122,121,77,42]    
         for id in ids:
+            print(f'https://www.alcoholics-anonymous.org.uk/markers.do?ig={id}')
             page = requests.get(f'https://www.alcoholics-anonymous.org.uk/markers.do?ig={id}') 
             soup = BeautifulSoup(page.text, 'html.parser') 
             meetings=soup.find_all('marker')
             for meeting in meetings:
                 
-                print(meeting)
+                
                 address = meeting.get('address')
                 code = meeting.get('code')
                 day = meeting.get('day')
@@ -48,7 +49,6 @@ class Command(BaseCommand):
                 wheelchair = meeting.get('wheelchair')
                 time = time.replace(".",":")
                 weekday_as_int = days[day]
-                print(weekday_as_int)
                 new_meeting = Meeting.objects.get_or_create(address=address,code=code,day=day,hearing=hearing,lat=lat,\
                 day_number=weekday_as_int,lng=lng,postcode=postcode,time=time,title=title,wheelchair=wheelchair)
 
