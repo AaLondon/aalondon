@@ -24,7 +24,7 @@ class   MeetingSearchForm extends React.Component {
       return (
         <form onSubmit={this.handleSubmit}>
           <label>
-            Name:
+            Postcode:
             <input type="text" value={this.props.value} onChange={this.handleChange} />
           </label>
           <input type="submit" value="Submit" />

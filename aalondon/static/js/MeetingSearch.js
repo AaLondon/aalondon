@@ -5,6 +5,10 @@ import Pagination from './components/Pagination';
 import Meeting from './components/Meeting';
 import axios from 'axios';
 import MeetingSearchForm from './components/MeetingSearchForm';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
 
 
@@ -73,29 +77,33 @@ class MeetingSearch extends Component {
 
     const { totalMeetings, currentMeetings, currentPage, totalPages } = this.state;
 
-   
+    if (totalMeetings === 0) return null;
 
   
 
     return (
 
       <div>
-        <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} />
-        <div className="table-responsive">
-          <table className="table table-sm table-striped">
+       
+        <Container>
+  {/* Stack the columns on mobile by making one full-width and the other half-width */}
+  <Row><MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} /></Row>
+  <Row>
+    <Col xs={12} md={8}>
+    <Pagination totalRecords={totalMeetings} pageLimit={10} pageNeighbours={1} onPageChanged={this.onPageChanged} />
+    </Col>
+    <Col xs={12} md={12}>
+      {'Meetings : '+totalMeetings}
+    </Col>
+  </Row>
 
-
-            <tbody>
-
-              <tr><td><Pagination totalRecords={totalMeetings} pageLimit={10} pageNeighbours={1} onPageChanged={this.onPageChanged} /></td>
-                <td className="text-right"><strong>{totalMeetings}</strong> Meetings</td>
-              </tr>
-              {currentMeetings.map(meeting => <Meeting key={meeting.code} title={meeting.title} time={meeting.time} code={meeting.code} day={meeting.day} slug={meeting.slug}/>)}
-            </tbody>
-          </table>
-
-
-        </div>
+  {/* Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop */}
+  {currentMeetings.map(meeting => <Meeting key={meeting.code} title={meeting.title} time={meeting.time} code={meeting.code} day={meeting.day} postcode={meeting.postcode} />)}
+       
+  {/* Columns are always 50% wide, on mobile and desktop */}
+  
+</Container>
+       
       </div>
 
 
