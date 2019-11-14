@@ -10,15 +10,16 @@ import Row from 'react-bootstrap/Row'
 
 
 const Meeting = props => {
-  const { code=null,title = null, time = null ,day = null,slug = null } = props.meeting || {};
+  const { code=null,title = null, time = null ,day = null,slug = null , postcode = null } = props.meeting || {};
   
   return (
     <Row>
-    <Col xs={4} md={4}><a href={'/meetings/'+props.slug}>{props.title}
+    <Col xs={3} md={3}><a href={'/meetings/'+props.slug}>{props.title}
               </a></Col>
   
-    <Col xs={4} md={4} >{props.day}</Col>
-    <Col>{props.time}</Col>
+    <Col xs={3} md={3} >{props.day}</Col>
+    <Col xs={3} md={3}>{props.postcode}</Col>
+    <Col xs={3} md={3}>{props.time}</Col>
 
   </Row>
   )
