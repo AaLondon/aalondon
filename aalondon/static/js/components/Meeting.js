@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
 
 
@@ -11,14 +13,14 @@ const Meeting = props => {
   const { code=null,title = null, time = null ,day = null,slug = null } = props.meeting || {};
   
   return (
-    <tr>
-    <td><a href={'/meetings/'+props.slug}>{props.title}
-              </a></td>
+    <Row>
+    <Col xs={4} md={4}><a href={'/meetings/'+props.slug}>{props.title}
+              </a></Col>
   
-    <td>{props.day}</td>
-    <td >{props.time}</td>
+    <Col xs={4} md={4} >{props.day}</Col>
+    <Col>{props.time}</Col>
 
-  </tr>
+  </Row>
   )
 }
 

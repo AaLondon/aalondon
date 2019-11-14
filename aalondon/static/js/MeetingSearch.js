@@ -14,6 +14,7 @@ class MeetingSearch extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.state = { totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, value: '' };
     //this.state = {temperature: '', scale: 'c'};
+    console.log('constructor');
   }
 
  
@@ -22,31 +23,40 @@ class MeetingSearch extends Component {
     const currentPage = 1;
     console.log("this.componentDidMount MeetingApp");
 
-    //this.setState({ allMeetings, currentPage });
-    axios.get(`/api/meetingsearch?ordering=time&day=Friday&page=${currentPage}`)
+    
+    this.setState({ currentPage: currentPage });
+
+    axios.get(`/api/meetingsearch?ordering=time`)
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
         const totalPages = response.data.count / 10;
-        console.log(response);
+        
         this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages });
       });
+      //console.log(this.state);
   }
 
   onPageChanged = data => {
     const { currentPage, totalPages, } = data;
-    console.log("this.OnPageChanged");
-    axios.get(`/api/meetingsearch?ordering=time&day=Friday&page=${currentPage}`)
+    
+    console.log(data);
+    console.log(this.state);
+   
+    console.log(`/api/meetingsearch?ordering=time&day=Thursday&page=${currentPage}`)
+    axios.get(`/api/meetingsearch?ordering=time&day=Thursday&page=${currentPage}`)
       .then(response => {
+        const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
-        this.setState({ currentPage, currentMeetings, totalPages });
+        const totalPages = response.data.count / 10;
+        console.log('onPageChanged response');
+        console.log(response);
+        this.setState({ totalMeetings,currentMeetings,currentPage,totalPages });
       });
   }
 
   handleInputChange = data =>{
 
-    console.log('xhandleInputChange');
-    console.log(data);
     axios.get(`/api/meetingsearch?ordering=time&day=Monday&search=${data}`)
     .then(response => {
       const totalMeetings = response.data.count;
@@ -63,9 +73,9 @@ class MeetingSearch extends Component {
 
     const { totalMeetings, currentMeetings, currentPage, totalPages } = this.state;
 
-    if (totalMeetings === 0) return null;
+   
 
-    const headerClass = ['text-dark py-2 pr-4 m-0', currentPage ? 'border-gray border-right' : ''].join(' ').trim();
+  
 
     return (
 

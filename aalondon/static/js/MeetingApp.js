@@ -4,6 +4,18 @@ import ReactDOM from 'react-dom';
 import Pagination from './components/Pagination';
 import Meeting from './components/Meeting';
 import axios from 'axios';
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/>
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+
+
 
 class MeetingApp extends Component {
 
@@ -52,17 +64,29 @@ class MeetingApp extends Component {
 
 
 
-      <div className="table-responsive">
-        <table className="table table-sm table-striped">
-      
+      <div className="container-responsive">
+    <Container>
+  {/* Stack the columns on mobile by making one full-width and the other half-width */}
+  <Row>
+    <Col xs={12} md={8}>
+    <Pagination totalRecords={totalMeetings} pageLimit={10} pageNeighbours={1} onPageChanged={this.onPageChanged} />
+    </Col>
+    <Col xs={12} md={12}>
+      {'Meetings : '+totalMeetings}
+    </Col>
+  </Row>
 
-          <tbody>
-            <tr><td><Pagination totalRecords={totalMeetings} pageLimit={10} pageNeighbours={1} onPageChanged={this.onPageChanged} /></td>
-              <td className="text-right"><strong>{totalMeetings}</strong> Meetings</td>
-              </tr>
-            {currentMeetings.map(meeting => <Meeting key={meeting.code} title={meeting.title} time={meeting.time} code={meeting.code} day={meeting.day} />)}
-          </tbody>
-        </table>
+  {/* Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop */}
+  {currentMeetings.map(meeting => <Meeting key={meeting.code} title={meeting.title} time={meeting.time} code={meeting.code} day={meeting.day} />)}
+       
+  {/* Columns are always 50% wide, on mobile and desktop */}
+  
+</Container>
+       
+           
+       
+       
+       
 
 
       </div>

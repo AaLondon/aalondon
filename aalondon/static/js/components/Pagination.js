@@ -35,20 +35,17 @@ class Pagination extends Component {
       : 0;
 
     this.totalPages = Math.ceil(this.totalRecords / this.pageLimit);
-
+    
     this.state = { currentPage: 1 };
   }
 
   componentDidMount() {
-    console.log('componentdidmount Pagination');
     this.gotoPage(1);
   }
 
   gotoPage = page => {
     const { onPageChanged = f => f } = this.props;
-    console.log('YYYYY');
     const currentPage = Math.max(0, Math.min(page, this.totalPages));
-
     const paginationData = {
       currentPage,
       totalPages: this.totalPages,
