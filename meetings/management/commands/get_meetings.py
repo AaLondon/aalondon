@@ -11,7 +11,14 @@ from meetings.models import Meeting
 
 import calendar
 days = dict(zip(calendar.day_name, range(7)));
+import os
 
+proxy= 'http://chriswedgwood:SerenityOlympic2@webproxy-dcb.onelondon.tfl.local:8080'
+
+os.environ['http_proxy'] = proxy
+os.environ['HTTP_PROXY'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
                 
 
 class Command(BaseCommand):
@@ -28,8 +35,7 @@ class Command(BaseCommand):
 
         ids = [117,36,123,124,118,51,64,63,62,119,120,75,55,122,121,77,42]    
         for id in ids:
-            print(f'https://www.alcoholics-anonymous.org.uk/markers.do?ig={id}')
-            page = requests.get(f'https://www.alcoholics-anonymous.org.uk/markers.do?ig={id}') 
+            page = requests.get(f'https://www.alcoholics-anonymous.org.uk/markers.do?ig={id}', verify=False) 
             soup = BeautifulSoup(page.text, 'html.parser') 
             meetings=soup.find_all('marker')
             for meeting in meetings:

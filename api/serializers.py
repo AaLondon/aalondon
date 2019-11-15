@@ -5,9 +5,11 @@ from datetime import datetime,timedelta
 
 class MeetingSerializer(serializers.ModelSerializer):
     actual_datetime = serializers.SerializerMethodField()
+    friendly_time = serializers.SerializerMethodField()
+    postcode_prefix = serializers.SerializerMethodField()
     class Meta:
         model = Meeting
-        fields = ['code','title','time','address','day','actual_datetime','postcode','slug','lat','lng','day_rank']
+        fields = ['code','title','time','address','day','actual_datetime','postcode','slug','lat','lng','day_rank','friendly_time','postcode_prefix']
 
 
     def get_actual_datetime(self, obj):
@@ -26,5 +28,12 @@ class MeetingSerializer(serializers.ModelSerializer):
         else:
             actual_datetime = None
         return actual_datetime
+    
+    def get_friendly_time(self,obj):
+        return obj.time.strftime('%H:%M%p')
+    
+    def get_postcode_prefix(self,obj):
+        return obj.postcode.split(' ')[0]
+
 
     

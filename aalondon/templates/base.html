@@ -39,15 +39,7 @@
         
         <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/timed-content.js' %}"></script>
-        <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://aa-edinburgh.org.uk/xmlrpc.php?rsd">
-        <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://aa-edinburgh.org.uk/wp-includes/wlwmanifest.xml"> 
-        <link rel="canonical" href="https://aa-edinburgh.org.uk/">
-        <link rel="shortlink" href="https://wp.me/PasRFy-V8">
-        <link rel="alternate" type="application/json+oembed" href="https://aa-edinburgh.org.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Faa-edinburgh.org.uk%2F">
-        <link rel="alternate" type="text/xml+oembed" href="https://aa-edinburgh.org.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Faa-edinburgh.org.uk%2F&amp;format=xml">
-        <meta name="12_step_meeting_list" content="3.4.20">
-        <link rel="alternate" type="application/json" title="Meetings Feed" href="https://aa-edinburgh.org.uk/wp-admin/admin-ajax.php?action=meetings">
-
+        
         <style type="text/css">img#wpstats{display:none}</style>
 
         <link rel="stylesheet" type="text/css" id="gravatar-card-css" href="{% static 'css/hovercard.min.css' %}"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="{% static 'css/services.min.css' %}">
@@ -82,7 +74,7 @@
         <nav class="navbar navbar-expand-lg navbar-light">
             <a class="phone-icon" href="tel:0800 917 7650">
                 <img src="{% static 'images/phone-icon.png' %}" scale="0"> </a>
-            <a class="navbar-brand" href="https://aa-edinburgh.org.uk/">
+            <a class="navbar-brand" href="{% url 'meeting_search' %}">
                 <img src="{% static 'images/aa_logo.png' %}" id="Logo" scale="0">
             </a>
 

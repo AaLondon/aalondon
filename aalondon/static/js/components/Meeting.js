@@ -15,8 +15,8 @@ const Meeting = props => {
   weekdayRow = <Row>{props.day}</Row>
   return (
    
-    <Row>
-      <Col xs={6} md={3}><a href={'/meetings/' + props.slug}>{props.title}</a></Col>
+    <Row className="meeting-row">
+      <Col xs={5} md={6}><a href={'/meetings/' + props.slug}>{props.title}</a></Col>
       <Col xs={3} md={3}>{props.postcode}</Col>
       <Col xs={3} md={3}>{props.time}</Col>
     </Row>
