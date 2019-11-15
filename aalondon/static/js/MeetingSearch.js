@@ -98,7 +98,7 @@ class MeetingSearch extends Component {
   </Row>
 
   {/* Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop */}
-  {currentMeetings.map(meeting => <Meeting key={meeting.code} title={meeting.title} time={meeting.time} code={meeting.code} day={meeting.day} postcode={meeting.postcode} slug={meeting.slug}/>)}
+  {currentMeetings.map(meeting => <Meeting key={meeting.code} title={meeting.title} time={meeting.time} code={meeting.code} day={meeting.day} postcode={meeting.postcode} slug={meeting.slug} dayRank={meeting.day_rank} />)}
        
   {/* Columns are always 50% wide, on mobile and desktop */}
   

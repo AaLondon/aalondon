@@ -7,7 +7,7 @@ class MeetingSerializer(serializers.ModelSerializer):
     actual_datetime = serializers.SerializerMethodField()
     class Meta:
         model = Meeting
-        fields = ['code','title','time','address','day','actual_datetime','postcode','slug','lat','lng']
+        fields = ['code','title','time','address','day','actual_datetime','postcode','slug','lat','lng','day_rank']
 
 
     def get_actual_datetime(self, obj):

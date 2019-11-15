@@ -8,8 +8,8 @@ from django.db.models import IntegerField, Value
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
-
-
+from django.db.models import Avg, F, Window
+from django.db.models.functions import  Rank
 
 # Create your views here.
 
@@ -39,7 +39,8 @@ class MeetingsList(generics.ListAPIView):
     """
     model = Meeting
     serializer_class = MeetingSerializer
-  
+    
+    
     
 
     def get_queryset(self):
@@ -56,14 +57,14 @@ class MeetingsList(generics.ListAPIView):
             
             meetings_today = Meeting.objects.filter((Q(day=day_name_today) & Q(time__gte=now.time())))#.order_by('time')
             meetings_tomorrow = Meeting.objects.filter((Q(day=day_name_tomorrow) & Q(time__lte=now.time())))#.order_by('time')
-            
+            rank_by_day = Window(expression=Rank(),partition_by=F("day"),order_by=F("time").asc())
 
             all = meetings_today | meetings_tomorrow
             if day_name_today == 'sunday':
                 all_ordered = all.order_by('-day_number','time')
             else:
                 all_ordered = all.order_by('day_number','time')
-            return all_ordered
+            return all_ordered#.annotate(the_rank=rank_by_day)
         
         return Meeting.objects.all()
 
@@ -80,7 +81,7 @@ class MeetingSearch(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend,filters.OrderingFilter, filters.SearchFilter]
     filterset_fields = ['day']
     ordering_fields = ['time']
-    
+        
 
     def get_queryset(self):
         """

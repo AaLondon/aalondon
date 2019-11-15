@@ -18,6 +18,7 @@ class Meeting(models.Model):
     wheelchair = models.BooleanField()
     day_number = models.IntegerField(null=False)
     slug = AutoSlugField(populate_from='title')
+    day_rank = models.IntegerField(null=True)
 
     
 

@@ -52,4 +52,12 @@ class Command(BaseCommand):
                 new_meeting = Meeting.objects.get_or_create(address=address,code=code,day=day,hearing=hearing,lat=lat,\
                 day_number=weekday_as_int,lng=lng,postcode=postcode,time=time,title=title,wheelchair=wheelchair)
 
+        day_numbers = [0,1,2,3,4,5,6,7]
+        for number in day_numbers:
+            meeting = Meeting.objects.filter(day_number=number).order_by('time').first()
+            
+            if meeting:
+                print(meeting)
+                meeting.day_rank = 1
+                meeting.save()
 

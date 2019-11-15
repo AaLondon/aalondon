@@ -34,7 +34,7 @@
     </section>
     <div class="container-fluid no-gutter">
         <section class="row ctas no-gutters">
-            <a href="https://aa-edinburgh.org.uk/newcomers" class="col-lg-3 col-md-6 col-sm-6 col-xs-12 cta">
+            <a href="{% url 'meeting_search' %}" class="col-lg-3 col-md-6 col-sm-6 col-xs-12 cta">
                 <div class="bgi newcomers">
                     <h6>
                         Problems with drinking? </h6>
@@ -43,7 +43,7 @@
                 <div class="icon">
                     <img src="{% static 'images/cta-arrow.png' %}" scale="0"> </div>
             </a>
-            <a href="https://aa-edinburgh.org.uk/meetings" class="col-lg-3 col-md-6 col-sm-6 col-xs-12 cta">
+            <a href="{% url 'meeting_search' %}" class="col-lg-3 col-md-6 col-sm-6 col-xs-12 cta">
                 <div class="bgi meetings">
                     <h6>
                         Find A Meeting </h6>
@@ -52,7 +52,7 @@
                 <div class="icon">
                     <img src="{% static 'images/cta-arrow.png' %}" scale="0"> </div>
             </a>
-            <a href="https://aa-edinburgh.org.uk/professionals" class="col-lg-3 col-md-6 col-sm-6 col-xs-12 cta">
+            <a href="{% url 'meeting_search' %}" class="col-lg-3 col-md-6 col-sm-6 col-xs-12 cta">
                 <div class="bgi professionals">
                     <h6>
                         Information For Professionals </h6>
@@ -61,7 +61,7 @@
                 <div class="icon">
                     <img src="{% static 'images/cta-arrow.png' %}" scale="0"> </div>
             </a>
-            <a href="https://aa-edinburgh.org.uk/a-message-for-young-people"
+            <a href="{% url 'meeting_search' %}"
                 class="col-lg-3 col-md-6 col-sm-6 col-xs-12 cta">
                 <div class="bgi a-message-for-young-people">
                     <h6>
@@ -84,9 +84,9 @@
                     result of their drinking you can call our helpline on <strong>0800 917 7650</strong> to be put in
                     touch with someone locally. All calls are free for both landline and mobile.</p>
                 <p>Click here for our <a
-                        href="https://aa-edinburgh.org.uk/meetings">Meeting Finder</a>.</p>
+                        href="{% url 'meeting_search' %}">Meeting Finder</a>.</p>
 
-                <a href="https://aa-edinburgh.org.uk/newcomers" class="btn btn-aa orange btn-lg">Get Help Now</a>
+                <a href="{% url 'meeting_search' %}" class="btn btn-aa orange btn-lg">Get Help Now</a>
             </div>
             <div class="col meeting-finder-24h-container">
                 <div class="meeting-finder-24h">
@@ -102,7 +102,7 @@
                    
                     <div class="form-row text-center">
                         <div class="col-12">
-                            <a href="https://aa-edinburgh.org.uk/all-meetings"
+                            <a href="{% url 'meeting_search' %}"
                                 class="btn btn-aa-ghost transparent btn-lg">See All Meetings
                             </a>
                         </div>
