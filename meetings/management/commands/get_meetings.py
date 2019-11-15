@@ -13,12 +13,7 @@ import calendar
 days = dict(zip(calendar.day_name, range(7)));
 import os
 
-proxy= 'http://chriswedgwood:SerenityOlympic2@webproxy-dcb.onelondon.tfl.local:8080'
 
-os.environ['http_proxy'] = proxy
-os.environ['HTTP_PROXY'] = proxy
-os.environ['https_proxy'] = proxy
-os.environ['HTTPS_PROXY'] = proxy
                 
 
 class Command(BaseCommand):
