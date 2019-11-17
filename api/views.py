@@ -88,12 +88,37 @@ class MeetingSearch(generics.ListAPIView):
         Optionally restricts the returned purchases to a given user,
         by filtering against a `username` query parameter in the URL.
         """
+      
+        
         queryset = Meeting.objects.all()
+        twentyfour = self.request.query_params.get('twentyfour',None)
+        if twentyfour == '1':
+            
+            now = datetime.now() 
+            date_today = now.date()
+            time_now = now.time()
+            datetime_now = datetime.combine(date_today,time_now)
+            day_name_today = now.strftime("%A")
+            tomorrow = now + timedelta(days=1) 
+            day_name_tomorrow = tomorrow.strftime("%A")
+            
+            meetings_today = Meeting.objects.filter((Q(day=day_name_today) & Q(time__gte=now.time())))#.order_by('time')
+            meetings_tomorrow = Meeting.objects.filter((Q(day=day_name_tomorrow) & Q(time__lte=now.time())))#.order_by('time')
+            rank_by_day = Window(expression=Rank(),partition_by=F("day"),order_by=F("time").asc())
+
+            all = meetings_today | meetings_tomorrow
+            if day_name_today == 'sunday':
+                all_ordered = all.order_by('-day_number','time')
+            else:
+                all_ordered = all.order_by('day_number','time')
+            return all_ordered#.annotate(the_rank=rank_by_day)
+
         postcode = self.request.query_params.get('search', None)
-        print(postcode)
+        
+
         if postcode is not None:
             queryset = queryset.filter(postcode__istartswith=postcode)
-        return queryset
+        return queryset.order_by('day_number','time')
     
 
   
