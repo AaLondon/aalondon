@@ -69,6 +69,7 @@ class MeetingSearchForm extends React.Component {
         </Dropdown.Toggle>
 
           <Dropdown.Menu>
+          <Dropdown.Item key={0} onSelect={this.handleIntergroupChange}>{'All Intergroups'}</Dropdown.Item>
           {Object.keys(igs).map((key, index) => ( 
           <Dropdown.Item key={key} onSelect={this.handleIntergroupChange}>{igs[key]}</Dropdown.Item>
          
