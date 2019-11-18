@@ -116,7 +116,7 @@ class MeetingSearch extends Component {
   onIntergroupChange = data =>{
     let day = this.state.day;
     let intergroup;
-    if (intergroup === 'All Intergroups'){
+    if (data === 'All Intergroups'){
       intergroup = '';
     }else
     {
@@ -125,7 +125,9 @@ class MeetingSearch extends Component {
     let currentPage = this.state.currentPage;
     console.log('C');
     this.setState({intergroup : intergroup});
+
     let queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${day}`;
+    console.log(queryString);
     axios.get(queryString)
       .then(response => {
         const totalMeetings = response.data.count;
