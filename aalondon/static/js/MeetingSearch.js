@@ -85,7 +85,7 @@ class MeetingSearch extends Component {
   onDayChange = data =>{
     let intergroup=this.state.intergroup;
     let day;
-    if (data === 'All'){
+    if (data === 'All days'){
        day = '';
     }else
     {

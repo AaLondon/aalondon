@@ -45,11 +45,11 @@ class MeetingSearchForm extends React.Component {
          <Col>
         <Dropdown >
           <Dropdown.Toggle variant="success" id="dropdown-basic">
-            {this.props.day ? this.props.day : "All"}
+            {this.props.day ? this.props.day : "All days"}
         </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item onSelect={this.handleDayChange}>All</Dropdown.Item>
+            <Dropdown.Item onSelect={this.handleDayChange}>All days</Dropdown.Item>
             <Dropdown.Item onSelect={this.handleDayChange}>Monday</Dropdown.Item>
             <Dropdown.Item onSelect={this.handleDayChange}>Tuesday</Dropdown.Item>
             <Dropdown.Item onSelect={this.handleDayChange}>Wednesday</Dropdown.Item>
