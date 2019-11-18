@@ -28,8 +28,10 @@ class Command(BaseCommand):
         print('get meetings')
         Meeting.objects.all().delete()
 
-        ids = [117,36,123,124,118,51,64,63,62,119,120,75,55,122,121,77,42]    
-        for id in ids:
+        igs = {117:"City Of London",36:"East London",123:"Chelsea",124:"Chelsea & Fulham",118:"London North East",51:"London North",64:"London North Middlesex",
+        63:"London North West",62:"London South Middlesex",119:"London West End",120:"London Westway",75:"London Croydon Epsom & Sutton",55:"London North Kent",
+        122:"London South East (East)",121:"London South East (West)",77:"London South",42:"London South West"}    
+        for id in igs:
             page = requests.get(f'https://www.alcoholics-anonymous.org.uk/markers.do?ig={id}', verify=False) 
             soup = BeautifulSoup(page.text, 'html.parser') 
             meetings=soup.find_all('marker')
@@ -48,10 +50,11 @@ class Command(BaseCommand):
                 time = meeting.get('time')
                 title = meeting.get('title')
                 wheelchair = meeting.get('wheelchair')
+                intergroup = igs[id]
                 time = time.replace(".",":")
                 weekday_as_int = days[day]
                 new_meeting = Meeting.objects.get_or_create(address=address,code=code,day=day,hearing=hearing,lat=lat,\
-                day_number=weekday_as_int,lng=lng,postcode=postcode,time=time,title=title,wheelchair=wheelchair)
+                day_number=weekday_as_int,lng=lng,postcode=postcode,time=time,title=title,wheelchair=wheelchair,intergroup=intergroup)
 
         day_numbers = [0,1,2,3,4,5,6,7]
         for number in day_numbers:
@@ -61,4 +64,7 @@ class Command(BaseCommand):
                 print(meeting)
                 meeting.day_rank = 1
                 meeting.save()
+
+
+
 

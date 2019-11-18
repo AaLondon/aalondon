@@ -18,7 +18,7 @@ class MeetingSearch extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     
     
-    this.state = { totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, value: '' };
+    this.state = { totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, day: '',intergroup : '' };
   }
 
  
@@ -34,11 +34,23 @@ class MeetingSearch extends Component {
         const currentMeetings = response.data.results;
         const totalPages = response.data.count / 10;
         
-        this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages, day : '' });
+        this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages});
       });
   }
 
+  getQueryString()
+  {
+    let intergroup=this.state.intergroup;
+    let day = this.state.day;
+
+    
+    return `/api/meetingsearch/?intergroup=${intergroup}&day=${day}`;
+  }
+
+ 
   onPageChanged = data => {
+    console.log('B'); 
+
     const { currentPage, totalPages, } = data;
     const day = this.state.day;
     let querystring = `/api/meetingsearch?page=${currentPage}&day=${day}`
@@ -71,19 +83,18 @@ class MeetingSearch extends Component {
   }
 
   onDayChange = data =>{
-    const currentPage = 1;
-    this.setState({day: data});
-    
-    let queryString;
-    if (data === ''){
-      queryString= `/api/meetingsearch?twentyfour=1`
-    }
-    else
+    let intergroup=this.state.intergroup;
+    let day;
+    if (data === 'All'){
+       day = '';
+    }else
     {
-      queryString= `/api/meetingsearch?ordering=time&day=${data}`
+      day = data
     }
-    
-
+    let currentPage = this.state.currentPage;
+    console.log('onDayCHange');
+    this.setState({day : day});
+    let queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${day}`;
     axios.get(queryString)
       .then(response => {
         const totalMeetings = response.data.count;
@@ -91,6 +102,33 @@ class MeetingSearch extends Component {
         const totalPages = response.data.count / 10;
         this.setState({ totalMeetings,currentMeetings,currentPage,totalPages });
       });
+  }
+
+  
+
+
+  
+  onIntergroupChange = data =>{
+    let day = this.state.day;
+    let intergroup;
+    if (intergroup === 'All Intergroups'){
+      intergroup = '';
+    }else
+    {
+      intergroup = data
+    }
+    let currentPage = this.state.currentPage;
+    console.log('C');
+    this.setState({intergroup : intergroup});
+    let queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${day}`;
+    axios.get(queryString)
+      .then(response => {
+        const totalMeetings = response.data.count;
+        const currentMeetings = response.data.results;
+        const totalPages = response.data.count / 10;
+        this.setState({ totalMeetings,currentMeetings,currentPage,totalPages });
+      });
+    
   }
   render() {
 
@@ -106,14 +144,15 @@ class MeetingSearch extends Component {
        
        <Container>
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
-          <Row><MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} day={this.state.day}/></Row>
+          <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
           <Row>
-            <Col xs={12} md={8}>
-              <Pagination totalRecords={totalMeetings} pageLimit={10} pageNeighbours={1} onPageChanged={this.onPageChanged} />
-            </Col>
-            <Col xs={12} md={12}>
+          <Col xs={12} md={12}>
               {'Meetings : ' + totalMeetings}
             </Col>
+            <Col xs={12} md={12}>
+              <Pagination totalRecords={totalMeetings} pageLimit={10} pageNeighbours={1} onPageChanged={this.onPageChanged} />
+            </Col>
+           
           </Row>
           {currentMeetings.map((meeting, i) => {
             // Return the element. Also pass key

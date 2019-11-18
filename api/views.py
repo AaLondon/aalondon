@@ -79,7 +79,7 @@ class MeetingSearch(generics.ListAPIView):
     model = Meeting
     serializer_class = MeetingSerializer
     filter_backends = [DjangoFilterBackend,filters.OrderingFilter, filters.SearchFilter]
-    filterset_fields = ['day']
+    filterset_fields = ['day','intergroup']
     ordering_fields = ['time']
         
 

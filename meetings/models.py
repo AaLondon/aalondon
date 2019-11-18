@@ -19,6 +19,7 @@ class Meeting(models.Model):
     day_number = models.IntegerField(null=False)
     slug = AutoSlugField(populate_from='title')
     day_rank = models.IntegerField(null=True)
+    intergroup = models.CharField(max_length=100,null=False)
 
     
 
