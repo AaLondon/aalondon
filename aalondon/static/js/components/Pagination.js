@@ -24,11 +24,11 @@ class Pagination extends Component {
 
   constructor(props) {
     super(props);
-    const { totalRecords = null, pageLimit = 30, pageNeighbours = 0 } = props;
-
+    const { totalRecords = null, pageLimit = 30, pageNeighbours = 0} = props;
+    
     this.pageLimit = typeof pageLimit === 'number' ? pageLimit : 30;
     this.totalRecords = typeof totalRecords === 'number' ? totalRecords : 0;
-
+    
     // pageNeighbours can be: 0, 1 or 2
     this.pageNeighbours = typeof pageNeighbours === 'number'
       ? Math.max(0, Math.min(pageNeighbours, 2))
@@ -36,7 +36,17 @@ class Pagination extends Component {
 
     this.totalPages = Math.ceil(this.totalRecords / this.pageLimit);
     
-    this.state = { currentPage: 1 };
+    this.state = { currentPage: 1,totalPages: null };
+    
+
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('pro000ps');
+    console.log(props);
+    state.totalPages =  Math.ceil(props.totalRecords / props.pageLimit);
+    console.log(state);
+    return state;
   }
 
   componentDidMount() {
@@ -48,7 +58,7 @@ class Pagination extends Component {
     const currentPage = Math.max(0, Math.min(page, this.totalPages));
     const paginationData = {
       currentPage,
-      totalPages: this.totalPages,
+      totalPages: this.state.totalPages,
       pageLimit: this.pageLimit,
       totalRecords: this.totalRecords
     };
@@ -83,8 +93,12 @@ class Pagination extends Component {
    * {...x} => represents page neighbours
    */
   fetchPageNumbers = () => {
+    console.log('this.totalpagfes');
+    console.log(this.totalPages);
+    console.log('this.state.totalpagfes');
+    console.log(this.state.totalPages);
 
-    const totalPages = this.totalPages;
+    const totalPages = this.state.totalPages;
     const currentPage = this.state.currentPage;
     const pageNeighbours = this.pageNeighbours;
 
@@ -143,12 +157,13 @@ class Pagination extends Component {
   }
 
   render() {
-
+    console.log('I am rendering');
     if (!this.totalRecords || this.totalPages === 1) return null;
 
     const { currentPage } = this.state;
     const pages = this.fetchPageNumbers();
-
+    console.log('I am rendering 2');
+    console.log(pages);
     return (
       <Fragment>
         <nav aria-label="Countries Pagination">

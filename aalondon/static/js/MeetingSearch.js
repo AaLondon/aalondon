@@ -16,6 +16,10 @@ class MeetingSearch extends Component {
   constructor(props) {
     super(props);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.onPageChanged = this.onPageChanged.bind(this);
+    this.onDayChange = this.onDayChange.bind(this);
+    this.onIntergroupChange = this.onIntergroupChange.bind(this);
+
     
     
     this.state = { totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, day: '',intergroup : '' };
@@ -28,7 +32,7 @@ class MeetingSearch extends Component {
     
     this.setState({ currentPage: currentPage });
 
-    axios.get(`/api/meetingsearch/?twentyfour=1`)
+    axios.get(`/api/meetingsearch/`)
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
@@ -56,14 +60,14 @@ class MeetingSearch extends Component {
     const intergroup = this.state.intergroup;
     let querystring = `/api/meetingsearch?page=${currentPage}&day=${day}&intergroup=${intergroup}`
     
-
-    
      
     axios.get(querystring)
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
         const totalPages = response.data.count / 10;
+        console.log('totalPages');
+        console.log(totalPages);
         this.setState({ totalMeetings,currentMeetings,currentPage,totalPages });
       });
   }
@@ -92,7 +96,7 @@ class MeetingSearch extends Component {
     {
       day = data
     }
-    let currentPage = this.state.currentPage;
+    let currentPage = 1;
     console.log('onDayCHange');
     this.setState({day : day});
     let queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${day}`;
@@ -134,7 +138,9 @@ class MeetingSearch extends Component {
   render() {
 
     const { totalMeetings, currentMeetings, currentPage, totalPages,day } = this.state;
-
+    console.log('tmeets');
+    console.log(totalMeetings);
+    
     if (totalMeetings === 0) return null;
 
   
@@ -151,7 +157,7 @@ class MeetingSearch extends Component {
               {'Meetings : ' + totalMeetings}
             </Col>
             <Col xs={12} md={12}>
-              <Pagination totalRecords={totalMeetings} pageLimit={10} pageNeighbours={1} onPageChanged={this.onPageChanged} />
+              <Pagination totalRecords={totalMeetings} pageLimit={10} pageNeighbours={1} onPageChanged={this.onPageChanged}  />
             </Col>
            
           </Row>

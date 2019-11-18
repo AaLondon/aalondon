@@ -43,7 +43,7 @@ class MeetingSearchForm extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <Row>  
          <Col>
-        <Dropdown >
+        <Dropdown focusFirstItemOnShow={true}>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             {this.props.day ? this.props.day : "All days"}
         </Dropdown.Toggle>
@@ -63,7 +63,7 @@ class MeetingSearchForm extends React.Component {
         </Dropdown>
         </Col> 
         <Col>
-        <Dropdown >
+        <Dropdown focusFirstItemOnShow={true}>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
           {this.props.intergroup ? this.props.intergroup : "All Intergroups"}
         </Dropdown.Toggle>
