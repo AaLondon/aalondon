@@ -21,6 +21,9 @@ body {
 
   margin-bottom: 5px;
 }
+.dropdown-menu{
+  transform: translate3d(5px, 35px, 0px)!important;
+}
 
 .published-on {
   padding-bottom: 20px !important;
