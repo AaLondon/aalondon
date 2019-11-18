@@ -53,7 +53,8 @@ class MeetingSearch extends Component {
 
     const { currentPage, totalPages, } = data;
     const day = this.state.day;
-    let querystring = `/api/meetingsearch?page=${currentPage}&day=${day}`
+    const intergroup = this.state.intergroup;
+    let querystring = `/api/meetingsearch?page=${currentPage}&day=${day}&intergroup=${intergroup}`
     
 
     
@@ -158,7 +159,7 @@ class MeetingSearch extends Component {
             // Return the element. Also pass key
             
             if (meeting.day_rank === 1 || i === 0) {
-              return (<Row key={i} ><Col><Row><Col>{meeting.day}</Col></Row><Row><Col><Meeting key={meeting.code} title={meeting.title} time={meeting.friendly_time} code={meeting.code} day={meeting.day} postcode={meeting.postcode_prefix} slug={meeting.slug} dayRank={meeting.day_rank} /></Col></Row></Col></Row>)
+              return (<Row key={i} ><Col><Row><Col><h2>{meeting.day}</h2></Col></Row><Row><Col><Meeting key={meeting.code} title={meeting.title} time={meeting.friendly_time} code={meeting.code} day={meeting.day} postcode={meeting.postcode_prefix} slug={meeting.slug} dayRank={meeting.day_rank} /></Col></Row></Col></Row>)
             }else {
               return (<Row key={i}><Col><Meeting key={meeting.code} title={meeting.title} time={meeting.friendly_time} code={meeting.code} day={meeting.day} postcode={meeting.postcode_prefix} slug={meeting.slug} dayRank={meeting.day_rank} /></Col></Row>)
             }

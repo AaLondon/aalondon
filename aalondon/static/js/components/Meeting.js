@@ -16,9 +16,10 @@ const Meeting = props => {
   return (
    
     <Row className="meeting-row">
+      <Col xs={3} md={3}>{props.time}</Col>
       <Col xs={5} md={6}><a href={'/meetings/' + props.slug}>{props.title}</a></Col>
       <Col xs={3} md={3}>{props.postcode}</Col>
-      <Col xs={3} md={3}>{props.time}</Col>
+      
     </Row>
   )
 }
