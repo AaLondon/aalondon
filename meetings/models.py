@@ -20,8 +20,7 @@ class Meeting(models.Model):
     slug = AutoSlugField(populate_from='title')
     day_rank = models.IntegerField(null=True)
     intergroup = models.CharField(max_length=100,null=False)
-
-    
+    detail = models.TextField(null=False)
 
     def __str__(self):
 
