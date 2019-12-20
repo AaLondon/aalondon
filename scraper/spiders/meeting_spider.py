@@ -9,12 +9,6 @@ from scraper.items import MeetingItem
 
 
 
-proxy= 'http://chriswedgwood:SerenityOlympic2@webproxy-dcb.onelondon.tfl.local:8080'
-
-os.environ['http_proxy'] = proxy
-os.environ['HTTP_PROXY'] = proxy
-os.environ['https_proxy'] = proxy
-os.environ['HTTPS_PROXY'] = proxy
 
 
 from scrapy import Spider
