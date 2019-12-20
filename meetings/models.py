@@ -16,11 +16,11 @@ class Meeting(models.Model):
     duration = models.TextField(max_length=20)
     title = models.TextField()
     wheelchair = models.BooleanField()
-    day_number = models.IntegerField(null=False)
+    day_number = models.IntegerField(null=True)
     slug = AutoSlugField(populate_from='title')
     day_rank = models.IntegerField(null=True)
-    intergroup = models.CharField(max_length=100,null=False)
-    detail = models.TextField(null=False)
+    intergroup = models.CharField(max_length=100,null=True)
+    detail = models.TextField(null=True)
 
     def __str__(self):
 
