@@ -62,7 +62,7 @@ class AASpider(scrapy.Spider):
 
 
             url = f'https://www.alcoholics-anonymous.org.uk/detail.do?id={marker_code}'
-            print(url)
+            
             yield Request(url=url,callback=self.get_meeting_detail,meta={'meeting_data':meeting_data})
 
     
