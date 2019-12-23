@@ -24,11 +24,7 @@ class AASpider(scrapy.Spider):
     name = 'aameetings'
     intergroup_urls = {x[0]:f'https://www.alcoholics-anonymous.org.uk/markers.do?ig={x[0]}'  for x  in intergroups.items()}
     member_ids = []
-    with open('aameetings.csv', 'w', newline='\n', encoding='utf-8') as f:
-            writer = csv.writer(f)
-            writer.writerow(["marker_title", "marker_time","marker_lat","marker_lng","marker_address","marker_postcode"\
-                ,"marker_code","marker_day","marker_hearing","marker_wheelchair","marker_url","detail_url","detail_line_one","detail_line_two","detail_line_three"\
-                    ,"detail_line_four","detail_line_five","detail_line_six","detail_line_seven","detail_line_eight","detail_line_nine"])
+    
 
     def start_requests(self):
         for intergroup_id,url in self.intergroup_urls.items():
@@ -58,8 +54,6 @@ class AASpider(scrapy.Spider):
             meeting_data = {'code':marker_code,'day':marker_day,'hearing':marker_hearing,'lat':marker_lat,'lng':marker_lng,'postcode':marker_postcode,'time':marker_time,\
                'duration':'','title':marker_title,'wheelchair':marker_wheelchair,'intergroup':''}     
           
-          
-
 
             url = f'https://www.alcoholics-anonymous.org.uk/detail.do?id={marker_code}'
             
