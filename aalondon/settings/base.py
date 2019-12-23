@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'scraper',
+    'event',
 
 
     'wagtail.contrib.forms',
