@@ -8,5 +8,6 @@ djangorestframework==3.10.3
 django-filter==2.2.0
 Scrapy==1.8.0
 scrapy-djangoitem==1.1.1
+pandas==0.25.3
 
 
