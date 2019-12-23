@@ -1,4 +1,5 @@
 {% load static wagtailuserbar %}
+{% load wagtailcore_tags %}
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -94,31 +95,11 @@
                             href="{% url 'meeting_search' %}" class="nav-link">Find a Meeting</a></li>
                     <li id="menu-item-4578"
                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-4578 nav-item dropdown">
-                        <a href="{% url 'meeting_search' %}" class="nav-link"
-                            >12 &amp; 12</a>
+                        <a href="/events" class="nav-link"
+                            >Events</a>
                         
                     </li>
-                    <li id="menu-item-4543"
-                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-4543 nav-item dropdown">
-                        <a href="https://aa-edinburgh.org.uk/professionals/" class="nav-link dropdown-toggle"
-                            data-toggle="dropdown">Information For Professionals</a>
-                        
-                    </li>
-                    <li id="menu-item-4564"
-                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-4564 nav-item dropdown">
-                        <a href="https://aa-edinburgh.org.uk/newcomers/" class="nav-link dropdown-toggle"
-                            data-toggle="dropdown">Newcomers to AA</a>
-                        
-                    </li>
-                    <li id="menu-item-4141"
-                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-4141 nav-item dropdown">
-                        <a href="https://aa-edinburgh.org.uk/newcomers/members-stories/"
-                            class="nav-link dropdown-toggle" data-toggle="dropdown">Members’ Stories</a>
-                        
-                    </li>
-                    <li id="menu-item-3536"
-                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3536 nav-item"><a
-                            href="https://aa-edinburgh.org.uk/contact-us/" class="nav-link">Contact Us</a></li>
+                    
                 </ul>
             </div>
         </nav>
