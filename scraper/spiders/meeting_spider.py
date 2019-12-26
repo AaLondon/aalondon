@@ -5,12 +5,6 @@ from bs4 import BeautifulSoup
 import re
 import csv
 from scraper.items import MeetingItem
-
-
-
-
-
-
 from scrapy import Spider
 from scrapy.http import FormRequest,Request
 from scrapy.utils.response import open_in_browser
@@ -76,6 +70,7 @@ class AASpider(scrapy.Spider):
         detail = "\n".join(lines[3:])
         meeting_data['detail'] = detail
         item = MeetingItem(meeting_data)
+        print('yuyuyu')
         yield item
         
 
