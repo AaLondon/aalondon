@@ -103,7 +103,7 @@ WSGI_APPLICATION = 'aalondon.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres:///aalondo'),
+    'default': env.db('DATABASE_URL', default='postgres:///aalondon'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
