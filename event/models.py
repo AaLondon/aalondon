@@ -125,7 +125,7 @@ def get_recurrant_dates(day_index,day,month_index,start_date,end_date):
             recurrant_dates.append(current)
         if day_index == 3 and current.day > 21 and current.day <=28:
             recurrant_dates.append(current)     
-        if day_index == 4 and current.month != following.month:
+        if day_index == -1 and current.month != following.month:
             recurrant_dates.append(current)         
 
     return recurrant_dates 
