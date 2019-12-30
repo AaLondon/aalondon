@@ -115,18 +115,19 @@ def daterange(start, end, step=datetime.timedelta(7)):
 
 def get_recurrant_dates(day_index,day,month_index,start_date,end_date):
     recurrant_dates = []
-
-    for previous,current,following in daterange(start_date,end_date): 
-        if day_index == 0 and current.month != previous.month and current.month == following.month:
-            recurrant_dates.append(current)
-        if day_index == 1 and current.day > 7 and current.day <=14:
-            recurrant_dates.append(current)
-        if day_index == 2 and current.day > 14 and current.day <=21:
-            recurrant_dates.append(current)
-        if day_index == 3 and current.day > 21 and current.day <=28:
-            recurrant_dates.append(current)     
-        if day_index == -1 and current.month != following.month:
-            recurrant_dates.append(current)         
+    
+    for previous,current,following in daterange(start_date,end_date):
+        if  (current.month - start_date.month) % (month_index + 1) == 0:
+            if day_index == 0 and current.month != previous.month and current.month == following.month:
+                recurrant_dates.append(current)
+            if day_index == 1 and current.day > 7 and current.day <=14:
+                recurrant_dates.append(current)
+            if day_index == 2 and current.day > 14 and current.day <=21:
+                recurrant_dates.append(current)
+            if day_index == 3 and current.day > 21 and current.day <=28:
+                recurrant_dates.append(current)     
+            if day_index == -1 and current.month != following.month:
+                recurrant_dates.append(current)         
 
     return recurrant_dates 
     
