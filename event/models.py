@@ -1,11 +1,8 @@
 from django.db import models
-
+from django.utils.text import slugify
 
 # Create your models here.
 from wagtail.core.signals import page_published
-
-
-
 from django.db import models
 
 from modelcluster.fields import ParentalKey
@@ -49,12 +46,14 @@ class RecurringEventParent(Page):
 
     body = RichTextField()
     date = models.DateField("Post date")
+    start_time = models.TimeField("Start Time")
+    end_time = models.TimeField("End Time")
     recurring = models.BooleanField(default=False)
     recurring_index = models.IntegerField(choices=RECURRING_INDEX_OPTIONS,null=True,blank=True)
     recurring_day = models.IntegerField(choices=RECURRING_DAY_OPTIONS,null=True,blank=True)
     recurring_month = models.IntegerField(choices=RECURRING_MONTH_OPTIONS,null=True,blank=True)
-    recurring_start_date = models.DateField(null=True,blank=True)
-    recurring_end_date = models.DateField(null=True,blank=True)
+    recurring_start_date = models.DateField(null=False,blank=False)
+    recurring_end_date = models.DateField(null=False,blank=False)
 
 
 
@@ -65,11 +64,12 @@ class RecurringEventParent(Page):
         FieldPanel('date'),
         FieldPanel('body', classname="full"),
         MultiFieldPanel(
-        [FieldPanel('recurring'),
+        [
         FieldPanel('recurring_index'),
         FieldPanel('recurring_day'),
         FieldPanel('recurring_month'),
-        FieldPanel('recurring_start_date')],
+        FieldPanel('recurring_start_date'),
+        FieldPanel('recurring_end_date')],
         heading="Recurrance Options",),
        #InlinePanel('override_dates', label='override dates'),
     ]
@@ -77,17 +77,29 @@ class RecurringEventParent(Page):
     subpage_types = ['RecurringEventChild',]
 
    
+class OneOffEvent(Page):
+    body = RichTextField()
+    date = models.DateField("Post date")
+
 
 class RecurringEventChild(Page):
     
-    child_date = models.DateField(blank=True,null=True) 
+    body = RichTextField()
+    date = models.DateField("Post date")
+    start_time = models.TimeField("Start Time")
+    end_time = models.TimeField("End Time")
+
 
     parent_page_type = [
         'events.RecurringEventChild'  
     ]
 
     content_panels = Page.content_panels + [
-        FieldPanel('child_date'),
+        FieldPanel('body', classname="full"),
+        FieldPanel('date'),
+        FieldPanel('start_time'),
+        FieldPanel('end_time'),
+        
     ]
 
 class EventIndexPage(Page):
@@ -98,13 +110,13 @@ class EventIndexPage(Page):
     ]
     def get_context(self, request):
         context = super().get_context(request)
-
+        events = []
         # Add extra variables and return the updated context
-        events=RecurringEventChild.objects.child_of(self).live()
-        events2=RecurringEventChild.objects.child_of(self).live()
-        
-        
-        context['event_entries'] = events.union(events2)
+        recurring_parents=RecurringEventParent.objects.child_of(self).live()
+        for parent in recurring_parents:
+            children = RecurringEventChild.objects.child_of(parent).live()    
+            events = children
+        context['event_entries'] = events
         return context
 
 def daterange(start, end, step=datetime.timedelta(7)):
@@ -113,7 +125,7 @@ def daterange(start, end, step=datetime.timedelta(7)):
         yield current_date - step,current_date,current_date + step
         current_date += step
 
-def get_recurrant_dates(day_index,day,month_index,start_date,end_date):
+def get_recurrant_dates(day_index,month_index,start_date,end_date):
     recurrant_dates = []
     
     for previous,current,following in daterange(start_date,end_date):
@@ -134,22 +146,47 @@ def get_recurrant_dates(day_index,day,month_index,start_date,end_date):
 
 
 # Do something clever for each model type
-def receiver(sender, **kwargs):
-    # Do something with blog posts
+def create_or_update_recurring_children(sender, **kwargs):
+   
+    new_slugs = []
+    now = datetime.datetime.now() 
     parent = kwargs['instance']
-    index = parent.recurring_index  
-    day_index = parent.recurring_day
+    day_index = parent.recurring_index  
     month_index = parent.recurring_month
     start_date = parent.recurring_start_date
     end_date = parent.recurring_end_date
-    recurrant_dates = get_recurrant_dates(index,day,month_index,start_date,end_date)
-    # event.save()
-    #recurring_event = RecurringEventChild(child_date='2019-12-28',title='City Intergroup Feb',slug='city-intergroup-feb')  
-    print('x')
-    #event.add_child(instance = recurring_event)
-    #event.save()
-   
+    recurrant_dates = get_recurrant_dates(day_index,month_index,start_date,end_date)
+    
+    for date in recurrant_dates:
+        
+        slug = slugify(f'{parent.slug}-{date}')
+        new_slugs.append(slug)
+        title = f'{parent.title} {date}'
+        start_time = parent.start_time
+        end_time = parent.start_time
+        body = parent.body
+       
+        #1. Create child if slug does not exist
+        if not(RecurringEventChild.objects.filter(slug=slug).exists()):
+            
+            child = RecurringEventChild(date=date,title=title,slug=slug,body=body,start_time=start_time,end_time=end_time)
+            parent.add_child(instance=child)
+
+    parent.save()             
+    #2. Go through all children - if slug does not match any of the provided dates delete it    
+    all_children = parent.get_children()
+    all_slugs = set([instance.slug for instance in all_children ])
+    new_slugs = set(new_slugs)
+    slugs_to_remove = RecurringEventChild.objects.filter(slug__in=all_slugs.difference(new_slugs))
+    slugs_to_remove.delete()
+
+    
+
+    
+
+
+    
     
 
 # Register listeners for each page model class
-page_published.connect(receiver, sender=RecurringEventParent)
+page_published.connect(create_or_update_recurring_children, sender=RecurringEventParent)
