@@ -14,6 +14,41 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 import datetime
 
+
+
+class SingleDayEvent(Page):
+    body = RichTextField()
+    date = models.DateField("Post date")
+    start_time = models.TimeField("Start Time")
+    end_time = models.TimeField("End Time")
+    address = models.TextField(blank=True,null=True)
+
+    content_panels = Page.content_panels + [
+    FieldPanel('date'),
+    FieldPanel('body', classname="full"),
+    FieldPanel('address'),
+    FieldPanel('start_time'),
+    FieldPanel('end_time'),
+    
+    ]
+
+class MultiDayEvent(Page):
+    body = RichTextField()
+    start_date = models.DateField("Post date")
+    end_date = models.TimeField("Start Time")
+    address = models.TextField(blank=True,null=True)
+   
+    content_panels = Page.content_panels + [
+    
+    FieldPanel('body', classname="full"),
+    FieldPanel('address'),
+    FieldPanel('start_date'),
+    FieldPanel('end_date'),
+    
+    ]
+
+
+
 class RecurringEventParent(Page):
 
     RECURRING_INDEX_OPTIONS = [
@@ -74,13 +109,9 @@ class RecurringEventParent(Page):
        #InlinePanel('override_dates', label='override dates'),
     ]
 
-    subpage_types = ['RecurringEventChild',]
+    subpage_types = ['event.RecurringEventParent','event.MultiDayEvent','event.SingleDayEvent']
 
    
-class OneOffEvent(Page):
-    body = RichTextField()
-    date = models.DateField("Post date")
-
 
 class RecurringEventChild(Page):
     
@@ -88,6 +119,7 @@ class RecurringEventChild(Page):
     date = models.DateField("Post date")
     start_time = models.TimeField("Start Time")
     end_time = models.TimeField("End Time")
+    address = models.TextField(blank=True,null=True)
 
 
     parent_page_type = [
@@ -97,6 +129,7 @@ class RecurringEventChild(Page):
     content_panels = Page.content_panels + [
         FieldPanel('body', classname="full"),
         FieldPanel('date'),
+        FieldPanel('address'),
         FieldPanel('start_time'),
         FieldPanel('end_time'),
         
@@ -118,6 +151,8 @@ class EventIndexPage(Page):
             events = children
         context['event_entries'] = events
         return context
+    
+    subpage_types = ['event.RecurringEventParent','event.MultiDayEvent','event.SingleDayEvent']
 
 def daterange(start, end, step=datetime.timedelta(7)):
     current_date = start
@@ -142,6 +177,7 @@ def get_recurrant_dates(day_index,month_index,start_date,end_date):
                 recurrant_dates.append(current)         
 
     return recurrant_dates 
+
     
 
 
