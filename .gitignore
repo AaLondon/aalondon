@@ -350,10 +350,12 @@ production/
 
 postcodes.txt
 
-.gitignore
+
 **/bundles/*
 
 db.sqlite3
 /static
 webpack-stats.json
 scraper/scraper/aameetings.csv
+
+/imports
