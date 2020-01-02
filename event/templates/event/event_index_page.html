@@ -9,10 +9,9 @@
 
     <div class="intro">{{ page.intro|richtext }}</div>
 
-    {% for event in page.get_children %}
+    {% for event in event_entries %}
         <h2><a href="{% pageurl event %}">{{ event.title }}</a></h2>
-        {{ event.specific.intro }}
-        {{ event.specific.body|richtext }}
+        
     {% endfor %}
 
 {% endblock %}

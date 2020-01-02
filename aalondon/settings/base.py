@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django_filters',
     'scraper',
     'event',
+    'postcodes',
 
 
     'wagtail.contrib.forms',
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'wagtail.contrib.modeladmin',
 ]
 
 MIDDLEWARE = [
@@ -103,7 +105,7 @@ WSGI_APPLICATION = 'aalondon.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres:///aalondo'),
+    'default': env.db('DATABASE_URL', default='postgres:///aalondon'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
