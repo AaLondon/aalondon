@@ -13,6 +13,7 @@ from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 import datetime
+from postcodes.models import Postcode
 
 
 
@@ -21,32 +22,44 @@ class SingleDayEvent(Page):
     date = models.DateField("Post date")
     start_time = models.TimeField("Start Time")
     end_time = models.TimeField("End Time")
-    address = models.TextField(blank=True,null=True)
+    address = models.TextField(blank=False,null=False)
+    postcode = models.CharField(max_length=10,blank=False,null=False)
+    longitude = models.FloatField(blank=True,null=True)
+    latitude = models.FloatField(blank=True,null=True)
+    
+
 
     content_panels = Page.content_panels + [
     FieldPanel('date'),
     FieldPanel('body', classname="full"),
     FieldPanel('address'),
+    FieldPanel('postcode'),
     FieldPanel('start_time'),
     FieldPanel('end_time'),
+
     
     ]
+    subpage_types = []
 
 class MultiDayEvent(Page):
     body = RichTextField()
     start_date = models.DateField("Post date")
     end_date = models.TimeField("Start Time")
-    address = models.TextField(blank=True,null=True)
+    address = models.TextField(blank=False,null=False)
+    postcode = models.CharField(max_length=10,blank=False,null=False)
+    longitude = models.FloatField(blank=True,null=True)
+    latitude = models.FloatField(blank=True,null=True)
    
     content_panels = Page.content_panels + [
     
     FieldPanel('body', classname="full"),
     FieldPanel('address'),
+    FieldPanel('postcode'),
     FieldPanel('start_date'),
     FieldPanel('end_date'),
     
     ]
-
+    subpage_types = []
 
 
 class RecurringEventParent(Page):
@@ -89,7 +102,10 @@ class RecurringEventParent(Page):
     recurring_month = models.IntegerField(choices=RECURRING_MONTH_OPTIONS,null=True,blank=True)
     recurring_start_date = models.DateField(null=False,blank=False)
     recurring_end_date = models.DateField(null=False,blank=False)
-
+    address = models.TextField(blank=False,null=False)
+    postcode = models.CharField(max_length=10,blank=False,null=False)
+    longitude = models.FloatField(blank=True,null=True)
+    latitude = models.FloatField(blank=True,null=True)
 
 
     
@@ -98,6 +114,8 @@ class RecurringEventParent(Page):
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         FieldPanel('body', classname="full"),
+        FieldPanel('address'),
+        FieldPanel('postcode'),
         MultiFieldPanel(
         [
         FieldPanel('recurring_index'),
@@ -106,10 +124,13 @@ class RecurringEventParent(Page):
         FieldPanel('recurring_start_date'),
         FieldPanel('recurring_end_date')],
         heading="Recurrance Options",),
+        FieldPanel('start_time'),
+        FieldPanel('end_time'),
+        
        #InlinePanel('override_dates', label='override dates'),
     ]
 
-    subpage_types = ['event.RecurringEventParent','event.MultiDayEvent','event.SingleDayEvent']
+    subpage_types = ['event.RecurringEventChild']
 
    
 
@@ -119,21 +140,27 @@ class RecurringEventChild(Page):
     date = models.DateField("Post date")
     start_time = models.TimeField("Start Time")
     end_time = models.TimeField("End Time")
-    address = models.TextField(blank=True,null=True)
-
+    address = models.TextField(blank=False,null=False)
+    postcode = models.CharField(max_length=10,blank=False,null=False)
+    longitude = models.FloatField(blank=True,null=True)
+    latitude = models.FloatField(blank=True,null=True)
+    class Meta:
+        ordering = ['date']
 
     parent_page_type = [
-        'events.RecurringEventChild'  
+        'event.RecurringEventParent',  
     ]
 
     content_panels = Page.content_panels + [
         FieldPanel('body', classname="full"),
         FieldPanel('date'),
         FieldPanel('address'),
+        FieldPanel('postcode'),
         FieldPanel('start_time'),
         FieldPanel('end_time'),
         
     ]
+    subpage_types = []
 
 class EventIndexPage(Page):
     intro = RichTextField(blank=True)
@@ -154,6 +181,9 @@ class EventIndexPage(Page):
     
     subpage_types = ['event.RecurringEventParent','event.MultiDayEvent','event.SingleDayEvent']
 
+
+
+### FUNCTIONS ####
 def daterange(start, end, step=datetime.timedelta(7)):
     current_date = start
     while current_date <= end:
@@ -192,6 +222,11 @@ def create_or_update_recurring_children(sender, **kwargs):
     start_date = parent.recurring_start_date
     end_date = parent.recurring_end_date
     recurrant_dates = get_recurrant_dates(day_index,month_index,start_date,end_date)
+    postcode_obj = Postcode.objects.filter(postcode=parent.postcode).first()
+    if postcode_obj:
+        obj.longitude = postcode_obj.longitude
+        obj.latitude = postcode_obj.latitude 
+    
     
     for date in recurrant_dates:
         
@@ -199,13 +234,15 @@ def create_or_update_recurring_children(sender, **kwargs):
         new_slugs.append(slug)
         title = f'{parent.title} {date}'
         start_time = parent.start_time
-        end_time = parent.start_time
+        end_time = parent.end_time
         body = parent.body
        
         #1. Create child if slug does not exist
         if not(RecurringEventChild.objects.filter(slug=slug).exists()):
             
-            child = RecurringEventChild(date=date,title=title,slug=slug,body=body,start_time=start_time,end_time=end_time)
+            child = RecurringEventChild(date=date,title=title,slug=slug,body=body,start_time=start_time,end_time=end_time,postcode=parent.postcode\
+                ,longitude=parent.longitude,latitude=parent.latitude\
+                    ,address=parent.address)
             parent.add_child(instance=child)
 
     parent.save()             
@@ -218,6 +255,15 @@ def create_or_update_recurring_children(sender, **kwargs):
 
     
 
+
+def add_longitude_latitude(sender,**kwargs):
+    obj = kwargs['instance']
+    postcode_obj = Postcode.objects.filter(postcode=obj.postcode).first()
+    if postcode_obj:
+        obj.longitude = postcode_obj.longitude
+        obj.latitude = postcode_obj.latitude     
+    obj.save()
+
     
 
 
@@ -226,3 +272,5 @@ def create_or_update_recurring_children(sender, **kwargs):
 
 # Register listeners for each page model class
 page_published.connect(create_or_update_recurring_children, sender=RecurringEventParent)
+page_published.connect(add_longitude_latitude, sender=SingleDayEvent)
+page_published.connect(add_longitude_latitude, sender=MultiDayEvent)

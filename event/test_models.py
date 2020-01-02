@@ -149,7 +149,9 @@ def test_creation_of_three_children():
                                     recurring_index = 0,\
                                     recurring_month = 0,
                                     start_time = datetime.datetime.now(),
-                                    end_time = datetime.datetime.now()    
+                                    end_time = datetime.datetime.now(),
+                                    address = '7 Portman Rd',
+                                    postcode = 'NW3 2LP'       
                                     ) 
     directory_page.add_child(instance=parent)  
     revision = parent.save_revision() 
@@ -171,9 +173,11 @@ def test_creation_publish_twice_six_children():
                                     recurring_start_date=datetime.date(2020, 1, 31),\
                                     recurring_end_date=datetime.date(2020, 7, 6),\
                                     recurring_index = 0,\
-                                    recurring_month = 0,
+                                    recurring_month = 0,\
                                     start_time = datetime.datetime.now(),
-                                    end_time = datetime.datetime.now()    
+                                    end_time = datetime.datetime.now(),
+                                    address = '7 Portman Rd',
+                                    postcode = 'NW3 2LP'    
                                     ) 
     directory_page.add_child(instance=parent)  
     revision = parent.save_revision() 
@@ -198,7 +202,9 @@ def test_creation_publish_with_new_dates_six_children():
                                     recurring_index = 0,\
                                     recurring_month = 0 ,
                                     start_time = datetime.datetime.now(),
-                                    end_time = datetime.datetime.now()
+                                    end_time = datetime.datetime.now(),
+                                    address = '7 Portman Rd',
+                                    postcode = 'NW3 2LP'   
 
                                     ) 
     directory_page.add_child(instance=parent)  
