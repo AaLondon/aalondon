@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django_filters',
     'scraper',
     'event',
+    'postcodes',
 
 
     'wagtail.contrib.forms',
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'wagtail.contrib.modeladmin',
 ]
 
 MIDDLEWARE = [
