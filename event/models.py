@@ -224,8 +224,8 @@ def create_or_update_recurring_children(sender, **kwargs):
     recurrant_dates = get_recurrant_dates(day_index,month_index,start_date,end_date)
     postcode_obj = Postcode.objects.filter(postcode=parent.postcode).first()
     if postcode_obj:
-        obj.longitude = postcode_obj.longitude
-        obj.latitude = postcode_obj.latitude 
+        parent.longitude = postcode_obj.longitude
+        parent.latitude = postcode_obj.latitude 
     
     
     for date in recurrant_dates:
