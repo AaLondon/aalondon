@@ -19,7 +19,8 @@ from postcodes.models import Postcode
 
 class SingleDayEvent(Page):
     body = RichTextField()
-    date = models.DateField("Post date")
+    post_date = models.DateField("Post Date")
+    start_date = models.DateField("Event Date")
     start_time = models.TimeField("Start Time")
     end_time = models.TimeField("End Time")
     address = models.TextField(blank=False,null=False)
@@ -30,7 +31,8 @@ class SingleDayEvent(Page):
 
 
     content_panels = Page.content_panels + [
-    FieldPanel('date'),
+    FieldPanel('post_date'),
+    FieldPanel('start_date'),
     FieldPanel('body', classname="full"),
     FieldPanel('address'),
     FieldPanel('postcode'),
@@ -43,8 +45,9 @@ class SingleDayEvent(Page):
 
 class MultiDayEvent(Page):
     body = RichTextField()
-    start_date = models.DateField("Post date")
-    end_date = models.TimeField("Start Time")
+    post_date = models.DateField("Post date")
+    start_date = models.DateField("Start Date")
+    end_date = models.DateField("End Date")
     address = models.TextField(blank=False,null=False)
     postcode = models.CharField(max_length=10,blank=False,null=False)
     longitude = models.FloatField(blank=True,null=True)
@@ -55,6 +58,7 @@ class MultiDayEvent(Page):
     FieldPanel('body', classname="full"),
     FieldPanel('address'),
     FieldPanel('postcode'),
+    FieldPanel('post_date'),
     FieldPanel('start_date'),
     FieldPanel('end_date'),
     
@@ -93,7 +97,7 @@ class RecurringEventParent(Page):
     # Database fields
 
     body = RichTextField()
-    date = models.DateField("Post date")
+    post_date = models.DateField("Post date")
     start_time = models.TimeField("Start Time")
     end_time = models.TimeField("End Time")
     recurring = models.BooleanField(default=False)
@@ -112,7 +116,8 @@ class RecurringEventParent(Page):
     # Editor panels configuration
 
     content_panels = Page.content_panels + [
-        FieldPanel('date'),
+        FieldPanel('post_date'),
+        
         FieldPanel('body', classname="full"),
         FieldPanel('address'),
         FieldPanel('postcode'),
@@ -137,7 +142,8 @@ class RecurringEventParent(Page):
 class RecurringEventChild(Page):
     
     body = RichTextField()
-    date = models.DateField("Post date")
+    post_date = models.DateField("Post date")
+    start_date = models.DateField("Start date")
     start_time = models.TimeField("Start Time")
     end_time = models.TimeField("End Time")
     address = models.TextField(blank=False,null=False)
@@ -145,7 +151,7 @@ class RecurringEventChild(Page):
     longitude = models.FloatField(blank=True,null=True)
     latitude = models.FloatField(blank=True,null=True)
     class Meta:
-        ordering = ['date']
+        ordering = ['start_date']
 
     parent_page_type = [
         'event.RecurringEventParent',  
@@ -153,7 +159,7 @@ class RecurringEventChild(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('body', classname="full"),
-        FieldPanel('date'),
+        FieldPanel('start_date'),
         FieldPanel('address'),
         FieldPanel('postcode'),
         FieldPanel('start_time'),
@@ -170,13 +176,20 @@ class EventIndexPage(Page):
     ]
     def get_context(self, request):
         context = super().get_context(request)
-        events = []
+        children = MultiDayEvent.objects.none()
         # Add extra variables and return the updated context
         recurring_parents=RecurringEventParent.objects.child_of(self).live()
         for parent in recurring_parents:
-            children = RecurringEventChild.objects.child_of(parent).live()    
-            events = children
-        context['event_entries'] = events
+            children = children | RecurringEventChild.objects.child_of(parent).live()    
+        
+        multis = list(MultiDayEvent.objects.all()) 
+        singles = list(SingleDayEvent.objects.all()) 
+        children = list(RecurringEventChild.objects.all())  
+
+        alls = singles + multis + children 
+        sorted_alls = sorted(alls, key=lambda event : event.start_date )   
+
+        context['event_entries'] = sorted_alls
         return context
     
     subpage_types = ['event.RecurringEventParent','event.MultiDayEvent','event.SingleDayEvent']
@@ -236,11 +249,12 @@ def create_or_update_recurring_children(sender, **kwargs):
         start_time = parent.start_time
         end_time = parent.end_time
         body = parent.body
+        post_date = parent.post_date
        
         #1. Create child if slug does not exist
         if not(RecurringEventChild.objects.filter(slug=slug).exists()):
             
-            child = RecurringEventChild(date=date,title=title,slug=slug,body=body,start_time=start_time,end_time=end_time,postcode=parent.postcode\
+            child = RecurringEventChild(start_date=date,post_date=post_date,title=title,slug=slug,body=body,start_time=start_time,end_time=end_time,postcode=parent.postcode\
                 ,longitude=parent.longitude,latitude=parent.latitude\
                     ,address=parent.address)
             parent.add_child(instance=child)

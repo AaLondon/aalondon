@@ -19,9 +19,10 @@ class Command(BaseCommand):
         
          
         # Import PostCodes 
-        bulk_mgr = BulkCreateManager(chunk_size=1000)
+        bulk_mgr = BulkCreateManager(chunk_size=10000)
         for index,row in df_postcodes.iterrows():
-            bulk_mgr.add(Postcode(postcode=row[0],longitude=row[1],latitude=row[2]))
+            bulk_mgr.add(Postcode(postcode=row[0],longitude=row[2],latitude=row[1]))
+            print(row[0])
         bulk_mgr.done()
         
         
