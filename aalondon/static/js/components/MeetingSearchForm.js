@@ -2,6 +2,7 @@ import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import Nav from 'react-bootstrap/Nav'
 
 class MeetingSearchForm extends React.Component {
   constructor(props) {
@@ -41,6 +42,15 @@ class MeetingSearchForm extends React.Component {
     return (
       
       <form onSubmit={this.handleSubmit}>
+        <Row><Nav variant="pills" defaultActiveKey="/home">
+  <Nav.Item>
+    <Nav.Link eventKey="link-1">Active</Nav.Link>
+  </Nav.Item>
+  <Nav.Item>
+    <Nav.Link eventKey="link-2">Option 2</Nav.Link>
+  </Nav.Item>
+
+</Nav></Row>
         <Row>  
          <Col>
         <Dropdown focusFirstItemOnShow={true}>
