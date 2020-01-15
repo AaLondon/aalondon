@@ -38,40 +38,25 @@ class MeetingSearchForm extends React.Component {
     let day = this.props.day;
     console.log('day');
     console.log(day);
-      
+
+    const weekDays = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+    let weekDayNav =  weekDays.map((value, index) => 
+    <Nav.Item key={index}>
+    <Nav.Link onSelect={this.handleDayChange} eventKey={index}>{value}</Nav.Link>
+  </Nav.Item>
+  )
+    console.log(weekDayNav);  
     return (
       
       <form onSubmit={this.handleSubmit}>
-        <Row><Nav variant="pills" defaultActiveKey="/home">
-  <Nav.Item>
-    <Nav.Link eventKey="link-1">Active</Nav.Link>
-  </Nav.Item>
-  <Nav.Item>
-    <Nav.Link eventKey="link-2">Option 2</Nav.Link>
-  </Nav.Item>
+        <Row>
+          
+          <Nav variant="pills" defaultActiveKey="0">
+          {weekDayNav}
+
 
 </Nav></Row>
         <Row>  
-         <Col>
-        <Dropdown focusFirstItemOnShow={true}>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-            {this.props.day ? this.props.day : "All days"}
-        </Dropdown.Toggle>
-
-          <Dropdown.Menu>
-            <Dropdown.Item onSelect={this.handleDayChange}>All days</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Monday</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Tuesday</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Wednesday</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Thursday</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Friday</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Saturday</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Sunday</Dropdown.Item>
-
-
-          </Dropdown.Menu>
-        </Dropdown>
-        </Col> 
         <Col>
         <Dropdown focusFirstItemOnShow={true}>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
