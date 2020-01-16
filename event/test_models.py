@@ -143,7 +143,7 @@ def test_creation_of_three_children():
     #create Parent Event
     directory_page = Page.objects.get(slug='home')
     parent = RecurringEventParent(title='parent',slug='parent',\
-                                    date=datetime.date.today(),body='xxx',\
+                                    post_date=datetime.date.today(),body='xxx',\
                                     recurring_start_date=datetime.date(2020, 1, 31),\
                                     recurring_end_date=datetime.date(2020, 7, 6),\
                                     recurring_index = 0,\
@@ -169,7 +169,7 @@ def test_creation_publish_twice_six_children():
     #create Parent Event
     directory_page = Page.objects.get(slug='home')
     parent = RecurringEventParent(title='parent',slug='parent',\
-                                    date=datetime.date.today(),body='xxx',\
+                                    post_date=datetime.date.today(),body='xxx',\
                                     recurring_start_date=datetime.date(2020, 1, 31),\
                                     recurring_end_date=datetime.date(2020, 7, 6),\
                                     recurring_index = 0,\
@@ -196,7 +196,7 @@ def test_creation_publish_with_new_dates_six_children():
     #create Parent Event
     directory_page = Page.objects.get(slug='home')
     parent = RecurringEventParent(title='parent',slug='parent',\
-                                    date=datetime.date.today(),body='xxx',\
+                                    post_date=datetime.date.today(),body='xxx',\
                                     recurring_start_date=datetime.date(2020, 1, 31),\
                                     recurring_end_date=datetime.date(2020, 7, 6),\
                                     recurring_index = 0,\
