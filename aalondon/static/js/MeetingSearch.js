@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import * as geolib from 'geolib';
 
 
 
@@ -28,6 +29,28 @@ class MeetingSearch extends Component {
  
 
   componentDidMount() {
+
+    /*  Geo play    */
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+          console.log("position.coords");       
+          console.log(position.coords);       
+          let lngA = position.coords.longitude;
+          let latA = position.coords.latitude;
+
+          console.log(
+              'You are ',
+              geolib.getDistance({latitude:latA,longitude:lngA}, {
+                  latitude: 51.525,
+                  longitude: 7.4575,
+              }),
+              'meters away from 51.525, 7.4575'
+          );
+      },
+      () => {
+          alert('Position could not be determined.');
+      }
+  );
     const currentPage = 1;
     
     this.setState({ currentPage: currentPage });
