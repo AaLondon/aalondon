@@ -39,7 +39,7 @@ class MeetingSearch extends Component {
           this.setState({clientLng:lng,clientLat:lat})
       },
       () => {
-          alert('Position could not be determined.');
+          console.log('Position could not be determined.');
       }
   );
     const currentPage = 1;
