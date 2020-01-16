@@ -24,7 +24,7 @@ class MeetingApp extends Component {
 
   componentDidMount() {
     const currentPage = 1;
-    console.log("this.componentDidMount MeetingApp");
+    
 
     //this.setState({ allMeetings, currentPage });
     axios.get(`/api/meetings2?twentyfour=1&page=${currentPage}`)
