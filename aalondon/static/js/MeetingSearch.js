@@ -23,7 +23,7 @@ class MeetingSearch extends Component {
 
     
     
-    this.state = { totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, day: null,intergroup : '',clientLng: null,clientLat: null  };
+    this.state = { totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, day: null,intergroup : '',clientLng: 0,clientLat: 0  };
   }
 
  
