@@ -50,36 +50,15 @@ class MeetingSearchForm extends React.Component {
       
       <form onSubmit={this.handleSubmit}>
         <Row>
+          <Col xs={12}>
+          <Row><Nav fill variant="pills" defaultActiveKey="0" >
+         {weekDayNav} 
           
-          <Nav variant="pills" defaultActiveKey="0">
-          {weekDayNav}
 
-
-</Nav></Row>
+</Nav></Row></Col></Row>
         <Row>  
         <Col>
-        <Dropdown focusFirstItemOnShow={true}>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {this.props.intergroup ? this.props.intergroup : "All Intergroups"}
-        </Dropdown.Toggle>
-
-          <Dropdown.Menu>
-          <Dropdown.Item key={0} onSelect={this.handleIntergroupChange}>{'All Intergroups'}</Dropdown.Item>
-          {Object.keys(igs).map((key, index) => ( 
-          <Dropdown.Item key={key} onSelect={this.handleIntergroupChange}>{igs[key]}</Dropdown.Item>
-         
-        ))}
-
-
-
-
-
-           
-           
-          
-
-          </Dropdown.Menu>
-        </Dropdown>
+       
         </Col> 
         </Row>  
       </form>

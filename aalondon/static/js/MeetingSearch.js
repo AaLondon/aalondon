@@ -177,29 +177,26 @@ class MeetingSearch extends Component {
        <Container>
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
           <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
-          <Row>
-          <Col xs={12} md={12}>
-              {'Meetings : ' + totalMeetings}
-            </Col>
-            <Col xs={12} md={12}>
-              <Pagination totalRecords={totalMeetings} pageLimit={10} pageNeighbours={1} onPageChanged={this.onPageChanged}  />
-            </Col>
-           
-          </Row>
+          
           {currentMeetings.map((meeting, i) => {
             // Return the element. Also pass key
             
-            if (meeting.day_rank === 1 || i === 0) {
-              return (<Row key={i} ><Col><Row><Col><h2>{meeting.day}</h2></Col></Row><Row><Col><Meeting key={meeting.code} title={meeting.title} time={meeting.friendly_time} code={meeting.code} day={meeting.day} postcode={meeting.postcode_prefix} slug={meeting.slug} dayRank={meeting.day_rank} /></Col></Row></Col></Row>)
-            }else {
+          //  if (meeting.day_rank === 1 || i === 0) {
+            //  return (<Row key={i} ><Col><Row><Col><h2>{meeting.day}</h2></Col></Row><Row><Col><Meeting key={meeting.code} title={meeting.title} time={meeting.friendly_time} code={meeting.code} day={meeting.day} postcode={meeting.postcode_prefix} slug={meeting.slug} dayRank={meeting.day_rank} /></Col></Row></Col></Row>)
+            //}else {
               return (<Row key={i}><Col><Meeting key={meeting.code} title={meeting.title} time={meeting.friendly_time} code={meeting.code} day={meeting.day} postcode={meeting.postcode_prefix} slug={meeting.slug} dayRank={meeting.day_rank} /></Col></Row>)
-            }
+            //}
           })}
           {/* Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop */}
           
 
           {/* Columns are always 50% wide, on mobile and desktop */}
-
+          <Row>
+              <Col xs={12} md={12}>
+              <Pagination totalRecords={totalMeetings} pageLimit={10} pageNeighbours={1} onPageChanged={this.onPageChanged}  />
+            </Col>
+           
+          </Row>
         </Container>
        
       </div>
