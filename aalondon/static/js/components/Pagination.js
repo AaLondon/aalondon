@@ -42,10 +42,10 @@ class Pagination extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    console.log('pro000ps');
-    console.log(props);
+
+
     state.totalPages =  Math.ceil(props.totalRecords / props.pageLimit);
-    console.log(state);
+
     return state;
   }
 
@@ -93,10 +93,7 @@ class Pagination extends Component {
    * {...x} => represents page neighbours
    */
   fetchPageNumbers = () => {
-    console.log('this.totalpagfes');
-    console.log(this.totalPages);
-    console.log('this.state.totalpagfes');
-    console.log(this.state.totalPages);
+  
 
     const totalPages = this.state.totalPages;
     const currentPage = this.state.currentPage;
@@ -157,13 +154,12 @@ class Pagination extends Component {
   }
 
   render() {
-    console.log('I am rendering');
+   
     if (!this.totalRecords || this.totalPages === 1) return null;
 
     const { currentPage } = this.state;
     const pages = this.fetchPageNumbers();
-    console.log('I am rendering 2');
-    console.log(pages);
+   
     return (
       <Fragment>
         <nav aria-label="Countries Pagination">

@@ -10,7 +10,7 @@ import Row from 'react-bootstrap/Row'
 
 
 const Meeting = props => {
-  const { code = null, title = null, time = null, day = null, slug = null, postcode = null, dayRank = null } = props.meeting || {};
+  const { code = null, title = null, time = null, day = null, slug = null, distance = null, dayRank = null } = props.meeting || {};
   let weekdayRow;
   weekdayRow = <Row>{props.day}</Row>
   return (
@@ -18,7 +18,7 @@ const Meeting = props => {
     <Row className="meeting-row">
       <Col xs={3} md={3}>{props.time}</Col>
       <Col xs={5} md={6}><a href={'/meetings/' + props.slug}>{props.title}</a></Col>
-      <Col xs={3} md={3}>{props.postcode}</Col>
+      <Col xs={3} md={3}>{props.distance}</Col>
       
     </Row>
   )

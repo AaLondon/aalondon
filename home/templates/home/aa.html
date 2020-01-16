@@ -22,91 +22,16 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hero-text">
                     <h5>ALCOHOLICS ANONYMOUS</h5>
                     <h2>London Region North</h2>
-
-                    <a href="{% slugurl 'chris-story' %}" class="btn btn-aa yellow btn-sm btn-lg home-btn">Latest News</a>
-                    <a href="#sidebar_meeting" class="btn btn-aa blue btn-sm home-btn">Find a meeting now</a>
-                    <a href="{% url 'meeting_search' %}" class="btn btn-aa green btn-sm home-btn">Detailed meeting search</a>
-                    <p class="helpline">Call our National Helpline for <span>FREE</span> on <span>0800 917 7650</span>
-                    </p>
+                    
                 </div>
             </div>
         </div>
     </section>
-    <div class="container-fluid no-gutter">
-        <section class="row ctas no-gutters">
-            <a href="{% url 'meeting_search' %}" class="col-lg-3 col-md-6 col-sm-6 col-xs-12 cta">
-                <div class="bgi newcomers">
-                    <h6>
-                        Problems with drinking? </h6>
-
-                </div>
-                <div class="icon">
-                    <img src="{% static 'images/cta-arrow.png' %}" scale="0"> </div>
-            </a>
-            <a href="{% url 'meeting_search' %}" class="col-lg-3 col-md-6 col-sm-6 col-xs-12 cta">
-                <div class="bgi meetings">
-                    <h6>
-                        Find A Meeting </h6>
-
-                </div>
-                <div class="icon">
-                    <img src="{% static 'images/cta-arrow.png' %}" scale="0"> </div>
-            </a>
-            <a href="{% url 'meeting_search' %}" class="col-lg-3 col-md-6 col-sm-6 col-xs-12 cta">
-                <div class="bgi professionals">
-                    <h6>
-                        Information For Professionals </h6>
-
-                </div>
-                <div class="icon">
-                    <img src="{% static 'images/cta-arrow.png' %}" scale="0"> </div>
-            </a>
-            <a href="{% url 'meeting_search' %}"
-                class="col-lg-3 col-md-6 col-sm-6 col-xs-12 cta">
-                <div class="bgi a-message-for-young-people">
-                    <h6>
-                        Young people in recovery </h6>
-
-                </div>
-                <div class="icon">
-                    <img src="{% static 'images/cta-arrow.png' %}" scale="0"> </div>
-            </a>
-        </section>
-    </div>
+   
     <section class="container-fluid">
-        <div class="row section-area">
-
-
-            <div class="col intro-text">
-                <h2 class="article-title" id="post-3542">AA London Region North</h2>
-                <p>People come to AA through many different means… chose the path that best suits you.</p>
-                <p>If you want to speak to someone in your area who has found a solution to the problems they had as a
-                    result of their drinking you can call our helpline on <strong>0800 917 7650</strong> to be put in
-                    touch with someone locally. All calls are free for both landline and mobile.</p>
-                <p>Click here for our <a
-                        href="{% url 'meeting_search' %}">Meeting Finder</a>.</p>
-
-                <a href="{% url 'meeting_search' %}" class="btn btn-aa orange btn-lg">Get Help Now</a>
-            </div>
-            <div class="col meeting-finder-24h-container">
-                <div class="meeting-finder-24h">
-                    <h2>AA Meetings in the next 24 hours</h2>
-                    <p class="meeting-information">Click blue venue links for venue details and map. We strive for
-                        complete accuracy, but rely on individual groups to provide accurate information.</p>
-                    <div class="meeting-finder-24h-inner">
-       
-                        <div id="sidebar_meeting" class="reactap"></div>
-                   
-                    <div class="form-row text-center">
-                        <div class="col-12">
-                            <a href="{% url 'meeting_search' %}"
-                                class="btn btn-aa-ghost transparent btn-lg">See All Meetings
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
+        <div class="row"><div id="meeting_search"></div></div>
+        
     </section>
 
     
@@ -127,13 +52,13 @@
   
   
   
-  window.react_mount = document.getElementById('sidebar_meeting');
+  window.react_mount = document.getElementById('meeting_search');
  
   
 </script>
 
 {% block extra_js %}
-             {% render_bundle 'meeting' %}
+             {% render_bundle 'meetingsearch' %}
 
         {% endblock %}
  

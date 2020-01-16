@@ -2,6 +2,7 @@ import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import Nav from 'react-bootstrap/Nav'
 
 class MeetingSearchForm extends React.Component {
   constructor(props) {
@@ -35,56 +36,28 @@ class MeetingSearchForm extends React.Component {
         63:"London North West",62:"London South Middlesex",119:"London West End",120:"London Westway",75:"London Croydon Epsom & Sutton",55:"London North Kent",
         122:"London South East (East)",121:"London South East (West)",77:"London South",42:"London South West"} ;
     let day = this.props.day;
-    console.log('day');
-    console.log(day);
-      
+   
+
+    const weekDays = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+    let weekDayNav =  weekDays.map((value, index) => 
+    <Nav.Item key={index}>
+    <Nav.Link onSelect={this.handleDayChange} eventKey={index}>{value}</Nav.Link>
+  </Nav.Item>
+  )
+    
     return (
       
       <form onSubmit={this.handleSubmit}>
-        <Row>  
-         <Col>
-        <Dropdown focusFirstItemOnShow={true}>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-            {this.props.day ? this.props.day : "All days"}
-        </Dropdown.Toggle>
-
-          <Dropdown.Menu>
-            <Dropdown.Item onSelect={this.handleDayChange}>All days</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Monday</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Tuesday</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Wednesday</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Thursday</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Friday</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Saturday</Dropdown.Item>
-            <Dropdown.Item onSelect={this.handleDayChange}>Sunday</Dropdown.Item>
-
-
-          </Dropdown.Menu>
-        </Dropdown>
-        </Col> 
-        <Col>
-        <Dropdown focusFirstItemOnShow={true}>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {this.props.intergroup ? this.props.intergroup : "All Intergroups"}
-        </Dropdown.Toggle>
-
-          <Dropdown.Menu>
-          <Dropdown.Item key={0} onSelect={this.handleIntergroupChange}>{'All Intergroups'}</Dropdown.Item>
-          {Object.keys(igs).map((key, index) => ( 
-          <Dropdown.Item key={key} onSelect={this.handleIntergroupChange}>{igs[key]}</Dropdown.Item>
-         
-        ))}
-
-
-
-
-
-           
-           
+        <Row>
+          <Col xs={12}>
+          <Row><Nav fill variant="pills" defaultActiveKey="0" >
+         {weekDayNav} 
           
 
-          </Dropdown.Menu>
-        </Dropdown>
+</Nav></Row></Col></Row>
+        <Row>  
+        <Col>
+       
         </Col> 
         </Row>  
       </form>
