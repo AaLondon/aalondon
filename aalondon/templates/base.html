@@ -1,6 +1,6 @@
 {% load static wagtailuserbar %}
 {% load wagtailcore_tags %}
-
+{% load render_bundle from webpack_loader %}
 <!DOCTYPE html>
 <html class="no-js" lang="en">
     <head>
@@ -19,37 +19,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/aalondon.css' %}">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Alcoholics Anonymous London Region North | Official AA Website for London Region North</title>
-                
-        <link rel="stylesheet" href="{% static 'css/stg6sru.css'%}">
-        <link rel="shortcut icon" href="https://aa-edinburgh.org.uk/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="https://aa-edinburgh.org.uk/favicon.ico" type="image/x-icon">
         
-        <link rel="stylesheet" id="wp-block-library-css" href="{% static 'css/style.min.css' %}" type="text/css" media="all">
-        <link rel="stylesheet" id="contact-form-7-css" href="{% static 'css/styles.css' %}" type="text/css" media="all">
+        <link rel="stylesheet" href="{% static 'css/main.css' %}" />
         <link rel="stylesheet" id="bootstrap-css" href="{% static 'css/bootstrap.css' %}" type="text/css" media="all">
-        <link rel="stylesheet" id="theme-style-css" href="{% static 'css/style.css' %}" type="text/css" media="all">
-        <link rel="stylesheet" id="slb_core-css" href="{% static 'css/app.css' %}" type="text/css" media="all">
-        <link rel="stylesheet" id="jquery-lazyloadxt-spinner-css-css" href="{% static 'css/jquery.lazyloadxt.spinner.css' %}" type="text/css" media="all">
-        <link rel="stylesheet" id="timed-content-css-css" href="{% static 'css/timed-content.css' %}" type="text/css" media="all">
-        
-        <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/timed-content.js' %}"></script>
-        
-        <style type="text/css">img#wpstats{display:none}</style>
-
-        <link rel="stylesheet" type="text/css" id="gravatar-card-css" href="{% static 'css/hovercard.min.css' %}"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="{% static 'css/services.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/stg6sru.css' %}">
-
-
         <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
         <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
-
+        
+       
         {% block extra_css %}
             {# Override this in templates to add extra stylesheets #}
         {% endblock %}
@@ -57,83 +33,156 @@
 
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
-        <header class="container-fluid site-header">
-        <div class="row color-bar">
-            <div class="col block blue">
-            </div>
+        <div id="wrapper">
+			
 
-            <div class="col block orange">
-            </div>
 
-            <div class="col block yellow">
-            </div>
+ 
 
-            <div class="col block green">
-            </div>
-        </div>
-
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="phone-icon" href="tel:0800 917 7650">
-                <img src="{% static 'images/phone-icon.png' %}" scale="0"> </a>
-            <a class="navbar-brand" href="/">
-                <img src="{% static 'images/aa_logo.png' %}" id="Logo" scale="0">
-            </a>
-
-            <p class="header-helpline">Call our National Helpline for <span>FREE</span> on <span>0800 917 7650</span>
-            </p>
-            <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
-                class="navbar-toggler" data-target="#navbarNav" data-toggle="collapse" type="button"><span
-                    class="navbar-toggler-icon"></span></button>
-
-            <div id="navbarNav" class="collapse navbar-collapse justify-content-end">
-                <ul id="menu-top" class="navbar-nav">
-                    <li id="menu-item-3537"
-                        class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-3537 nav-item active">
-                        <a href="/" class="nav-link active">Home</a></li>
-                    <li id="menu-item-4517"
-                        class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4517 nav-item"><a
-                            href="{% url 'meeting_search' %}" class="nav-link">Find a Meeting</a></li>
-                    <li id="menu-item-4578"
-                        class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-4578 nav-item dropdown">
-                        <a href="/events" class="nav-link"
-                            >Events</a>
-                        
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Intergroups
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/City-Of-London-Intergroup" target="_blank">City of London</a>
-                          <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-Chelsea-Intergroup" target="_blank">Chelsea</a>
-                          <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/East-London-Intergroup" target="_blank">East London</a>
-                          <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-Kensington-&-Fulham-Intergroup" target="_blank">Kensington &-Fulham</a>
-                          <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-North-East-Intergroup" target="_blank">North East</a>
-                          <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-North-Intergroup" target="_blank">North</a>
-                          <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-North-Middlesex-Intergroup" target="_blank">North Middlesex</a>
-                          <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-North-West-Intergroup" target="_blank">North West</a>
-                          <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-South-Middlesex-Intergroup" target="_blank">South Middlesex</a>
-                          <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-West-End-Intergroup" target="_blank">West End</a>
-                          <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-Westway-Intergroup" target="_blank">Westway</a>
-                           
-                        </div>
-                      </li>
+            <!-- Header -->
+                <header id="header">
+                    <h1><a href="/">AA</a></h1>
+                    <nav class="links">
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/meetingsearch">Find a Meeting</a></li>
+                            <li><a href="/events">Events</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Intergroups
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/City-Of-London-Intergroup" target="_blank">City of London</a>
+                                  <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-Chelsea-Intergroup" target="_blank">Chelsea</a>
+                                  <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/East-London-Intergroup" target="_blank">East London</a>
+                                  <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-Kensington-&-Fulham-Intergroup" target="_blank">Kensington &-Fulham</a>
+                                  <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-North-East-Intergroup" target="_blank">North East</a>
+                                  <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-North-Intergroup" target="_blank">North</a>
+                                  <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-North-Middlesex-Intergroup" target="_blank">North Middlesex</a>
+                                  <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-North-West-Intergroup" target="_blank">North West</a>
+                                  <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-South-Middlesex-Intergroup" target="_blank">South Middlesex</a>
+                                  <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-West-End-Intergroup" target="_blank">West End</a>
+                                  <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-Westway-Intergroup" target="_blank">Westway</a>
+                                   
+                                </div>
+                              </li>
+                            
+                            <li><a href="#">Service</a></li>
+                                </ul>
+                    </nav>
                     
-                </ul>
-            </div>
-        </nav>
-    </header>
-        {% block content %}{% endblock %}
+                </header>
+
+            <!-- Menu -->
+                <section id="menu">
+
+                    <!-- Search -->
+                        <section>
+                            <form class="search" method="get" action="#">
+                                <input type="text" name="query" placeholder="Search" />
+                            </form>
+                        </section>
+
+                    <!-- Links -->
+                        <section>
+                            <ul class="links">
+                                <li>
+                                    <a href="#">
+                                        <h3>Lorem ipsum</h3>
+                                        <p>Feugiat tempus veroeros dolor</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <h3>Dolor sit amet</h3>
+                                        <p>Sed vitae justo condimentum</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <h3>Feugiat veroeros</h3>
+                                        <p>Phasellus sed ultricies mi congue</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <h3>Etiam sed consequat</h3>
+                                        <p>Porta lectus amet ultricies</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </section>
+
+                    <!-- Actions -->
+                        <section>
+                            <ul class="actions stacked">
+                                <li><a href="#" class="button large fit">Log In</a></li>
+                            </ul>
+                        </section>
+
+                </section>
+
+            <!-- Main -->
+                <section id="main">
+
+                    <!-- Post -->
+                        <article class="post">
+                            <header>
+                                <div class="title">
+                                    <h2><a href="single.html">Meetings</a></h2>
+                                    </div>
+                                
+                            </header>
+                            
+                            {% block content %}{% endblock %}
+                        </article>
+
+                    
+
+
+                    
+
+                </section>
+
+            <!-- Sidebar -->
+                <section id="sidebar">
+
+                    <!-- Intro -->
+                        <section id="intro">
+                            <a href="#" class="logo"><img src="{% static 'images/logo.jpg' %}" alt="" /></a>
+                            
+                            <header>
+                                <h2>Alcoholics Anonymous</h2>
+                                <p>London Region North</a></p>
+                            </header>
+                        </section>
+
+                    
+                        
+                    
+                    
+                
+                        
+
+                </section>
+
+        </div>
+       
 
         {# Global javascript #}
-        <script type="text/javascript" src="{% static 'js/dom-ready.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/photon.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/devicepx-jetpack.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/gprofiles.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/eu-cookie-law.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/aalondon.js' %}"></script>
+        
+       
+               
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="{% static 'js/browser.min.js' %}"></script>
+        <script src="{% static 'js/breakpoints.min.js' %}"></script>
+        <script src="{% static 'js/util.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+
+	
+        
 
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
