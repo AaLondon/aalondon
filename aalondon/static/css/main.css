@@ -2156,7 +2156,7 @@ input, select, textarea {
 		margin-right: -2em;
 		opacity: 0;
 		width: 1em;
-		z-index: -1;
+
 	}
 
 		input[type="checkbox"] + label,
@@ -3126,10 +3126,10 @@ input, select, textarea {
 		height: 3.5em;
 		left: 0;
 		line-height: 3.5em;
-		position: fixed;
+		position: absolute;
 		top: 0;
 		width: 100%;
-	/*	z-index: 10000;*/
+		
 	}
 
 		#header a {
@@ -3168,7 +3168,6 @@ input, select, textarea {
 			height: inherit;
 			line-height: inherit;
 			margin-left: 1.5em;
-			overflow: hidden;
 			padding-left: 1.5em;
 		}
 
@@ -3533,7 +3532,6 @@ input, select, textarea {
 		top: 0;
 		visibility: hidden;
 		width: 25em;
-		z-index: 10002;
 	}
 
 		#menu > * {

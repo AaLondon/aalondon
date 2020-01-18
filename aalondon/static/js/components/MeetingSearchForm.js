@@ -38,7 +38,7 @@ class MeetingSearchForm extends React.Component {
     let day = this.props.day;
    
 
-    const weekDays = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+    const weekDays = ["Now","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
     let weekDayNav =  weekDays.map((value, index) => 
     <Nav.Item key={index}>
     <Nav.Link onSelect={this.handleDayChange} eventKey={index}>{value}</Nav.Link>
