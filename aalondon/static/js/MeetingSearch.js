@@ -37,6 +37,8 @@ class MeetingSearch extends Component {
           let lng = position.coords.longitude;
           let lat = position.coords.latitude;
           this.setState({clientLng:lng,clientLat:lat})
+          console.log(lng);
+          console.log(lat);
       },
       () => {
           console.log('Position could not be determined.');
