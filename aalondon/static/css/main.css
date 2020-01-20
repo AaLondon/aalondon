@@ -168,7 +168,7 @@ input, select, textarea {
 		-webkit-transition: color 0.2s ease, border-bottom-color 0.2s ease;
 		-ms-transition: color 0.2s ease, border-bottom-color 0.2s ease;
 		transition: color 0.2s ease, border-bottom-color 0.2s ease;
-		border-bottom: dotted 1px rgba(160, 160, 160, 0.65);
+		
 		color: inherit;
 		text-decoration: none;
 	}
@@ -3607,3 +3607,16 @@ input, select, textarea {
 			}
 
 		}
+
+
+
+
+
+		.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+			color: #2ebaae ;
+			background-color: #ffffff; 
+			
+		}
+
+
+		
