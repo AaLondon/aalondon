@@ -49,7 +49,7 @@ class MeetingSearch extends Component {
     
     let day =  new Date().toLocaleString('en-us', {  weekday: 'long' });
     this.setState({ currentPage: currentPage,day:day });
-    axios.get(`/api/meetingsearch/?day=${day}`)
+    axios.get(`/api/meetingsearch/?day=${day}&now=1`)
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
@@ -113,9 +113,15 @@ class MeetingSearch extends Component {
       day = data
     }
     let currentPage = 1;
+    let now = 0;
+    if (day == 'Now'){
+      day =  new Date().toLocaleString('en-us', {  weekday: 'long' });
+      now=1;
+    }
 
     this.setState({day : day});
-    let queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${day}`;
+    let queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${day}&now=${now}`;
+    console.log(queryString);
     axios.get(queryString)
       .then(response => {
         const totalMeetings = response.data.count;
@@ -168,7 +174,7 @@ class MeetingSearch extends Component {
           {/* Columns are always 50% wide, on mobile and desktop */}
           <Row>
               <Col xs={12} md={12}>
-              <Pagination totalRecords={totalMeetings} pageLimit={10} pageNeighbours={1} onPageChanged={this.onPageChanged}  />
+             
             </Col>
            
           </Row>

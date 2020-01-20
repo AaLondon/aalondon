@@ -91,8 +91,8 @@ class MeetingSearch(generics.ListAPIView):
       
         
         queryset = Meeting.objects.all()
-        twentyfour = self.request.query_params.get('twentyfour',None)
-        if twentyfour == '1':
+        now = self.request.query_params.get('now',None)
+        if now == '1':
             
             now = datetime.now() 
             date_today = now.date()
@@ -106,7 +106,7 @@ class MeetingSearch(generics.ListAPIView):
             meetings_tomorrow = Meeting.objects.filter((Q(day=day_name_tomorrow) & Q(time__lte=now.time())))#.order_by('time')
             rank_by_day = Window(expression=Rank(),partition_by=F("day"),order_by=F("time").asc())
 
-            all = meetings_today | meetings_tomorrow
+            all = meetings_today #| meetings_tomorrow
             if day_name_today == 'sunday':
                 all_ordered = all.order_by('-day_number','time')
             else:
