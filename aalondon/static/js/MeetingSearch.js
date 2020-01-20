@@ -10,7 +10,8 @@ import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import * as geolib from 'geolib';
-
+import Table from 'react-bootstrap/Table';
+import MeetingTableData from './components/MeetingDataTable';
 
 
 class MeetingSearch extends Component {
@@ -19,6 +20,7 @@ class MeetingSearch extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onPageChanged = this.onPageChanged.bind(this);
     this.onDayChange = this.onDayChange.bind(this);
+    
     
 
     
@@ -49,7 +51,8 @@ class MeetingSearch extends Component {
     
     let day =  new Date().toLocaleString('en-us', {  weekday: 'long' });
     this.setState({ currentPage: currentPage,day:day });
-    axios.get(`/api/meetingsearch/?day=${day}&now=1`)
+    console.log(`/api/meetingsearch/?day=${day}&now=1`);
+    axios.get(`/api/meetingsearch/?day=${day}&now=0`)
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
@@ -129,9 +132,9 @@ class MeetingSearch extends Component {
         const totalPages = response.data.count / 10;
         this.setState({ totalMeetings,currentMeetings,currentPage,totalPages });
       });
-  }
+      
 
-  
+  }
 
 
   
@@ -143,7 +146,9 @@ class MeetingSearch extends Component {
     
     if (totalMeetings === 0) return null;
 
-  
+    console.log(currentMeetings);
+    let firstCode=currentMeetings[0].code;
+
 
     return (
 
@@ -152,32 +157,8 @@ class MeetingSearch extends Component {
        <Container>
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
           <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
-          
-          {currentMeetings.map((meeting, i) => {
-            // Return the element. Also pass key
-            
-          //  if (meeting.day_rank === 1 || i === 0) {
-            //  return (<Row key={i} ><Col><Row><Col><h2>{meeting.day}</h2></Col></Row><Row><Col><Meeting key={meeting.code} title={meeting.title} time={meeting.friendly_time} code={meeting.code} day={meeting.day} postcode={meeting.postcode_prefix} slug={meeting.slug} dayRank={meeting.day_rank} /></Col></Row></Col></Row>)
-            //}else {
-             let distance =  geolib.getDistance({latitude:meeting.lat,longitude:meeting.lng}, {latitude: this.state.clientLat,longitude: this.state.clientLng})*0.000621371192
-           
-             
-             let distance_rounded = Math.round(distance*10)/10;
-           
-
-              return (<Row key={i}><Col><Meeting key={meeting.code} title={meeting.title} time={meeting.friendly_time} code={meeting.code} day={meeting.day} distance={distance_rounded} slug={meeting.slug} dayRank={meeting.day_rank} /></Col></Row>)
-            //}
-          })}
-          {/* Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop */}
-          
-
-          {/* Columns are always 50% wide, on mobile and desktop */}
-          <Row>
-              <Col xs={12} md={12}>
-             
-            </Col>
-           
-          </Row>
+         <MeetingTableData key={firstCode} currentMeetings={this.state.currentMeetings} />
+    
         </Container>
        
       </div>

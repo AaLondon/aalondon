@@ -15,12 +15,12 @@ const Meeting = props => {
   weekdayRow = <Row>{props.day}</Row>
   return (
    
-    <Row className="meeting-row">
-      <Col xs={3} md={3}>{props.time}</Col>
-      <Col xs={5} md={6}><a href={'/meetings/' + props.slug}>{props.title}</a></Col>
-      <Col xs={3} md={3}>{props.distance}</Col>
+    <tr className="meeting-row">
+      <td xs={3} md={3}>{props.time}</td>
+      <td xs={5} md={6}><a href={'/meetings/' + props.slug}>{props.title}</a></td>
+      <td xs={3} md={3}>{props.distance}</td>
       
-    </Row>
+    </tr>
   )
 }
 
