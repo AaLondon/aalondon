@@ -70,7 +70,19 @@
                                 </div>
                               </li>
                             
-                            <li><a href="#">Service</a></li>
+                            <li class="nav-ite dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Service
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    {% for page in servicepages %}
+                                  
+                                    
+                                  <a class="dropdown-item" href="{{ page.url}}" >{{page.title}}</a>
+                                  {% endfor %}
+                                </div>
+
+                              </li>
                                 </ul>
                     </nav>
           
