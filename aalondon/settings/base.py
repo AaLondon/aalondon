@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'scraper',
     'event',
     'postcodes',
+    'service',
 
 
     'wagtail.contrib.forms',
