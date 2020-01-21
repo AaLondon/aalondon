@@ -14,7 +14,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 import datetime
 from postcodes.models import Postcode
-
+from service.models import ServicePage
 
 
 class SingleDayEvent(Page):
@@ -190,6 +190,7 @@ class EventIndexPage(Page):
         sorted_alls = sorted(alls, key=lambda event : event.start_date )   
 
         context['event_entries'] = sorted_alls
+        context['servicepages'] = ServicePage.objects.all()
         return context
     
     subpage_types = ['event.RecurringEventParent','event.MultiDayEvent','event.SingleDayEvent']
