@@ -15,6 +15,8 @@ from wagtail.search import index
 import datetime
 from postcodes.models import Postcode
 from service.models import ServicePage
+from django.utils import dateformat
+import datetime
 
 
 class SingleDayEvent(Page):
@@ -246,19 +248,24 @@ def create_or_update_recurring_children(sender, **kwargs):
         
         slug = slugify(f'{parent.slug}-{date}')
         new_slugs.append(slug)
-        title = f'{parent.title} {date}'
+        date_output  = datetime.datetime.strftime(date, "%B %d, %Y")
+        title = f'{parent.title} {date_output}'
         start_time = parent.start_time
         end_time = parent.end_time
         body = parent.body
         post_date = parent.post_date
        
         #1. Create child if slug does not exist
-        if not(RecurringEventChild.objects.filter(slug=slug).exists()):
+        child = RecurringEventChild.objects.filter(slug=slug)
+        if not(child):
             
             child = RecurringEventChild(start_date=date,post_date=post_date,title=title,slug=slug,body=body,start_time=start_time,end_time=end_time,postcode=parent.postcode\
                 ,longitude=parent.longitude,latitude=parent.latitude\
                     ,address=parent.address)
             parent.add_child(instance=child)
+        else:
+            child[0].title = title
+            child[0].save()
 
     parent.save()             
     #2. Go through all children - if slug does not match any of the provided dates delete it    
