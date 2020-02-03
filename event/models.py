@@ -192,7 +192,7 @@ class EventIndexPage(Page):
         sorted_alls = sorted(alls, key=lambda event : event.start_date )   
 
         context['event_entries'] = sorted_alls
-        context['servicepages'] = ServicePage.objects.all()
+        
         return context
     
     subpage_types = ['event.RecurringEventParent','event.MultiDayEvent','event.SingleDayEvent']
