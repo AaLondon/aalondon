@@ -8,7 +8,7 @@ from scraper.items import MeetingItem
 from scrapy import Spider
 from scrapy.http import FormRequest,Request
 from scrapy.utils.response import open_in_browser
- 
+
 
 intergroups = {117:"City Of London",36:"East London",123:"Chelsea",124:"Chelsea & Fulham",118:"London North East",51:"London North",64:"London North Middlesex",
     63:"London North West",62:"London South Middlesex",119:"London West End",120:"London Westway",75:"London Croydon Epsom & Sutton",55:"London North Kent",
@@ -29,9 +29,15 @@ class AASpider(scrapy.Spider):
         soup = BeautifulSoup(response.text, 'html.parser') 
         meetings=soup.find_all('marker')
         for meeting in meetings:
-            marker_title = meeting.get('title')
+      
             marker_address = meeting.get('address')
             marker_code = meeting.get('code')
+
+            if marker_code == '13286':
+                marker_title = "Hampstead FARSI speaking به جلسه فارسی زبانان  لندن خوش آمدید."
+            else:
+                marker_title = meeting.get('title')
+       
             marker_day = meeting.get('day')
             hearing = meeting.get('hearing')
             marker_lat = meeting.get('lat') or None
