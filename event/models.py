@@ -177,6 +177,7 @@ class EventIndexPage(Page):
         FieldPanel('intro', classname="full")
     ]
     def get_context(self, request):
+        today = datetime.datetime.today()
         context = super().get_context(request)
         children = MultiDayEvent.objects.none()
         # Add extra variables and return the updated context
@@ -184,9 +185,9 @@ class EventIndexPage(Page):
         for parent in recurring_parents:
             children = children | RecurringEventChild.objects.child_of(parent).live()    
         
-        multis = list(MultiDayEvent.objects.all()) 
-        singles = list(SingleDayEvent.objects.all()) 
-        children = list(RecurringEventChild.objects.all())  
+        multis = list(MultiDayEvent.objects.filter(end_date__gte=today)) 
+        singles = list(SingleDayEvent.objects.filter(start_date__gte=today)) 
+        children = list(RecurringEventChild.objects.filter(start_date__gte=today))  
 
         alls = singles + multis + children 
         sorted_alls = sorted(alls, key=lambda event : event.start_date )   
