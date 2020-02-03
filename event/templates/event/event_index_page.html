@@ -10,7 +10,10 @@
     <div class="intro">{{ page.intro|richtext }}</div>
 
     {% for event in event_entries %}
-        <h2><a href="{% pageurl event %}">{{ event.title }}</a></h2>
+        {% ifchanged event.start_date|date:"F" %}
+         <h1>  {{  event.start_date|date:"F" }} {{  event.start_date|date:"Y" }}</h1> 
+        {% endifchanged %}
+        <h5><a href="{% pageurl event %}">{{ event.title }}</a></h5>
         
     {% endfor %}
 
