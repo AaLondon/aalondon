@@ -17,7 +17,7 @@ class Meeting(models.Model):
     title = models.TextField()
     wheelchair = models.BooleanField()
     day_number = models.IntegerField(null=True)
-    slug = AutoSlugField(populate_from='title')
+    slug = AutoSlugField(populate_from=['title','day','postcode'])
     day_rank = models.IntegerField(null=True)
     intergroup = models.CharField(max_length=100,null=True)
     detail = models.TextField(null=True)
