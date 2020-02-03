@@ -5,7 +5,16 @@
 {% block body_class %}template-eventindexpage{% endblock %}
 
 {% block content %}
-    <h1>{{ page.title }}</h1>
+<!-- Post -->
+<article class="post">
+    <header>
+        <div class="title">
+            <h2><a>Events</a></h2>
+            </div>
+        
+    </header>
+
+ 
 
     <div class="intro">{{ page.intro|richtext }}</div>
 
@@ -16,5 +25,5 @@
         <h5><a href="{% pageurl event %}">{{ event.title }}</a></h5>
         
     {% endfor %}
-
+</article>
 {% endblock %}

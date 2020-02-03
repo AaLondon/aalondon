@@ -32,7 +32,7 @@ class HomePage(Page):
         context['meetings_tomorrow'] = meetings_tomorrow 
         context['day_name_tomorrow'] = day_name_tomorrow
         context['day_name_today'] = day_name_today
-        context['servicepages'] = ServicePage.objects.all()
+        
         
         
 
