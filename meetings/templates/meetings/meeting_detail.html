@@ -2,6 +2,15 @@
 {% load render_bundle from webpack_loader %}
 
 {% block content %}
+<!-- Post -->
+<article class="post">
+  <header>
+      <div class="title">
+          <h2><a>Meetings</a></h2>
+          </div>
+      
+  </header>
+
     <h1>{{object.title}} Details</h1>
     <div class="container">
     
@@ -30,7 +39,7 @@ var marker = new mapboxgl.Marker()
   .addTo(map);
 </script>
     </div>
-
+</article>
 
 {% endblock %}
 

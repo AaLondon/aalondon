@@ -4,13 +4,47 @@
 {% block body_class %}template-evebtpage{% endblock %}
 
 {% block content %}
-    <h1>{{ page.title }}</h1>
-    <p class="meta">{{ page.start_date }}</p>
+ <!-- Post -->
+<article class="post">
+  <header>
+      <div class="title">
+          <h2><a>Events</a></h2>
+          </div>
+      
+  </header>
+<h1>{{page.title}}</h1>
+    <div class="container">
+  
+    
+    <div class="row"><div class="col-md-6" id='map' style='width: 400px; height: 300px;'></div>
+    <div class="col-md-6" style="padding-left: 29px;" ><div class="row"></div>
+    <div class="row"><div><b>Start Time:</b> {{page.start_time}}</div></div>
+    <div class="row"><div><b>End Time:</b> {{page.end_time}}</div></div>
+    <div class="row"><div><b>Details:</b></div></div>
+    <div class="row"><div>{{page.body|richtext}}</div></div>
+    <div class="row"><a href="https://citymapper.com/directions?endcoord={{object.lat}}%2C{{object.lng}}&endname={{object.title}}" target="_blank"><img src="https://static.citymapper.com/img/embed/GetMeThere_Citymapper.png" alt="Get directions with Citymapper" /></a></div>
+    </div></div>
 
-    <div class="intro">{{ page.intro }}</div>
 
-    {{ page.body|richtext }}
+</div></article>
+<script>
+var lat = {{ page.latitude }};
+var lng = {{page.longitude}};
+console.log(lat);
+console.log(lng);
 
-    <p><a href="{{ page.get_parent.url }}">Return to events</a></p>
 
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3ZWRnd29vZCIsImEiOiJjazJ3M2xyOGkwYXppM29xbGlreGxtZWk1In0.wB4JKWEScmQogF0I9aSNoA';
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center:[lng,lat],
+zoom: 14
+});
+
+var marker = new mapboxgl.Marker()
+  .setLngLat([lng, lat])
+  .addTo(map);
+</script>
 {% endblock %}
