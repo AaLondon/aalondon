@@ -52,7 +52,7 @@ class MeetingSearch extends Component {
     let day =  new Date().toLocaleString('en-us', {  weekday: 'long' });
     this.setState({ currentPage: currentPage,day:day });
     console.log(`/api/meetingsearch/?day=${day}&now=1`);
-    axios.get(`/api/meetingsearch/?day=${day}&now=0`)
+    axios.get(`/api/meetingsearch/?day=${day}&now=1`)
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
@@ -144,7 +144,20 @@ class MeetingSearch extends Component {
     const { totalMeetings, currentMeetings, currentPage, totalPages,day } = this.state;
    
     
-    if (totalMeetings === 0) return null;
+    if (totalMeetings === 0) return (
+
+      <div>
+       
+       <Container>
+          {/* Stack the columns on mobile by making one full-width and the other half-width */}
+          <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
+          <div>NO MEETINGS FOR THE REST OF THE DAY PLEASE CHECK TOMORROW</div>
+    
+        </Container>
+       
+      </div>
+
+    );
 
     console.log(currentMeetings);
     let firstCode=currentMeetings[0].code;
