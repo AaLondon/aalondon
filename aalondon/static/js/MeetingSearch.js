@@ -22,9 +22,6 @@ class MeetingSearch extends Component {
     this.onDayChange = this.onDayChange.bind(this);
     
     
-
-    
-    
     this.state = { totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, day: null,intergroup : '',clientLng: 0,clientLat: 0  };
   }
 
@@ -51,8 +48,9 @@ class MeetingSearch extends Component {
     
     let day =  new Date().toLocaleString('en-us', {  weekday: 'long' });
     this.setState({ currentPage: currentPage,day:day });
-    console.log(`/api/meetingsearch/?day=${day}&now=1`);
-    axios.get(`/api/meetingsearch/?day=${day}&now=1`)
+
+    console.log(`/api/meetingsearch/?day=${day}&now=1&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`);
+    axios.get(`/api/meetingsearch/?day=${day}&now=0&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`)
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
@@ -123,7 +121,7 @@ class MeetingSearch extends Component {
     }
 
     this.setState({day : day});
-    let queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${day}&now=${now}`;
+    let queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${day}&now=${now}&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`;
     console.log(queryString);
     axios.get(queryString)
       .then(response => {
@@ -140,10 +138,11 @@ class MeetingSearch extends Component {
   
   
   render() {
-
+    console.log("render");
     const { totalMeetings, currentMeetings, currentPage, totalPages,day } = this.state;
    
     
+
     if (totalMeetings === 0) return (
 
       <div>
@@ -159,7 +158,8 @@ class MeetingSearch extends Component {
 
     );
 
-    console.log(currentMeetings);
+
+    
     let firstCode=currentMeetings[0].code;
 
 
@@ -170,7 +170,7 @@ class MeetingSearch extends Component {
        <Container>
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
           <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
-         <MeetingTableData key={firstCode} currentMeetings={this.state.currentMeetings} />
+         <MeetingTableData key={firstCode} currentMeetings={this.state.currentMeetings}  />
     
         </Container>
        
