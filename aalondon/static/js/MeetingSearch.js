@@ -52,7 +52,7 @@ class MeetingSearch extends Component {
     let day =  new Date().toLocaleString('en-us', {  weekday: 'long' });
     this.setState({ currentPage: currentPage,day:day });
     console.log(`/api/meetingsearch/?day=${day}&now=1`);
-    axios.get(`/api/meetingsearch/?day=${day}&now=0`)
+    axios.get(`/api/meetingsearch/?day=${day}&now=1`)
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
