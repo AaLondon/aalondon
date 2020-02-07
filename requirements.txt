@@ -13,3 +13,4 @@ psycopg2-binary==2.7.7
 git+https://github.com/chriswedgwood/django-storages.git
 boto3==1.9.215
 
+geopy==1.21.0

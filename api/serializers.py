@@ -1,15 +1,17 @@
 from meetings.models import Meeting
 from rest_framework import serializers
 from datetime import datetime,timedelta
-
+from geopy.distance import geodesic     
 
 class MeetingSerializer(serializers.ModelSerializer):
     actual_datetime = serializers.SerializerMethodField()
     friendly_time = serializers.SerializerMethodField()
     postcode_prefix = serializers.SerializerMethodField()
+    distance_from_client = serializers.SerializerMethodField()
     class Meta:
         model = Meeting
-        fields = ['code','title','time','address','day','actual_datetime','postcode','slug','lat','lng','day_rank','friendly_time','postcode_prefix','day_number','intergroup']
+        fields = ['code','title','time','address','day','actual_datetime','postcode','slug','lat','lng',
+                    'day_rank','friendly_time','postcode_prefix','day_number','intergroup','distance_from_client']
 
 
     def get_actual_datetime(self, obj):
@@ -35,6 +37,14 @@ class MeetingSerializer(serializers.ModelSerializer):
     
     def get_postcode_prefix(self,obj):
         return obj.postcode.split(' ')[0]
+
+    def get_distance_from_client(self,obj):
+        qp = self.context['request'].query_params
+        origin = (qp.get('clientLat',0),qp.get('clientLng',0))
+        destination = (obj.lat,obj.lng)
+        print(origin)
+
+        return  round(geodesic(origin, destination).miles,2)
 
 
     

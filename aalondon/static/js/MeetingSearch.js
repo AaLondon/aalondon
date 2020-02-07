@@ -20,147 +20,167 @@ class MeetingSearch extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onPageChanged = this.onPageChanged.bind(this);
     this.onDayChange = this.onDayChange.bind(this);
-    
-    
-
-    
-    
-    this.state = { totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, day: null,intergroup : '',clientLng: 0,clientLat: 0  };
-  }
-
  
 
+
+    this.state = { totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, day: null, intergroup: '', clientLng: -0.3099624, clientLat: 51.4561304 };
+  }
+
+  sleep(ms) {
+    console.log('sleeping');
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   componentDidMount() {
+    
     console.log('componentDidMount');
-    
+    this.sleep(10000);
+    console.log('componentDidMount');
     /*  Geo    */
-    navigator.geolocation.getCurrentPosition(position =>
-     {
-          let lng = position.coords.longitude;
-          let lat = position.coords.latitude;
-          this.setState({clientLng:lng,clientLat:lat})
-          console.log(lng);
-          console.log(lat);
-      },
+    navigator.geolocation.getCurrentPosition(position => {
+      let lng = position.coords.longitude;
+      let lat = position.coords.latitude;
+      this.setState({ clientLng: lng, clientLat: lat })
+      console.log("lng");
+      
+      console.log(lng);
+      console.log(lat);
+    },
       () => {
-          console.log('Position could not be determined.');
+        console.log('Position could not be determined.');
       }
-  );
+    );
     const currentPage = 1;
-    
-    
-    let day =  new Date().toLocaleString('en-us', {  weekday: 'long' });
-    this.setState({ currentPage: currentPage,day:day });
-    console.log(`/api/meetingsearch/?day=${day}&now=1`);
-    axios.get(`/api/meetingsearch/?day=${day}&now=1`)
+
+
+
+    let day = new Date().toLocaleString('en-us', { weekday: 'long' });
+    this.setState({ currentPage: currentPage, day: day });
+
+    console.log(`/api/meetingsearch/?day=${day}&now=1&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`);
+    axios.get(`/api/meetingsearch/?day=${day}&now=1&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`)
+
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
         const totalPages = response.data.count / 10;
-        
-        this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages});
+
+        this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages });
       });
   }
 
-  getQueryString()
-  {
-    let intergroup=this.state.intergroup;
+  getQueryString() {
+    let intergroup = this.state.intergroup;
     let day = this.state.day;
 
-    
+
     return `/api/meetingsearch/?intergroup=${intergroup}&day=${day}`;
   }
 
- 
+
   onPageChanged = data => {
     console.log('onPageChanged');
-    
+
 
     const { currentPage, totalPages, } = data;
     const day = this.state.day;
     const intergroup = this.state.intergroup;
     let querystring = `/api/meetingsearch?page=${currentPage}&day=${day}`
-    
-     
+
+
     axios.get(querystring)
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
         const totalPages = response.data.count / 10;
-        this.setState({ totalMeetings,currentMeetings,currentPage,totalPages });
+        this.setState({ totalMeetings, currentMeetings, currentPage, totalPages });
       });
   }
 
-  handleInputChange = data =>{
+  handleInputChange = data => {
 
     axios.get(`/api/meetingsearch?ordering=day&search=${data}`)
-    .then(response => {
-      const totalMeetings = response.data.count;
-      const currentMeetings = response.data.results;
-      const totalPages = response.data.count / 10;
-      this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages,value: data });
-    });
-    
+      .then(response => {
+        const totalMeetings = response.data.count;
+        const currentMeetings = response.data.results;
+        const totalPages = response.data.count / 10;
+        this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages, value: data });
+      });
+
 
 
   }
 
-  onDayChange = data =>{
+  onDayChange = data => {
     console.log('onDayCHange');
-    let intergroup=this.state.intergroup;
+    let intergroup = this.state.intergroup;
     let day;
-    if (data === 'All days'){
-       day = '';
-    }else
-    {
+    if (data === 'All days') {
+      day = '';
+    } else {
       day = data
     }
     let currentPage = 1;
     let now = 0;
-    if (day == 'Now'){
-      day =  new Date().toLocaleString('en-us', {  weekday: 'long' });
-      now=1;
+    if (day == 'Now') {
+      day = new Date().toLocaleString('en-us', { weekday: 'long' });
+      now = 1;
     }
 
-    this.setState({day : day});
-    let queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${day}&now=${now}`;
+    this.setState({ day: day });
+    let queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${day}&now=${now}&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`;
     console.log(queryString);
     axios.get(queryString)
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
         const totalPages = response.data.count / 10;
-        this.setState({ totalMeetings,currentMeetings,currentPage,totalPages });
+        this.setState({ totalMeetings, currentMeetings, currentPage, totalPages });
       });
-      
+
 
   }
 
 
-  
-  
+
+
   render() {
+    console.log("render");
+    const { totalMeetings, currentMeetings, currentPage, totalPages, day } = this.state;
+    console.log(totalMeetings);
 
-    const { totalMeetings, currentMeetings, currentPage, totalPages,day } = this.state;
-   
-    
-    if (totalMeetings === 0) return null;
 
-    console.log(currentMeetings);
-    let firstCode=currentMeetings[0].code;
+    if (totalMeetings === 0) return (
+
+      <div>
+
+        <Container>
+          {/* Stack the columns on mobile by making one full-width and the other half-width */}
+          <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
+          <div>NO MEETINGS FOR THE REST OF THE DAY PLEASE CHECK TOMORROW</div>
+
+        </Container>
+
+      </div>
+
+    );
+
+
+
+    let firstCode = currentMeetings[0].code;
 
 
     return (
 
       <div>
-       
-       <Container>
+
+        <Container>
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
           <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
-         <MeetingTableData key={firstCode} currentMeetings={this.state.currentMeetings} />
-    
+          <MeetingTableData key={firstCode} currentMeetings={this.state.currentMeetings} />
+
         </Container>
-       
+
       </div>
 
 
