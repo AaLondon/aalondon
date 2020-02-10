@@ -41,32 +41,31 @@ class MeetingSearch extends Component {
       let lng = position.coords.longitude;
       let lat = position.coords.latitude;
       this.setState({ clientLng: lng, clientLat: lat })
-      console.log("lng");
+      const currentPage = 1;
+
+
+
+      let day = new Date().toLocaleString('en-us', { weekday: 'long' });
+      this.setState({ currentPage: currentPage, day: day });
+  
+      console.log(`/api/meetingsearch/?day=${day}&now=1&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`);
+      axios.get(`/api/meetingsearch/?day=${day}&now=1&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`)
+  
+        .then(response => {
+          const totalMeetings = response.data.count;
+          const currentMeetings = response.data.results;
+          const totalPages = response.data.count / 10;
+  
+          this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages,showSpinner: 0  });
+        });
       
-      console.log(lng);
-      console.log(lat);
     },
       () => {
+        //TODO WHEN GEO CANT BE FOUNG
         console.log('Position could not be determined.');
       }
     );
-    const currentPage = 1;
-
-
-
-    let day = new Date().toLocaleString('en-us', { weekday: 'long' });
-    this.setState({ currentPage: currentPage, day: day });
-
-    console.log(`/api/meetingsearch/?day=${day}&now=1&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`);
-    axios.get(`/api/meetingsearch/?day=${day}&now=1&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`)
-
-      .then(response => {
-        const totalMeetings = response.data.count;
-        const currentMeetings = response.data.results;
-        const totalPages = response.data.count / 10;
-
-        this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages });
-      });
+   
   }
   componentDidUpdate(){
     console.log("componentDidUpdate")
