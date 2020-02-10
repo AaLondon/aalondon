@@ -198,7 +198,7 @@ class MeetingSearch extends Component {
        
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
           <MeetingSearchForm value={this.state.day} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
-          <MeetingTableData key={firstCode} currentMeetings={this.state.currentMeetings} />
+          <MeetingTableData key={firstCode} currentMeetings={this.state.currentMeetings} clientLat={this.state.clientLat} />
 
         </Container>
 
