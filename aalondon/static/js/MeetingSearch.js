@@ -114,6 +114,7 @@ class MeetingSearch extends Component {
   }
 
   onDayChange = data => {
+    this.setState({showSpinner: 1})
     console.log('onDayCHange');
     let intergroup = this.state.intergroup;
     let day;
@@ -137,7 +138,8 @@ class MeetingSearch extends Component {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
         const totalPages = response.data.count / 10;
-        this.setState({ totalMeetings, currentMeetings, currentPage, totalPages });
+      
+        this.setState({ totalMeetings, currentMeetings, currentPage, totalPages ,showSpinner: 0});
       });
 
 
@@ -150,6 +152,7 @@ class MeetingSearch extends Component {
     console.log("render");
     const { totalMeetings, currentMeetings, currentPage, totalPages, day,showSpinner } = this.state;
     console.log(totalMeetings);
+    console.log(showSpinner);
 
     if (showSpinner === 1 )
      return( <Container>
