@@ -29,49 +29,50 @@ class MeetingSearch extends Component {
      };
   }
 
-  sleep(ms) {
-    console.log('sleeping');
-    return new Promise(resolve => setTimeout(resolve, ms));
+  
+
+  getPosition() {
+    // Simple wrapper
+    return new Promise((res, rej) => {
+        navigator.geolocation.getCurrentPosition(res, rej);
+    });
   }
+
 
   componentDidMount() {
     
-
-    /*  Geo    */
-    navigator.geolocation.getCurrentPosition(position => {
-      let lng = position.coords.longitude;
-      let lat = position.coords.latitude;
-      this.setState({ clientLng: lng, clientLat: lat })
-      const currentPage = 1;
-
-
-
-      let day = new Date().toLocaleString('en-us', { weekday: 'long' });
-      this.setState({ currentPage: currentPage});
-  
-  //    console.log(`/api/meetingsearch/?day=${day}&now=1&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`);
-      axios.get(`/api/meetingsearch/?day=${day}&now=1&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`)
-  
-        .then(response => {
-          const totalMeetings = response.data.count;
-          const currentMeetings = response.data.results;
-          const totalPages = response.data.count / 10;
-  
-          this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages,showSpinner: 0  });
-        });
+    let day = new Date().toLocaleString('en-us', { weekday: 'long' });
+    
+    let queryString = 
+    this.getPosition().then((position) => {
+      // successMessage is whatever we passed in the resolve(...) function above.
+      // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
+      //
+      let lat = position.coords['latitude']
+      let lng = position.coords['latitude']
+      return `/api/meetingsearch/?day=${day}&now=1&clientLat=${lat}&clientLng=${lng}` 
       
-    },
-      () => {
-        //TODO WHEN GEO CANT BE FOUNG
-        console.log('Position could not be determined.');
-      }
-    );
-   
-  }
-  componentDidUpdate(){
- //   console.log("componentDidUpdate")
+    });
 
-  }
+    
+    console.log('xxx');
+    console.log(queryString);
+    console.log('xxx');
+    
+    this.setState({ currentPage: 1});
+
+   console.log(queryString);
+    axios.get(queryString)
+
+      .then(response => {
+        const totalMeetings = response.data.count;
+        const currentMeetings = response.data.results;
+        const totalPages = response.data.count / 10;
+
+        this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages,showSpinner: 0  });
+      });
+    }
+  
   getQueryString() {
     let intergroup = this.state.intergroup;
     let day = this.state.day;
