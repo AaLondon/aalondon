@@ -78,7 +78,7 @@ export default class MeetingDataTable extends Component {
           {_.map(data, ({ code,friendly_time,title, distance_from_client,slug }) => (
             <Table.Row key={code}>
               <Table.Cell>{friendly_time}</Table.Cell>
-              <Table.Cell><a href={'/meetings/' + slug}>{title}</a></Table.Cell>
+              <Table.Cell><a href={'/meetings/' + slug+'/#meetingmap'}>{title}</a></Table.Cell>
               <Table.Cell>{distance_from_client}</Table.Cell>
             </Table.Row>
           ))}
