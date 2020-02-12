@@ -63,7 +63,7 @@ class MeetingSearch extends Component {
       () => {
         //TODO WHEN GEO CANT BE FOUNG
         console.log("B");
-
+        this.setState({showPostcode:1})
         return `/api/meetingsearch/?day=${day}&now=1`
 
       }
@@ -157,6 +157,7 @@ class MeetingSearch extends Component {
     let queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${query_day}&now=${now}`;
     if(this.state.clientLat){
       queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${query_day}&now=${now}&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`;
+      this.setState({showPostcode:0})
     }
     axios.get(queryString)
       .then(response => {
@@ -220,7 +221,7 @@ class MeetingSearch extends Component {
 
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
           <MeetingSearchForm value={this.state.day} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
-          <MeetingTableData key={firstCode} currentMeetings={this.state.currentMeetings} clientLat={this.state.clientLat} />
+          <MeetingTableData showPostcode={this.state.showPostcode} key={firstCode} currentMeetings={this.state.currentMeetings}  />
 
         </Container>
 
