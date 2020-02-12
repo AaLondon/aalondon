@@ -48,7 +48,8 @@ export default class MeetingDataTable extends Component {
 
   render() {
     const { column, data, direction } = this.state
-    
+    let thirdColumnHeader = "Distance(miles)"; 
+    let showPostcode = this.props.showPostcode;
 
     return (
       <Table sortable celled fixed unstackable>
@@ -70,16 +71,16 @@ export default class MeetingDataTable extends Component {
               sorted={column === 'distance_from_client' ? direction : null}
               onClick={this.handleSort('distance_from_client')}
             >
-              Distance(miles)
+              {showPostcode===0 ? "Distance(miles)" : "Postcode"}
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {_.map(data, ({ code,friendly_time,title, distance_from_client,slug }) => (
+          {_.map(data, ({ code,friendly_time,title, distance_from_client,slug,postcode_prefix }) => (
             <Table.Row key={code}>
               <Table.Cell>{friendly_time}</Table.Cell>
               <Table.Cell><a href={'/meetings/' + slug+'/#meetingmap'}>{title}</a></Table.Cell>
-              <Table.Cell>{distance_from_client}</Table.Cell>
+              <Table.Cell>{showPostcode===0?distance_from_client:postcode_prefix}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
