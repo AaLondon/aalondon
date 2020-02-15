@@ -10,6 +10,7 @@
     <header>
         <div class="title">
             <h2><a>Events</a></h2>
+            <div>To add an event please <b><a href="mailto:ecomm.ln@aamail.org">email us</a></b></div>
             </div>
         
     </header>
@@ -22,7 +23,7 @@
         {% ifchanged event.start_date|date:"F" %}
          <h1>  {{  event.start_date|date:"F" }} {{  event.start_date|date:"Y" }}</h1> 
         {% endifchanged %}
-        <h5><a href="{% pageurl event %}">{{ event.title }}</a></h5>
+        <h5 class="aa-event-title"><a href="{% pageurl event %}">{{ event.title }}</a></h5>
         
     {% endfor %}
 </article>
