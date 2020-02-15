@@ -32,7 +32,7 @@ class MeetingSerializer(serializers.ModelSerializer):
         return actual_datetime
     
     def get_friendly_time(self,obj):
-        time = obj.time.strftime('%H:%M %p')
+        time = obj.time.strftime('%H:%M')
         return f'{time}' 
     
     def get_postcode_prefix(self,obj):
