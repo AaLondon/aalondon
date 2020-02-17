@@ -123,8 +123,8 @@ class MeetingSearch extends Component {
     console.log(data);
     console.log("slider changed B ");
     let day = new Date().toLocaleString('en-us', { weekday: 'long' });
-    let minMiles = data[0];
-    let maxMiles = data[1];
+    let minMiles = 0;
+    let maxMiles = data;
     let queryString = "";
     let lat = null;
     let lng = null;
