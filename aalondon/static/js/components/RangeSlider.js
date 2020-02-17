@@ -46,7 +46,7 @@ export default function RangeSlider({onSliderChange}) {
   return (
     <div className={classes.root}>
       <Typography id="range-slider" gutterBottom>
-        Mile Range
+        Distance Filter
       </Typography>
       <Slider min={0}
       max={15}

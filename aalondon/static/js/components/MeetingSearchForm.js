@@ -59,8 +59,8 @@ class MeetingSearchForm extends React.Component {
     return (
       
       <form onSubmit={this.handleSubmit}>
-        <Row>
-          <Col xs={12}>
+        <Row className="justify-content-center">
+          <Col xs={10}>
           <Row><Nav fill variant="pills" activeKey={activeIndex} defaultActiveKey="0" >
          {weekDayNav} 
           
@@ -71,7 +71,7 @@ class MeetingSearchForm extends React.Component {
        
         </Col> 
         </Row>
-        <Row><RangeSlider  onSliderChange={this.handleSliderChange} /></Row>  
+        <Row className="justify-content-center"><RangeSlider  onSliderChange={this.handleSliderChange} /></Row>  
       </form>
     );
   }
