@@ -3690,3 +3690,12 @@ input, select, textarea {
 		.aa-event-title{
 			text-transform: none;
 		}
+
+		.MuiSlider-root {
+			color: #2ebaae !important;
+		}
+
+		#range-slider{
+			text-align: center;
+			font-weight: bold;
+		}

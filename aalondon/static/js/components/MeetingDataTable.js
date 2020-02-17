@@ -11,21 +11,21 @@ const tableData = [
 ]
 
 export default class MeetingDataTable extends Component {
-    constructor(props) {
-        super(props);
-       
-        
-        this.state = {
-          data: this.props.currentMeetings,
-          column: null,
-          direction: null,
+  constructor(props) {
+    super(props);
 
-        };
-      }
-  
-      componentDidMount() {
-          console.log("componentDidMount");
-      }
+
+    this.state = {
+      data: this.props.currentMeetings,
+      column: null,
+      direction: null,
+
+    };
+  }
+
+  componentDidMount() {
+    console.log("MeetingDataTable componentDidMount");
+  }
 
   handleSort = (clickedColumn) => () => {
     const { column, data, direction } = this.state
@@ -48,8 +48,22 @@ export default class MeetingDataTable extends Component {
 
   render() {
     const { column, data, direction } = this.state
-    let thirdColumnHeader = "Distance(miles)"; 
+    let thirdColumnHeader = "Distance(miles)";
     let showPostcode = this.props.showPostcode;
+
+    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix }) => {
+      if ((showPostcode === 1) || (distance_from_client >= this.props.minMiles && distance_from_client <= this.props.maxMiles))
+      {
+        console.log(typeof distance_from_client);
+     return (
+        <Table.Row key={code}>
+          <Table.Cell>{friendly_time}</Table.Cell>
+          <Table.Cell><a href={'/meetings/' + slug + '/#meetingmap'}>{title}</a></Table.Cell>
+          <Table.Cell>{showPostcode === 0 ? distance_from_client : postcode_prefix}</Table.Cell>
+        </Table.Row>
+      )
+    }
+    })
 
     return (
       <Table sortable celled fixed unstackable>
@@ -71,18 +85,12 @@ export default class MeetingDataTable extends Component {
               sorted={column === 'distance_from_client' ? direction : null}
               onClick={this.handleSort('distance_from_client')}
             >
-              {showPostcode===0 ? "Distance(miles)" : "Postcode"}
+              {showPostcode === 0 ? "Distance(miles)" : "Postcode"}
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {_.map(data, ({ code,friendly_time,title, distance_from_client,slug,postcode_prefix }) => (
-            <Table.Row key={code}>
-              <Table.Cell>{friendly_time}</Table.Cell>
-              <Table.Cell><a href={'/meetings/' + slug+'/#meetingmap'}>{title}</a></Table.Cell>
-              <Table.Cell>{showPostcode===0?distance_from_client:postcode_prefix}</Table.Cell>
-            </Table.Row>
-          ))}
+          {tbl}
         </Table.Body>
       </Table>
     )

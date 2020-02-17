@@ -3,6 +3,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Nav from 'react-bootstrap/Nav'
+import RangeSlider from './RangeSlider'
 
 class MeetingSearchForm extends React.Component {
   constructor(props) {
@@ -13,10 +14,15 @@ class MeetingSearchForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDayChange = this.handleDayChange.bind(this);
     this.handleIntergroupChange = this.handleIntergroupChange.bind(this);
+    this.handleSliderChange = this.handleSliderChange.bind(this);
     
   }
 
+  handleSliderChange(e){
+    console.log("handleSliderChange");
+    this.props.onSliderChange(e);
 
+  }
   handleChange(e) {
     this.props.onInputChange(e.target.value);
   }
@@ -41,10 +47,8 @@ class MeetingSearchForm extends React.Component {
 
     const weekDays = ["Now","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
     let activeIndex = weekDays.findIndex(element => element.includes(day));
-    console.log("MeetingSearchForm");
-    console.log(day);
-
-    console.log(activeIndex);
+    console.log("MeetingSearchForm Render");
+   
 
     let weekDayNav =  weekDays.map((value, index) => 
     <Nav.Item key={index}>
@@ -55,8 +59,8 @@ class MeetingSearchForm extends React.Component {
     return (
       
       <form onSubmit={this.handleSubmit}>
-        <Row>
-          <Col xs={12}>
+        <Row className="justify-content-center">
+          <Col xs={10}>
           <Row><Nav fill variant="pills" activeKey={activeIndex} defaultActiveKey="0" >
          {weekDayNav} 
           
@@ -66,7 +70,8 @@ class MeetingSearchForm extends React.Component {
         <Col>
        
         </Col> 
-        </Row>  
+        </Row>
+        <Row className="justify-content-center"><RangeSlider  onSliderChange={this.handleSliderChange} /></Row>  
       </form>
     );
   }
