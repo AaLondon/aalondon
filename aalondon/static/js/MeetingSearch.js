@@ -21,6 +21,7 @@ class MeetingSearch extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onPageChanged = this.onPageChanged.bind(this);
     this.onDayChange = this.onDayChange.bind(this);
+    this.onSliderChange = this.onSliderChange.bind(this);
 
 
 
@@ -134,6 +135,14 @@ class MeetingSearch extends Component {
 
   }
 
+  onSliderChange = data =>{
+
+    console.log("slider changed A ");
+    console.log(data);
+    console.log("slider changed B ");
+
+
+  }
   onDayChange = data => {
 
     console.log('onDayCHange');
@@ -220,7 +229,7 @@ class MeetingSearch extends Component {
         <Container>
 
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
-          <MeetingSearchForm value={this.state.day} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
+          <MeetingSearchForm value={this.state.day} onInputChange={this.handleInputChange} onSliderChange={this.onSliderChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
           <MeetingTableData showPostcode={this.state.showPostcode} key={firstCode} currentMeetings={this.state.currentMeetings}  />
 
         </Container>
