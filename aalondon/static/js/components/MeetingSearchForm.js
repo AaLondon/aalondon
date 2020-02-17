@@ -47,10 +47,8 @@ class MeetingSearchForm extends React.Component {
 
     const weekDays = ["Now","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
     let activeIndex = weekDays.findIndex(element => element.includes(day));
-    console.log("MeetingSearchForm");
-    console.log(day);
-
-    console.log(activeIndex);
+    console.log("MeetingSearchForm Render");
+   
 
     let weekDayNav =  weekDays.map((value, index) => 
     <Nav.Item key={index}>

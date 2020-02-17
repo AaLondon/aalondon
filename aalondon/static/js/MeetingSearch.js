@@ -46,16 +46,16 @@ class MeetingSearch extends Component {
     let day = new Date().toLocaleString('en-us', { weekday: 'long' });
 
     let queryString = "";
-    let lat;
-    let lng;
+    let lat = null;
+    let lng = null;
     this.getPosition().then((position) => {
       // successMessage is whatever we passed in the resolve(...) function above.
       // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
       //
-      console.log("A");
+      console.log("MeetingSearch componentDidMount A");
       lat = position.coords['latitude']
       lng = position.coords['longitude']
-      this.setState({clientLat:lat,clientLng:lng});
+      
       queryString = `/api/meetingsearch/?day=${day}&now=1&clientLat=${lat}&clientLng=${lng}`
       return queryString
 
@@ -70,18 +70,20 @@ class MeetingSearch extends Component {
       }
 
     ).then((queryString) => {
-      console.log("C");
-
-      console.log(queryString);
+      
       axios.get(queryString)
 
         .then(response => {
           const totalMeetings = response.data.count;
           const currentMeetings = response.data.results;
           const totalPages = response.data.count / 10;
+          console.log("MeetingSearch componentDidMount setState before ");
+      
+      
+          this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, 
+            totalPages: totalPages, showSpinner: 0,currentPage: 1,clientLat:lat,clientLng:lng });
+            console.log("MeetingSearch componentDidMount setState after ");  
 
-          this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, totalPages: totalPages, showSpinner: 0 });
-          this.setState({ currentPage: 1 });
 
         });
     });
@@ -136,17 +138,61 @@ class MeetingSearch extends Component {
   }
 
   onSliderChange = data =>{
+   
+    //console.log("slider changed A ");
+    //console.log(data);
+    //console.log("slider changed B ");
+    let day = new Date().toLocaleString('en-us', { weekday: 'long' });
 
-    console.log("slider changed A ");
-    console.log(data);
-    console.log("slider changed B ");
+    let queryString = "";
+    let lat = null;
+    let lng = null;
+    this.getPosition().then((position) => {
+      // successMessage is whatever we passed in the resolve(...) function above.
+      // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
+      //
+      //console.log("Slider A");
+      lat = position.coords['latitude']
+      lng = position.coords['longitude']
+      //this.setState({clientLat:lat,clientLng:lng});
+      queryString = `/api/meetingsearch/?day=Friday&now=0&clientLat=${lat}&clientLng=${lng}`
+      return queryString
+
+    }
+      ,
+      () => {
+        //TODO WHEN GEO CANT BE FOUNG
+        //console.log("Slider B");
+        this.setState({showPostcode:1})
+        return `/api/meetingsearch/?day=${day}&now=0`
+
+      }
+
+    ).then((queryString) => {
+     // console.log("Slider C");
+
+    //  console.log(queryString);
+      
+      axios.get(queryString)
+
+        .then(response => {
+          const totalMeetings = response.data.count;
+          const currentMeetings = response.data.results;
+          const totalPages = response.data.count / 10;
+
+          this.setState({ totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1, 
+            totalPages: totalPages, showSpinner: 0,currentPage: 1,clientLat:lat,clientLng:lng });
+
+        });
+    });
+
 
 
   }
   onDayChange = data => {
 
     console.log('onDayCHange');
-    console.log(data);
+    //console.log(data);
     let intergroup = this.state.intergroup;
     let query_day = data;
     if (data === 'All days') {
@@ -187,11 +233,14 @@ class MeetingSearch extends Component {
 
     const { totalMeetings, currentMeetings, currentPage, totalPages, day, showSpinner } = this.state;
 
-    console.log('render');
-    console.log(day);
+   // console.log('render');
+   // console.log(day);
+    console.log('render MeetingSearch A');
+    console.log("ShowSpinner: " + showSpinner);
+    let slider = <MeetingSearchForm value={this.state.day} onInputChange={this.handleInputChange} onSliderChange={this.onSliderChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />;
     if (showSpinner === 1)
       return (<Container>
-        <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
+        <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onSliderChange={this.onSliderChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
         <Row className="justify-content-center"><Col xs={2}> <Spinner size="lg" animation="border" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner></Col></Row>
@@ -200,14 +249,14 @@ class MeetingSearch extends Component {
       </Container>)
 
 
-
+    console.log('render MeetingSearch B');    
     if (totalMeetings === 0) return (
 
       <div>
 
         <Container>
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
-          <MeetingSearchForm value={day} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
+          {slider}
           <div>NO MEETINGS FOR THE REST OF THE DAY PLEASE CHECK TOMORROW</div>
 
 
@@ -218,7 +267,7 @@ class MeetingSearch extends Component {
     );
 
 
-
+    console.log('render MeetingSearch C');    
     let firstCode = currentMeetings[0].code;
 
 
@@ -229,7 +278,7 @@ class MeetingSearch extends Component {
         <Container>
 
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
-          <MeetingSearchForm value={this.state.day} onInputChange={this.handleInputChange} onSliderChange={this.onSliderChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
+          {slider}
           <MeetingTableData showPostcode={this.state.showPostcode} key={firstCode} currentMeetings={this.state.currentMeetings}  />
 
         </Container>

@@ -24,7 +24,7 @@ export default class MeetingDataTable extends Component {
       }
   
       componentDidMount() {
-          console.log("componentDidMount");
+          console.log("MeetingDataTable componentDidMount");
       }
 
   handleSort = (clickedColumn) => () => {
