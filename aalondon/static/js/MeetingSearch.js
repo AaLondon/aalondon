@@ -178,7 +178,7 @@ class MeetingSearch extends Component {
           const totalPages = response.data.count / 10;
           console.log(currentMeetings);
           this.setState({
-            totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1,
+            totalMeetings: totalMeetings, currentMeetings: currentMeetings,
             totalPages: totalPages, showSpinner: 0, currentPage: 1, clientLat: lat, clientLng: lng, showPostcode : showPostcode ,minMiles:minMiles,maxMiles:maxMiles,geoFail : geoFail
           });
 
@@ -233,7 +233,7 @@ class MeetingSearch extends Component {
     const { totalMeetings, currentMeetings, currentPage, totalPages, day, showSpinner } = this.state;
     let geoFail = this.state.geoFail;
     let geoFailRow = <Row className="justify-content-center"></Row>;
-    console.log("geoFail: " +geoFail);
+    console.log(currentMeetings);
     if (geoFail === 1){
       geoFailRow = <Row className="justify-content-center">We have been unable to retrieve your location. Please check your browser settings.</Row>
 
@@ -273,7 +273,8 @@ class MeetingSearch extends Component {
 
 
     console.log('render MeetingSearch C');
-    let firstCode = currentMeetings[0].code;
+    let firstCode = currentMeetings[0].code +currentMeetings[0].distance_from_client  ;
+    
 
 
     return (
@@ -285,7 +286,7 @@ class MeetingSearch extends Component {
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
           {slider}
           {geoFailRow}
-          <MeetingTableData showPostcode={this.state.showPostcode} key={firstCode} currentMeetings={this.state.currentMeetings} minMiles={this.state.minMiles} maxMiles={this.state.maxMiles} />
+          <MeetingTableData showPostcode={this.state.showPostcode} key={firstCode} currentMeetings={currentMeetings} minMiles={this.state.minMiles} maxMiles={this.state.maxMiles} />
           
         </Container>
 
