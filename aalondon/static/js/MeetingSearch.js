@@ -122,9 +122,18 @@ class MeetingSearch extends Component {
     console.log("slider changed A ");
     console.log(data);
     console.log("slider changed B ");
-    let day = new Date().toLocaleString('en-us', { weekday: 'long' });
-    let minMiles = data[0];
-    let maxMiles = data[1];
+    let day = this.state.day;
+    let now = 0;
+    
+    if (day = "Now")
+    {
+      day = new Date().toLocaleString('en-us', { weekday: 'long' });
+      now = 1;
+    }
+    console.log("DAY: "+ day);
+      
+    let minMiles = 0;
+    let maxMiles = data;
     let queryString = "";
     let lat = null;
     let lng = null;
@@ -138,7 +147,7 @@ class MeetingSearch extends Component {
       lat = position.coords['latitude']
       lng = position.coords['longitude']
       //this.setState({clientLat:lat,clientLng:lng});
-      queryString = `/api/meetingsearch/?day=Friday&now=0&clientLat=${lat}&clientLng=${lng}`
+      queryString = `/api/meetingsearch/?day=${day}&now=${now}&clientLat=${lat}&clientLng=${lng}`
       geoFail = 0;
       return queryString
 
@@ -149,7 +158,7 @@ class MeetingSearch extends Component {
         console.log("Slider Geo not working");
         geoFail = 1;
 
-        return `/api/meetingsearch/?day=${day}&now=0`
+        return `/api/meetingsearch/?day=${day}&now=${now}`
 
       }
 
@@ -167,7 +176,7 @@ class MeetingSearch extends Component {
           const totalMeetings = response.data.count;
           const currentMeetings = response.data.results;
           const totalPages = response.data.count / 10;
-
+          console.log(currentMeetings);
           this.setState({
             totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1,
             totalPages: totalPages, showSpinner: 0, currentPage: 1, clientLat: lat, clientLng: lng, showPostcode : showPostcode ,minMiles:minMiles,maxMiles:maxMiles,geoFail : geoFail

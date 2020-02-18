@@ -36,7 +36,7 @@ function valuetext(value) {
 
 export default function RangeSlider({onSliderChange}) {
   const classes = useStyles();
-  const [value, setValue] = React.useState([0, 15]);
+  const [value, setValue] = React.useState(15);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -45,16 +45,16 @@ export default function RangeSlider({onSliderChange}) {
 
   return (
     <div className={classes.root}>
-      <Typography id="range-slider" gutterBottom>
+      <Typography id="discrete-slider" gutterBottom>
         Distance Filter
       </Typography>
-      <Slider min={0}
+      <Slider 
       max={15}
         value={value}
         marks={marks}
         onChange={handleChange}
         valueLabelDisplay="auto"
-        aria-labelledby="range-slider"
+        aria-labelledby="discrete-slider"
         getAriaValueText={valuetext}
       />
     </div>
