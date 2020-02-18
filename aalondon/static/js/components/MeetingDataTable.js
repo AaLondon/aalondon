@@ -50,14 +50,10 @@ export default class MeetingDataTable extends Component {
     const { column, data, direction } = this.state
     let thirdColumnHeader = "Distance(miles)";
     let showPostcode = this.props.showPostcode;
-   
+    console.log(data);
 
     let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix }) => {
-      console.log("showPostcode:"+ showPostcode);
-      console.log("distance_from_client: "+ distance_from_client);
-      console.log("this.props.minMiles: "+this.props.minMiles);
-      console.log("this.props.maxMiles: "+this.props.maxMiles);
-
+      
       if ((showPostcode === 1) || (distance_from_client >= this.props.minMiles && distance_from_client <= this.props.maxMiles))
       {
         console.log(typeof distance_from_client);
