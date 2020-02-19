@@ -3695,7 +3695,7 @@ input, select, textarea {
 			color: #2ebaae !important;
 		}
 
-		#range-slider{
+		#discrete-slider{
 			text-align: center;
 			font-weight: bold;
 		}
