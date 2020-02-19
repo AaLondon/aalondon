@@ -3222,6 +3222,7 @@ input, select, textarea {
 					font-weight: 400;
 					letter-spacing: 0.25em;
 					text-transform: uppercase;
+					line-height: 18px;
 				}
 
 		#header .main {
