@@ -55,14 +55,14 @@ class MeetingSearch extends Component {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
         const totalPages = response.data.count / 10;
-        console.log("MeetingSearch componentDidMount setState before ");
+     
 
 
         this.setState({
           totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1,
           totalPages: totalPages, showSpinner: 0, currentPage: 1
         });
-        console.log("MeetingSearch componentDidMount setState after ");
+      
 
 
       });
@@ -85,7 +85,7 @@ class MeetingSearch extends Component {
 
 
   onPageChanged = data => {
-    // console.log('onPageChanged');
+
 
 
     const { currentPage, totalPages, } = data;
@@ -119,9 +119,7 @@ class MeetingSearch extends Component {
 
   onSliderChange = data => {
 
-    console.log("slider changed A ");
-    console.log(data);
-    console.log("slider changed B ");
+  
     let day = this.state.day;
     let now = 0;
     
@@ -130,7 +128,7 @@ class MeetingSearch extends Component {
       day = new Date().toLocaleString('en-us', { weekday: 'long' });
       now = 1;
     }
-    console.log("DAY: "+ day);
+
       
     let minMiles = 0;
     let maxMiles = data;
@@ -143,7 +141,7 @@ class MeetingSearch extends Component {
       // successMessage is whatever we passed in the resolve(...) function above.
       // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
       //
-      console.log("Slider A");
+
       lat = position.coords['latitude']
       lng = position.coords['longitude']
       //this.setState({clientLat:lat,clientLng:lng});
@@ -155,7 +153,7 @@ class MeetingSearch extends Component {
       ,
       () => {
         //TODO WHEN GEO CANT BE FOUNG
-        console.log("Slider Geo not working");
+   
         geoFail = 1;
 
         return `/api/meetingsearch/?day=${day}&now=${now}`
@@ -163,8 +161,7 @@ class MeetingSearch extends Component {
       }
 
     ).then((queryString) => {
-      console.log("lat: " + lat);
-      console.log(queryString);
+
       if(lat === null){
         showPostcode = 1;
       }
@@ -176,7 +173,7 @@ class MeetingSearch extends Component {
           const totalMeetings = response.data.count;
           const currentMeetings = response.data.results;
           const totalPages = response.data.count / 10;
-          console.log(currentMeetings);
+ 
           this.setState({
             totalMeetings: totalMeetings, currentMeetings: currentMeetings,
             totalPages: totalPages, showSpinner: 0, currentPage: 1, clientLat: lat, clientLng: lng, showPostcode : showPostcode ,minMiles:minMiles,maxMiles:maxMiles,geoFail : geoFail
@@ -190,8 +187,7 @@ class MeetingSearch extends Component {
   }
   onDayChange = data => {
 
-    console.log('onDayCHange');
-    //console.log(data);
+  
     let intergroup = this.state.intergroup;
     let query_day = data;
     if (data === 'All days') {
@@ -233,15 +229,12 @@ class MeetingSearch extends Component {
     const { totalMeetings, currentMeetings, currentPage, totalPages, day, showSpinner } = this.state;
     let geoFail = this.state.geoFail;
     let geoFailRow = <Row className="justify-content-center"></Row>;
-    console.log(currentMeetings);
+
     if (geoFail === 1){
       geoFailRow = <Row className="justify-content-center">We have been unable to retrieve your location. Please check your browser settings.</Row>
 
     }
-    // console.log('render');
-    // console.log(day);
-    console.log('render MeetingSearch A');
-    console.log("ShowSpinner: " + showSpinner);
+ 
     let slider = <MeetingSearchForm value={this.state.day} onInputChange={this.handleInputChange} onSliderChange={this.onSliderChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />;
     if (showSpinner === 1)
       return (<Container>
@@ -254,7 +247,7 @@ class MeetingSearch extends Component {
       </Container>)
 
 
-    console.log('render MeetingSearch B');
+    
     if (totalMeetings === 0) return (
 
       <div>
@@ -272,7 +265,7 @@ class MeetingSearch extends Component {
     );
 
 
-    console.log('render MeetingSearch C');
+   
     let firstCode = currentMeetings[0].code +currentMeetings[0].distance_from_client  ;
     
 
