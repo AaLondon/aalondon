@@ -19,6 +19,13 @@ from django.utils import dateformat
 import datetime
 
 
+
+class EventType(models.Model):
+    value = models.CharField(max_length=40)
+
+    def __str__(self):
+        self.value
+
 class SingleDayEvent(Page):
     body = RichTextField()
     post_date = models.DateField("Post Date")
@@ -29,6 +36,7 @@ class SingleDayEvent(Page):
     postcode = models.CharField(max_length=10,blank=False,null=False)
     longitude = models.FloatField(blank=True,null=True)
     latitude = models.FloatField(blank=True,null=True)
+    type = models.ForeignKey(to=EventType, on_delete=models.SET_NULL,null=True)
     
 
 
@@ -40,6 +48,7 @@ class SingleDayEvent(Page):
     FieldPanel('postcode'),
     FieldPanel('start_time'),
     FieldPanel('end_time'),
+    FieldPanel('type'),
 
     
     ]
@@ -54,6 +63,7 @@ class MultiDayEvent(Page):
     postcode = models.CharField(max_length=10,blank=False,null=False)
     longitude = models.FloatField(blank=True,null=True)
     latitude = models.FloatField(blank=True,null=True)
+    type = models.ForeignKey(to=EventType, on_delete=models.SET_NULL,null=True)
    
     content_panels = Page.content_panels + [
     
@@ -63,6 +73,7 @@ class MultiDayEvent(Page):
     FieldPanel('post_date'),
     FieldPanel('start_date'),
     FieldPanel('end_date'),
+    FieldPanel('type'),
     
     ]
     subpage_types = []
@@ -112,6 +123,7 @@ class RecurringEventParent(Page):
     postcode = models.CharField(max_length=10,blank=False,null=False)
     longitude = models.FloatField(blank=True,null=True)
     latitude = models.FloatField(blank=True,null=True)
+    type = models.ForeignKey(to=EventType, on_delete=models.SET_NULL,null=True)
 
 
     
@@ -133,6 +145,7 @@ class RecurringEventParent(Page):
         heading="Recurrance Options",),
         FieldPanel('start_time'),
         FieldPanel('end_time'),
+        FieldPanel('type'),
         
        #InlinePanel('override_dates', label='override dates'),
     ]
@@ -152,6 +165,7 @@ class RecurringEventChild(Page):
     postcode = models.CharField(max_length=10,blank=False,null=False)
     longitude = models.FloatField(blank=True,null=True)
     latitude = models.FloatField(blank=True,null=True)
+    type = models.ForeignKey(to=EventType, on_delete=models.SET_NULL,null=True)
     class Meta:
         ordering = ['start_date']
 
@@ -166,6 +180,7 @@ class RecurringEventChild(Page):
         FieldPanel('postcode'),
         FieldPanel('start_time'),
         FieldPanel('end_time'),
+        FieldPanel('type'),
         
     ]
     subpage_types = []
