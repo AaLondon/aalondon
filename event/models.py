@@ -24,7 +24,7 @@ class EventType(models.Model):
     value = models.CharField(max_length=40)
 
     def __str__(self):
-        self.value
+        return self.value
 
 class SingleDayEvent(Page):
     body = RichTextField()
@@ -191,10 +191,16 @@ class EventIndexPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('intro', classname="full")
     ]
+    
     def get_context(self, request):
         today = datetime.datetime.today()
         context = super().get_context(request)
         children = MultiDayEvent.objects.none()
+         
+        event_type = request.GET.get('event_type', 'all')
+
+        # get event counts
+
         # Add extra variables and return the updated context
         recurring_parents=RecurringEventParent.objects.child_of(self).live()
         for parent in recurring_parents:
@@ -204,7 +210,9 @@ class EventIndexPage(Page):
         singles = list(SingleDayEvent.objects.filter(start_date__gte=today)) 
         children = list(RecurringEventChild.objects.filter(start_date__gte=today))  
 
-        alls = singles + multis + children 
+        alls = singles + multis + children
+        if event_type:
+            alls = alls.filter(type=1) 
         sorted_alls = sorted(alls, key=lambda event : event.start_date )   
 
         context['event_entries'] = sorted_alls
@@ -270,6 +278,7 @@ def create_or_update_recurring_children(sender, **kwargs):
         end_time = parent.end_time
         body = parent.body
         post_date = parent.post_date
+        event_type = parent.type
        
         #1. Create child if slug does not exist
         child = RecurringEventChild.objects.filter(slug=slug)
@@ -277,7 +286,7 @@ def create_or_update_recurring_children(sender, **kwargs):
             
             child = RecurringEventChild(start_date=date,post_date=post_date,title=title,slug=slug,body=body,start_time=start_time,end_time=end_time,postcode=parent.postcode\
                 ,longitude=parent.longitude,latitude=parent.latitude\
-                    ,address=parent.address)
+                    ,address=parent.address,type=event_type)
             parent.add_child(instance=child)
         else:
             child[0].title = title
