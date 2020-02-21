@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.db.models import Avg, Case, Count
 
 # Create your models here.
 from wagtail.core.signals import page_published
@@ -197,12 +198,18 @@ class EventIndexPage(Page):
         context = super().get_context(request)
         children = MultiDayEvent.objects.none()
          
-        event_type = request.GET.get('type', None)
+        event_type = request.GET.get('event_type', None)
 
         # get event counts
-        z = RecurringEventChild.objects.values('type__value').annotate(total=Count('type__value')).order_by() 
-        y = MultiDayEvent.objects.values('type__value').annotate(total=Count('type__value')).order_by() 
-        x = SingleDayEvent.objects.values('type__value').annotate(total=Count('type__value')).order_by() 
+        type_counts_recurring = list(RecurringEventChild.objects.values('type__value').annotate(total=Count('type__value')).order_by())
+        type_counts_multi = list(MultiDayEvent.objects.values('type__value').annotate(total=Count('type__value')).order_by()) 
+        type_counts_single = list(SingleDayEvent.objects.values('type__value').annotate(total=Count('type__value')).order_by()) 
+        event_counts = {}
+        all_counts = type_counts_recurring + type_counts_multi + type_counts_single
+
+        for row in all_counts:
+            event_counts['All'] = event_counts.get('All',0) + row['total']
+            event_counts[row['type__value']] = event_counts.get(row['type__value'],0) +   row['total']
 
         # Add extra variables and return the updated context
         recurring_parents=RecurringEventParent.objects.child_of(self).live()
@@ -213,10 +220,11 @@ class EventIndexPage(Page):
         singles_qs = SingleDayEvent.objects.filter(start_date__gte=today) 
         children_qs = RecurringEventChild.objects.filter(start_date__gte=today)
 
-        if event_type:
+        if event_type and event_type != 'All':
             multis_qs = multis_qs.filter(type__value__iexact=event_type)
             singles_qs = singles_qs.filter(type__value__iexact=event_type)
             children_qs = children_qs.filter(type__value__iexact=event_type)
+
             
         multis = list(multis_qs) 
         singles = list(singles_qs) 
@@ -228,6 +236,8 @@ class EventIndexPage(Page):
         sorted_alls = sorted(alls, key=lambda event : event.start_date )   
 
         context['event_entries'] = sorted_alls
+        context['event_counts'] = event_counts
+        context['active'] = event_type or 'All'
         
         return context
     

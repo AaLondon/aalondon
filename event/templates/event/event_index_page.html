@@ -18,6 +18,13 @@
  
 
     <div class="intro">{{ page.intro|richtext }}</div>
+    <div class='event-types'>
+
+        {% for key, value in event_counts.items %}
+        <div><a href="/events/?event_type={{key}}" {% ifequal key active %} style="color: #2ebaae !important;" {% endifequal%}>{{key}}({{value}})</a></div>
+        
+        {% endfor %}
+    </div>
 
     {% for event in event_entries %}
         {% ifchanged event.start_date|date:"F" %}
@@ -28,3 +35,4 @@
     {% endfor %}
 </article>
 {% endblock %}
+
