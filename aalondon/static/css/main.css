@@ -3700,3 +3700,11 @@ input, select, textarea {
 			text-align: center;
 			font-weight: bold;
 		}
+
+
+		.event-types{
+			display:grid;
+			width:100%;
+			grid-template-columns: repeat( auto-fit, minmax(50px, 1fr) );
+
+		}

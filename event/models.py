@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.db.models import Avg, Case, Count
 
 # Create your models here.
 from wagtail.core.signals import page_published
@@ -19,6 +20,13 @@ from django.utils import dateformat
 import datetime
 
 
+
+class EventType(models.Model):
+    value = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.value
+
 class SingleDayEvent(Page):
     body = RichTextField()
     post_date = models.DateField("Post Date")
@@ -29,6 +37,7 @@ class SingleDayEvent(Page):
     postcode = models.CharField(max_length=10,blank=False,null=False)
     longitude = models.FloatField(blank=True,null=True)
     latitude = models.FloatField(blank=True,null=True)
+    type = models.ForeignKey(to=EventType, on_delete=models.SET_NULL,null=True)
     
 
 
@@ -40,6 +49,7 @@ class SingleDayEvent(Page):
     FieldPanel('postcode'),
     FieldPanel('start_time'),
     FieldPanel('end_time'),
+    FieldPanel('type'),
 
     
     ]
@@ -54,6 +64,7 @@ class MultiDayEvent(Page):
     postcode = models.CharField(max_length=10,blank=False,null=False)
     longitude = models.FloatField(blank=True,null=True)
     latitude = models.FloatField(blank=True,null=True)
+    type = models.ForeignKey(to=EventType, on_delete=models.SET_NULL,null=True)
    
     content_panels = Page.content_panels + [
     
@@ -63,6 +74,7 @@ class MultiDayEvent(Page):
     FieldPanel('post_date'),
     FieldPanel('start_date'),
     FieldPanel('end_date'),
+    FieldPanel('type'),
     
     ]
     subpage_types = []
@@ -112,6 +124,7 @@ class RecurringEventParent(Page):
     postcode = models.CharField(max_length=10,blank=False,null=False)
     longitude = models.FloatField(blank=True,null=True)
     latitude = models.FloatField(blank=True,null=True)
+    type = models.ForeignKey(to=EventType, on_delete=models.SET_NULL,null=True)
 
 
     
@@ -133,6 +146,7 @@ class RecurringEventParent(Page):
         heading="Recurrance Options",),
         FieldPanel('start_time'),
         FieldPanel('end_time'),
+        FieldPanel('type'),
         
        #InlinePanel('override_dates', label='override dates'),
     ]
@@ -152,6 +166,7 @@ class RecurringEventChild(Page):
     postcode = models.CharField(max_length=10,blank=False,null=False)
     longitude = models.FloatField(blank=True,null=True)
     latitude = models.FloatField(blank=True,null=True)
+    type = models.ForeignKey(to=EventType, on_delete=models.SET_NULL,null=True)
     class Meta:
         ordering = ['start_date']
 
@@ -166,6 +181,7 @@ class RecurringEventChild(Page):
         FieldPanel('postcode'),
         FieldPanel('start_time'),
         FieldPanel('end_time'),
+        FieldPanel('type'),
         
     ]
     subpage_types = []
@@ -176,23 +192,52 @@ class EventIndexPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('intro', classname="full")
     ]
+    
     def get_context(self, request):
         today = datetime.datetime.today()
         context = super().get_context(request)
         children = MultiDayEvent.objects.none()
+         
+        event_type = request.GET.get('event_type', None)
+
+        # get event counts
+        type_counts_recurring = list(RecurringEventChild.objects.values('type__value').annotate(total=Count('type__value')).order_by())
+        type_counts_multi = list(MultiDayEvent.objects.values('type__value').annotate(total=Count('type__value')).order_by()) 
+        type_counts_single = list(SingleDayEvent.objects.values('type__value').annotate(total=Count('type__value')).order_by()) 
+        event_counts = {}
+        all_counts = type_counts_recurring + type_counts_multi + type_counts_single
+
+        for row in all_counts:
+            event_counts['All'] = event_counts.get('All',0) + row['total']
+            event_counts[row['type__value']] = event_counts.get(row['type__value'],0) +   row['total']
+
         # Add extra variables and return the updated context
         recurring_parents=RecurringEventParent.objects.child_of(self).live()
         for parent in recurring_parents:
             children = children | RecurringEventChild.objects.child_of(parent).live()    
         
-        multis = list(MultiDayEvent.objects.filter(end_date__gte=today)) 
-        singles = list(SingleDayEvent.objects.filter(start_date__gte=today)) 
-        children = list(RecurringEventChild.objects.filter(start_date__gte=today))  
+        multis_qs = MultiDayEvent.objects.filter(end_date__gte=today) 
+        singles_qs = SingleDayEvent.objects.filter(start_date__gte=today) 
+        children_qs = RecurringEventChild.objects.filter(start_date__gte=today)
 
-        alls = singles + multis + children 
+        if event_type and event_type != 'All':
+            multis_qs = multis_qs.filter(type__value__iexact=event_type)
+            singles_qs = singles_qs.filter(type__value__iexact=event_type)
+            children_qs = children_qs.filter(type__value__iexact=event_type)
+
+            
+        multis = list(multis_qs) 
+        singles = list(singles_qs) 
+        children = list(children_qs)  
+
+        alls = singles + multis + children
+        #if event_type:
+         #   alls = alls.filter(type=1) 
         sorted_alls = sorted(alls, key=lambda event : event.start_date )   
 
         context['event_entries'] = sorted_alls
+        context['event_counts'] = event_counts
+        context['active'] = event_type or 'All'
         
         return context
     
@@ -255,6 +300,7 @@ def create_or_update_recurring_children(sender, **kwargs):
         end_time = parent.end_time
         body = parent.body
         post_date = parent.post_date
+        event_type = parent.type
        
         #1. Create child if slug does not exist
         child = RecurringEventChild.objects.filter(slug=slug)
@@ -262,7 +308,7 @@ def create_or_update_recurring_children(sender, **kwargs):
             
             child = RecurringEventChild(start_date=date,post_date=post_date,title=title,slug=slug,body=body,start_time=start_time,end_time=end_time,postcode=parent.postcode\
                 ,longitude=parent.longitude,latitude=parent.latitude\
-                    ,address=parent.address)
+                    ,address=parent.address,type=event_type)
             parent.add_child(instance=child)
         else:
             child[0].title = title
