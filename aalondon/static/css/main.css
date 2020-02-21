@@ -3708,3 +3708,12 @@ input, select, textarea {
 			grid-template-columns: repeat( auto-fit, minmax(50px, 1fr) );
 
 		}
+
+
+		@media screen and (max-width: 480px) {
+			.event-types{
+			grid-auto-columns: 1fr 1fr;
+			grid-template-columns: none;
+
+			}
+		}
