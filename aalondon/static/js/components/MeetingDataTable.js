@@ -67,6 +67,8 @@ export default class MeetingDataTable extends Component {
     }
     })
 
+    let third_column_field = showPostcode === 0 ? 'distance_from_client' : 'postcode_prefix';
+
     return (
       <Table sortable celled fixed unstackable>
         <Table.Header>
@@ -84,8 +86,8 @@ export default class MeetingDataTable extends Component {
               Title
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'distance_from_client' ? direction : null}
-              onClick={this.handleSort('distance_from_client')}
+              sorted={column === third_column_field ? direction : null}
+              onClick={this.handleSort(third_column_field)}
             >
               {showPostcode === 0 ? "Distance(miles)" : "Postcode"}
             </Table.HeaderCell>
