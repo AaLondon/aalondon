@@ -13,6 +13,6 @@ def servicepages(request):
     return {
        "servicepages": servicepages,
        "ga_tracking_id": GA_TRACKING_ID,
-       "pdf_url": pdf.url
+       "pdf_url": pdf.file.url
 
     }
