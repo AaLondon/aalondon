@@ -91,9 +91,12 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     {% for page in servicepages %}
-                                  
-                                    
-                                  <a class="dropdown-item" href="{{ page.url}}" >{{page.title}}</a>
+                                 
+                                  {% ifequal page.title "Insurance" %}  
+                                  <a class="dropdown-item" href="{{pdf_url}}" target="_blank">Insurance</a>
+                                  {% else %} 
+                                <a class="dropdown-item" href="{{ page.url}}" >{{page.title}}</a>
+                                      {% endifequal %}
                                   {% endfor %}
                                 </div>
 
@@ -141,7 +144,10 @@
                                 <p>London Region North</p>
                                 <p class="aa-intro">Our prototype is designed to promote service in London, North of the Thames. If you would like to learn more about alcoholism, get help with a drinking problem or use our 'Chat Now' service please visit our <b><a href="https://www.alcoholics-anonymous.org.uk">national website</a></b>,<b><a href="mailto:help@aamail.org" tabindex="0">email us</a></b> or call one of our helplines below<b></br>
                                 <b>National helpline</b><br/> 0800 917 7650 </br>(24 hrs 7 days per week)</br>
-                                <b>London helpline</b><br/> 0207 407 0700  (10AM–10PM) .</p>
+                                <b>London helpline</b><br/> 0207 407 0700  (10AM–10PM)</p> 
+                                <p class="aa-intro">We welcome any feedback on where you think the site could be improved please do <b><a href="mailto:ecomm.ln@aamail.org">email us</a></b> </p>
+                                
+
                             </header>
                         </section>
 
