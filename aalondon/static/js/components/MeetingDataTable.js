@@ -50,7 +50,7 @@ export default class MeetingDataTable extends Component {
     const { column, data, direction } = this.state
     let thirdColumnHeader = "Distance(miles)";
     let showPostcode = this.props.showPostcode;
-    console.log(data);
+   
 
     let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix }) => {
       
@@ -66,6 +66,8 @@ export default class MeetingDataTable extends Component {
       )
     }
     })
+
+    let third_column_field = showPostcode === 0 ? 'distance_from_client' : 'postcode_prefix';
 
     return (
       <Table sortable celled fixed unstackable>
@@ -84,8 +86,8 @@ export default class MeetingDataTable extends Component {
               Title
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'distance_from_client' ? direction : null}
-              onClick={this.handleSort('distance_from_client')}
+              sorted={column === third_column_field ? direction : null}
+              onClick={this.handleSort(third_column_field)}
             >
               {showPostcode === 0 ? "Distance(miles)" : "Postcode"}
             </Table.HeaderCell>

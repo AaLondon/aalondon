@@ -121,14 +121,16 @@ class MeetingSearch extends Component {
 
   
     let day = this.state.day;
+    console.log("DAY: "+day);
     let now = 0;
-    
-    if (day = "Now")
+    console.log("now0:"+ now);
+    if (day === "Now")
     {
+      console.log("Im her");
       day = new Date().toLocaleString('en-us', { weekday: 'long' });
       now = 1;
     }
-
+    console.log("nowA:"+ now);
       
     let minMiles = 0;
     let maxMiles = data;
@@ -165,8 +167,8 @@ class MeetingSearch extends Component {
       if(lat === null){
         showPostcode = 1;
       }
-
-
+      console.log("nowB:"+ now);
+      console.log("SliderChange:"+queryString);
       axios.get(queryString)
 
         .then(response => {
@@ -201,21 +203,24 @@ class MeetingSearch extends Component {
       query_day = new Date().toLocaleString('en-us', { weekday: 'long' });
       now = 1;
     }
-
-    this.setState({ day: data, showSpinner: 1 });
+  
+    this.setState({  showSpinner: 1 });
 
     let queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${query_day}&now=${now}`;
     if (this.state.clientLat) {
       queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${query_day}&now=${now}&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`;
       this.setState({ showPostcode: 0 })
     }
+    console.log("DayChange:"+queryString);
     axios.get(queryString)
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = response.data.results;
         const totalPages = response.data.count / 10;
 
-        this.setState({ totalMeetings, currentMeetings, currentPage, totalPages, showSpinner: 0 });
+
+
+        this.setState({ totalMeetings, currentMeetings, currentPage, totalPages, showSpinner: 0,day: data });
       });
 
 
