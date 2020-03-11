@@ -22,6 +22,9 @@
     <div class="row"><div>{{object.detail|linebreaks}}</div></div>
     <div class="row"><a href="https://citymapper.com/directions?endcoord={{object.lat}}%2C{{object.lng}}&endname={{object.title}}" target="_blank"><img src="https://static.citymapper.com/img/embed/GetMeThere_Citymapper.png" alt="Get directions with Citymapper" /></a></div>
     </div></div>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
+
 <script>
 var lat = {{ object.lat }};
 var lng = {{object.lng}};
