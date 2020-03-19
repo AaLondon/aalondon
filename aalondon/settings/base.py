@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'event',
     'postcodes',
     'service',
+    'online',
 
 
     'wagtail.contrib.forms',
