@@ -104,7 +104,18 @@
                               </li>
                             <li><a class="nav-link" href="/meetingsearch">Find a Meeting</a></li>
                             <li><a class="nav-link" href="/events#event-title">Events</a></li>
-                           
+                            <li class="nav-ite dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Online Meetings
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    {% for page in onlinepages %}
+                                 
+                                <a class="dropdown-item" href="{{ page.url}}" >{{page.title}}</a>
+                                  {% endfor %}
+                                </div>
+
+                              </li>
                             
                           
                             

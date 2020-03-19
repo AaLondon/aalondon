@@ -39,4 +39,4 @@ class HomePage(Page):
 
         return context
 
-    subpage_types = ['event.EventIndexPage','service.ServiceIndexPage']
+    subpage_types = ['event.EventIndexPage','service.ServiceIndexPage','online.OnlineIndexPage']
