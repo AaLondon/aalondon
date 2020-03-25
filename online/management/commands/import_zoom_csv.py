@@ -36,7 +36,7 @@ class Command(BaseCommand):
                     time = datetime.datetime.strptime(time_str, '%H%M').time()
                     
 
-                    if row[2]=='Zoom daily meetings':  
+                    if row[2]=='Zoom daily meetings - all times: London':  
                         for day in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']:
                             day_number = days[day]
                             meeting ,created = OnlineMeeting.objects.get_or_create(title=row[0],time=time,day=day,link=row[3],platform='Zoom',day_number=day_number)

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load render_bundle from webpack_loader %}
+
+{% block content %}
+<!-- Post -->
+<article class="post">
+  <header>
+      <div class="title">
+          <h2><a>Meetings</a></h2>
+          </div>
+      
+  </header>
+
+    <h1>{{object.title}} {{object.day}}</h1>
+    <div class="container">
+    
+    
+    
+    
+    <div id="meetingmap" class="row">
+    
+    <div  style="padding-left: 29px;" >
+    <div class="row"><div>{{object.time}}</div></div>
+    <div class="row"><div><a href="{{object.link}}" target="_blank">{{object.link}}</a></div></div>
+    <div class="row"><div>{{object.description}}</div></div>
+
+    
+    </div></div>
+   
+
+    </div>
+</article>
+
+{% endblock %}
+
+
+
+
+
+ 
