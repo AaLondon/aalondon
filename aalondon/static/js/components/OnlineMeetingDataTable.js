@@ -59,8 +59,8 @@ export default class MeetingDataTable extends Component {
      return (
         <Table.Row key={id}>
           <Table.Cell>{friendly_time}</Table.Cell>
-          <Table.Cell><a href={'/meetings/' + slug + '/#meetingmap'}>{title}</a></Table.Cell>
-          <Table.Cell><a href={link}>zoom link</a></Table.Cell>
+          <Table.Cell><a href={'/onlinemeetings/' + slug + '/'} >{title}</a></Table.Cell>
+          <Table.Cell><a href={link} target="blank">link</a></Table.Cell>
         </Table.Row>
       )
     
