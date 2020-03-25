@@ -11,6 +11,7 @@ from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 import datetime
+from django_extensions.db.fields import AutoSlugField
 
 
 
@@ -37,5 +38,56 @@ class OnlinePage(Page):
     
     ]
     subpage_types = []
+
+
+
+
+class OnlineMeeting(models.Model):
+    MONDAY = 'Monday'
+    TUESDAY = 'Tuesday'
+    WEDNESDAY = 'Wednesday'
+    THURSDAY = 'Thursday'
+    FRIDAY = 'Friday'
+    SATURDAY = 'Saturday'
+    SUNDAY = 'Sunday'
+
+    DAY_OF_WEEK_CHOICES = [
+        (MONDAY, MONDAY),
+        (TUESDAY,TUESDAY),
+        (WEDNESDAY,WEDNESDAY),
+        (THURSDAY,THURSDAY),
+        (FRIDAY,FRIDAY),
+        (SATURDAY,SATURDAY),
+        (SUNDAY,SUNDAY),
+      
+    ]   
+
+    ZOOM = 'Zoom'
+    SKYPE = 'Skype'
+
+    TYPE_CHOICES = [
+        (ZOOM,ZOOM),
+        (SKYPE,SKYPE),
+    ] 
+
+    title = models.CharField(max_length=100)
+    day = models.CharField(
+        max_length=9,
+        choices=DAY_OF_WEEK_CHOICES
+    )
+    time = models.TimeField()
+    platform = models.CharField(
+        max_length=10,
+        choices=TYPE_CHOICES
+    )
+    link = models.CharField(max_length=1000)
+    description = models.TextField()
+    slug = AutoSlugField(populate_from=['title','day'])
+    day_number = models.IntegerField(null=True)
+
+
+
+    def __str__(self):
+        return self.title
 
 

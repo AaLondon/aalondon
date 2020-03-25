@@ -8,6 +8,7 @@ module.exports = {
   entry: {
     meeting: './aalondon/static/js/MeetingApp.js',
     meetingsearch: './aalondon/static/js/MeetingSearch.js',
+    onlinemeetingsearch: './aalondon/static/js/OnlineMeetingSearch.js',
 
 
 
