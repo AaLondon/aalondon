@@ -10,6 +10,7 @@ from api import urls as api_urls
 
 from search import views as search_views
 from meetings.views import MeetingSearchView,MeetingDetailView
+from online.views import OnlineMeetingDetailView,redirect_view
 
 urlpatterns = [
     url(r'^django-admin/', admin.site.urls),
@@ -21,7 +22,8 @@ urlpatterns = [
     url(r'^api/', include(api_urls)),
     path('meetingsearch/', MeetingSearchView.as_view(), name='meeting_search'),
     path('meetings/<slug:slug>/', MeetingDetailView.as_view(), name='meeting-detail'),
-
+    path('onlinemeetings/<slug:slug>/', OnlineMeetingDetailView.as_view(), name='meeting-detail'),
+    path('online/zoom-meetings/', redirect_view),
     
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in

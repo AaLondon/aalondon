@@ -4,7 +4,7 @@ from .models import OnlineMeeting
 from django.utils import timezone
 from service.models import ServicePage
 
-
+from django.shortcuts import redirect
 
 class OnlineMeetingDetailView(DetailView):
     model = OnlineMeeting
@@ -16,3 +16,8 @@ class OnlineMeetingDetailView(DetailView):
 
 
 
+
+
+def redirect_view(request):
+    response = redirect('/')
+    return response
