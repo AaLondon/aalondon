@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^api/', include(api_urls)),
     path('meetingsearch/', MeetingSearchView.as_view(), name='meeting_search'),
     path('meetings/<slug:slug>/', MeetingDetailView.as_view(), name='meeting-detail'),
-    path('onlinemeetings/<slug:slug>/', OnlineMeetingDetailView.as_view(), name='meeting-detail'),
+    path('onlinemeetings/<slug:slug>/', OnlineMeetingDetailView.as_view(), name='online-meeting-detail'),
     path('online/zoom-meetings/', redirect_view),
     
     # For anything not caught by a more specific rule above, hand over to

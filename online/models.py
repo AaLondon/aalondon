@@ -50,8 +50,11 @@ class OnlineMeeting(models.Model):
     FRIDAY = 'Friday'
     SATURDAY = 'Saturday'
     SUNDAY = 'Sunday'
+    ALL = 'All'
 
     DAY_OF_WEEK_CHOICES = [
+
+        (ALL, ALL),    
         (MONDAY, MONDAY),
         (TUESDAY,TUESDAY),
         (WEDNESDAY,WEDNESDAY),
@@ -81,9 +84,9 @@ class OnlineMeeting(models.Model):
         choices=TYPE_CHOICES
     )
     link = models.CharField(max_length=1000)
-    description = models.TextField()
+    description = models.TextField(null=True,blank=True)
     slug = AutoSlugField(populate_from=['title','day'])
-    day_number = models.IntegerField(null=True)
+    day_number = models.IntegerField(null=True,blank=True)
 
 
 
@@ -91,3 +94,8 @@ class OnlineMeeting(models.Model):
         return self.title
 
 
+    def save(self, *args, **kwargs):
+        days =['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','All']
+        self.day_number = days.index(self.day)
+        
+        super().save(*args, **kwargs)
