@@ -26,7 +26,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        OnlineMeeting.objects.all().delete()    
+          
         with open('zoom_file_initial.csv', newline='') as csvfile:
             meetingreader = csv.reader(csvfile, delimiter=',',)
             for row in meetingreader:
