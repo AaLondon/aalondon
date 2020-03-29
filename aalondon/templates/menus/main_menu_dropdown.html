@@ -1,70 +1,27 @@
-{% load static wagtailuserbar %}
-{% load wagtailcore_tags %}
-{% load render_bundle from webpack_loader %}
 {% load menu_tags %}
+<nav class="links x navbar navbar-expand-lg navbar-light bg-light">
+                     
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon"></span>
+                        </button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">                        
+<ul class="nav navbar-nav">
+{% for item in menu_items %}
+    <li class="z {{ item.active_class }}{% if item.has_children_in_menu %} dropdown{% endif %}">
+        <a href="{{ item.href }}"{% if item.has_children_in_menu %} class="p dropdown-toggle" id="ddtoggle_{{ item.link_page.pk }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{% endif %}>{{ item.text }}{% if item.has_children_in_menu %} <span class="caret"></span>{% endif %}</a>
+        {% if item.has_children_in_menu %}
+        	{% sub_menu item template="menus/sub_menu_dropdown.html" %}
+        {% endif %}
+    </li>       
+{% endfor %}
+</ul>
+</div>
+</nav>
 
 
+<!--
 
-<!DOCTYPE html>
-<html class="no-js" lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>
-            {% block title %}
-                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
-            {% endblock %}
-            {% block title_suffix %}
-                {% with self.get_site.site_name as site_name %}
-                    {% if site_name %}- {{ site_name }}{% endif %}
-                {% endwith %}
-            {% endblock %}
-        </title>
-        <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        {# Global stylesheets #}
-        
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-               
-        
-        
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
-
-        
-
-         <link rel="stylesheet" href="{% static 'css/main.css' %}" />
-       
-        {% block extra_css %}
-            {# Override this in templates to add extra stylesheets #}
-        {% endblock %}
-
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-    
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ ga_tracking_id }}"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', '{{ ga_tracking_id }}');
-</script>
-
-
-    </head>
-
-    <body class="{% block body_class %}{% endblock %}">
-        {% wagtailuserbar %}
-        <div id="wrapper">
-			
-
-
- 
-
-            <!-- Header -->
-                <header id="header">
-                    <h1><a href="/">AA</a></h1>
-                    {% main_menu max_levels=3 template="menus/main_menu_dropdown.html" sub_menu_template="menus/sub_menu.html" %}
-                   <!-- 
+<h1><a href="/">AA</a></h1>
                     <nav class="links navbar navbar-expand-lg navbar-light bg-light">
                      
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +34,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   Intergroups
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="    " aria-labelledby="navbarDropdown">
                                   <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/City-Of-London-Intergroup" target="_blank">City of London</a>
                                   <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/London-Chelsea-Intergroup" target="_blank">Chelsea</a>
                                   <a class="dropdown-item" href="https://www.alcoholics-anonymous.org.uk/Members/Regional-&-Local-Websites/london-region-(north)/East-London-Intergroup" target="_blank">East London</a>
@@ -129,69 +86,5 @@
                          
                         </div>
                       </nav>
+
                       -->
-                
-                </header>
-
-            
-            
-           
-
-            <!-- Main -->
-                <section id="main">
-
-                            
-                            {% block content %}{% endblock %}
-                  
-
-                    
-
-
-                    
-
-                </section>
-
-            <!-- Sidebar -->
-                <section id="sidebar">
-
-                    <!-- Intro -->
-                        <section id="intro">
-                            <a href="#" class="logo"><img src="{% static 'images/logo.jpg' %}" alt="" /></a>
-                            
-                            <header>
-                                <h2>Alcoholics Anonymous London</h2>
-                            
-
-                            </header>
-                        </section>
-
-                    
-                        
-                    
-                    
-                
-                        
-
-                </section>
-
-        </div>
-       
-
-        {# Global javascript #}
-        
-       
-               
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>        <script src="{% static 'js/browser.min.js' %}"></script>
-        <script src="{% static 'js/breakpoints.min.js' %}"></script>
-        <script src="{% static 'js/util.js' %}"></script>
-        <script src="{% static 'js/main.js' %}"></script>
-	
-        
-
-        {% block extra_js %}
-            {# Override this in templates to add extra javascript #}
-        {% endblock %}
-    </body>
-</html>
