@@ -24,7 +24,7 @@ class ServiceIndexPage(Page):
         context = super().get_context(request)
         return context
     
-    subpage_types = ['service.ServicePage',]
+    subpage_types = ['service.ServicePage','home.LinkPage']
 
 
 class ServicePage(Page):
