@@ -11,6 +11,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from django.db.models import Avg, F, Window
 from django.db.models.functions import  Rank
+from django.utils import timezone
+import pytz
 
 # Create your views here.
 
@@ -47,6 +49,8 @@ class MeetingsList(generics.ListAPIView):
     def get_queryset(self):
         twentyfour = self.request.query_params.get('twentyfour',None)
         if twentyfour == '1':
+            tz = pytz.timezone('Europe/London') 
+            now = datetime.datetime.now(tz=tz)   
             
             now = datetime.now() 
             date_today = now.date()
@@ -132,7 +136,7 @@ class OnlineMeetingSearch(generics.ListAPIView):
     model = Meeting
     serializer_class = OnlineMeetingSerializer
     filter_backends = [DjangoFilterBackend,filters.OrderingFilter, filters.SearchFilter]
-    filterset_fields = ['day',]
+    #filterset_fields = ['day',]
     ordering_fields = ['time']
         
 
@@ -141,29 +145,32 @@ class OnlineMeetingSearch(generics.ListAPIView):
         Optionally restricts the returned purchases to a given user,
         by filtering against a `username` query parameter in the URL.
         """
-      
+        day = self.request.query_params.get('day',None)
+        tz = pytz.timezone('Europe/London') 
+        dt_now = datetime.now(tz=tz)  
+        day_name_today = dt_now.strftime("%A")
         
-        queryset = OnlineMeeting.objects.all()
+        queryset = OnlineMeeting.objects.filter(Q(day=day) | Q(day='All') )
         now = self.request.query_params.get('now',None)
         if now == '1':
+             
             
-            now = datetime.now() 
-            date_today = now.date()
-            time_now = now.time()
+            date_today = dt_now.date()
+            time_now = dt_now.time()
             datetime_now = datetime.combine(date_today,time_now)
-            day_name_today = now.strftime("%A")
-            tomorrow = now + timedelta(days=1) 
+            
+            tomorrow = dt_now + timedelta(days=1) 
             day_name_tomorrow = tomorrow.strftime("%A")
             
-            meetings_today = OnlineMeeting.objects.filter((Q(day=day_name_today) & Q(time__gte=now.time())))#.order_by('time')
-            meetings_tomorrow = OnlineMeeting.objects.filter((Q(day=day_name_tomorrow) & Q(time__lte=now.time())))#.order_by('time')
+            meetings_today = OnlineMeeting.objects.filter(((Q(day=day_name_today) | Q(day='All'))   & Q(time__gte=dt_now.time())))#.order_by('time')
+            meetings_tomorrow = OnlineMeeting.objects.filter((Q(day=day_name_tomorrow) & Q(time__lte=dt_now.time())))#.order_by('time')
             rank_by_day = Window(expression=Rank(),partition_by=F("day"),order_by=F("time").asc())
 
             all = meetings_today #| meetings_tomorrow
             if day_name_today == 'sunday':
-                all_ordered = all.order_by('-day_number','time')
+                all_ordered = all.order_by('time')
             else:
-                all_ordered = all.order_by('day_number','time')
+                all_ordered = all.order_by('time')
             return all_ordered#.annotate(the_rank=rank_by_day)
 
         postcode = self.request.query_params.get('search', None)
@@ -171,7 +178,7 @@ class OnlineMeetingSearch(generics.ListAPIView):
 
         if postcode is not None:
             queryset = queryset.filter(postcode__istartswith=postcode)
-        return queryset.order_by('day_number','time')
+        return queryset.order_by('time')
     
 
   
