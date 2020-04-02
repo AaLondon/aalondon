@@ -210,11 +210,11 @@ input, select, textarea {
 
 		a:hover {
 			border-bottom-color: transparent;
-			color: #2ebaae !important;
+			color: #0E71EB !important;
 		}
 
 			a:hover:before {
-				color: #2ebaae !important;
+				color: #0E71EB !important;
 			}
 
 	strong, b {
@@ -1919,8 +1919,8 @@ input, select, textarea {
 		input[type="button"]:hover,
 		button:hover,
 		.button:hover {
-			box-shadow: inset 0 0 0 1px #2ebaae;
-			color: #2ebaae !important;
+			box-shadow: inset 0 0 0 1px #0E71EB;
+			color: #0E71EB !important;
 		}
 
 			input[type="submit"]:hover:active,
@@ -2098,8 +2098,8 @@ input, select, textarea {
 		input[type="tel"]:focus,
 		select:focus,
 		textarea:focus {
-			border-color: #2ebaae;
-			box-shadow: inset 0 0 0 1px #2ebaae;
+			border-color: #0E71EB;
+			box-shadow: inset 0 0 0 1px #0E71EB;
 		}
 
 	.select-wrapper {
@@ -2240,8 +2240,8 @@ input, select, textarea {
 
 		input[type="checkbox"]:focus + label:before,
 		input[type="radio"]:focus + label:before {
-			border-color: #2ebaae;
-			box-shadow: 0 0 0 1px #2ebaae;
+			border-color: #0E71EB;
+			box-shadow: 0 0 0 1px #0E71EB;
 		}
 
 	input[type="radio"] + label:before {
@@ -3672,7 +3672,7 @@ input, select, textarea {
 					}
 
 					#menu .links > li a:hover h3 {
-						color: #2ebaae;
+						color: #0E71EB;
 					}
 
 				#menu .links > li:first-child {
@@ -3702,7 +3702,7 @@ input, select, textarea {
 
 
 		.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-			color: #2ebaae ;
+			color: #0E71EB ;
 			background-color: #ffffff; 
 			
 		}
@@ -3729,7 +3729,7 @@ input, select, textarea {
 		}
 
 		.MuiSlider-root {
-			color: #2ebaae !important;
+			color: #0E71EB !important;
 		}
 
 		#discrete-slider{
@@ -3760,4 +3760,20 @@ input, select, textarea {
 				background: #FCFCFC;
 		}
 
+		
+
+		.red-notice{
+			color:hsl(0, 87%, 47%);
+		}
+
+		.red-notice h2{
+			color:hsl(0, 87%, 47%);
+		}
+
+		.red-notice b{
+			color:hsl(0, 87%, 47%);
+		}
+		.red-notice a{
+			text-decoration: underline;
+		}	
 		
