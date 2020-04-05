@@ -36,7 +36,12 @@ class OnlineMeetingCreateView(CreateView):
 
         form = super(OnlineMeetingCreateView, self).get_form(form_class)
         form.fields['time'].widget = forms.TextInput(attrs={'placeholder': '24 hour e.g. 14:00 or 15:30'})
-        form.fields['link'].widget = forms.TextInput(attrs={'placeholder': 'Please us a password link'})
+        form.fields['title'].widget = forms.TextInput(attrs={'placeholder': 'Name of meeting'})
+        form.fields['link'].widget = forms.TextInput(attrs={'placeholder': 'Please use a zoom url with password link e.g. https://zoom.us/j/123456789?pwd=ABCDEFGc2FEK2NVZ1c5d3Z0OEJuQT09'})
+        form.fields['email'].widget = forms.TextInput(attrs={'placeholder': 'This email is for internal communications only and will not be displayed on the site'})
+        form.fields['description'].widget = forms.TextInput(attrs={'placeholder': 'Any other meeting details that you would like to be on the meeting detail page? e.g. attendeed limits,expected etiquette?'})
+        form.fields['additional_comments'].widget = forms.TextInput(attrs={'placeholder': 'Do you have any additional comments/concerns you need to communiacate to us? We can get back to you by your email'})
+
 
         return form
 
