@@ -87,7 +87,9 @@ class OnlineMeeting(models.Model):
     description = models.TextField(null=True,blank=True)
     slug = AutoSlugField(populate_from=['title','day'])
     day_number = models.IntegerField(null=True,blank=True)
-
+    additional_comments = models.TextField(null=True,blank=True)
+    published = models.BooleanField(null=False,blank=False,default=False)
+    email = models.EmailField(null=True,blank=True)
 
 
     def __str__(self):

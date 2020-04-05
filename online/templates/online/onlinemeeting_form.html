@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load render_bundle from webpack_loader %}
+
+{% block content %}
+<!-- Post -->
+<article class="post">
+  <header>
+      <div class="title">
+          <h2><a>Sumbit Online Meeting Detail</a></h2>
+          </div>
+      
+  </header>
+
+    <h1>{{object.title}} {{object.day}}</h1>
+    <div class="container">
+    
+    
+     <form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+    </form>
+
+    </div>
+</article>
+
+{% endblock %}
+
+
+
+
+
+ 
