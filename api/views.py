@@ -150,7 +150,7 @@ class OnlineMeetingSearch(generics.ListAPIView):
         dt_now = datetime.now(tz=tz)  
         day_name_today = dt_now.strftime("%A")
         
-        queryset = OnlineMeeting.objects.filter(Q(day=day) | Q(day='All') )
+        queryset = OnlineMeeting.objects.filter(Q(day=day) | Q(day='All') ).filter(published=True)
         now = self.request.query_params.get('now',None)
         if now == '1':
              
