@@ -52,10 +52,13 @@ export default class MeetingDataTable extends Component {
     let showPostcode = this.props.showPostcode;
    
 
-    let tbl = _.map(data, ({ id, title, time, day, link, description,slug,friendly_time }) => {
+    let tbl = _.map(data, ({ id, title, time, day, link, description,slug,friendly_time,zoom_password }) => {
       
-     
-        console.log(typeof distance_from_client);
+      
+        console.log('ZOOM meeting:'+zoom_password);
+        if (zoom_password === 1){
+            title = <b>{title+'*'}</b>;
+        }
      return (
         <Table.Row key={id}>
           <Table.Cell>{friendly_time}</Table.Cell>
