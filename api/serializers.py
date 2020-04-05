@@ -52,10 +52,11 @@ class MeetingSerializer(serializers.ModelSerializer):
 class OnlineMeetingSerializer(serializers.ModelSerializer):
     actual_datetime = serializers.SerializerMethodField()
     friendly_time = serializers.SerializerMethodField()
+    zoom_password = serializers.SerializerMethodField()
     class Meta:
         model = OnlineMeeting
         fields = ['id','title','time','day','actual_datetime','link','description','slug',
-                    'friendly_time']
+                    'friendly_time','zoom_password']
 
 
     def get_actual_datetime(self, obj):
@@ -77,4 +78,13 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
     
     def get_friendly_time(self,obj):
         time = obj.time.strftime('%H:%M')
-        return f'{time}' 
+        return f'{time}'
+
+    def get_zoom_password(self,obj):
+        link = obj.link
+        description = obj.description
+        if 'pwd=' in link or 'pwd=' in description or 'password' in description:
+            return 1
+        return 0
+
+         
