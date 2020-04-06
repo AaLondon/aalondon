@@ -63,7 +63,7 @@ export default class MeetingDataTable extends Component {
         <Table.Row key={id}>
           <Table.Cell>{friendly_time}</Table.Cell>
           <Table.Cell><a href={'/onlinemeetings/' + slug + '/'} >{title}</a></Table.Cell>
-          <Table.Cell><a href={link} target="blank">Join</a></Table.Cell>
+         
         </Table.Row>
       )
     
@@ -85,13 +85,9 @@ export default class MeetingDataTable extends Component {
               sorted={column === 'title' ? direction : null}
               onClick={this.handleSort('title')}
             >
-              Title
+              Meeting 
             </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === 'link' ? direction : null}
-              onClick={this.handleSort('link')}
-            >
-            </Table.HeaderCell>
+            
           </Table.Row>
         </Table.Header>
         <Table.Body>
