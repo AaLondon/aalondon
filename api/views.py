@@ -147,7 +147,7 @@ class OnlineMeetingSearch(generics.ListAPIView):
         """
         day = self.request.query_params.get('day',None)
         tz = pytz.timezone('Europe/London') 
-        dt_now = datetime.now(tz=tz)  
+        dt_now = datetime.now(tz=tz) - timedelta(minutes=10)    
         day_name_today = dt_now.strftime("%A")
         
         queryset = OnlineMeeting.objects.filter(Q(day=day) | Q(day='All') ).filter(published=True)
