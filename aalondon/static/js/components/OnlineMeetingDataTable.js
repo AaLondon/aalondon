@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { Table } from 'semantic-ui-react'
 
 
+
+
 const tableData = [
   { name: 'John', age: 15, gender: 'Male' },
   { name: 'Amber', age: 40, gender: 'Female' },
@@ -52,17 +54,21 @@ export default class MeetingDataTable extends Component {
     let showPostcode = this.props.showPostcode;
    
 
-    let tbl = _.map(data, ({ id, title, time, day, link, description,slug,friendly_time,zoom_password }) => {
+    let tbl = _.map(data, ({ id, title, time, day, link, description,slug,friendly_time,zoom_password,platform }) => {
       
       
-        console.log('ZOOM meeting:'+zoom_password);
+        console.log('ZOOM meeting:'+platform);
+        let img='/static/images/zoom.png';
+        if (platform === 'Skype'){
+          img = '/static/images/skype.png'
+        }
         if (zoom_password === 1){
             title = <b>{title+'*'}</b>;
         }
      return (
         <Table.Row key={id}>
           <Table.Cell>{friendly_time}</Table.Cell>
-          <Table.Cell><a href={'/onlinemeetings/' + slug + '/'} >{title}</a></Table.Cell>
+          <Table.Cell className='meeting-cell'><div><a href={'/onlinemeetings/' + slug + '/'} >{title}</a></div><div><img src={img}></img></div></Table.Cell>
          
         </Table.Row>
       )

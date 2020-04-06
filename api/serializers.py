@@ -56,7 +56,7 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
     class Meta:
         model = OnlineMeeting
         fields = ['id','title','time','day','actual_datetime','link','description','slug',
-                    'friendly_time','zoom_password']
+                    'friendly_time','zoom_password','platform']
 
 
     def get_actual_datetime(self, obj):

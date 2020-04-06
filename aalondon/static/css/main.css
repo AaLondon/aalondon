@@ -3778,3 +3778,18 @@ input, select, textarea {
 		}	
 		
 	
+
+	/* Meeting Table */
+	.meeting-cell{
+		display: grid;
+		grid-template-columns: auto auto;
+		align-items: right;
+	}
+	
+	.meeting-cell img {
+		
+		width:30px;
+		
+	}
+	
+	
