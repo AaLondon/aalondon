@@ -67,9 +67,9 @@ export default class MeetingDataTable extends Component {
         }
      return (
         <Table.Row key={id}>
-          <Table.Cell>{friendly_time}</Table.Cell>
-          <Table.Cell className='meeting-cell'><div><a href={'/onlinemeetings/' + slug + '/'} >{title}</a></div><div><img src={img}></img></div></Table.Cell>
-         
+          <Table.Cell textAlign="center" >{friendly_time}</Table.Cell>
+          <Table.Cell textAlign="center"><div><a href={'/onlinemeetings/' + slug + '/'} >{title} </a></div></Table.Cell>
+          <Table.Cell textAlign="center" className='meeting-cell'><img src={img}></img></Table.Cell>
         </Table.Row>
       )
     
@@ -78,22 +78,26 @@ export default class MeetingDataTable extends Component {
     let third_column_field = showPostcode === 0 ? 'distance_from_client' : 'postcode_prefix';
 
     return (
-      <Table sortable celled fixed unstackable>
+      <Table sortable celled>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell
               sorted={column === 'friendly_time' ? direction : null}
               onClick={this.handleSort('friendly_time')}
+              textAlign="center"
             >
               Time
             </Table.HeaderCell>
             <Table.HeaderCell
               sorted={column === 'title' ? direction : null}
               onClick={this.handleSort('title')}
+              textAlign="center"
             >
               Meeting 
             </Table.HeaderCell>
-            
+            <Table.HeaderCell textAlign="center">
+              Platform 
+            </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
