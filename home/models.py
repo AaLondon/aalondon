@@ -72,7 +72,11 @@ class StandardPage(Page):
     ]
 
 class HomePage(Page):
-    pass
+    body = StreamField([
+        ('heading', blocks.CharBlock(classname="full title")),
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', ImageChooserBlock()),
+    ],null=True)
 
     def get_context(self, request):
         context = super().get_context(request)  
@@ -98,5 +102,9 @@ class HomePage(Page):
 
 
         return context
-
+    
+    content_panels = Page.content_panels + [
+    StreamFieldPanel('body'),
+        
+    ]
     subpage_types = ['event.EventIndexPage','service.ServiceIndexPage','online.OnlineIndexPage','StandardIndexPage','StandardPage','LinkPage']
