@@ -48,8 +48,8 @@ class OnlineMeetingSearchForm extends React.Component {
     return (
       
       <form onSubmit={this.handleSubmit}>
-        <Row className="justify-content-center">
-          <Col xs={10}>
+        <Row className="justify-content-center ">
+          <Col className="days" xs={10}>
           <Row><Nav fill variant="pills" activeKey={activeIndex} defaultActiveKey="0" >
          {weekDayNav} 
           
