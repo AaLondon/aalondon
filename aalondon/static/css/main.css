@@ -3704,10 +3704,12 @@ input, select, textarea {
 		.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
 			color: #0E71EB ;
 			background-color: #ffffff; 
+			text-decoration: none;
+			border-bottom: 3px #0E71EB solid ;
 			
 		}
 
-
+		
 		
 
 		.dropdown-menu{
@@ -3789,3 +3791,17 @@ input, select, textarea {
 	}
 	
 	
+	
+
+	@media screen and (max-width: 480px)
+	{
+		.days{
+			padding-left: 0;
+		}
+
+		.nav {
+
+			padding-left: 0;
+		
+		}
+	}
