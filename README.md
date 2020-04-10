@@ -7,6 +7,8 @@ docker-compose -f docker-compose.yml build
 docker-compose -f docker-compose.yml up -d
 docker-compose -f docker-compose.yml run web python manage.py createsuperuser
 docker-compose -f docker-compose.yml run web python manage.py import_zoom_csv
+npm install
+npm run build
 
 ```
 
