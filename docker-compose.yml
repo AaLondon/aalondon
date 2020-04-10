@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:11
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=aalondon
+    volumes:
+      - aapostgresdata:/var/lib/postgresql/data
+  web:
+    build: .
+    environment:
+      - DJANGO_SECRET_KEY=p_o3vp1rg5)t^lxm9-43%0)s-=1qpeq%o7gfq+e4#*!t+_ev82
+      - DEBUG=1
+      - ALLOWED_HOSTS=0.0.0.0
+      - DATABASE_URL=postgres://postgres:postgres@db/aalondon
+  
+    command: python manage.py runserver 0.0.0.0:8000 
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  
+volumes:
+  aapostgresdata:
+ 
+  

@@ -82,7 +82,7 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
 
     def get_zoom_password(self,obj):
         link = obj.link
-        description = obj.description
+        description = obj.description or ''
         if 'pwd=' in link or 'pwd=' in description or 'password' in description:
             return 1
         return 0

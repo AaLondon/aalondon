@@ -39,9 +39,9 @@ class Command(BaseCommand):
                     if row[2]=='Zoom daily meetings - all times: London':  
                         for day in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']:
                             day_number = days[day]
-                            meeting ,created = OnlineMeeting.objects.get_or_create(title=row[0],time=time,day=day,link=row[3],platform='Zoom',day_number=day_number)
+                            meeting ,created = OnlineMeeting.objects.get_or_create(title=row[0],time=time,day=day,link=row[3],platform='Zoom',day_number=day_number,published=True)
                     else:
                         day = row[2]
                         day_number = days[day]
-                        meeting ,created = OnlineMeeting.objects.get_or_create(title=row[0],time=time,day=row[2],link=row[3],platform='Zoom',day_number=day_number)
+                        meeting ,created = OnlineMeeting.objects.get_or_create(title=row[0],time=time,day=row[2],link=row[3],platform='Zoom',day_number=day_number,published=True)
               
