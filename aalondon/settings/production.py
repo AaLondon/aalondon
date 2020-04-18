@@ -1,7 +1,7 @@
 from .base import *
 from .base import env
-
-
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 
 try:
@@ -14,25 +14,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 DEBUG = False
 ALLOWED_HOSTS = ['alcoholicsanonymouslondon.com','www.alcoholicsanonymouslondon.com'] 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': '/home/deployer/debug.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
-DEBUG_PROPAGATE_EXCEPTIONS = True
+
 
 # STORAGES
 DO_SPACES_ACCESS_KEY_ID = env('DJANGO_DO_ACCESS_KEY_ID')
@@ -99,3 +81,16 @@ SECURE_CONTENT_TYPE_NOSNIFF = env.bool('DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', def
 SECURE_BROWSER_XSS_FILTER = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
 X_FRAME_OPTIONS = 'DENY'
+
+
+SENTRY_DSN = env('SENTRY_DSN') 
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration()],
+
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True
+    )
+
