@@ -10,13 +10,14 @@ def servicepages(request):
     servicepages = ServicePage.objects.all()
     pdf = Document.objects.filter(title='Insurance.pdf').first()
     onlinepages = OnlinePage.objects.all()
-    
-
+    pdf_url=''
+    if pdf:
+       pdf_url = pdf.file.url
            
     return {
        "servicepages": servicepages,
        "onlinepages":onlinepages,
        "ga_tracking_id": GA_TRACKING_ID,
-       "pdf_url": pdf.file.url
+       "pdf_url":  pdf_url
 
     }
