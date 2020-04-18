@@ -26,7 +26,7 @@ urlpatterns = [
     path('onlinemeetings/create/', OnlineMeetingCreateView.as_view(), name='online-meeting-create'),
     path('onlinemeetings/<slug:slug>/', OnlineMeetingDetailView.as_view(), name='online-meeting-detail'),
     
-    path('online/zoom-meetings/', redirect_view),
+    path('online/zoom-meetings/', redirect_view,name='online-zoom-meetings-redirect'),
     
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
