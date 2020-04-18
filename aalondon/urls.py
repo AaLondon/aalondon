@@ -12,7 +12,12 @@ from search import views as search_views
 from meetings.views import MeetingSearchView,MeetingDetailView
 from online.views import OnlineMeetingDetailView,redirect_view,OnlineMeetingCreateView,OnlineMeetingThanksView
 
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
+
 urlpatterns = [
+    path('sentry-debug/', trigger_error),
     url(r'^django-admin/', admin.site.urls),
 
     url(r'^admin/', include(wagtailadmin_urls)),
