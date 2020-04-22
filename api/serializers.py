@@ -84,8 +84,7 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
 
         link = obj.link
         description = obj.description or ''
-        if 'pwd=' in link or 'pwd=' in description or 'password' in description:
-            return 1
+        
         return 0
 
          
