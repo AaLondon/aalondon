@@ -10,12 +10,12 @@
 
 
 <!-- Post -->
-<article class="post">
+
   <header>
       <div class="title">
-          <h2><a>Online Meetings</a></h2>
+          <h2><a>Online Meetings Now</a></h2>
     
-          {{page.body}}
+     
 
           </div>
   </header>
@@ -37,7 +37,9 @@
 
 
 
- 
+ <script>
+   window.topRecords = 5
+ </script>
 <script>
   
   
@@ -46,7 +48,7 @@
  
   
 </script>
-</article>
+
 {% block extra_js %}
              {% render_bundle 'onlinemeetingsearch' %}
 

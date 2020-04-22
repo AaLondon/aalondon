@@ -152,6 +152,7 @@ class OnlineMeetingSearch(generics.ListAPIView):
         
         queryset = OnlineMeeting.objects.filter(Q(day=day) | Q(day='All') ).filter(published=True)
         now = self.request.query_params.get('now',None)
+        top = int(self.request.query_params.get('top',0))
         if now == '1':
              
             
@@ -171,6 +172,9 @@ class OnlineMeetingSearch(generics.ListAPIView):
                 all_ordered = all.order_by('time')
             else:
                 all_ordered = all.order_by('time')
+            
+            if top:
+                all_ordered = all_ordered[:top]
             return all_ordered#.annotate(the_rank=rank_by_day)
 
         postcode = self.request.query_params.get('search', None)
