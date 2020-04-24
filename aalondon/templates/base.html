@@ -62,7 +62,7 @@
 
             <!-- Header -->
                 <header id="header">
-                    <h1><a href="/">AA</a></h1>
+                  
                     {% main_menu max_levels=3 template="menus/main_menu_dropdown.html" sub_menu_template="menus/sub_menu.html" %}
 
                 
@@ -71,8 +71,23 @@
             
             
            
+
+            <!-- Main -->
+                <main id="main">
+
+                            
+                            {% block content %}{% endblock %}
+                  
+
+                    
+
+
+                    
+
+                </main>
+
             <!-- Sidebar -->
-                <section id="sidebar">
+                <aside id="sidebar">
 
                     <!-- Intro -->
                         <section id="intro">
@@ -92,22 +107,7 @@
                 
                         
 
-                </section>
-
-
-            <!-- Main -->
-                <section id="main">
-
-                            
-                            {% block content %}{% endblock %}
-                  
-
-                    
-
-
-                    
-
-                </section>
+                </aside>
 
         </div>
        

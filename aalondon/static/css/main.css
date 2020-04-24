@@ -33,7 +33,7 @@ section, summary, time, mark, audio, video {
 
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav {
-	display: block;}
+	display: grid;}
 
 body {
 	line-height: 1;
@@ -3136,27 +3136,10 @@ input, select, textarea {
 
 /* Header */
 
-	body {
-		padding-top: 3.5em;
-	}
+	
 
 	#header {
-		display: -moz-flex;
-		display: -webkit-flex;
-		display: -ms-flex;
-		display: flex;
-		-moz-justify-content: space-between;
-		-webkit-justify-content: space-between;
-		-ms-justify-content: space-between;
-		justify-content: space-between;
-		background-color: #ffffff;
-		border-bottom: solid 1px rgba(160, 160, 160, 0.3);
-		height: 3.5em;
-		left: 0;
-		line-height: 3.5em;
-		position: absolute;
-		top: 0;
-		width: 100%;
+		
 		
 	}
 
@@ -3188,14 +3171,10 @@ input, select, textarea {
 			}
 
 		#header .links {
-			-moz-flex: 1;
-			-webkit-flex: 1;
-			-ms-flex: 1;
-			flex: 1;
 			border-left: solid 1px rgba(160, 160, 160, 0.3);
 			height: inherit;
 			line-height: inherit;
-			margin-left: 1.5em;
+			
 			padding-left: 1.5em;
 			background-color: #ffffff !important;
 			border-bottom: solid 1px rgba(160, 160, 160, 0.3);
@@ -3386,9 +3365,31 @@ input, select, textarea {
 
 	#wrapper {
 		display:grid;
-		grid-template-columns: 25% 75%;
+		width:100%;
+		grid-template-areas: 
+		"header header header"
+		"aside  main  main";
+		grid-template-columns: 1fr 1fr 1fr;
+		
+  
+
 
 	}
+
+	#wrapper > header {
+		grid-area: header;
+		
+	  }
+
+	  #wrapper> aside {
+		grid-area: aside;
+		
+	  }
+
+	  #wrapper > main {
+		grid-area: main;
+		
+	  }
 
 		body.is-menu-visible #wrapper {
 			opacity: 0.15;
@@ -3396,9 +3397,7 @@ input, select, textarea {
 
 		@media screen and (max-width: 1680px) {
 
-			#wrapper {
-				padding: 3em;
-			}
+		
 
 		}
 
