@@ -3370,6 +3370,7 @@ input, select, textarea {
 		"header header header"
 		"aside  main  main";
 		grid-template-columns: 1fr 1fr 1fr;
+		grid-row-gap: 4rem;
 		
   
 
@@ -3384,10 +3385,12 @@ input, select, textarea {
 	  #wrapper> aside {
 		grid-area: aside;
 		
+		
 	  }
 
 	  #wrapper > main {
 		grid-area: main;
+		
 		
 	  }
 
@@ -3433,6 +3436,7 @@ input, select, textarea {
 		margin-right: 3em;
 		min-width: 22em;
 		width: 22em;
+		padding-left: 100px;
 	}
 
 		#sidebar > * {
