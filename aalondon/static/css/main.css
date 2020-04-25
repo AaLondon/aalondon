@@ -105,7 +105,7 @@ input, select, textarea {
 	}
 
 	body {
-		background: #FCFCFC;
+		background: #F4F4F4;
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -3390,6 +3390,11 @@ input, select, textarea {
 
 	  #wrapper > main {
 		grid-area: main;
+		background: #FFFFFF;
+		border-style:solid;
+		border-color: #ECECEC;
+		border-width: 1px;
+		width:95%;
 		
 		
 	  }
@@ -3427,7 +3432,21 @@ input, select, textarea {
 /* Main */
 
 	#main {
-		
+		display:grid;
+		padding-left:40px ;
+		padding-right:40px ;
+
+	}
+	#main > header{
+		height: 100px;
+		justify-items: center;
+		align-content:center;
+	}
+
+	#main header h2
+	{
+	    font-size: 1.3em;
+    	font-weight: 900;
 	}
 
 /* Sidebar */

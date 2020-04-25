@@ -175,14 +175,15 @@ class OnlineMeetingSearch extends Component {
       dayForm = null;
     }
     if (showSpinner === 1)
-      return (<Container>
+      return (
+        <div>
         <OnlineMeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} day={this.state.day}  />
         <Row className="justify-content-center"><Col xs={2}> <Spinner size="lg" animation="border" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner></Col></Row>
+        </div>
 
-
-      </Container>)
+      )
 
 
     
@@ -190,13 +191,13 @@ class OnlineMeetingSearch extends Component {
 
       <div>
 
-        <Container>
+       
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
            {dayForm}      
           <div>NO MEETINGS FOR THE REST OF THE DAY PLEASE CHECK TOMORROW</div>
 
 
-        </Container>
+       
 
       </div>
 
@@ -212,14 +213,13 @@ class OnlineMeetingSearch extends Component {
 
       <div>
 
-        <Container>
-
+        
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
           
           {dayForm} 
           <OnlineMeetingTableData showPostcode={this.state.showPostcode} key={firstCode} currentMeetings={currentMeetings}  />
           
-        </Container>
+        
 
       </div>
 
