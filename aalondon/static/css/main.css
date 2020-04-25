@@ -3435,13 +3435,40 @@ input, select, textarea {
 		display:grid;
 		padding-left:40px ;
 		padding-right:40px ;
+		grid-template-areas: 
+		"header header"
+		"meetings meetings"
+		"link link"
+		"news notices";
+		grid-template-columns: 1fr 1fr;
 
 	}
 	#main > header{
+		grid-area: header;
 		height: 100px;
 		justify-items: center;
 		align-content:center;
 	}
+	#main > #meeting-search{
+		grid-area: meetings
+	}
+	#main > #online-meetings-link{
+		grid-area: link
+	}
+
+	#main > #online-meetings-link h2{
+		font-size: 0.9em;
+		font-weight: 600;
+		color: #287EFB;
+		letter-spacing: .5px;
+	}
+	#main > #new-to-aa{
+		grid-area: news
+	}
+	#main > #notice-board{
+		grid-area: notices
+	}
+
 
 	#main header h2
 	{
