@@ -1,7 +1,7 @@
 from django.db import models
 from meetings.models import Meeting
 from service.models import ServicePage
-from wagtail.core.models import Page
+from wagtail.core.models import Orderable,Page
 from datetime import datetime,timedelta
 from django.db.models import Q
 from django.core import serializers
@@ -71,13 +71,32 @@ class StandardPage(Page):
         ImageChooserPanel('image'),
     ]
 
+
+class Notice(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.CharField(max_length=500)
+    link = models.URLField("External link", blank=True)
+
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('description'),
+        FieldPanel('link'),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class HomePageNotices(Orderable, Notice):
+    page = ParentalKey('home.HomePage', on_delete=models.CASCADE, related_name='notices')
+
 class HomePage(Page):
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
     ],null=True)
-
+    
     def get_context(self, request):
         context = super().get_context(request)  
 
@@ -105,6 +124,7 @@ class HomePage(Page):
     
     content_panels = Page.content_panels + [
     StreamFieldPanel('body'),
+    InlinePanel('notices', label="notices"),
         
     ]
     subpage_types = ['event.EventIndexPage','service.ServiceIndexPage','online.OnlineIndexPage','StandardIndexPage','StandardPage','LinkPage']
