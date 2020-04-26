@@ -3517,9 +3517,17 @@ input, select, textarea {
 		border-color: #E8E8E8;
 		display: inline-flex;
 		border-width: 1px;
+		height: 35px;
 		
 	}
 
+	.blue-text
+	{
+		font-size: 1em;
+    	font-weight: 900;
+		color: #287EFB;
+
+	}
 
 
 /* Sidebar */
