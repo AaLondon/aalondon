@@ -227,7 +227,7 @@ input, select, textarea {
 	}
 
 	p {
-		margin: 0 0 2em 0;
+		margin: 0 0 0 0;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -3453,7 +3453,8 @@ input, select, textarea {
 		grid-area: meetings
 	}
 	#main > #online-meetings-link{
-		grid-area: link
+		grid-area: link;
+		height:50px;
 	}
 
 	#main > #online-meetings-link h2{
@@ -3461,20 +3462,65 @@ input, select, textarea {
 		font-weight: 600;
 		color: #287EFB;
 		letter-spacing: .5px;
+	
 	}
 	#main > #new-to-aa{
 		grid-area: news
 	}
+	#main > #new-to-aa h2{
+		font-size: 0.9em;
+		font-weight: 600;
+		color: 000000;
+		letter-spacing: .5px;
+	}
+	
+
 	#main > #notice-board{
 		grid-area: notices
 	}
 
+	#main > #notice-board h2{
+		font-size: 0.9em;
+		font-weight: 600;
+		color: 000000;
+		letter-spacing: .5px;
+	}
 
 	#main header h2
 	{
 	    font-size: 1.3em;
     	font-weight: 900;
 	}
+
+	#arrow-wrapper{
+		display:grid;
+	}
+	
+	.new-arrow{
+		display: inline-flex;
+		
+		width:20px;
+		margin-right: 10px;
+	
+		
+	}
+
+	.arrow-wrapper-row img
+	{
+		
+		width:20px;
+		
+	}
+	.arrow-wrapper-row 
+	{
+		border-bottom:solid;
+		border-color: #E8E8E8;
+		display: inline-flex;
+		border-width: 1px;
+		
+	}
+
+
 
 /* Sidebar */
 
