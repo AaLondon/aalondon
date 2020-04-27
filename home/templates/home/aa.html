@@ -32,7 +32,11 @@
    
  
     </section>
-    <section id="notice-board"><h2>noticeboard</h2></section>
+    <section id="notice-board"><h2>noticeboard</h2>
+    {% for notice in notices%}
+    {{ notice.title }}
+    {% endfor%}
+    </section>
 
     
     

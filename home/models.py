@@ -11,6 +11,7 @@ from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.search import index
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
+from django.utils.translation import ugettext_lazy as _
 
 from wagtail.admin.edit_handlers import (
     FieldPanel,
@@ -75,12 +76,21 @@ class StandardPage(Page):
 class Notice(models.Model):
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=500)
+    link_page = models.ForeignKey(
+        Page,
+        verbose_name=_('link to an internal page'),
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+    )
     link = models.URLField("External link", blank=True)
 
     panels = [
         FieldPanel('title'),
         FieldPanel('description'),
+        FieldPanel('link_page'),
         FieldPanel('link'),
+        
     ]
 
     class Meta:
@@ -115,6 +125,8 @@ class HomePage(Page):
         context['meetings_tomorrow'] = meetings_tomorrow 
         context['day_name_tomorrow'] = day_name_tomorrow
         context['day_name_today'] = day_name_today
+        
+        context['notices'] = context['page'].notices.all()
         
         
         
