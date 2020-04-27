@@ -3529,6 +3529,36 @@ input, select, textarea {
 
 	}
 
+	.notice-board-row{
+		display:grid;
+		grid-template-areas: 
+		"notice-arrow notice-header"
+		"notice-arrow notice-meetings"
+		"notice-arrow notice-link";
+		grid-template-columns: 1fr 4fr;
+		grid-column-gap: 40px;
+	
+	
+	}
+
+	.notice-board-row > .notice-arrow{
+		grid-area: notice-arrow;
+		background: #A1A1A1;
+	}
+	.notice-board-row > .notice-header{
+		grid-area: notice-header;
+	}
+	.notice-board-row > .notice-link{
+		grid-area: notice-link;
+	}
+
+	.notice-arrow img{
+		top: 2%;
+		position: relative;
+		left: 60%;
+		width: 30px;
+	}
+
 
 /* Sidebar */
 

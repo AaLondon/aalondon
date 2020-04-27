@@ -34,7 +34,13 @@
     </section>
     <section id="notice-board"><h2>noticeboard</h2>
     {% for notice in notices%}
-    {{ notice.title }}
+    <div class="notice-board-row">
+      <div class="notice-arrow"><img src="{% static 'images/white-arrow.png' %}" alt="" /></div> 
+      <div class="notice-board-data-title">{{ notice.title }}</div>
+      <div class="notice-board-data-description">{{ notice.description }}</div>
+      <div class="notice-board-data-link">{{ notice.link_page }}</div>
+    </div>
+
     {% endfor%}
     </section>
 
