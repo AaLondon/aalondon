@@ -3735,8 +3735,16 @@ input, select, textarea {
 
 		#intro-aa header p {
 			text-align: left;
-			font-size: 10px;
+			line-height: 20px;
+			font-size: 14px;
 			margin-left:4%;
+			text-transform: none;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
+			border-top:rgba(160, 160, 160, 0.3);
+			border-top-width:1px;
+			
+			
+			border-style: solid;
 		}
 
 		#intro-aa .logo {
@@ -3774,6 +3782,7 @@ input, select, textarea {
 		#intro header p {
 			font-size: 0.8em;
 			padding-top: 10px;
+			
 		}
 
 	}
