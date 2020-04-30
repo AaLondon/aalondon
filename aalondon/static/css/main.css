@@ -3403,35 +3403,47 @@ input, select, textarea {
 			opacity: 0.15;
 		}
 
-		@media screen and (max-width: 1680px) {
+		@media screen and (max-width: 480px) {
 
+			#wrapper {
+				display:grid;
+				width:100%;
+				grid-template-areas: 
+				"header"
+				"aside"
+				"main";
+				grid-template-columns: 1fr;
+				grid-row-gap: 4rem;
+				
+		  
 		
+		
+			}
 
 		}
 
 		@media screen and (max-width: 1280px) {
 
-			#wrapper {
-				
-			}
-
+		
 		}
 
 		@media screen and (max-width: 736px) {
 
-			#wrapper {
-				padding: 1.5em;
-			}
+		
 
 		}
 
-		body.single #wrapper {
-			display: block;
-		}
+		
 
 /* Main */
 
 	#main {
+		padding-left:40px ;
+		padding-right:40px ;
+		padding-top: 40px;
+	}
+
+	#main-home {
 		display:grid;
 		padding-left:40px ;
 		padding-right:40px ;
@@ -3443,31 +3455,31 @@ input, select, textarea {
 		grid-template-columns: 1fr 1fr;
 
 	}
-	#main > header{
+	#main-home > header{
 		grid-area: header;
 		height: 100px;
 		justify-items: center;
 		align-content:center;
 	}
-	#main > #meeting-search{
+	#main-home > #meeting-search{
 		grid-area: meetings
 	}
-	#main > #online-meetings-link{
+	#main-home > #online-meetings-link{
 		grid-area: link;
 		height:50px;
 	}
 
-	#main > #online-meetings-link h2{
+	#main-home > #online-meetings-link h2{
 		font-size: 0.9em;
 		font-weight: 600;
 		color: #287EFB;
 		letter-spacing: .5px;
 	
 	}
-	#main > #new-to-aa{
+	#main-home > #new-to-aa{
 		grid-area: news
 	}
-	#main > #new-to-aa h2{
+	#main-home > #new-to-aa h2{
 		font-size: 0.9em;
 		font-weight: 600;
 		color: 000000;
@@ -3475,18 +3487,18 @@ input, select, textarea {
 	}
 	
 
-	#main > #notice-board{
+	#main-home > #notice-board{
 		grid-area: notices
 	}
 
-	#main > #notice-board h2{
+	#main-home > #notice-board h2{
 		font-size: 0.9em;
 		font-weight: 600;
 		color: 000000;
 		letter-spacing: .5px;
 	}
 
-	#main header h2
+	#main-home header h2
 	{
 	    font-size: 1.3em;
     	font-weight: 900;
@@ -3537,6 +3549,7 @@ input, select, textarea {
 		"notice-arrow notice-link";
 		grid-template-columns: 1fr 4fr;
 		grid-column-gap: 40px;
+		padding-bottom: 20px;
 	
 	
 	}
