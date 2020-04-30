@@ -3586,20 +3586,36 @@ input, select, textarea {
 
 
 #intro-aa{
+	display:grid;
 	border-bottom: 0;
 			margin: 0 0 1em 0;
 			overflow: hidden;
 			position: relative;
 			width: 100%;
+	grid-template-columns: 1fr;
 
 }	
+#intro-aa .logo{
+	display:grid;
+	grid-template-columns: 1fr;
+	margin: 0 auto;
+}
+
+
 #intro-aa .logo img {
-	display: block;
-	margin-left: -0.25em;
-	width: 2.5em;
-	padding-left: 10px;
+	
+  grid-column: 1;
+  grid-row: 1 / -1;      /* from first line at start, to first line at end */
+  background-position: center;
+  width: 100px;
+
 }
 	
+#intro-aa header h2
+{
+	
+	font-size: 1.0em;
+}
 
 	@media screen and (min-width: 760px) {
 
