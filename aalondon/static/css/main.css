@@ -3392,7 +3392,7 @@ input, select, textarea {
 		border-style:solid;
 		border-color: #ECECEC;
 		border-width: 1px;
-		width:95%;
+		margin: 16px;
 		
 		
 	  }
@@ -3404,7 +3404,7 @@ input, select, textarea {
 		
 
 		
-		@media screen and (min-width: 768px){
+		@media screen and (min-width: 1024px){
 			#wrapper {
 				display:grid;
 				width:100%;
@@ -3432,14 +3432,14 @@ input, select, textarea {
 
 	#main-home {
 		display:grid;
-		padding-left:40px ;
-		padding-right:40px ;
+		
 		grid-template-areas: 
-		"header header"
-		"meetings meetings"
-		"link link"
-		"news notices";
-		grid-template-columns: 1fr 1fr;
+		"header"
+		"meetings"
+		"link"
+		"news" 
+		"notices";
+		grid-template-columns: 1fr;
 
 	}
 	#main-home > header{
@@ -3488,7 +3488,8 @@ input, select, textarea {
 	#main-home header h2
 	{
 	    font-size: 1.3em;
-    	font-weight: 900;
+		font-weight: 900;
+		text-align: center;
 	}
 
 	#arrow-wrapper{
@@ -3552,13 +3553,47 @@ input, select, textarea {
 		grid-area: notice-link;
 	}
 
-	.notice-arrow img{
+	.notice-arrow img {
 		top: 2%;
 		position: relative;
-		left: 60%;
+		left: 40%;
 		width: 30px;
 	}
 
+	
+
+
+	@media screen and (min-width: 768px){
+
+		#main-home {
+			display:grid;
+			
+			grid-template-areas: 
+			"header header"
+			"meetings meetings"
+			"link link"
+			"news notices";
+			grid-template-columns: 1fr 1fr;
+	
+		}
+
+	}
+
+	@media screen and (min-width: 1024px){
+
+		#main-home {
+			display:grid;
+			
+			grid-template-areas: 
+			"header header"
+			"meetings meetings"
+			"link link"
+			"news notices";
+			grid-template-columns: 1fr 1fr;
+	
+		}
+
+	}
 
 /* Sidebar */
 
@@ -3576,8 +3611,9 @@ input, select, textarea {
 				width: 100%;
 				overflow-x: hidden;
 				margin-right: 3em;
+				padding-left: 10px;
 			
-				padding-left: 100px;
+				
 			}
 
 		}
@@ -3593,6 +3629,7 @@ input, select, textarea {
 			position: relative;
 			width: 100%;
 	grid-template-columns: 1fr;
+	padding-top: 15px;
 
 }	
 #intro-aa .logo{
@@ -3607,17 +3644,32 @@ input, select, textarea {
   grid-column: 1;
   grid-row: 1 / -1;      /* from first line at start, to first line at end */
   background-position: center;
-  width: 100px;
+  width: 80px;
 
 }
 	
 #intro-aa header h2
 {
-	
+	text-align:center;
 	font-size: 1.0em;
 }
 
+#intro-aa header p
+
+{
+	text-align: center;
+    font-size: 8px;
+    padding: 20px;
+}
+
 	@media screen and (min-width: 760px) {
+
+
+		#intro-aa header p {
+			text-align: center;
+			font-size: 14px;
+			padding: 20px;
+		}
 
 		#intro .logo {
 			border-bottom: 0;
@@ -3926,4 +3978,10 @@ input, select, textarea {
 			padding-left: 0;
 		
 		}
+	}
+
+	/* Nav */
+
+	.nav li {
+		padding-top:10px
 	}
