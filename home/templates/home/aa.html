@@ -36,9 +36,9 @@
     {% for notice in notices%}
     <div class="notice-board-row">
       <div class="notice-arrow"><img src="{% static 'images/white-arrow.png' %}" alt="" /></div> 
-      <div class="notice-board-data-title">{{ notice.title }}</div>
+      <div class="notice-board-data-title"><h2>{{ notice.title }}</h2></div>
       <div class="notice-board-data-description">{{ notice.description }}</div>
-      <div class="notice-board-data-link">{{ notice.link_page }}</div>
+      <div class="notice-board-data-link"><a class="blue-text"  {% if notice.link_page %} href="/{{ notice.link_page.slug }}"{% else %}href="{{notice.link}}"  target="_blank" {% endif %} >Learn More</a></div>
     </div>
 
     {% endfor%}
