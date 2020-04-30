@@ -3363,19 +3363,17 @@ input, select, textarea {
 
 /* Wrapper */
 
-	#wrapper {
-		display:grid;
-		width:100%;
-		grid-template-areas: 
-		"header header header"
-		"aside  main  main";
-		grid-template-columns: 1fr 1fr 1fr;
-		grid-row-gap: 4rem;
-		
-  
-
-
-	}
+#wrapper {
+	display:grid;
+	width:100%;
+	grid-template-areas: 
+	"header"
+	"aside"
+	"main";
+	grid-template-columns: 1fr;
+	
+}
+	
 
 	#wrapper > header {
 		grid-area: header;
@@ -3403,16 +3401,17 @@ input, select, textarea {
 			opacity: 0.15;
 		}
 
-		@media screen and (max-width: 480px) {
+		
 
+		
+		@media screen and (min-width: 768px){
 			#wrapper {
 				display:grid;
 				width:100%;
 				grid-template-areas: 
-				"header"
-				"aside"
-				"main";
-				grid-template-columns: 1fr;
+				"header header header"
+				"aside  main  main";
+				grid-template-columns: 1fr 1fr 1fr;
 				grid-row-gap: 4rem;
 				
 		  
@@ -3421,18 +3420,6 @@ input, select, textarea {
 			}
 
 		}
-
-		@media screen and (max-width: 1280px) {
-
-		
-		}
-
-		@media screen and (max-width: 736px) {
-
-		
-
-		}
-
 		
 
 /* Main */
@@ -3575,96 +3562,88 @@ input, select, textarea {
 
 /* Sidebar */
 
-	#sidebar {
-		margin-right: 3em;
-		min-width: 22em;
-		width: 22em;
-		padding-left: 100px;
-	}
+	
 
-		#sidebar > * {
-			border-top: solid 1px rgba(160, 160, 160, 0.3);
-			margin: 3em 0 0 0;
-			padding: 3em 0 0 0;
-		}
+		
 
-		#sidebar > :first-child {
-			border-top: 0;
-			margin-top: 0;
-			padding-top: 0;
-		}
-
-		@media screen and (max-width: 1280px) {
+		@media screen and (min-width: 760px) {
 
 			#sidebar {
-				border-top: solid 1px rgba(160, 160, 160, 0.3);
-				margin: 3em 0 0 0;
-				min-width: 0;
-				padding: 3em 0 0 0;
+				
+				
+			
+			
 				width: 100%;
 				overflow-x: hidden;
+				margin-right: 3em;
+			
+				padding-left: 100px;
 			}
 
 		}
 
 /* Intro */
 
-	#intro .logo {
-		border-bottom: 0;
-		margin: 0 0 1em 0;
-		overflow: hidden;
-		position: relative;
-		width: 4em;
-	}
 
-		#intro .logo:before {
-			background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100' preserveAspectRatio='none' zoomAndPan='disable'%3E%3Cpolygon points='0,0 100,0 100,25 50,0 0,25' style='fill:%23f4f4f4' /%3E%3Cpolygon points='0,100 100,100 100,75 50,100 0,75' style='fill:%23f4f4f4' /%3E%3C/svg%3E");
-			background-position: top left;
-			background-repeat: no-repeat;
-			background-size: 100% 100%;
-			content: '';
-			display: block;
-			height: 100%;
-			left: 0;
-			position: absolute;
-			top: 0;
+#intro-aa{
+	border-bottom: 0;
+			margin: 0 0 1em 0;
+			overflow: hidden;
+			position: relative;
 			width: 100%;
+
+}	
+#intro-aa .logo img {
+	display: block;
+	margin-left: -0.25em;
+	width: 2.5em;
+	padding-left: 10px;
+}
+	
+
+	@media screen and (min-width: 760px) {
+
+		#intro .logo {
+			border-bottom: 0;
+			margin: 0 0 1em 0;
+			overflow: hidden;
+			position: relative;
+			width: 4em;
 		}
-
-		#intro .logo img {
-			display: block;
-			margin-left: -0.25em;
-			width: 4.5em;
-		}
-
-	#intro header h2 {
-		font-size: 2em;
-		font-weight: 900;
-	}
-
-	#intro header p {
-		font-size: 0.8em;
-		padding-top: 10px;
-	}
-
-	@media screen and (max-width: 1280px) {
-
-		#intro {
-			margin: 0 0 3em 0;
-			text-align: center;
-		}
-
-			#intro header h2 {
-				font-size: 2em;
+	
+			#intro .logo:before {
+				background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100' preserveAspectRatio='none' zoomAndPan='disable'%3E%3Cpolygon points='0,0 100,0 100,25 50,0 0,25' style='fill:%23f4f4f4' /%3E%3Cpolygon points='0,100 100,100 100,75 50,100 0,75' style='fill:%23f4f4f4' /%3E%3C/svg%3E");
+				background-position: top left;
+				background-repeat: no-repeat;
+				background-size: 100% 100%;
+				content: '';
+				display: block;
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 100%;
 			}
-
-			#intro header p {
-				font-size: 0.7em;
+	
+			#intro .logo img {
+				display: block;
+				margin-left: -0.25em;
+				width: 4.5em;
 			}
+	
+		#intro header h2 {
+			font-size: 2em;
+			font-weight: 900;
+		}
+	
+		#intro header p {
+			font-size: 0.8em;
+			padding-top: 10px;
+		}
 
 	}
 
-	@media screen and (max-width: 736px) {dropdown-menu
+/*	@media screen and (max-width: 736px) {dropdown-menu
 
 		#intro {
 		
@@ -3704,7 +3683,7 @@ input, select, textarea {
 				display:none;
 			}
 
-	}
+	} */
 
 /* Footer */
 
