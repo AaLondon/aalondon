@@ -3430,6 +3430,12 @@ input, select, textarea {
 		padding-top: 40px;
 	}
 
+	#main header h2 {
+		font-size: 1.3em;
+		font-weight: 900;
+		text-align: center;
+
+	}
 	#main-home {
 		display:grid;
 		
