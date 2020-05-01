@@ -3622,27 +3622,21 @@ input, select, textarea {
 
 
 #intro-aa{
-	display:grid;
 	border-bottom: 0;
 			margin: 0 0 1em 0;
 			overflow: hidden;
 			position: relative;
 			width: 100%;
-	grid-template-columns: 1fr;
 	padding-top: 15px;
 
 }	
 #intro-aa .logo{
-	display:grid;
-	grid-template-columns: 1fr;
 	margin: 0 auto;
 }
 
 
 #intro-aa .logo img {
 	
-  grid-column: 1;
-  grid-row: 1 / -1;      /* from first line at start, to first line at end */
   background-position: center;
   width: 80px;
 
@@ -3659,7 +3653,10 @@ input, select, textarea {
 {
 	text-align: center;
     font-size: 8px;
-    padding: 20px;
+	padding: 20px;
+	letter-spacing: normal;
+	text-transform: none;
+	font-family: "Source Sans Pro", Helvetica, sans-serif;
 }
 
 	@media screen and (min-width: 760px) {
@@ -3713,9 +3710,7 @@ input, select, textarea {
 
 	@media screen and (min-width: 1024px) {
 
-		#intro-aa{
-		grid-template-rows: 1fr 4fr 4fr;
-		}
+		
 
 		#intro-aa header h2
 		{
@@ -3727,8 +3722,6 @@ input, select, textarea {
 		}
 
 		#intro-aa .logo img {
-			grid-column: 1;
-			grid-row: 1 / -1;
 			background-position: center;
 			width: 100px;
 		}
@@ -3738,8 +3731,7 @@ input, select, textarea {
 			line-height: 20px;
 			font-size: 14px;
 			margin-left:4%;
-			text-transform: none;
-			font-family: "Source Sans Pro", Helvetica, sans-serif;
+			
 			border-top:rgba(160, 160, 160, 0.3);
 			border-top-width:1px;
 			
@@ -3748,9 +3740,7 @@ input, select, textarea {
 		}
 
 		#intro-aa .logo {
-   		 display: grid;
-		grid-template-columns: 1fr;
-		margin-left: 10%;
+   		margin-left: 10%;
     	
 		}
 	
