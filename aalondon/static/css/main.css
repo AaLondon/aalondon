@@ -3660,12 +3660,12 @@ input, select, textarea {
 
 {
 	text-align: center;
-    font-size: 10px;
+    font-size: 12px;
 	padding: 20px;
 	letter-spacing: normal;
 	text-transform: none;
 	font-family: "Source Sans Pro", Helvetica, sans-serif;
-	line-height: 14px;
+	line-height: 15px;
 }
 
 	@media screen and (min-width: 760px) {
