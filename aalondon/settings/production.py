@@ -12,7 +12,7 @@ except ImportError:
 
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 DEBUG = False
-ALLOWED_HOSTS = ['alcoholicsanonymouslondon.com','www.alcoholicsanonymouslondon.com','aa-london.com','www.aa-london.com'] 
+ALLOWED_HOSTS = ['alcoholicsanonymouslondon.com','www.alcoholicsanonymouslondon.com','.aa-london.com','www.aa-london.com'] 
 
 
 
