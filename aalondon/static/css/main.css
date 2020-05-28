@@ -3563,28 +3563,48 @@ input, select, textarea {
 	.notice-arrow img {
 		top: 2%;
 		position: relative;
-		left: 40%;
-		width: 30px;
+		left: 55%;
+		width: 40%;
 	}
 
 	
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) { #main-home {
+	display:grid;
 	
+	grid-template-areas: 
+	"header header"
+	"meetings meetings"
+	"link link"
+	"news notices";
+	grid-template-columns: 1fr 1fr;
 
-	@media screen and (min-width: 768px){
+}
 
-		#main-home {
-			display:grid;
-			
-			grid-template-areas: 
-			"header header"
-			"meetings meetings"
-			"link link"
-			"news notices";
-			grid-template-columns: 1fr 1fr;
+
+}
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) { #main-home {
+	display:grid;
 	
-		}
+	grid-template-areas: 
+	"header header"
+	"meetings meetings"
+	"link link"
+	"news notices";
+	grid-template-columns: 1fr 1fr;
 
-	}
+}
+
+
+}
+
+
 
 	@media screen and (min-width: 1024px){
 
@@ -3597,8 +3617,11 @@ input, select, textarea {
 			"link link"
 			"news notices";
 			grid-template-columns: 1fr 1fr;
+			grid-column-gap: 50px;
 	
 		}
+		
+		
 
 	}
 
