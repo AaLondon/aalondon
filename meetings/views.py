@@ -21,4 +21,3 @@ class MeetingDetailView(DetailView):
         return context
 
 
-
