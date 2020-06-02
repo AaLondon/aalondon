@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 # Create your tests here.
-from .models import get_recurrant_dates,RecurringEventParent
+from .models import get_recurrant_dates, RecurringEventParent, EventType 
 import datetime
 import pytest
 from wagtail.core.models import Page
@@ -142,6 +142,8 @@ def test_get_recurrant_dates_every_third_month_on_last_friday():
 def test_creation_of_three_children():
     #create Parent Event
     directory_page = Page.objects.get(slug='home')
+    event_type = EventType.objects.first()
+    #event_type.save()
     parent = RecurringEventParent(title='parent',slug='parent',\
                                     post_date=datetime.date.today(),body='xxx',\
                                     recurring_start_date=datetime.date(2020, 1, 31),\
@@ -151,7 +153,8 @@ def test_creation_of_three_children():
                                     start_time = datetime.datetime.now(),
                                     end_time = datetime.datetime.now(),
                                     address = '7 Portman Rd',
-                                    postcode = 'NW3 2LP'       
+                                    postcode = 'NW3 2LP',
+                                    type = event_type      
                                     ) 
     directory_page.add_child(instance=parent)  
     revision = parent.save_revision() 
@@ -167,6 +170,7 @@ def test_creation_of_three_children():
 @pytest.mark.django_db
 def test_creation_publish_twice_six_children():
     #create Parent Event
+    event_type = EventType.objects.first()
     directory_page = Page.objects.get(slug='home')
     parent = RecurringEventParent(title='parent',slug='parent',\
                                     post_date=datetime.date.today(),body='xxx',\
@@ -177,7 +181,8 @@ def test_creation_publish_twice_six_children():
                                     start_time = datetime.datetime.now(),
                                     end_time = datetime.datetime.now(),
                                     address = '7 Portman Rd',
-                                    postcode = 'NW3 2LP'    
+                                    postcode = 'NW3 2LP',
+                                    type = event_type    
                                     ) 
     directory_page.add_child(instance=parent)  
     revision = parent.save_revision() 
@@ -194,6 +199,7 @@ def test_creation_publish_twice_six_children():
 @pytest.mark.django_db
 def test_creation_publish_with_new_dates_six_children():
     #create Parent Event
+    event_type = EventType.objects.first()
     directory_page = Page.objects.get(slug='home')
     parent = RecurringEventParent(title='parent',slug='parent',\
                                     post_date=datetime.date.today(),body='xxx',\
@@ -204,7 +210,8 @@ def test_creation_publish_with_new_dates_six_children():
                                     start_time = datetime.datetime.now(),
                                     end_time = datetime.datetime.now(),
                                     address = '7 Portman Rd',
-                                    postcode = 'NW3 2LP'   
+                                    postcode = 'NW3 2LP' ,
+                                    type = event_type
 
                                     ) 
     directory_page.add_child(instance=parent)  
