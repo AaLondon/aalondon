@@ -37,11 +37,12 @@ class OnlineMeetingSearch extends Component {
 
 
   componentDidMount() {
-
+    console.log('window.topRecords'+window.topRecords);
+    let top = window.topRecords || 0;
     let day = new Date().toLocaleString('en-us', { weekday: 'long' });
 
     let queryString = "";
-    queryString = `/api/onlinemeetingsearch/?day=${day}&now=1`
+    queryString = `/api/onlinemeetingsearch/?day=${day}&now=1&top=${top}`
     this.setState({ showPostcode: 1 })
 
     axios.get(queryString)
@@ -55,7 +56,7 @@ class OnlineMeetingSearch extends Component {
 
         this.setState({
           totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1,
-          totalPages: totalPages, showSpinner: 0, currentPage: 1
+          totalPages: totalPages, showSpinner: 0, currentPage: 1, top: top
         });
       
 
@@ -73,9 +74,10 @@ class OnlineMeetingSearch extends Component {
   getQueryString() {
     let intergroup = this.state.intergroup;
     let day = this.state.day;
+    let top = this.state.top;
 
 
-    return `/api/onlinemeetingsearch/?intergroup=${intergroup}&day=${day}`;
+    return `/api/onlinemeetingsearch/?intergroup=${intergroup}&day=${day}&top=${top}`;
   }
 
 
@@ -86,7 +88,8 @@ class OnlineMeetingSearch extends Component {
     const { currentPage, totalPages, } = data;
     const day = this.state.day;
     const intergroup = this.state.intergroup;
-    let querystring = `/api/onlinemeetingsearch?page=${currentPage}&day=${day}`
+    let top = this.state.top;
+    let querystring = `/api/onlinemeetingsearch?page=${currentPage}&day=${day}&top=${top}`;
 
 
     axios.get(querystring)
@@ -157,7 +160,7 @@ class OnlineMeetingSearch extends Component {
 
   render() {
 
-    const { totalMeetings, currentMeetings, currentPage, totalPages, day, showSpinner } = this.state;
+    const { totalMeetings, currentMeetings, currentPage, totalPages, day, showSpinner,top } = this.state;
     let geoFail = this.state.geoFail;
     let geoFailRow = <Row className="justify-content-center"></Row>;
 
@@ -165,17 +168,22 @@ class OnlineMeetingSearch extends Component {
       geoFailRow = <Row className="justify-content-center">We have been unable to retrieve your location. Please check your browser settings.</Row>
 
     }
-    let dayForm = <OnlineMeetingSearchForm value={this.state.day} onInputChange={this.handleInputChange}  onDayChange={this.onDayChange}  day={this.state.day}  />;
-  
+
+    let dayForm = <OnlineMeetingSearchForm value={this.state.day} onInputChange={this.handleInputChange}  onDayChange={this.onDayChange}  day={this.state.day}  /> ;
+    console.log('top:'+top);
+    if (top !== 0){
+      dayForm = null;
+    }
     if (showSpinner === 1)
-      return (<Container>
+      return (
+        <div>
         <OnlineMeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} day={this.state.day}  />
         <Row className="justify-content-center"><Col xs={2}> <Spinner size="lg" animation="border" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner></Col></Row>
+        </div>
 
-
-      </Container>)
+      )
 
 
     
@@ -183,13 +191,13 @@ class OnlineMeetingSearch extends Component {
 
       <div>
 
-        <Container>
+       
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
            {dayForm}      
           <div>NO MEETINGS FOR THE REST OF THE DAY PLEASE CHECK TOMORROW</div>
 
 
-        </Container>
+       
 
       </div>
 
@@ -205,14 +213,13 @@ class OnlineMeetingSearch extends Component {
 
       <div>
 
-        <Container>
-
+        
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
           
           {dayForm} 
           <OnlineMeetingTableData showPostcode={this.state.showPostcode} key={firstCode} currentMeetings={currentMeetings}  />
           
-        </Container>
+        
 
       </div>
 

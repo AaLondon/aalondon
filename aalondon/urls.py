@@ -10,8 +10,10 @@ from api import urls as api_urls
 
 from search import views as search_views
 from meetings.views import MeetingSearchView,MeetingDetailView
-from online.views import OnlineMeetingDetailView,redirect_view,OnlineMeetingCreateView,OnlineMeetingThanksView
+
+from online.views import OnlineMeetingDetailView,redirect_view,OnlineMeetingCreateView,OnlineMeetingThanksView,OnlineMeetingSearchView
 from wagtail.contrib.sitemaps.views import sitemap
+
 
 def trigger_error(request):
     division_by_zero = 1 / 0
@@ -27,6 +29,7 @@ urlpatterns = [
     url(r'^search/$', search_views.search, name='search'),
     url(r'^api/', include(api_urls)),
     path('meetingsearch/', MeetingSearchView.as_view(), name='meeting_search'),
+    path('onlinemeetingsearch/', OnlineMeetingSearchView.as_view(), name='online_meeting_search'),
     path('meetings/<slug:slug>/', MeetingDetailView.as_view(), name='meeting-detail'),
     path('onlinemeetings/thanks/', OnlineMeetingThanksView.as_view(), name='online-meeting-thanks'),
     path('onlinemeetings/create/', OnlineMeetingCreateView.as_view(), name='online-meeting-create'),
