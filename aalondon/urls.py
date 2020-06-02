@@ -11,6 +11,7 @@ from api import urls as api_urls
 from search import views as search_views
 from meetings.views import MeetingSearchView,MeetingDetailView
 from online.views import OnlineMeetingDetailView,redirect_view,OnlineMeetingCreateView,OnlineMeetingThanksView
+from wagtail.contrib.sitemaps.views import sitemap
 
 def trigger_error(request):
     division_by_zero = 1 / 0
@@ -32,6 +33,7 @@ urlpatterns = [
     path('onlinemeetings/<slug:slug>/', OnlineMeetingDetailView.as_view(), name='online-meeting-detail'),
     
     path('online/zoom-meetings/', redirect_view,name='online-zoom-meetings-redirect'),
+    url('^sitemap\.xml$', sitemap),
     
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
