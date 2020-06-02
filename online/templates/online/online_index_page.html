@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-onlineindexpage{% endblock %}
+
+{% block content %}
+<!-- Post -->
+<article class="post">
+    <header>
+        <div id="event-title" class="title">
+            <h2><a>Online</a></h2>
+            </div>
+        
+    </header>
+
+ 
+
+    <div class="intro">{{ page.intro|richtext }}</div>
+
+</article>
+{% endblock %}
+
