@@ -19,7 +19,15 @@
                 {% endwith %}
             {% endblock %}
         </title>
-        <meta name="description" content="" />
+        <meta name="description" content="{% block meta_description %}{% if self.search_description %}{{ self.search_description }}{% else %}aa-london carrying the message to the still suffering alcoholic{% endif %}{% endblock %}"/>
+        <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
+        <meta property="og:title" content="{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %} - aa-london.com">
+        <meta property="og:description" content="{% if self.search_description %}{{ self.search_description }}{% else %}Alcoholics Anonymous London helping people who want to stop drinking to stop drinking{% endif %}">
+        <meta property="og:image" content="{% static 'images/favicon.ico' %}">
+        <meta property="og:url" content="{{ page.full_url }}">
+
+
+        <meta name="descriptionx" content="" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {# Global stylesheets #}
