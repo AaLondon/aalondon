@@ -19,6 +19,8 @@
                 {% endwith %}
             {% endblock %}
         </title>
+            <script src="https://kit.fontawesome.com/fb67b2fef3.js" crossorigin="anonymous"></script>
+
         <meta name="description" content="{% block meta_description %}{% if self.search_description %}{{ self.search_description }}{% else %}aa-london carrying the message to the still suffering alcoholic{% endif %}{% endblock %}"/>
         <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
         <meta property="og:title" content="{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %} - aa-london.com">
@@ -145,5 +147,7 @@ help other alcoholics to achieve sobriety. </p>
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}
+       
+       
     </body>
 </html>
