@@ -23,15 +23,8 @@
     <div class="row"><div>{{object.time}}</div></div>
     <div class="row"><div><a href="{{object.link}}" target="_blank">{{object.link}}</a></div></div>
     <div class="row"><div>{{object.description}}</div></div>
-    <div class="row"><div><a class="fa fa-whatsapp" href="whatsapp://send?text={{object.title}} - {{ object.time}} - {% if object.description%} {{object.description}} {% endif %} {{object.link}}">
-           
-            
-
-          </a> Share meeting info on WhatsApp</div></div>
-
-     
-
-    
+    <div class="row"><div>Share meeting info on WhatsApp <a class="fa fa-whatsapp fa-2x" href="whatsapp://send?text={{object.title}} - {{ object.time}} - {% if object.description%} {{object.description}} {% endif %} {{object.link}}">
+          </a></div></div>
     </div></div>
    
 
