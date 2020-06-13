@@ -13,6 +13,7 @@ from django.db.models import Avg, F, Window
 from django.db.models.functions import  Rank
 from django.utils import timezone
 import pytz
+from django.contrib.postgres.search import SearchVector
 
 # Create your views here.
 
@@ -86,6 +87,7 @@ class MeetingSearch(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend,filters.OrderingFilter, filters.SearchFilter]
     filterset_fields = ['day','intergroup']
     ordering_fields = ['time']
+   
         
 
     def get_queryset(self):
@@ -95,7 +97,8 @@ class MeetingSearch(generics.ListAPIView):
         """
       
         
-        queryset = Meeting.objects.all()
+        #queryset = Meeting.objects.all()
+        queryset =  Meeting.objects.annotate(search=SearchVector('postcode', 'detail'),)
         now = self.request.query_params.get('now',None)
         if now == '1':
             
@@ -118,11 +121,16 @@ class MeetingSearch(generics.ListAPIView):
                 all_ordered = all.order_by('day_number','time')
             return all_ordered#.annotate(the_rank=rank_by_day)
 
-        postcode = self.request.query_params.get('search', None)
-        
 
-        if postcode is not None:
-            queryset = queryset.filter(postcode__istartswith=postcode)
+
+        search = self.request.query_params.get('search', None)
+       
+        if search is not None:
+            queryset = queryset.filter(search=search)
+        
+        #filter by time band
+        #filter by accessibility
+
         return queryset.order_by('day_number','time')
     
 
