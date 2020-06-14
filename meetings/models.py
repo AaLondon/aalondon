@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django_extensions.db.fields import AutoSlugField
+from datetime import time
 
 # Create your models here.
 
@@ -21,6 +22,7 @@ class Meeting(models.Model):
     day_rank = models.IntegerField(null=True)
     intergroup = models.CharField(max_length=100,null=True)
     detail = models.TextField(null=True)
+    time_band = models.CharField(max_length=10,null=True)
 
     def __str__(self):
 
@@ -29,4 +31,14 @@ class Meeting(models.Model):
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
+        meeting_time = self.time
+        
+        if meeting_time > time(0, 0) and meeting_time <= time(12,0):
+            self.time_band = 'morning'
+        elif meeting_time > time(12,0) and meeting_time <= time(18,0):
+            self.time_band = 'afternoon'
+        else:
+            self.time_band = 'evening'
+    
+
         super(Meeting, self).save(*args, **kwargs)

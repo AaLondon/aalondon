@@ -85,7 +85,7 @@ class MeetingSearch(generics.ListAPIView):
     model = Meeting
     serializer_class = MeetingSerializer
     filter_backends = [DjangoFilterBackend,filters.OrderingFilter, filters.SearchFilter]
-    filterset_fields = ['day','intergroup']
+    filterset_fields = ['day','intergroup','time_band','hearing','wheelchair']
     ordering_fields = ['time']
    
         
@@ -186,10 +186,11 @@ class OnlineMeetingSearch(generics.ListAPIView):
             return all_ordered#.annotate(the_rank=rank_by_day)
 
         postcode = self.request.query_params.get('search', None)
-        
-
         if postcode is not None:
             queryset = queryset.filter(postcode__istartswith=postcode)
+        
+        
+        
         return queryset.order_by('time')
     
 
