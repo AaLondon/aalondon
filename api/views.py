@@ -125,7 +125,7 @@ class MeetingSearch(generics.ListAPIView):
 
         search = self.request.query_params.get('search', None)
        
-        if search is not None:
+        if search is not None and len(search) > 0:
             queryset = queryset.filter(search=search)
         
         #filter by time band

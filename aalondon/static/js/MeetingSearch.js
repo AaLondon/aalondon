@@ -22,12 +22,13 @@ class MeetingSearch extends Component {
     this.onPageChanged = this.onPageChanged.bind(this);
     this.onDayChange = this.onDayChange.bind(this);
     this.onSliderChange = this.onSliderChange.bind(this);
+    this.onSearchEnter = this.onSearchEnter.bind(this);
 
 
 
     this.state = {
       totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, day: "Now", showSpinner: 1, intergroup: '',
-      clientLng: null, clientLat: null, showPostcode: 0,minMiles: 0, maxMiles: 1000000, geoFail : 0
+      clientLng: null, clientLat: null, showPostcode: 0,minMiles: 0, maxMiles: 1000000, geoFail : 0,search:''
     };
   }
 
@@ -40,6 +41,22 @@ class MeetingSearch extends Component {
     });
   }
 
+  getResults(day,search){
+   
+    let queryString = `/api/meetingsearch/?search=${search}&day=${day}`;
+    let currentPage = 1
+    console.log("DayChange:"+queryString);
+    axios.get(queryString)
+      .then(response => {
+        const totalMeetings = response.data.count;
+        const currentMeetings = response.data.results;
+        const totalPages = response.data.count / 10;
+
+
+
+        this.setState({ totalMeetings, currentMeetings, currentPage, totalPages, showSpinner: 0,day: day,search:search });
+      });
+  }
 
   componentDidMount() {
 
@@ -82,7 +99,6 @@ class MeetingSearch extends Component {
 
     return `/api/meetingsearch/?intergroup=${intergroup}&day=${day}`;
   }
-
 
   onPageChanged = data => {
 
@@ -189,45 +205,21 @@ class MeetingSearch extends Component {
   }
   onDayChange = data => {
 
-  
-    let intergroup = this.state.intergroup;
-    let query_day = data;
-    if (data === 'All days') {
-      query_day = '';
-    } else {
-      query_day = data
-    }
-    let currentPage = 1;
-    let now = 0;
-    if (data == 'Now') {
-      query_day = new Date().toLocaleString('en-us', { weekday: 'long' });
-      now = 1;
-    }
-  
-    this.setState({  showSpinner: 1 });
-
-    let queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${query_day}&now=${now}`;
-    if (this.state.clientLat) {
-      queryString = `/api/meetingsearch/?intergroup=${intergroup}&day=${query_day}&now=${now}&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`;
-      this.setState({ showPostcode: 0 })
-    }
-    console.log("DayChange:"+queryString);
-    axios.get(queryString)
-      .then(response => {
-        const totalMeetings = response.data.count;
-        const currentMeetings = response.data.results;
-        const totalPages = response.data.count / 10;
-
-
-
-        this.setState({ totalMeetings, currentMeetings, currentPage, totalPages, showSpinner: 0,day: data });
-      });
-
+    this.setState({ showSpinner: 1, day: data });
+    this.getResults(data,this.state.search);
 
   }
 
-
-
+onSearchEnter = data =>{
+ 
+      
+    console.log('data:'+data);
+  
+    this.setState({ showSpinner: 1, search: data });
+    
+    this.getResults(this.state.day,data);
+    
+}
 
   render() {
 
@@ -240,19 +232,14 @@ class MeetingSearch extends Component {
 
     }
  
-    let slider = <MeetingSearchForm value={this.state.day} onInputChange={this.handleInputChange} onSliderChange={this.onSliderChange} onDayChange={this.onDayChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />;
+    let slider = <MeetingSearchForm value={this.state.day} onInputChange={this.handleInputChange} onSliderChange={this.onSliderChange} onDayChange={this.onDayChange} onSearchEnter={this.onSearchEnter} onIntergroupChange={this.onIntergroupChange}  day={this.state.day} intergroup={this.state.intergroup} search={this.state.search} />;
     if (showSpinner === 1)
       return (<Container>
-        <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onSliderChange={this.onSliderChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} />
+        <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} onDayChange={this.onDayChange} onSearchEnter={this.onSearchEnter} onSliderChange={this.onSliderChange} onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} search={this.state.search} />
         <Row className="justify-content-center"><Col xs={2}> <Spinner size="lg" animation="border" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner></Col></Row>
-
-
       </Container>)
-
-
-    
     if (totalMeetings === 0) return (
 
       <div>

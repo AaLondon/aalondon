@@ -3,7 +3,9 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Nav from 'react-bootstrap/Nav'
 import RangeSlider from './RangeSlider'
-import { Dropdown } from 'semantic-ui-react'
+import { Dropdown, Input } from 'semantic-ui-react'
+
+const ENTER_KEY = 13;
 
 class MeetingSearchForm extends React.Component {
   constructor(props) {
@@ -15,6 +17,10 @@ class MeetingSearchForm extends React.Component {
     this.handleDayChange = this.handleDayChange.bind(this);
     this.handleIntergroupChange = this.handleIntergroupChange.bind(this);
     this.handleSliderChange = this.handleSliderChange.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleSearchKeyDown = this.handleSearchKeyDown.bind(this);
+
+    this.state = {search:props.search}
 
   }
 
@@ -37,6 +43,25 @@ class MeetingSearchForm extends React.Component {
   handleIntergroupChange(eventKey, e) {
     this.props.onIntergroupChange(e.target.innerText);
   }
+  
+  handleSearchChange(e) {
+    console.log(e);
+    this.setState({ search: e.target.value });
+ }
+
+  handleSearchKeyDown(e){
+    if (e.keyCode === ENTER_KEY) {
+      console.log('SEARCH DATA A: '+ e.target.value);
+      console.log(e.target.value);
+      console.log(this.props);
+      this.props.onSearchEnter(e.target.value);
+  }
+    
+   
+    
+    
+  }
+
   render() {
 
     let igs = {
@@ -49,6 +74,7 @@ class MeetingSearchForm extends React.Component {
       console.log('ZZZZZ{}'+this.props.day)
       day = this.props.day;
     } 
+    let search = this.state.search;
 
     const weekDays = ["Now", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     const dayOptions = [
@@ -114,12 +140,10 @@ class MeetingSearchForm extends React.Component {
 
     return (
 
-      <form onSubmit={this.handleSubmit}>
+      <div >
         <Row className="justify-content-center">
-          <Col xs={10}>
-            <Row><Nav fill variant="pills" activeKey={activeIndex} defaultActiveKey="0" >
-              {weekDayNav}
-            </Nav></Row></Col></Row>
+        <Input icon='search' placeholder='Search...' onChange={this.handleSearchChange} onKeyDown={this.handleSearchKeyDown} value={search}/>
+          </Row>
         <Row>
           <Col>
           <Dropdown
@@ -130,11 +154,12 @@ class MeetingSearchForm extends React.Component {
            icon='dropdown'
            onChange={this.handleDayChange}
            value = {day}
+           scrolling={false}
   />
           </Col>
         </Row>
-        <Row className="justify-content-center"><RangeSlider onSliderChange={this.handleSliderChange} /></Row>
-      </form>
+       
+      </div>
     );
   }
 }
