@@ -44,7 +44,7 @@ class MeetingSerializer(serializers.ModelSerializer):
         qp = self.context['request'].query_params
         origin = (qp.get('clientLat',0),qp.get('clientLng',0))
         destination = (obj.lat,obj.lng)
-        print(origin)
+        
 
         return  round(geodesic(origin, destination).miles,2)
 

@@ -19,6 +19,8 @@ class MeetingSearchForm extends React.Component {
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchKeyDown = this.handleSearchKeyDown.bind(this);
+    this.handleTimeChange = this.handleTimeChange.bind(this);
+    
 
     this.state = {search:props.search}
 
@@ -51,16 +53,14 @@ class MeetingSearchForm extends React.Component {
 
   handleSearchKeyDown(e){
     if (e.keyCode === ENTER_KEY) {
-      console.log('SEARCH DATA A: '+ e.target.value);
-      console.log(e.target.value);
-      console.log(this.props);
+     
       this.props.onSearchEnter(e.target.value);
-  }
-    
-   
-    
-    
-  }
+  } }
+
+  handleTimeChange(eventKey,e) {
+    console.log(e);
+    this.props.onTimeChange(e.value);
+  } 
 
   render() {
 
@@ -75,13 +75,37 @@ class MeetingSearchForm extends React.Component {
       day = this.props.day;
     } 
     let search = this.state.search;
-
+    let timeBand = this.props.timeBand;
     const weekDays = ["Now", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    const timeBands = [{
+      key: 'morning',
+      text: 'Morning',
+      value: 'morning',
+      
+    },
+    {
+      key: 'afternoon',
+      text: 'Afternoon',
+      value: 'afternoon',
+      
+    },
+    {
+      key: 'evening',
+      text: 'Evening',
+      value: 'evening',
+      
+    },]
     const dayOptions = [
       {
-        key: 'Now',
+        key: 'now',
         text: 'Now',
-        value: 'Now',
+        value: 'now',
+        
+      },
+      {
+        key: 'All',
+        text: 'All',
+        value: 'All',
         
       },
       {
@@ -157,6 +181,19 @@ class MeetingSearchForm extends React.Component {
            scrolling={false}
   />
           </Col>
+          <Col>
+          <Dropdown
+            placeholder='Time'
+           // fluid
+            selection
+            options={timeBands}
+           icon='dropdown'
+           onChange={this.handleTimeChange}
+           value = {timeBand}
+           scrolling={false}
+  />
+          </Col>
+
         </Row>
        
       </div>
