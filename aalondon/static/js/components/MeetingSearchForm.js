@@ -20,6 +20,7 @@ class MeetingSearchForm extends React.Component {
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchKeyDown = this.handleSearchKeyDown.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
+    this.handleAccessChange = this.handleAccessChange.bind(this);
     
 
     this.state = {search:props.search}
@@ -62,6 +63,11 @@ class MeetingSearchForm extends React.Component {
     this.props.onTimeChange(e.value);
   } 
 
+  handleAccessChange(eventKey,e) {
+    console.log(e);
+    this.props.onAccessChange(e.value);
+  } 
+
   render() {
 
     let igs = {
@@ -76,7 +82,20 @@ class MeetingSearchForm extends React.Component {
     } 
     let search = this.state.search;
     let timeBand = this.props.timeBand;
+    let access = this.props.access;
     const weekDays = ["Now", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    const accesses = [{
+      key: 'wheelchair',
+      text: 'Wheelchair',
+      value: 'wheelchair',
+      
+    },
+    {
+      key: 'hearing',
+      text: 'Hearing',
+      value: 'hearing',
+      
+    }]
     const timeBands = [{
       key: 'morning',
       text: 'Morning',
@@ -193,6 +212,19 @@ class MeetingSearchForm extends React.Component {
            scrolling={false}
   />
           </Col>
+          <Col>
+          <Dropdown
+            placeholder='Accessibility'
+           // fluid
+            selection
+            options={accesses}
+           icon='dropdown'
+           onChange={this.handleAccessChange}
+           value = {access}
+           scrolling={false}
+  />
+          </Col>
+          
 
         </Row>
        
