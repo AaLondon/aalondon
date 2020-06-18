@@ -71,9 +71,11 @@ class MeetingSearch extends Component {
 
     let queryString = "";
     queryString = `/api/meetingsearch/?day=${day}`
-    this.setState({ showPostcode: 1 })
+    this.setState({ showPostcode: 1, day: day })
+    this.getResults(day,this.state.search,this.state.timeBand,this.state.access);
 
-    axios.get(queryString)
+
+/*    axios.get(queryString)
 
       .then(response => {
         const totalMeetings = response.data.count;
@@ -89,7 +91,7 @@ class MeetingSearch extends Component {
       
 
 
-      });
+      });*/
   }
 
   getQueryString() {

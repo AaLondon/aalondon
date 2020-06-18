@@ -16,7 +16,7 @@ export default class MeetingDataTable extends Component {
 
 
     this.state = {
-      data: this.props.currentMeetings,
+      data: this.props.currentMeetings, 
       column: null,
       direction: null,
 
@@ -52,13 +52,14 @@ export default class MeetingDataTable extends Component {
     let showPostcode = this.props.showPostcode;
    
 
-    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix }) => {
+    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day }) => {
       
       if ((showPostcode === 1) || (distance_from_client >= this.props.minMiles && distance_from_client <= this.props.maxMiles))
       {
         console.log(typeof distance_from_client);
      return (
         <Table.Row key={code}>
+          <Table.Cell>{day}</Table.Cell>
           <Table.Cell>{friendly_time}</Table.Cell>
           <Table.Cell><a href={'/meetings/' + slug + '/#meetingmap'}>{title}</a></Table.Cell>
           <Table.Cell>{showPostcode === 0 ? distance_from_client : postcode_prefix}</Table.Cell>
@@ -70,9 +71,15 @@ export default class MeetingDataTable extends Component {
     let third_column_field = showPostcode === 0 ? 'distance_from_client' : 'postcode_prefix';
 
     return (
-      <Table sortable celled fixed unstackable>
+      <Table sortable celled fixed >
         <Table.Header>
           <Table.Row>
+          <Table.HeaderCell
+              sorted={column === 'day' ? direction : null}
+              onClick={this.handleSort('day')}
+            >
+              Day
+            </Table.HeaderCell>
             <Table.HeaderCell
               sorted={column === 'friendly_time' ? direction : null}
               onClick={this.handleSort('friendly_time')}
