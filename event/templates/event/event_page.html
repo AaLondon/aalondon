@@ -15,7 +15,7 @@
 <h1>{{page.title}}</h1>
     <div class="container">
   
-    
+  
     <div class="row"><div class="col-md-6" id='map' style='width: 400px; height: 300px;'></div>
     <div class="col-md-6" style="padding-left: 29px;"><div class="row"></div>
     <div class="row"><div><b>Start Time:</b> {{page.start_time}}</div></div>
@@ -30,8 +30,8 @@
   <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
 <script>
-var lat = {{ object.lat }};
-var lng = {{object.lng}};
+var lat = {{ page.lat }};
+var lng = {{page.lng}};
 console.log(lat);
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3ZWRnd29vZCIsImEiOiJjazJ3M2xyOGkwYXppM29xbGlreGxtZWk1In0.wB4JKWEScmQogF0I9aSNoA';
 var map = new mapboxgl.Map({
