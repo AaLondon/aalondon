@@ -18,7 +18,7 @@
     <div class="container">
   
     
-    <div class="row"><div class="col-md-6" id='map' style='width: 400px; height: 300px;'></div>
+    <div class="row"><div class="col-md-6" id='map' ></div>
     <div class="col-md-6" style="padding-left: 29px;" ><div class="row"></div>
     <div class="row"><div><b>Start Date:</b> {{page.start_date}}</div></div>
     <div class="row"><div><b>End Date:</b> {{page.end_date}}</div></div>
@@ -29,6 +29,8 @@
 
 
 </div></article>
+ <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
 <script>
 var lat = {{ page.latitude }};
 var lng = {{page.longitude}};

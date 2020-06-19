@@ -2,6 +2,7 @@ from meetings.models import Meeting
 from online.models import OnlineMeeting
 from rest_framework import serializers
 from datetime import datetime,timedelta
+import time
 from geopy.distance import geodesic     
 
 class MeetingSerializer(serializers.ModelSerializer):
@@ -9,10 +10,13 @@ class MeetingSerializer(serializers.ModelSerializer):
     friendly_time = serializers.SerializerMethodField()
     postcode_prefix = serializers.SerializerMethodField()
     distance_from_client = serializers.SerializerMethodField()
+    day_number = serializers.SerializerMethodField()
+    covid_open_status = serializers.SerializerMethodField()
+   
     class Meta:
         model = Meeting
         fields = ['code','title','time','address','day','actual_datetime','postcode','slug','lat','lng',
-                    'day_rank','friendly_time','postcode_prefix','day_number','intergroup','distance_from_client']
+                    'day_rank','friendly_time','postcode_prefix','day_number','intergroup','distance_from_client','time_band','covid_open_status']
 
 
     def get_actual_datetime(self, obj):
@@ -43,9 +47,23 @@ class MeetingSerializer(serializers.ModelSerializer):
         qp = self.context['request'].query_params
         origin = (qp.get('clientLat',0),qp.get('clientLng',0))
         destination = (obj.lat,obj.lng)
-        print(origin)
-
         return  round(geodesic(origin, destination).miles,2)
+
+
+    def get_day_number(self,obj):
+     
+        return  time.strptime(obj.day, '%A').tm_wday
+
+    def get_covid_open_status(self,obj):
+
+        if obj.covid_open_status:
+            return 1
+        else:
+            return 0
+        
+
+        
+   
 
 
     

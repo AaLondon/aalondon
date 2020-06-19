@@ -52,13 +52,17 @@ class Command(BaseCommand):
                 wheelchair = meeting.get('wheelchair')
                 intergroup = igs[id]
                 time = time.replace(".",":")
+                hour = int(time[:2])
+                minute = int(time[3:5]) 
                 weekday_as_int = days[day]
-                new_meeting = Meeting.objects.get_or_create(address=address,code=code,day=day,hearing=hearing,lat=lat,\
-                day_number=weekday_as_int,lng=lng,postcode=postcode,time=time,title=title,wheelchair=wheelchair,intergroup=intergroup)
-                
+                time = datetime.time(hour,minute)
                 meeting_detail = requests.get(f'https://www.alcoholics-anonymous.org.uk/detail.do?id={code}', verify=False) 
                 print(f'https://www.alcoholics-anonymous.org.uk/detail.do?id={code}')
 
+                new_meeting = Meeting.objects.get_or_create(address=address,code=code,day=day,hearing=hearing,lat=lat,\
+                day_number=weekday_as_int,lng=lng,postcode=postcode,time=time,title=title,wheelchair=wheelchair,intergroup=intergroup,detail=meeting_detail)
+                
+                
         day_numbers = [0,1,2,3,4,5,6,7]
         for number in day_numbers:
             meeting = Meeting.objects.filter(day_number=number).order_by('time').first()

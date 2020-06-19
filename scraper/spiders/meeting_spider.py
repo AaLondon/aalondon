@@ -8,6 +8,8 @@ from scraper.items import MeetingItem
 from scrapy import Spider
 from scrapy.http import FormRequest,Request
 from scrapy.utils.response import open_in_browser
+import datetime
+from meetings.models import Meeting
 
 
 intergroups = {117:"City Of London",36:"East London",123:"Chelsea",124:"Chelsea & Fulham",118:"London North East",51:"London North",64:"London North Middlesex",
@@ -50,8 +52,11 @@ class AASpider(scrapy.Spider):
             marker_hearing = meeting.get('hearing')
             marker_time = marker_time.replace(".",":")
             marker_url = response.url
+            hour = int(marker_time[:2])
+            minute = int(marker_time[3:5]) 
+            meeting_time = datetime.time(hour,minute)
             
-            meeting_data = {'code':marker_code,'day':marker_day,'hearing':marker_hearing,'lat':marker_lat,'lng':marker_lng,'postcode':marker_postcode,'time':marker_time,\
+            meeting_data = {'code':marker_code,'day':marker_day,'hearing':marker_hearing,'lat':marker_lat,'lng':marker_lng,'postcode':marker_postcode,'time':meeting_time,\
                'duration':'','title':marker_title,'wheelchair':marker_wheelchair,'intergroup':''}     
           
 

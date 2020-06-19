@@ -8,11 +8,13 @@ from django.db.models import Q
 from django.db.models import IntegerField, Value
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter
 from rest_framework import filters
 from django.db.models import Avg, F, Window
 from django.db.models.functions import  Rank
 from django.utils import timezone
 import pytz
+from django.contrib.postgres.search import SearchVector
 
 # Create your views here.
 
@@ -77,27 +79,25 @@ class MeetingsList(generics.ListAPIView):
 
 
 class MeetingSearch(generics.ListAPIView):
-    """
-    Return a list of all the products that the authenticated
-    user has ever purchased, with optional filtering.
-    """
+   
     model = Meeting
     serializer_class = MeetingSerializer
-    filter_backends = [DjangoFilterBackend,filters.OrderingFilter, filters.SearchFilter]
-    filterset_fields = ['day','intergroup']
-    ordering_fields = ['time']
+    filter_backends = [DjangoFilterBackend ,OrderingFilter]
+    filterset_fields = ['time_band','hearing','wheelchair']
+    ordering_fields = ['day_number','time']
+   
         
 
     def get_queryset(self):
-        """
-        Optionally restricts the returned purchases to a given user,
-        by filtering against a `username` query parameter in the URL.
-        """
-      
         
-        queryset = Meeting.objects.all()
-        now = self.request.query_params.get('now',None)
-        if now == '1':
+        queryset =  Meeting.objects.annotate(search=SearchVector('postcode', 'detail','title'),)
+        search = self.request.query_params.get('search', None)
+       
+        if search is not None and len(search) > 0:
+            queryset = queryset.filter(search=search)
+
+        day = self.request.query_params.get('day',None)
+        if day == 'now':
             
             now = datetime.now() 
             date_today = now.date()
@@ -116,13 +116,10 @@ class MeetingSearch(generics.ListAPIView):
                 all_ordered = all.order_by('-day_number','time')
             else:
                 all_ordered = all.order_by('day_number','time')
-            return all_ordered#.annotate(the_rank=rank_by_day)
-
-        postcode = self.request.query_params.get('search', None)
-        
-
-        if postcode is not None:
-            queryset = queryset.filter(postcode__istartswith=postcode)
+            queryset = queryset.filter((Q(day=day_name_today) & Q(time__gte=now.time())))#.annotate(the_rank=rank_by_day)
+        elif day in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']:
+            queryset = queryset.filter(day=day)
+    
         return queryset.order_by('day_number','time')
     
 
@@ -178,10 +175,11 @@ class OnlineMeetingSearch(generics.ListAPIView):
             return all_ordered#.annotate(the_rank=rank_by_day)
 
         postcode = self.request.query_params.get('search', None)
-        
-
         if postcode is not None:
             queryset = queryset.filter(postcode__istartswith=postcode)
+        
+        
+        
         return queryset.order_by('time')
     
 
