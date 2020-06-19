@@ -1,8 +1,6 @@
 import React from 'react';
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
 import Nav from 'react-bootstrap/Nav'
-import RangeSlider from './RangeSlider'
+
 import { Dropdown, Input } from 'semantic-ui-react'
 
 const ENTER_KEY = 13;
@@ -172,23 +170,13 @@ class MeetingSearchForm extends React.Component {
       
     ]
 
-    let activeIndex = weekDays.findIndex(element => element.includes(day));
 
 
-    let weekDayNav = weekDays.map((value, index) =>
-      <Nav.Item key={index}>
-        <Nav.Link onSelect={this.handleDayChange} eventKey={index}>{value}</Nav.Link>
-      </Nav.Item>
-    )
 
     return (
 
-      <div >
-        <Row className="justify-content-center">
+      <div className={'meeting-search-form'}>
         <Input icon='search' placeholder='Search...' onChange={this.handleSearchChange} onKeyDown={this.handleSearchKeyDown} value={search}/>
-          </Row>
-        <Row>
-          <Col>
           <Dropdown
             placeholder='Day'
            // fluid
@@ -199,8 +187,6 @@ class MeetingSearchForm extends React.Component {
            value = {day}
            scrolling={false}
   />
-          </Col>
-          <Col>
           <Dropdown
             placeholder='Time'
            // fluid
@@ -211,8 +197,6 @@ class MeetingSearchForm extends React.Component {
            value = {timeBand}
            scrolling={false}
   />
-          </Col>
-          <Col>
           <Dropdown
             placeholder='Accessibility'
            // fluid
@@ -223,10 +207,6 @@ class MeetingSearchForm extends React.Component {
            value = {access}
            scrolling={false}
   />
-          </Col>
-          
-
-        </Row>
        
       </div>
     );

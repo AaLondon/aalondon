@@ -1,7 +1,8 @@
 from meetings.models import Meeting
 from online.models import OnlineMeeting
 from rest_framework import serializers
-from datetime import datetime,timedelta,time
+from datetime import datetime,timedelta
+import time
 from geopy.distance import geodesic     
 
 class MeetingSerializer(serializers.ModelSerializer):
@@ -9,6 +10,7 @@ class MeetingSerializer(serializers.ModelSerializer):
     friendly_time = serializers.SerializerMethodField()
     postcode_prefix = serializers.SerializerMethodField()
     distance_from_client = serializers.SerializerMethodField()
+    day_number = serializers.SerializerMethodField()
    
     class Meta:
         model = Meeting
@@ -44,10 +46,16 @@ class MeetingSerializer(serializers.ModelSerializer):
         qp = self.context['request'].query_params
         origin = (qp.get('clientLat',0),qp.get('clientLng',0))
         destination = (obj.lat,obj.lng)
-        
-
         return  round(geodesic(origin, destination).miles,2)
 
+
+    def get_day_number(self,obj):
+     
+        return  time.strptime(obj.day, '%A').tm_wday
+
+        
+
+        
    
 
 

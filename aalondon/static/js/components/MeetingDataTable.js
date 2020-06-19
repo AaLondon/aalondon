@@ -29,11 +29,11 @@ export default class MeetingDataTable extends Component {
 
   handleSort = (clickedColumn) => () => {
     const { column, data, direction } = this.state
-
+    console.log(data);
     if (column !== clickedColumn) {
       this.setState({
         column: clickedColumn,
-        data: _.sortBy(data, [clickedColumn]),
+        data: _.sortBy(data, ['day_number',clickedColumn]),
         direction: 'ascending',
       })
 
