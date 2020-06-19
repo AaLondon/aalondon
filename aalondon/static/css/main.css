@@ -2270,45 +2270,6 @@ input, select, textarea {
 
 /* Icon */
 
-	.icon {
-		text-decoration: none;
-		border-bottom: none;
-		position: relative;
-	}
-
-		.icon:before {
-			-moz-osx-font-smoothing: grayscale;
-			-webkit-font-smoothing: antialiased;
-			display: inline-block;
-			font-style: normal;
-			font-variant: normal;
-			text-rendering: auto;
-			line-height: 1;
-			text-transform: none !important;
-			font-family: 'Font Awesome 5 Free';
-			font-weight: 400;
-		}
-
-		.icon > .label {
-			display: none;
-		}
-
-		.icon:before {
-			line-height: inherit;
-		}
-
-		.icon.solid:before {
-			font-weight: 900;
-		}
-
-		.icon.brands:before {
-			font-family: 'Font Awesome 5 Brands';
-		}
-
-		.icon.suffix:before {
-			float: right;
-		}
-
 /* Image */
 
 	.image {
@@ -4099,3 +4060,40 @@ and (orientation : portrait) { #main-home {
 			height: 300px;
 		}
 	}
+
+
+	/* meeting-search-form */
+
+	.meeting-search-form
+	{
+		display:grid;
+		grid-template-columns: 1fr;
+		grid-row-gap: 10px;
+	}
+
+	.clear-filters{
+		cursor: pointer;
+		font-size: 0.9em;
+		font-weight: 600;
+		color: #287EFB !important; 
+		letter-spacing: .5px;
+		text-transform: uppercase;
+	}
+
+
+	
+		@media (min-width: 600px) {
+			.meeting-search-form
+	{
+		display:grid;
+		grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+		grid-template-rows: 1fr;
+		grid-column-gap: 10px;
+
+
+	}
+	.ui.selection.dropdown{
+		min-width: 0;
+	}
+
+}
