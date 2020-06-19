@@ -4068,7 +4068,16 @@ and (orientation : portrait) { #main-home {
 	{
 		display:grid;
 		grid-template-columns: 1fr;
-		grid-row-gap: 50px;
+		grid-row-gap: 10px;
+	}
+
+	.clear-filters{
+		cursor: pointer;
+		font-size: 0.9em;
+		font-weight: 600;
+		color: #287EFB !important; 
+		letter-spacing: .5px;
+		text-transform: uppercase;
 	}
 
 
@@ -4077,9 +4086,14 @@ and (orientation : portrait) { #main-home {
 			.meeting-search-form
 	{
 		display:grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
 		grid-template-rows: 1fr;
 		grid-column-gap: 10px;
+
+
+	}
+	.ui.selection.dropdown{
+		min-width: 0;
 	}
 
 }

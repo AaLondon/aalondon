@@ -13,6 +13,7 @@ import * as geolib from 'geolib';
 import Table from 'react-bootstrap/Table';
 import MeetingTableData from './components/MeetingDataTable';
 import Spinner from 'react-bootstrap/Spinner'
+import _ from 'lodash'
 
 
 class MeetingSearch extends Component {
@@ -24,6 +25,7 @@ class MeetingSearch extends Component {
     this.onSliderChange = this.onSliderChange.bind(this);
     this.onSearchEnter = this.onSearchEnter.bind(this);
     this.onAccessChange = this.onAccessChange.bind(this);
+    this.onClearFilters = this.onClearFilters.bind(this);
 
 
 
@@ -56,7 +58,7 @@ class MeetingSearch extends Component {
     axios.get(queryString)
       .then(response => {
         const totalMeetings = response.data.count;
-        const currentMeetings = response.data.results;
+        const currentMeetings = _.sortBy(response.data.results, ['day_number','time']);
         const totalPages = response.data.count / 10;
 
 
@@ -75,23 +77,7 @@ class MeetingSearch extends Component {
     this.getResults(day,this.state.search,this.state.timeBand,this.state.access);
 
 
-/*    axios.get(queryString)
 
-      .then(response => {
-        const totalMeetings = response.data.count;
-        const currentMeetings = response.data.results;
-        const totalPages = response.data.count / 10;
-     
-
-
-        this.setState({
-          totalMeetings: totalMeetings, currentMeetings: currentMeetings, currentPage: 1,
-          totalPages: totalPages, showSpinner: 0, currentPage: 1
-        });
-      
-
-
-      });*/
   }
 
   getQueryString() {
@@ -236,6 +222,10 @@ onAccessChange = data => {
   this.getResults(this.state.day,this.state.search,this.state.timeBand,data);
 
 }
+onClearFilters = () =>  {
+  this.setState({showSpinner: 1,day: 'All', search:'',timeBand:'', access:''})
+  this.getResults('All','','','');  
+}
 
   render() {
 
@@ -251,6 +241,7 @@ onAccessChange = data => {
     let slider = <MeetingSearchForm value={this.state.day} 
     onInputChange={this.handleInputChange} onSliderChange={this.onSliderChange} 
     onDayChange={this.onDayChange} onSearchEnter={this.onSearchEnter}  onTimeChange={this.onTimeChange} onAccessChange={this.onAccessChange}
+    onClearFilters={this.onClearFilters}
     onIntergroupChange={this.onIntergroupChange}  
     day={this.state.day} intergroup={this.state.intergroup} search={this.state.search} access={this.state.access}
     timeBand={this.state.timeBand}
@@ -259,7 +250,7 @@ onAccessChange = data => {
       return (<Container>
         <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} 
         onDayChange={this.onDayChange} onSearchEnter={this.onSearchEnter} onTimeChange={this.onTimeChange} 
-        onSliderChange={this.onSliderChange} onAccessChange={this.onAccessChange}
+        onSliderChange={this.onSliderChange} onAccessChange={this.onAccessChange} onClearFilters={this.onClearFilters}
         onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} 
         search={this.state.search} timeBand={this.state.timeBand} access={this.state.access} />
         <Row className="justify-content-center"><Col xs={2}> <Spinner size="lg" animation="border" role="status">

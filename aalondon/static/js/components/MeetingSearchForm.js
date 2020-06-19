@@ -1,5 +1,6 @@
 import React from 'react';
 import Nav from 'react-bootstrap/Nav'
+import _ from 'lodash'
 
 import { Dropdown, Input } from 'semantic-ui-react'
 
@@ -19,6 +20,7 @@ class MeetingSearchForm extends React.Component {
     this.handleSearchKeyDown = this.handleSearchKeyDown.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
     this.handleAccessChange = this.handleAccessChange.bind(this);
+    this.handleClearFilters = this.handleClearFilters.bind(this);
     
 
     this.state = {search:props.search}
@@ -64,6 +66,10 @@ class MeetingSearchForm extends React.Component {
   handleAccessChange(eventKey,e) {
     console.log(e);
     this.props.onAccessChange(e.value);
+  } 
+  handleClearFilters() {
+    
+    this.props.onClearFilters();
   } 
 
   render() {
@@ -207,6 +213,7 @@ class MeetingSearchForm extends React.Component {
            value = {access}
            scrolling={false}
   />
+  <a className="clear-filters" onClick={this.handleClearFilters}>Clear Filters</a>
        
       </div>
     );
