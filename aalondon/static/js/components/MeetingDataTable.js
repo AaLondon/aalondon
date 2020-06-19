@@ -33,7 +33,7 @@ export default class MeetingDataTable extends Component {
     if (column !== clickedColumn) {
       this.setState({
         column: clickedColumn,
-        data: _.sortBy(data, ['day_number',clickedColumn]),
+        data: _.sortBy(data, [clickedColumn,'day_number']),
         direction: 'ascending',
       })
 
@@ -52,17 +52,22 @@ export default class MeetingDataTable extends Component {
     let showPostcode = this.props.showPostcode;
    
 
-    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day }) => {
+    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day,covid_open_status }) => {
       
       if ((showPostcode === 1) || (distance_from_client >= this.props.minMiles && distance_from_client <= this.props.maxMiles))
       {
-        console.log(typeof distance_from_client);
+
+        console.log('covid_open_status');
+        console.log(covid_open_status);
+        console.log('covid_open_status');
      return (
         <Table.Row key={code}>
           <Table.Cell>{day}</Table.Cell>
           <Table.Cell>{friendly_time}</Table.Cell>
           <Table.Cell><a href={'/meetings/' + slug + '/#meetingmap'}>{title}</a></Table.Cell>
           <Table.Cell>{showPostcode === 0 ? distance_from_client : postcode_prefix}</Table.Cell>
+          <Table.Cell>{covid_open_status === 0 ? 'Closed':'Open'}</Table.Cell>
+          
         </Table.Row>
       )
     }
@@ -97,6 +102,12 @@ export default class MeetingDataTable extends Component {
               onClick={this.handleSort(third_column_field)}
             >
               {showPostcode === 0 ? "Distance(miles)" : "Postcode"}
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={column === 'covid_open_status' ? direction : null}
+              onClick={this.handleSort('covid_open_status')}
+            >
+              Covid Open Status
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>

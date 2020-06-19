@@ -11,11 +11,12 @@ class MeetingSerializer(serializers.ModelSerializer):
     postcode_prefix = serializers.SerializerMethodField()
     distance_from_client = serializers.SerializerMethodField()
     day_number = serializers.SerializerMethodField()
+    covid_open_status = serializers.SerializerMethodField()
    
     class Meta:
         model = Meeting
         fields = ['code','title','time','address','day','actual_datetime','postcode','slug','lat','lng',
-                    'day_rank','friendly_time','postcode_prefix','day_number','intergroup','distance_from_client','time_band']
+                    'day_rank','friendly_time','postcode_prefix','day_number','intergroup','distance_from_client','time_band','covid_open_status']
 
 
     def get_actual_datetime(self, obj):
@@ -53,6 +54,12 @@ class MeetingSerializer(serializers.ModelSerializer):
      
         return  time.strptime(obj.day, '%A').tm_wday
 
+    def get_covid_open_status(self,obj):
+
+        if obj.covid_open_status:
+            return 1
+        else:
+            return 0
         
 
         

@@ -23,7 +23,7 @@ class Meeting(models.Model):
     intergroup = models.CharField(blank=True,max_length=100,null=True)
     detail = models.TextField(blank=True,null=True)
     time_band = models.CharField(blank=True,max_length=10,null=True)
-    covid_status = models.BooleanField(null=False,default=False)    
+    covid_open_status = models.BooleanField(null=False,default=False)    
 
     
     
