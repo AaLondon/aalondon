@@ -30,8 +30,8 @@ class MeetingSearch extends Component {
 
 
     this.state = {
-      totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, day: '', showSpinner: 1, intergroup: '',
-      clientLng: null, clientLat: null, showPostcode: 0,minMiles: 0, maxMiles: 1000000, geoFail : 0,search:'',timeBand: '',access:''
+      totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, day: 'all', showSpinner: 1, intergroup: '',
+      clientLng: null, clientLat: null, showPostcode: 0,minMiles: 0, maxMiles: 1000000, geoFail : 0,search:'',timeBand: 'all',access:''
     };
   }
 
@@ -45,8 +45,11 @@ class MeetingSearch extends Component {
   }
 
   getResults(day,search,timeBand,access){
-   
-    let queryString = `/api/meetingsearch/?search=${search}&day=${day}&time_band=${timeBand}`;
+    
+    let timeBandSend = timeBand === 'all' ? '' :timeBand
+    let daySend = day === 'all' ? '' :day
+      
+    let queryString = `/api/meetingsearch/?search=${search}&day=${daySend}&time_band=${timeBandSend}`;
     if (access === 'wheelchair'){
       queryString+='&wheelchair=1'
     }else if(access === 'hearing'){
@@ -54,7 +57,7 @@ class MeetingSearch extends Component {
     }
 
     let currentPage = 1
-    console.log("DayChange:"+queryString);
+   
     axios.get(queryString)
       .then(response => {
         const totalMeetings = response.data.count;
@@ -69,12 +72,10 @@ class MeetingSearch extends Component {
 
   componentDidMount() {
 
-    let day = new Date().toLocaleString('en-us', { weekday: 'long' });
+    //let day = new Date().toLocaleString('en-us', { weekday: 'long' });
 
-    let queryString = "";
-    queryString = `/api/meetingsearch/?day=${day}`
-    this.setState({ showPostcode: 1, day: day })
-    this.getResults(day,this.state.search,this.state.timeBand,this.state.access);
+    this.setState({ showPostcode: 1})
+    this.getResults(this.state.day,this.state.search,this.state.timeBand,this.state.access);
 
 
 
@@ -223,8 +224,8 @@ onAccessChange = data => {
 
 }
 onClearFilters = () =>  {
-  this.setState({showSpinner: 1,day: 'All', search:'',timeBand:'', access:''})
-  this.getResults('All','','','');  
+  this.setState({showSpinner: 1,day: 'all', search:'',timeBand:'all', access:''})
+  this.getResults('all','','all','');  
 }
 
   render() {
