@@ -41,6 +41,8 @@ class MeetingSearchForm extends React.Component {
     event.preventDefault();
   }
   handleDayChange(eventKey, e) {
+    console.log(e);
+    
       this.props.onDayChange(e.value);
   }
   handleIntergroupChange(eventKey, e) {
@@ -79,15 +81,11 @@ class MeetingSearchForm extends React.Component {
       63: "London North West", 62: "London South Middlesex", 119: "London West End", 120: "London Westway", 75: "London Croydon Epsom & Sutton", 55: "London North Kent",
       122: "London South East (East)", 121: "London South East (West)", 77: "London South", 42: "London South West"
     };
-    let day = null;
-    if (this.props.day !== null){
-      console.log('ZZZZZ{}'+this.props.day)
-      day = this.props.day;
-    } 
+    
     let search = this.state.search;
     let timeBand = this.props.timeBand;
     let access = this.props.access;
-    const weekDays = ["Now", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    let day = this.props.day;
     const accesses = [{
       key: 'wheelchair',
       text: 'Wheelchair',
@@ -101,6 +99,11 @@ class MeetingSearchForm extends React.Component {
       
     }]
     const timeBands = [{
+      key: 'all',
+      text: 'Anytime',
+      value: 'all',
+      
+    },{
       key: 'morning',
       text: 'Morning',
       value: 'morning',
@@ -126,9 +129,9 @@ class MeetingSearchForm extends React.Component {
         
       },
       {
-        key: 'All',
-        text: 'All',
-        value: 'All',
+        key: 'all',
+        text: 'Any day',
+        value: 'all',
         
       },
       {

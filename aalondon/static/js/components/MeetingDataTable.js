@@ -57,9 +57,7 @@ export default class MeetingDataTable extends Component {
       if ((showPostcode === 1) || (distance_from_client >= this.props.minMiles && distance_from_client <= this.props.maxMiles))
       {
 
-        console.log('covid_open_status');
-        console.log(covid_open_status);
-        console.log('covid_open_status');
+       
      return (
         <Table.Row key={code}>
           <Table.Cell>{day}</Table.Cell>
