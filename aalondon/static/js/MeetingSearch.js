@@ -299,7 +299,7 @@ class MeetingSearch extends Component {
         <Container>
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
           {slider}
-          <div>NO MEETINGS FOR THE REST OF THE DAY PLEASE CHECK TOMORROW</div>
+          <div>No meetings found :(  </div><div>Please update your search</div>
 
 
         </Container>
