@@ -3644,12 +3644,12 @@ and (orientation : portrait) { #main-home {
 
 {
 	text-align: center;
-    font-size: 12px;
+    font-size: 15px;
 	padding: 20px;
 	letter-spacing: normal;
 	text-transform: none;
 	font-family: "Source Sans Pro", Helvetica, sans-serif;
-	line-height: 15px;
+	line-height: 18px;
 }
 
 	@media screen and (min-width: 760px) {
@@ -4082,12 +4082,13 @@ and (orientation : portrait) { #main-home {
 
 
 	
-		@media (min-width: 600px) {
+		@media (min-width: 700px) {
+
 			.meeting-search-form
 	{
 		display:grid;
-		grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-		grid-template-rows: 1fr;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
 		grid-column-gap: 10px;
 
 
@@ -4096,4 +4097,47 @@ and (orientation : portrait) { #main-home {
 		min-width: 0;
 	}
 
+
+
 }
+
+@media only screen 
+and (min-device-width : 375px) 
+and (max-device-width : 812px) 
+and (-webkit-device-pixel-ratio : 3)
+and (orientation : landscape) { 
+	
+	.meeting-search-form
+	{
+		display:grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+		grid-column-gap: 10px;
+
+
+	}
+	.ui.selection.dropdown{
+		min-width: 0;
+	}
+}
+
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)  { 
+	
+	.meeting-search-form
+	{
+		display:grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+		grid-column-gap: 10px;
+
+
+	}
+	.ui.selection.dropdown{
+		min-width: 0;
+	}
+	
+}
+
