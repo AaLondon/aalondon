@@ -34,7 +34,7 @@ class Meeting(models.Model):
     
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        self.slug = slugify(f'{self.title} {self.day}')
         meeting_time = self.time
         
         if meeting_time > time(0, 0) and meeting_time <= time(12,0):
