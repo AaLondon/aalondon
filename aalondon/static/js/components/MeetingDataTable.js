@@ -24,12 +24,12 @@ export default class MeetingDataTable extends Component {
   }
 
   componentDidMount() {
-    console.log("MeetingDataTable componentDidMount");
+  
   }
 
   handleSort = (clickedColumn) => () => {
     const { column, data, direction } = this.state
-    console.log(data);
+
     if (column !== clickedColumn) {
       this.setState({
         column: clickedColumn,
@@ -64,7 +64,7 @@ export default class MeetingDataTable extends Component {
           <Table.Cell>{friendly_time}</Table.Cell>
           <Table.Cell><a href={'/meetings/' + slug + '/#meetingmap'}>{title}</a></Table.Cell>
           <Table.Cell>{showPostcode === 0 ? distance_from_client : postcode_prefix}</Table.Cell>
-          <Table.Cell>{covid_open_status === 0 ? 'Closed':'Open'}</Table.Cell>
+          <Table.Cell>{covid_open_status === 0 ? 'Inactive':'Active'}</Table.Cell>
           
         </Table.Row>
       )

@@ -83,7 +83,7 @@ class MeetingSearch(generics.ListAPIView):
     model = Meeting
     serializer_class = MeetingSerializer
     filter_backends = [DjangoFilterBackend ,OrderingFilter]
-    filterset_fields = ['time_band','hearing','wheelchair']
+    filterset_fields = ['time_band','hearing','wheelchair','covid_open_status']
     ordering_fields = ['day_number','time']
    
         

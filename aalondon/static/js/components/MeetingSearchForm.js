@@ -20,6 +20,7 @@ class MeetingSearchForm extends React.Component {
     this.handleSearchKeyDown = this.handleSearchKeyDown.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
     this.handleAccessChange = this.handleAccessChange.bind(this);
+    this.handleCovidChange = this.handleCovidChange.bind(this);
     this.handleClearFilters = this.handleClearFilters.bind(this);
     
 
@@ -28,7 +29,7 @@ class MeetingSearchForm extends React.Component {
   }
 
   handleSliderChange(e) {
-    console.log("handleSliderChange");
+    
     this.props.onSliderChange(e);
 
   }
@@ -41,7 +42,7 @@ class MeetingSearchForm extends React.Component {
     event.preventDefault();
   }
   handleDayChange(eventKey, e) {
-    console.log(e);
+  
     
       this.props.onDayChange(e.value);
   }
@@ -50,25 +51,41 @@ class MeetingSearchForm extends React.Component {
   }
   
   handleSearchChange(e) {
-    console.log(e);
+   
+
+   let lastSearchLength = this.state.search.length;
+    let currentSearchLength = e.target.value.length;
+    
     this.setState({ search: e.target.value });
+    if (e.target.value.length > 2 || (lastSearchLength - currentSearchLength === lastSearchLength && currentSearchLength === 0) ){
+      this.props.onSearchChange(e.target.value);
+    }
+
+    
+
  }
 
   handleSearchKeyDown(e){
+    
     if (e.keyCode === ENTER_KEY) {
      
       this.props.onSearchEnter(e.target.value);
   } }
 
   handleTimeChange(eventKey,e) {
-    console.log(e);
+   
     this.props.onTimeChange(e.value);
   } 
 
   handleAccessChange(eventKey,e) {
-    console.log(e);
+  
     this.props.onAccessChange(e.value);
   } 
+  handleCovidChange(eventKey,e) {
+  
+    this.props.onCovidChange(e.value);
+  } 
+
   handleClearFilters() {
     
     this.props.onClearFilters();
@@ -86,6 +103,7 @@ class MeetingSearchForm extends React.Component {
     let timeBand = this.props.timeBand;
     let access = this.props.access;
     let day = this.props.day;
+    let covid = this.props.covid;
     const accesses = [{
       key: 'wheelchair',
       text: 'Wheelchair',
@@ -178,7 +196,19 @@ class MeetingSearchForm extends React.Component {
       },
       
     ]
-
+    const covids = [
+    {
+      key: 'active',
+      text: 'Active',
+      value: 'active',
+      
+    },
+    {
+      key: 'inactive',
+      text: 'Inactive',
+      value: 'inactive',
+      
+    }]
 
 
 
@@ -186,6 +216,8 @@ class MeetingSearchForm extends React.Component {
 
       <div className={'meeting-search-form'}>
         <Input icon='search' placeholder='Search...' onChange={this.handleSearchChange} onKeyDown={this.handleSearchKeyDown} value={search}/>
+          
+      
           <Dropdown
             placeholder='Day'
            // fluid
@@ -216,6 +248,17 @@ class MeetingSearchForm extends React.Component {
            value = {access}
            scrolling={false}
   />
+    <Dropdown
+            placeholder='Covid status'
+           // fluid
+            selection
+            options={covids}
+           icon='dropdown'
+           onChange={this.handleCovidChange}
+           value = {covid}
+           scrolling={false}
+  />
+    
   <a className="clear-filters" onClick={this.handleClearFilters}>Clear Filters</a>
        
       </div>
