@@ -28,7 +28,7 @@ class MeetingSearchForm extends React.Component {
   }
 
   handleSliderChange(e) {
-    console.log("handleSliderChange");
+    
     this.props.onSliderChange(e);
 
   }
@@ -41,7 +41,7 @@ class MeetingSearchForm extends React.Component {
     event.preventDefault();
   }
   handleDayChange(eventKey, e) {
-    console.log(e);
+  
     
       this.props.onDayChange(e.value);
   }
@@ -50,23 +50,34 @@ class MeetingSearchForm extends React.Component {
   }
   
   handleSearchChange(e) {
-    console.log(e);
+   
+    console.log(e.target.value);
+   let lastSearchLength = this.state.search.length;
+    let currentSearchLength = e.target.value.length;
+    
     this.setState({ search: e.target.value });
+    if (e.target.value.length > 2 || (lastSearchLength - currentSearchLength === lastSearchLength && currentSearchLength === 0) ){
+      this.props.onSearchChange(e.target.value);
+    }
+
+    
+
  }
 
   handleSearchKeyDown(e){
+    
     if (e.keyCode === ENTER_KEY) {
      
       this.props.onSearchEnter(e.target.value);
   } }
 
   handleTimeChange(eventKey,e) {
-    console.log(e);
+   
     this.props.onTimeChange(e.value);
   } 
 
   handleAccessChange(eventKey,e) {
-    console.log(e);
+  
     this.props.onAccessChange(e.value);
   } 
   handleClearFilters() {

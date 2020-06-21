@@ -26,7 +26,7 @@ class MeetingSearch extends Component {
     this.onSearchEnter = this.onSearchEnter.bind(this);
     this.onAccessChange = this.onAccessChange.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
-
+    this.onSearchChange = this.onSearchChange.bind(this);
 
 
     this.state = {
@@ -44,7 +44,7 @@ class MeetingSearch extends Component {
     });
   }
 
-  getResults(day,search,timeBand,access){
+  getResults(day,search,timeBand,access,isSearchChange){
     
     let timeBandSend = timeBand === 'all' ? '' :timeBand
     let daySend = day === 'all' ? '' :day
@@ -57,16 +57,25 @@ class MeetingSearch extends Component {
     }
 
     let currentPage = 1
+   console.log(queryString);
    
+
     axios.get(queryString)
       .then(response => {
         const totalMeetings = response.data.count;
         const currentMeetings = _.sortBy(response.data.results, ['day_number','time']);
         const totalPages = response.data.count / 10;
+        console.log(isSearchChange);
+   console.log(response.data.count);
 
-
+        if ((isSearchChange === 1 && response.data.count > 0) || isSearchChange === 0)
+        {
+          console.log('xxx');
+          console.log(currentMeetings);
+          
 
         this.setState({ totalMeetings, currentMeetings, currentPage, totalPages, showSpinner: 0,day: day,search:search });
+      }
       });
   }
 
@@ -75,7 +84,7 @@ class MeetingSearch extends Component {
     //let day = new Date().toLocaleString('en-us', { weekday: 'long' });
 
     this.setState({ showPostcode: 1})
-    this.getResults(this.state.day,this.state.search,this.state.timeBand,this.state.access);
+    this.getResults(this.state.day,this.state.search,this.state.timeBand,this.state.access,0);
 
 
 
@@ -126,16 +135,14 @@ class MeetingSearch extends Component {
 
   
     let day = this.state.day;
-    console.log("DAY: "+day);
     let now = 0;
-    console.log("now0:"+ now);
+   
     if (day === "Now")
     {
-      console.log("Im her");
+     
       day = new Date().toLocaleString('en-us', { weekday: 'long' });
       now = 1;
     }
-    console.log("nowA:"+ now);
       
     let minMiles = 0;
     let maxMiles = data;
@@ -172,8 +179,7 @@ class MeetingSearch extends Component {
       if(lat === null){
         showPostcode = 1;
       }
-      console.log("nowB:"+ now);
-      console.log("SliderChange:"+queryString);
+     
       axios.get(queryString)
 
         .then(response => {
@@ -195,37 +201,46 @@ class MeetingSearch extends Component {
   onDayChange = data => {
 
     this.setState({ showSpinner: 1, day: data });
-    this.getResults(data,this.state.search,this.state.timeBand,this.state.access);
+    this.getResults(data,this.state.search,this.state.timeBand,this.state.access,0);
 
   }
 
 onSearchEnter = data =>{
  
       
-    console.log('data:'+data);
+    
   
     this.setState({ showSpinner: 1, search: data });
     
-    this.getResults(this.state.day,data,this.state.timeBand,this.state.access);
+    this.getResults(this.state.day,data,this.state.timeBand,this.state.access,0);
     
 }
+onSearchChange = data =>{
+ 
+      
+ 
 
+  this.setState({ showSpinner: 0, search: data });
+  
+  this.getResults(this.state.day,data,this.state.timeBand,this.state.access,1);
+  
+}
 onTimeChange = data => {
 
   this.setState({ showSpinner: 1, timeBand: data });
-  this.getResults(this.state.day,this.state.search,data,this.state.access);
+  this.getResults(this.state.day,this.state.search,data,this.state.access,0);
 
 }
 
 onAccessChange = data => {
 
   this.setState({ showSpinner: 1, access: data });
-  this.getResults(this.state.day,this.state.search,this.state.timeBand,data);
+  this.getResults(this.state.day,this.state.search,this.state.timeBand,data,0);
 
 }
 onClearFilters = () =>  {
   this.setState({showSpinner: 1,day: 'all', search:'',timeBand:'all', access:''})
-  this.getResults('all','','all','');  
+  this.getResults('all','','all','',0);  
 }
 
   render() {
@@ -241,16 +256,16 @@ onClearFilters = () =>  {
  
     let slider = <MeetingSearchForm value={this.state.day} 
     onInputChange={this.handleInputChange} onSliderChange={this.onSliderChange} 
-    onDayChange={this.onDayChange} onSearchEnter={this.onSearchEnter}  onTimeChange={this.onTimeChange} onAccessChange={this.onAccessChange}
+    onDayChange={this.onDayChange} onSearchEnter={this.onSearchEnter} onSearchChange={this.onSearchChange} onTimeChange={this.onTimeChange} onAccessChange={this.onAccessChange}
     onClearFilters={this.onClearFilters}
     onIntergroupChange={this.onIntergroupChange}  
     day={this.state.day} intergroup={this.state.intergroup} search={this.state.search} access={this.state.access}
     timeBand={this.state.timeBand}
     />;
-    if (showSpinner === 1)
+    if (showSpinner === 1 )
       return (<Container>
         <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange} 
-        onDayChange={this.onDayChange} onSearchEnter={this.onSearchEnter} onTimeChange={this.onTimeChange} 
+        onDayChange={this.onDayChange} onSearchEnter={this.onSearchEnter} onSearchChange={this.onSearchChange} onTimeChange={this.onTimeChange}  
         onSliderChange={this.onSliderChange} onAccessChange={this.onAccessChange} onClearFilters={this.onClearFilters}
         onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup} 
         search={this.state.search} timeBand={this.state.timeBand} access={this.state.access} />
@@ -276,7 +291,7 @@ onClearFilters = () =>  {
 
 
    
-    let firstCode = currentMeetings[0].code +currentMeetings[0].distance_from_client  ;
+    let firstCode = currentMeetings[0].code + currentMeetings.length  ;
     
 
 
