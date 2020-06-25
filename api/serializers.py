@@ -12,11 +12,14 @@ class MeetingSerializer(serializers.ModelSerializer):
     distance_from_client = serializers.SerializerMethodField()
     day_number = serializers.SerializerMethodField()
     covid_open_status = serializers.SerializerMethodField()
+    code = serializers.SerializerMethodField()
+    place = serializers.SerializerMethodField()
+  
    
     class Meta:
         model = Meeting
         fields = ['code','title','time','address','day','actual_datetime','postcode','slug','lat','lng',
-                    'day_rank','friendly_time','postcode_prefix','day_number','intergroup','distance_from_client','time_band','covid_open_status']
+                    'day_rank','friendly_time','postcode_prefix','day_number','intergroup','distance_from_client','time_band','covid_open_status','place']
 
 
     def get_actual_datetime(self, obj):
@@ -61,7 +64,13 @@ class MeetingSerializer(serializers.ModelSerializer):
         else:
             return 0
         
+    def get_code(self, obj):
 
+        return 'physical_'+str(obj.id)
+
+    def get_place(self,obj):
+
+        return obj.postcode
         
    
 
@@ -71,10 +80,14 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
     actual_datetime = serializers.SerializerMethodField()
     friendly_time = serializers.SerializerMethodField()
     zoom_password = serializers.SerializerMethodField()
+    code = serializers.SerializerMethodField()
+    place = serializers.SerializerMethodField()
+    day_number = serializers.SerializerMethodField()
+  
     class Meta:
         model = OnlineMeeting
         fields = ['id','title','time','day','actual_datetime','link','description','slug',
-                    'friendly_time','zoom_password','platform']
+                    'friendly_time','zoom_password','platform','code','place','day_number']
 
 
     def get_actual_datetime(self, obj):
@@ -106,3 +119,16 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
         return 0
 
          
+    def get_code(self, obj):
+
+        return 'online_'+str(obj.id)
+
+
+    def get_place(self, obj):
+
+        return 'zoom'
+
+    def get_day_number(self,obj):
+        if obj.day == 'All':
+            return -1
+        return  time.strptime(obj.day, '%A').tm_wday

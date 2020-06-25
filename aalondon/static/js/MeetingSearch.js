@@ -45,6 +45,8 @@ class MeetingSearch extends Component {
     });
   }
 
+ 
+
   getResults(day, search, timeBand, access, isSearchChange, covid) {
 
     let timeBandSend = timeBand === 'all' ? '' : timeBand
@@ -66,12 +68,63 @@ class MeetingSearch extends Component {
 
     let currentPage = 1
 
+    
+    var strr = [];
 
+    axios.get(`/api/onlinemeetingsearch/`).then(response =>
+     {
+      strr.push(response.data);
+     } )
 
+    console.log(queryString);  
     axios.get(queryString)
       .then(response => {
+        strr.push(response.data);
+        console.log(strr);
+        let onlineMeetings = strr[0].results;
+        let physicalMeetings = strr[1].results;
+        
+        let onlineMeetingsAllExpansion = []
+        //get online meetings that are ""all""
+        let onlineMeetingsAll = onlineMeetings.filter(v => _.includes(['All'], v.day)) ;
+        let onlineMeetingsExcludesAll = onlineMeetings.filter(v => !_.includes(['All'], v.day)) ;
+         //iterate over the all onlineMeetingsall 
+        for (var value of onlineMeetingsAll) {
+          if (day === 'all'){
+            let currentCode = value['code'];
+         
+            for (const [i, dayName] of ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"].entries()) {
+              var newMeeting = _.cloneDeep(value);
+              newMeeting['day'] = dayName;
+              newMeeting['code'] = currentCode + '_' + dayName; 
+              newMeeting['day_number'] = i;
+              console.log(newMeeting);
+              onlineMeetingsExcludesAll.push(newMeeting);
+             
+              
+
+            }    
+          }
+        }
+    
+            // if day of week is specieifed push 1 row to onlineMeetingsAllExpansion
+            
+            // if day== 'all' then iterate over days of week 
+                 //change value of day   
+                //push 7 records for mon->sun
+
+        //let xxx = _.filter(onlineMeetings, { 'day': '-All'});
+   //     let tbl = _.map(onlineMeetings, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day,covid_open_status,place }) => {
+     //   return { day}
+       // })
+
+
+
+        let currentMeetings = physicalMeetings.concat(onlineMeetingsExcludesAll); 
+
+        currentMeetings = _.sortBy(currentMeetings, ['day_number','time']);
         const totalMeetings = response.data.count;
-        const currentMeetings = _.sortBy(response.data.results, ['day_number', 'time']);
+        //const currentMeetings = _.sortBy(response.data.results, ['day', 'time']);
         const totalPages = response.data.count / 10;
 
         if ((isSearchChange === 1 && response.data.count > 0) || isSearchChange === 0) {
