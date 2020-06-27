@@ -45,90 +45,93 @@ class MeetingSearch extends Component {
     });
   }
 
- 
+
 
   getResults(day, search, timeBand, access, isSearchChange, covid) {
 
     let timeBandSend = timeBand === 'all' ? '' : timeBand
     let daySend = day === 'all' ? '' : day
-    
+
     let queryString = `/api/meetingsearch/?search=${search}&day=${daySend}&time_band=${timeBandSend}`;
     if (access === 'wheelchair') {
       queryString += '&wheelchair=1'
-      
+
     } else if (access === 'hearing') {
       queryString += '&hearing=1'
     }
 
-    if (covid == 'active'){
+    if (covid == 'active') {
       queryString += '&covid_open_status=true'
-    } else if (covid == 'inactive'){
+    } else if (covid == 'inactive') {
       queryString += '&covid_open_status=false'
-    } 
+    }
 
     let currentPage = 1
 
-    
+
     var strr = [];
-
-    axios.get(`/api/onlinemeetingsearch/`).then(response =>
-     {
+    let onlineQueryString = `/api/onlinemeetingsearch/?search=${search}&day=${daySend}`
+    axios.get(onlineQueryString).then(response => {
+      console.log('response');
       strr.push(response.data);
-     } )
+      console.log('response');
+    }
+    )
 
-    console.log(queryString);  
+    console.log(queryString);
     axios.get(queryString)
       .then(response => {
         strr.push(response.data);
         console.log(strr);
         let onlineMeetings = strr[0].results;
         let physicalMeetings = strr[1].results;
-        
+
         let onlineMeetingsAllExpansion = []
         //get online meetings that are ""all""
-        let onlineMeetingsAll = onlineMeetings.filter(v => _.includes(['All'], v.day)) ;
-        let onlineMeetingsExcludesAll = onlineMeetings.filter(v => !_.includes(['All'], v.day)) ;
-         //iterate over the all onlineMeetingsall 
+        let onlineMeetingsAll = onlineMeetings.filter(v => _.includes(['All'], v.day));
+        let onlineMeetingsExcludesAll = onlineMeetings.filter(v => !_.includes(['All'], v.day));
+        //iterate over the all onlineMeetingsall 
         for (var value of onlineMeetingsAll) {
-          if (day === 'all'){
-            let currentCode = value['code'];
-         
-            for (const [i, dayName] of ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"].entries()) {
+          let currentCode = value['code'];
+          if (day === 'all') {
+            for (const [i, dayName] of ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].entries()) {
               var newMeeting = _.cloneDeep(value);
               newMeeting['day'] = dayName;
-              newMeeting['code'] = currentCode + '_' + dayName; 
+              newMeeting['code'] = currentCode + '_' + dayName;
               newMeeting['day_number'] = i;
-              console.log(newMeeting);
               onlineMeetingsExcludesAll.push(newMeeting);
-             
-              
-
-            }    
+            }
+          } else {
+            let weekDays = { "Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3, "Friday": 4, "Saturday": 5, "Sunday": 6 }
+            var newMeeting = _.cloneDeep(value);
+            newMeeting['day'] = day;
+            newMeeting['code'] = currentCode + '_' + day;
+            newMeeting['day_number'] = weekDays[day];
           }
         }
-    
-            // if day of week is specieifed push 1 row to onlineMeetingsAllExpansion
-            
-            // if day== 'all' then iterate over days of week 
-                 //change value of day   
-                //push 7 records for mon->sun
+
+        // if day of week is specieifed push 1 row to onlineMeetingsAllExpansion
+
+        // if day== 'all' then iterate over days of week 
+        //change value of day   
+        //push 7 records for mon->sun
 
         //let xxx = _.filter(onlineMeetings, { 'day': '-All'});
-   //     let tbl = _.map(onlineMeetings, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day,covid_open_status,place }) => {
-     //   return { day}
-       // })
+        //     let tbl = _.map(onlineMeetings, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day,covid_open_status,place }) => {
+        //   return { day}
+        // })
 
 
 
-        let currentMeetings = physicalMeetings.concat(onlineMeetingsExcludesAll); 
+        let currentMeetings = physicalMeetings.concat(onlineMeetingsExcludesAll);
 
-        currentMeetings = _.sortBy(currentMeetings, ['day_number','time']);
+        currentMeetings = _.sortBy(currentMeetings, ['day_number', 'time', 'title']);
         const totalMeetings = response.data.count;
         //const currentMeetings = _.sortBy(response.data.results, ['day', 'time']);
         const totalPages = response.data.count / 10;
 
         if ((isSearchChange === 1 && response.data.count > 0) || isSearchChange === 0) {
-   
+
 
 
           this.setState({ totalMeetings, currentMeetings, currentPage, totalPages, showSpinner: 0, day: day, search: search });
@@ -137,7 +140,7 @@ class MeetingSearch extends Component {
   }
 
   componentDidMount() {
-    
+
 
     //let day = new Date().toLocaleString('en-us', { weekday: 'long' });
 
@@ -304,7 +307,7 @@ class MeetingSearch extends Component {
   }
 
   onClearFilters = () => {
-    this.setState({ showSpinner: 1, day: 'all', search: '', timeBand: 'all', access: '',coivid:'all' })
+    this.setState({ showSpinner: 1, day: 'all', search: '', timeBand: 'all', access: '', coivid: 'all' })
     this.getResults('all', '', 'all', '', 0, 'all');
   }
 
@@ -333,11 +336,11 @@ class MeetingSearch extends Component {
     if (showSpinner === 1)
       return (<Container>
         <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange}
-          onDayChange={this.onDayChange} onSearchEnter={this.onSearchEnter} onSearchChange={this.onSearchChange} 
+          onDayChange={this.onDayChange} onSearchEnter={this.onSearchEnter} onSearchChange={this.onSearchChange}
           onTimeChange={this.onTimeChange}
-          onSliderChange={this.onSliderChange} 
-          onAccessChange={this.onAccessChange} 
-          onCovidChange={this.onCovidChange} 
+          onSliderChange={this.onSliderChange}
+          onAccessChange={this.onAccessChange}
+          onCovidChange={this.onCovidChange}
           onClearFilters={this.onClearFilters}
           onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup}
           search={this.state.search} timeBand={this.state.timeBand} access={this.state.access} covid={this.state.covid} />
