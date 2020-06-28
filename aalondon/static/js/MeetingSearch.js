@@ -71,72 +71,74 @@ class MeetingSearch extends Component {
 
     var strr = [];
     let onlineQueryString = `/api/onlinemeetingsearch/?search=${search}&day=${daySend}`
-    axios.get(onlineQueryString).then(response => {
-      console.log('response');
-      strr.push(response.data);
-      console.log('response');
-    }
-    )
 
-    console.log(queryString);
-    axios.get(queryString)
-      .then(response => {
-        strr.push(response.data);
-        console.log(strr);
-        let onlineMeetings = strr[0].results;
-        let physicalMeetings = strr[1].results;
+    const onlineMeetingRequest = axios.get(onlineQueryString);
+    const physicalMeetingRequest = axios.get(queryString);
 
-        let onlineMeetingsAllExpansion = []
-        //get online meetings that are ""all""
-        let onlineMeetingsAll = onlineMeetings.filter(v => _.includes(['All'], v.day));
-        let onlineMeetingsExcludesAll = onlineMeetings.filter(v => !_.includes(['All'], v.day));
-        //iterate over the all onlineMeetingsall 
-        for (var value of onlineMeetingsAll) {
-          let currentCode = value['code'];
-          if (day === 'all') {
-            for (const [i, dayName] of ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].entries()) {
-              var newMeeting = _.cloneDeep(value);
-              newMeeting['day'] = dayName;
-              newMeeting['code'] = currentCode + '_' + dayName;
-              newMeeting['day_number'] = i;
-              onlineMeetingsExcludesAll.push(newMeeting);
-            }
-          } else {
-            let weekDays = { "Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3, "Friday": 4, "Saturday": 5, "Sunday": 6 }
+    axios.all([onlineMeetingRequest, physicalMeetingRequest]).then(axios.spread((...responses) => {
+      const responseOne = responses[0]
+      const responseTwo = responses[1]
+      let onlineMeetings = responses[0].data.results;
+      let physicalMeetings = responses[1].data.results;
+      
+      console.log(onlineMeetings)
+      let onlineMeetingsAllExpansion = []
+      //get online meetings that are ""all""
+      let onlineMeetingsAll = onlineMeetings.filter(v => _.includes(['All'], v.day));
+      let onlineMeetingsExcludesAll = onlineMeetings.filter(v => !_.includes(['All'], v.day));
+      //iterate over the all onlineMeetingsall 
+      for (var value of onlineMeetingsAll) {
+        let currentCode = value['code'];
+        if (day === 'all') {
+          for (const [i, dayName] of ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].entries()) {
             var newMeeting = _.cloneDeep(value);
-            newMeeting['day'] = day;
-            newMeeting['code'] = currentCode + '_' + day;
-            newMeeting['day_number'] = weekDays[day];
+            newMeeting['day'] = dayName;
+            newMeeting['code'] = currentCode + '_' + dayName;
+            newMeeting['day_number'] = i;
+            onlineMeetingsExcludesAll.push(newMeeting);
           }
+        } else {
+          let weekDays = { "Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3, "Friday": 4, "Saturday": 5, "Sunday": 6 }
+          var newMeeting = _.cloneDeep(value);
+          newMeeting['day'] = day;
+          newMeeting['code'] = currentCode + '_' + day;
+          newMeeting['day_number'] = weekDays[day];
         }
+      }
 
-        // if day of week is specieifed push 1 row to onlineMeetingsAllExpansion
+      // if day of week is specieifed push 1 row to onlineMeetingsAllExpansion
 
-        // if day== 'all' then iterate over days of week 
-        //change value of day   
-        //push 7 records for mon->sun
+      // if day== 'all' then iterate over days of week 
+      //change value of day   
+      //push 7 records for mon->sun
 
-        //let xxx = _.filter(onlineMeetings, { 'day': '-All'});
-        //     let tbl = _.map(onlineMeetings, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day,covid_open_status,place }) => {
-        //   return { day}
-        // })
-
-
-
-        let currentMeetings = physicalMeetings.concat(onlineMeetingsExcludesAll);
-
-        currentMeetings = _.sortBy(currentMeetings, ['day_number', 'time', 'title']);
-        const totalMeetings = response.data.count;
-        //const currentMeetings = _.sortBy(response.data.results, ['day', 'time']);
-        const totalPages = response.data.count / 10;
-
-        if ((isSearchChange === 1 && response.data.count > 0) || isSearchChange === 0) {
+      //let xxx = _.filter(onlineMeetings, { 'day': '-All'});
+      //     let tbl = _.map(onlineMeetings, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day,covid_open_status,place }) => {
+      //   return { day}
+      // })
 
 
+      console.log(physicalMeetings)
+      let currentMeetings = physicalMeetings.concat(onlineMeetingsExcludesAll);
 
-          this.setState({ totalMeetings, currentMeetings, currentPage, totalPages, showSpinner: 0, day: day, search: search });
-        }
-      });
+      currentMeetings = _.sortBy(currentMeetings, ['day_number', 'time', 'title']);
+      const totalMeetings = currentMeetings.count;
+      //const currentMeetings = _.sortBy(response.data.results, ['day', 'time']);
+      const totalPages = currentMeetings.count / 10;
+
+      if ((isSearchChange === 1 && currentMeetings.count > 0) || isSearchChange === 0) {
+
+        
+
+        this.setState({ totalMeetings, currentMeetings, currentPage, totalPages, showSpinner: 0, day: day, search: search });
+      }
+
+      // use/access the results 
+    }))
+
+
+
+
   }
 
   componentDidMount() {
