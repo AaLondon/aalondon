@@ -12,6 +12,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 import datetime
 from django_extensions.db.fields import AutoSlugField
+from datetime import time
 
 
 
@@ -91,6 +92,7 @@ class OnlineMeeting(models.Model):
     published = models.BooleanField(null=False,blank=False,default=False)
     email = models.EmailField(null=True,blank=True)
     hearing = models.BooleanField(null=False,blank=False,default=False)
+    time_band = models.CharField(blank=True,max_length=10,null=True)
 
 
     def __str__(self):
@@ -100,5 +102,15 @@ class OnlineMeeting(models.Model):
     def save(self, *args, **kwargs):
         days =['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','All']
         self.day_number = days.index(self.day)
+        meeting_time = self.time
+        
+        if meeting_time > time(0, 0) and meeting_time <= time(12,0):
+            self.time_band = 'morning'
+        elif meeting_time > time(12,0) and meeting_time <= time(18,0):
+            self.time_band = 'afternoon'
+        else:
+            self.time_band = 'evening'
         
         super().save(*args, **kwargs)
+
+
