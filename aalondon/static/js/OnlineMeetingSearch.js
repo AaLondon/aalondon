@@ -42,7 +42,7 @@ class OnlineMeetingSearch extends Component {
     let day = new Date().toLocaleString('en-us', { weekday: 'long' });
 
     let queryString = "";
-    queryString = `/api/onlinemeetingsearch/?day=${day}&now=1&top=${top}`
+    queryString = `/api/onlinemeetingsearch/?day=now&top=${top}`
     this.setState({ showPostcode: 1 })
 
     axios.get(queryString)

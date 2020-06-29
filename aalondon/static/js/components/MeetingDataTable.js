@@ -50,21 +50,31 @@ export default class MeetingDataTable extends Component {
     const { column, data, direction } = this.state
     let thirdColumnHeader = "Distance(miles)";
     let showPostcode = this.props.showPostcode;
-   
 
-    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day,covid_open_status }) => {
-      
+
+    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day,covid_open_status,place }) => {
+      let placeText = '';
+      let img='/static/images/zoom.png';
+      let meetingUrlPath = '/onlinemeetings'
+      if (place !== 'zoom'){
+        placeText = place;
+        meetingUrlPath = '/meetings/'
+        img = '/static/images/zoomAA-location-pin.png'
+      }
+
+
+
       if ((showPostcode === 1) || (distance_from_client >= this.props.minMiles && distance_from_client <= this.props.maxMiles))
       {
 
        
      return (
         <Table.Row key={code}>
-          <Table.Cell>{day}</Table.Cell>
-          <Table.Cell>{friendly_time}</Table.Cell>
-          <Table.Cell><a href={'/meetings/' + slug + '/#meetingmap'}>{title}</a></Table.Cell>
-          <Table.Cell>{showPostcode === 0 ? distance_from_client : postcode_prefix}</Table.Cell>
-          <Table.Cell>{covid_open_status === 0 ? 'Inactive':'Active'}</Table.Cell>
+          <Table.Cell textAlign="center">{day}</Table.Cell>
+          <Table.Cell textAlign="center">{friendly_time}</Table.Cell>
+          <Table.Cell textAlign="center"><a href={meetingUrlPath + slug + '/#meetingmap'}>{title}</a></Table.Cell>
+          <Table.Cell textAlign="center" className='meeting-cell'> <div><img src={img}></img></div><div>{placeText}</div></Table.Cell>
+          <Table.Cell textAlign="center">{covid_open_status === 0 ? 'Inactive':'Active'}</Table.Cell>
           
         </Table.Row>
       )
@@ -96,10 +106,10 @@ export default class MeetingDataTable extends Component {
               Title
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === third_column_field ? direction : null}
-              onClick={this.handleSort(third_column_field)}
+              sorted={column === 'place' ? direction : null}
+              onClick={this.handleSort('place')}
             >
-              {showPostcode === 0 ? "Distance(miles)" : "Postcode"}
+              Place
             </Table.HeaderCell>
             <Table.HeaderCell
               sorted={column === 'covid_open_status' ? direction : null}

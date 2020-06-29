@@ -4023,7 +4023,14 @@ and (orientation : portrait) { #main-home {
 		
 	}
 	
+	.meeting-key img {
+		
+		width:30px;
+		vertical-align: sub;
+		
+	}
 	
+
 	
 
 	@media screen and (max-width: 480px)
@@ -4141,3 +4148,6 @@ and (max-device-width : 1024px)  {
 	
 }
 
+#meeting_search{
+	padding-top: 60px;
+}

@@ -71,7 +71,7 @@ class MeetingsList(generics.ListAPIView):
                 all_ordered = all.order_by('-day_number','time')
             else:
                 all_ordered = all.order_by('day_number','time')
-            return all_ordered#.annotate(the_rank=rank_by_day)
+            return all_ordered
         
         return Meeting.objects.all()
 
@@ -107,16 +107,16 @@ class MeetingSearch(generics.ListAPIView):
             tomorrow = now + timedelta(days=1) 
             day_name_tomorrow = tomorrow.strftime("%A")
             
-            meetings_today = Meeting.objects.filter((Q(day=day_name_today) & Q(time__gte=now.time())))#.order_by('time')
-            meetings_tomorrow = Meeting.objects.filter((Q(day=day_name_tomorrow) & Q(time__lte=now.time())))#.order_by('time')
-            rank_by_day = Window(expression=Rank(),partition_by=F("day"),order_by=F("time").asc())
+            meetings_today = Meeting.objects.filter((Q(day=day_name_today) & Q(time__gte=now.time())))
+            meetings_tomorrow = Meeting.objects.filter((Q(day=day_name_tomorrow) & Q(time__lte=now.time())))
+            
 
-            all = meetings_today #| meetings_tomorrow
+            all = meetings_today 
             if day_name_today == 'sunday':
                 all_ordered = all.order_by('-day_number','time')
             else:
                 all_ordered = all.order_by('day_number','time')
-            queryset = queryset.filter((Q(day=day_name_today) & Q(time__gte=now.time())))#.annotate(the_rank=rank_by_day)
+            queryset = queryset.filter((Q(day=day_name_today) & Q(time__gte=now.time())))
         elif day in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']:
             queryset = queryset.filter(day=day)
     
@@ -146,11 +146,17 @@ class OnlineMeetingSearch(generics.ListAPIView):
         tz = pytz.timezone('Europe/London') 
         dt_now = datetime.now(tz=tz) - timedelta(minutes=10)    
         day_name_today = dt_now.strftime("%A")
-        
-        queryset = OnlineMeeting.objects.filter(Q(day=day) | Q(day='All') ).filter(published=True)
+        queryset = OnlineMeeting.objects.annotate(search=SearchVector('description','title'),)
+        queryset = queryset.filter(published=True)
+
+        search = self.request.query_params.get('search', None)
+
+        if search is not None and len(search) > 0:
+            queryset = queryset.filter(search=search)
+
         now = self.request.query_params.get('now',None)
         top = int(self.request.query_params.get('top',0))
-        if now == '1':
+        if day=='now':
              
             
             date_today = dt_now.date()
@@ -162,7 +168,7 @@ class OnlineMeetingSearch(generics.ListAPIView):
             
             meetings_today = OnlineMeeting.objects.filter(((Q(day=day_name_today) | Q(day='All'))   & Q(time__gte=dt_now.time())))#.order_by('time')
             meetings_tomorrow = OnlineMeeting.objects.filter((Q(day=day_name_tomorrow) & Q(time__lte=dt_now.time())))#.order_by('time')
-            rank_by_day = Window(expression=Rank(),partition_by=F("day"),order_by=F("time").asc())
+            
 
             all = meetings_today #| meetings_tomorrow
             if day_name_today == 'sunday':
@@ -173,10 +179,10 @@ class OnlineMeetingSearch(generics.ListAPIView):
             if top:
                 all_ordered = all_ordered[:top]
             return all_ordered#.annotate(the_rank=rank_by_day)
-
-        postcode = self.request.query_params.get('search', None)
-        if postcode is not None:
-            queryset = queryset.filter(postcode__istartswith=postcode)
+        elif day in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']:
+            queryset = queryset.filter(Q(day=day) | Q(day='All') )
+            
+        
         
         
         

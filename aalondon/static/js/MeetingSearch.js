@@ -28,11 +28,13 @@ class MeetingSearch extends Component {
     this.onCovidChange = this.onCovidChange.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
+    this.onMeetingTypeChange = this.onMeetingTypeChange.bind(this);
 
 
     this.state = {
       totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, day: 'all', showSpinner: 1, intergroup: '',
-      clientLng: null, clientLat: null, showPostcode: 1, minMiles: 0, maxMiles: 1000000, geoFail: 0, search: '', timeBand: 'all', access: '', covid: ''
+      clientLng: null, clientLat: null, showPostcode: 1, minMiles: 0, maxMiles: 1000000, geoFail: 0, search: '', 
+      timeBand: 'all', access: '', covid: '', meetingType: ''
     };
   }
 
@@ -45,46 +47,107 @@ class MeetingSearch extends Component {
     });
   }
 
-  getResults(day, search, timeBand, access, isSearchChange, covid) {
+
+
+  getResults(day, search, timeBand, access, isSearchChange, covid, meetingType) {
 
     let timeBandSend = timeBand === 'all' ? '' : timeBand
     let daySend = day === 'all' ? '' : day
-    
+    let meetingTypeSend = meetingType === 'all' ? '' : meetingType
+
     let queryString = `/api/meetingsearch/?search=${search}&day=${daySend}&time_band=${timeBandSend}`;
     if (access === 'wheelchair') {
       queryString += '&wheelchair=1'
-      
+
     } else if (access === 'hearing') {
       queryString += '&hearing=1'
     }
 
-    if (covid == 'active'){
+    if (covid == 'active') {
       queryString += '&covid_open_status=true'
-    } else if (covid == 'inactive'){
+    } else if (covid == 'inactive') {
       queryString += '&covid_open_status=false'
-    } 
+    }
 
     let currentPage = 1
 
 
+    var strr = [];
+    let onlineQueryString = `/api/onlinemeetingsearch/?search=${search}&day=${daySend}`
 
-    axios.get(queryString)
-      .then(response => {
-        const totalMeetings = response.data.count;
-        const currentMeetings = _.sortBy(response.data.results, ['day_number', 'time']);
-        const totalPages = response.data.count / 10;
+    const onlineMeetingRequest = axios.get(onlineQueryString);
+    const physicalMeetingRequest = axios.get(queryString);
+    console.log(onlineQueryString)
+    console.log(queryString)
 
-        if ((isSearchChange === 1 && response.data.count > 0) || isSearchChange === 0) {
+
+    axios.all([onlineMeetingRequest, physicalMeetingRequest]).then(axios.spread((...responses) => {
    
-
-
-          this.setState({ totalMeetings, currentMeetings, currentPage, totalPages, showSpinner: 0, day: day, search: search });
+      let onlineMeetings = responses[0].data.results;
+      let physicalMeetings = responses[1].data.results;
+      let currentMeetings = [];
+      
+    
+      
+      //get online meetings that are ""all""
+      let onlineMeetingsAll = onlineMeetings.filter(v => _.includes(['All'], v.day));
+      let onlineMeetingsExcludesAll = onlineMeetings.filter(v => !_.includes(['All'], v.day));
+      //iterate over the all onlineMeetingsall 
+      for (var value of onlineMeetingsAll) {
+        let currentCode = value['code'];
+        if (day === 'all') {
+          for (const [i, dayName] of ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].entries()) {
+            var newMeeting = _.cloneDeep(value);
+            newMeeting['day'] = dayName;
+            newMeeting['code'] = currentCode + '_' + dayName;
+            newMeeting['day_number'] = i;
+            onlineMeetingsExcludesAll.push(newMeeting);
+          }
+        } else {
+          let weekDays = { "Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3, "Friday": 4, "Saturday": 5, "Sunday": 6 }
+          var newMeeting = _.cloneDeep(value);
+          newMeeting['day'] = day;
+          newMeeting['code'] = currentCode + '_' + day;
+          newMeeting['day_number'] = weekDays[day];
         }
-      });
+      }
+
+    
+      if (meetingType === 'faceToFace'){
+        currentMeetings = physicalMeetings
+        
+      } else if (meetingType === 'online')
+      {
+        currentMeetings = onlineMeetingsExcludesAll
+        
+      }else{
+        currentMeetings = physicalMeetings.concat(onlineMeetingsExcludesAll);
+      }
+
+      
+      currentMeetings = _.sortBy(currentMeetings, ['day_number', 'time', 'title']);
+     
+      const totalMeetings = currentMeetings.length;
+      const totalPages = currentMeetings.length / 10;
+
+      if ((isSearchChange === 1 && currentMeetings.length > 0) || isSearchChange === 0) {
+
+        
+
+        this.setState({ totalMeetings, currentMeetings, currentPage, totalPages, showSpinner: 0, day: day, search: search, 
+          meetingType: meetingType });
+      }
+
+      
+    }))
+
+
+
+
   }
 
   componentDidMount() {
-    
+
 
     //let day = new Date().toLocaleString('en-us', { weekday: 'long' });
 
@@ -194,7 +257,8 @@ class MeetingSearch extends Component {
 
           this.setState({
             totalMeetings: totalMeetings, currentMeetings: currentMeetings,
-            totalPages: totalPages, showSpinner: 0, currentPage: 1, clientLat: lat, clientLng: lng, showPostcode: showPostcode, minMiles: minMiles, maxMiles: maxMiles, geoFail: geoFail
+            totalPages: totalPages, showSpinner: 0, currentPage: 1, clientLat: lat, clientLng: lng, 
+            showPostcode: showPostcode, minMiles: minMiles, maxMiles: maxMiles, geoFail: geoFail
           });
 
         });
@@ -206,7 +270,7 @@ class MeetingSearch extends Component {
   onDayChange = data => {
 
     this.setState({ showSpinner: 1, day: data });
-    this.getResults(data, this.state.search, this.state.timeBand, this.state.access, 0, this.state.covid);
+    this.getResults(data, this.state.search, this.state.timeBand, this.state.access, 0, this.state.covid, this.state.meetingType);
 
   }
 
@@ -217,7 +281,7 @@ class MeetingSearch extends Component {
 
     this.setState({ showSpinner: 1, search: data });
 
-    this.getResults(this.state.day, data, this.state.timeBand, this.state.access, 0);
+    this.getResults(this.state.day, data, this.state.timeBand, this.state.access, 0, this.state.meetingType);
 
   }
   onSearchChange = data => {
@@ -227,33 +291,41 @@ class MeetingSearch extends Component {
 
     this.setState({ showSpinner: 0, search: data });
 
-    this.getResults(this.state.day, data, this.state.timeBand, this.state.access, 1);
+    this.getResults(this.state.day, data, this.state.timeBand, this.state.access, 1, this.state.meetingType, this.state.meetingType);
 
   }
   onTimeChange = data => {
 
     this.setState({ showSpinner: 1, timeBand: data });
-    this.getResults(this.state.day, this.state.search, data, this.state.access, 0, this.state.covid);
+    this.getResults(this.state.day, this.state.search, data, this.state.access, 0, this.state.covid, this.state.meetingType);
 
   }
 
   onAccessChange = data => {
 
     this.setState({ showSpinner: 1, access: data });
-    this.getResults(this.state.day, this.state.search, this.state.timeBand, data, 0, this.state.covid);
+    this.getResults(this.state.day, this.state.search, this.state.timeBand, data, 0, this.state.covid, this.state.meetingType);
 
   }
   onCovidChange = data => {
 
     this.setState({ showSpinner: 1, covid: data });
-    this.getResults(this.state.day, this.state.search, this.state.timeBand, this.state.access, 0, data);
+    this.getResults(this.state.day, this.state.search, this.state.timeBand, this.state.access, 0, data, this.state.meetingType );
 
   }
 
   onClearFilters = () => {
-    this.setState({ showSpinner: 1, day: 'all', search: '', timeBand: 'all', access: '',coivid:'all' })
+    this.setState({ showSpinner: 1, day: 'all', search: '', timeBand: 'all', access: '', coivid: 'all' })
     this.getResults('all', '', 'all', '', 0, 'all');
   }
+
+  onMeetingTypeChange = data => {
+
+    this.setState({ showSpinner: 1, meetingType: data });
+    this.getResults(this.state.day, this.state.search, this.state.timeBand, this.state.access, 0, this.state.covid ,data);
+
+  }
+
 
   render() {
 
@@ -273,21 +345,24 @@ class MeetingSearch extends Component {
       onAccessChange={this.onAccessChange}
       onCovidChange={this.onCovidChange}
       onClearFilters={this.onClearFilters}
+      onMeetingTypeChange={this.onMeetingTypeChange}
       onIntergroupChange={this.onIntergroupChange}
       day={this.state.day} intergroup={this.state.intergroup} search={this.state.search} access={this.state.access}
-      timeBand={this.state.timeBand} covid={this.state.covid}
+      timeBand={this.state.timeBand} covid={this.state.covid} meetingType={this.state.meetingType}
     />;
     if (showSpinner === 1)
       return (<Container>
         <MeetingSearchForm value={this.state.value} onInputChange={this.handleInputChange}
-          onDayChange={this.onDayChange} onSearchEnter={this.onSearchEnter} onSearchChange={this.onSearchChange} 
+          onDayChange={this.onDayChange} onSearchEnter={this.onSearchEnter} onSearchChange={this.onSearchChange}
           onTimeChange={this.onTimeChange}
-          onSliderChange={this.onSliderChange} 
-          onAccessChange={this.onAccessChange} 
-          onCovidChange={this.onCovidChange} 
+          onSliderChange={this.onSliderChange}
+          onAccessChange={this.onAccessChange}
+          onCovidChange={this.onCovidChange}
           onClearFilters={this.onClearFilters}
+          onMeetingTypeChange={this.onMeetingTypeChange}
           onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup}
-          search={this.state.search} timeBand={this.state.timeBand} access={this.state.access} covid={this.state.covid} />
+          search={this.state.search} timeBand={this.state.timeBand} access={this.state.access} covid={this.state.covid} 
+          meetingType={this.state.meetingType}/>
         <Row className="justify-content-center"><Col xs={2}> <Spinner size="lg" animation="border" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner></Col></Row>
@@ -311,7 +386,7 @@ class MeetingSearch extends Component {
 
 
     let firstCode = currentMeetings[0].code + currentMeetings.length;
-
+    
 
 
     return (
