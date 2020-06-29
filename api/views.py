@@ -130,10 +130,10 @@ class OnlineMeetingSearch(generics.ListAPIView):
     Return a list of all the products that the authenticated
     user has ever purchased, with optional filtering.
     """
-    model = Meeting
+    model = OnlineMeeting
     serializer_class = OnlineMeetingSerializer
     filter_backends = [DjangoFilterBackend,filters.OrderingFilter, filters.SearchFilter]
-    #filterset_fields = ['day',]
+    filterset_fields = ['time_band',]
     ordering_fields = ['time']
         
 
