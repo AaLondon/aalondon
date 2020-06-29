@@ -53,6 +53,7 @@ class MeetingSearch extends Component {
 
     let timeBandSend = timeBand === 'all' ? '' : timeBand
     let daySend = day === 'all' ? '' : day
+    let meetingTypeSend = meetingType === 'all' ? '' : meetingType
 
     let queryString = `/api/meetingsearch/?search=${search}&day=${daySend}&time_band=${timeBandSend}`;
     if (access === 'wheelchair') {
@@ -76,15 +77,18 @@ class MeetingSearch extends Component {
 
     const onlineMeetingRequest = axios.get(onlineQueryString);
     const physicalMeetingRequest = axios.get(queryString);
+    console.log(onlineQueryString)
+    console.log(queryString)
+
 
     axios.all([onlineMeetingRequest, physicalMeetingRequest]).then(axios.spread((...responses) => {
-      const responseOne = responses[0]
-      const responseTwo = responses[1]
+   
       let onlineMeetings = responses[0].data.results;
       let physicalMeetings = responses[1].data.results;
+      let currentMeetings = [];
       
-      console.log(onlineMeetings)
-      let onlineMeetingsAllExpansion = []
+    
+      
       //get online meetings that are ""all""
       let onlineMeetingsAll = onlineMeetings.filter(v => _.includes(['All'], v.day));
       let onlineMeetingsExcludesAll = onlineMeetings.filter(v => !_.includes(['All'], v.day));
@@ -109,15 +113,24 @@ class MeetingSearch extends Component {
       }
 
     
-      console.log(physicalMeetings)
-      let currentMeetings = physicalMeetings.concat(onlineMeetingsExcludesAll);
+      if (meetingType === 'faceToFace'){
+        currentMeetings = physicalMeetings
+        
+      } else if (meetingType === 'online')
+      {
+        currentMeetings = onlineMeetingsExcludesAll
+        
+      }else{
+        currentMeetings = physicalMeetings.concat(onlineMeetingsExcludesAll);
+      }
 
+      
       currentMeetings = _.sortBy(currentMeetings, ['day_number', 'time', 'title']);
-      const totalMeetings = currentMeetings.count;
-      //const currentMeetings = _.sortBy(response.data.results, ['day', 'time']);
-      const totalPages = currentMeetings.count / 10;
+     
+      const totalMeetings = currentMeetings.length;
+      const totalPages = currentMeetings.length / 10;
 
-      if ((isSearchChange === 1 && currentMeetings.count > 0) || isSearchChange === 0) {
+      if ((isSearchChange === 1 && currentMeetings.length > 0) || isSearchChange === 0) {
 
         
 
@@ -125,7 +138,7 @@ class MeetingSearch extends Component {
           meetingType: meetingType });
       }
 
-      // use/access the results 
+      
     }))
 
 
@@ -373,7 +386,7 @@ class MeetingSearch extends Component {
 
 
     let firstCode = currentMeetings[0].code + currentMeetings.length;
-
+    
 
 
     return (

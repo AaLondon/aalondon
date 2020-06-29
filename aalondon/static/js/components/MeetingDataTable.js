@@ -51,8 +51,6 @@ export default class MeetingDataTable extends Component {
     let thirdColumnHeader = "Distance(miles)";
     let showPostcode = this.props.showPostcode;
 
-    console.log(data);
-    
 
     let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day,covid_open_status,place }) => {
       
