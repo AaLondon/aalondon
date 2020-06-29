@@ -55,7 +55,7 @@ export default class MeetingDataTable extends Component {
     let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day,covid_open_status,place }) => {
       let placeText = '';
       let img='/static/images/zoom.png';
-      let meetingUrlPath = '/onlinemeetings'
+      let meetingUrlPath = '/onlinemeetings/'
       if (place !== 'zoom'){
         placeText = place;
         meetingUrlPath = '/meetings/'
