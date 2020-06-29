@@ -22,6 +22,7 @@ class MeetingSearchForm extends React.Component {
     this.handleAccessChange = this.handleAccessChange.bind(this);
     this.handleCovidChange = this.handleCovidChange.bind(this);
     this.handleClearFilters = this.handleClearFilters.bind(this);
+    this.handleMeetingTypeChange = this.handleMeetingTypeChange.bind(this);
     
 
     this.state = {search:props.search}
@@ -91,6 +92,9 @@ class MeetingSearchForm extends React.Component {
     this.props.onClearFilters();
   } 
 
+  handleMeetingTypeChange(eventKey,e){
+   this.props.onMeetingTypeChange(e.value);
+  }
   render() {
 
     let igs = {
@@ -104,6 +108,8 @@ class MeetingSearchForm extends React.Component {
     let access = this.props.access;
     let day = this.props.day;
     let covid = this.props.covid;
+    let meetingType = this.props.meetingType;
+    
     const accesses = [{
       key: 'wheelchair',
       text: 'Wheelchair',
@@ -209,7 +215,22 @@ class MeetingSearchForm extends React.Component {
       value: 'inactive',
       
     }]
-
+    const meetingTypes = [
+      {
+        key: 'online',
+        text: 'Online',
+        value: 'online',
+        
+      },
+      {
+        key: 'faceToFace',
+        text: 'Face to Face',
+        value: 'faceToFace',
+        
+      }]
+      let zoomImg='/static/images/zoom.png';
+      let  physicalImg = '/static/images/zoomAA-location-pin.png'
+      
 
 
     return (
@@ -258,8 +279,21 @@ class MeetingSearchForm extends React.Component {
            value = {covid}
            scrolling={false}
   />
+    <Dropdown
+            placeholder='Meeting Type'
+           // fluid
+            selection
+            options={meetingTypes}
+           icon='dropdown'
+           onChange={this.handleMeetingTypeChange}
+           value = {meetingType}
+           scrolling={false}
+  />
     
-  <a className="clear-filters" onClick={this.handleClearFilters}>Clear Filters</a>
+  <div><a className="clear-filters" onClick={this.handleClearFilters}>Clear Filters</a></div>
+  <div className='meeting-key'><span><img src={zoomImg}></img></span><span> = Zoom</span></div>
+  <div className='meeting-key'><img src={physicalImg}></img><span> = Face To Face</span></div>
+  
        
       </div>
     );
