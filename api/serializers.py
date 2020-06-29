@@ -70,7 +70,7 @@ class MeetingSerializer(serializers.ModelSerializer):
 
     def get_place(self,obj):
 
-        return obj.postcode
+        return obj.postcode.split(' ')[0]
         
    
 

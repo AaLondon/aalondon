@@ -228,6 +228,9 @@ class MeetingSearchForm extends React.Component {
         value: 'faceToFace',
         
       }]
+      let zoomImg='/static/images/zoom.png';
+      let  physicalImg = '/static/images/zoomAA-location-pin.png'
+      
 
 
     return (
@@ -287,7 +290,10 @@ class MeetingSearchForm extends React.Component {
            scrolling={false}
   />
     
-  <a className="clear-filters" onClick={this.handleClearFilters}>Clear Filters</a>
+  <div><a className="clear-filters" onClick={this.handleClearFilters}>Clear Filters</a></div>
+  <div className='meeting-key'><span><img src={zoomImg}></img></span><span> = Zoom</span></div>
+  <div className='meeting-key'><img src={physicalImg}></img><span> = Face To Face</span></div>
+  
        
       </div>
     );
