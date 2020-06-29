@@ -72,7 +72,7 @@ export default class MeetingDataTable extends Component {
         <Table.Row key={code}>
           <Table.Cell textAlign="center">{day}</Table.Cell>
           <Table.Cell textAlign="center">{friendly_time}</Table.Cell>
-          <Table.Cell textAlign="center"><a href={meetingUrlPath + slug + '/#meetingmap'}>{title}</a></Table.Cell>
+          <Table.Cell textAlign="center"><a href={meetingUrlPath + slug }>{title}</a></Table.Cell>
           <Table.Cell textAlign="center" className='meeting-cell'> <div><img src={img}></img></div><div>{placeText}</div></Table.Cell>
           <Table.Cell textAlign="center">{covid_open_status === 0 ? 'Inactive':'Active'}</Table.Cell>
           
