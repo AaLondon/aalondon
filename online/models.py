@@ -90,6 +90,7 @@ class OnlineMeeting(models.Model):
     additional_comments = models.TextField(null=True,blank=True)
     published = models.BooleanField(null=False,blank=False,default=False)
     email = models.EmailField(null=True,blank=True)
+    hearing = models.BooleanField(null=False,blank=False,default=False)
 
 
     def __str__(self):
