@@ -1,8 +1,6 @@
-# Introduction
+# Contributing to aalondon
 
-## AA London
-
-Lorem ipsum dolores sit amet...
+The following are instructions on how to contribute to this project.
 
 # Prerequisites
 
@@ -17,7 +15,7 @@ your operating system.
 ## PostgreSQL database
 
 1. Obtain the postgres database from one of the existing contributors of this
-   project. (Filename: `aalondon.sql`)
+   project. (Mention filename `aalondon.sql`)
 
 2. Save this in repository root directory.
 
@@ -37,10 +35,13 @@ your operating system.
 ```bash
 # kill the docker container
 docker stop {web_container_id}
+
+# set up database table ready for data import
 docker exec -it {db_container_id} psql -U postgres -d postgres -c "DROP DATABASE aalondon;"
 docker exec -it {db_container_id} psql -U postgres -d postgres -c "CREATE DATABASE aalondon;"
 docker exec -it {db_container_id} psql -U postgres -d postgres -c "CREATE ROLE aalondon;"
 
+# import database
 cat aalondon.sql | docker exec -i {db_container_id} psql -U postgres -d aalondon
 ```
 
