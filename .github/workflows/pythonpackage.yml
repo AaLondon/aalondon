@@ -14,7 +14,7 @@ jobs:
     services:
       postgres:
         image: postgres:11
-        environment:
+        env:
           - POSTGRES_HOST_AUTH_METHOD=trust
           - POSTGRES_DB=aalondon
     steps:
