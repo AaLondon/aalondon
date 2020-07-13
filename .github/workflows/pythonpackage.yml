@@ -11,6 +11,12 @@ jobs:
       matrix:
         python-version: [3.7]
 
+    services:
+      postgres:
+        image: postgres:11
+        environment:
+          - POSTGRES_HOST_AUTH_METHOD=trust
+          - POSTGRES_DB=aalondon
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python ${{ matrix.python-version }}
