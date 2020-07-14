@@ -1,0 +1,25 @@
+
+- name: Create the celeryd script
+  template: src=celeryd
+                    dest=/etc/default/celeryd
+  become: yes
+
+
+- name: Create the celery_worker_start script for running our app from systemd service
+  template: src=celery_worker_start
+                    dest={{ deploy_dir }}/celery_worker_start
+  become: yes
+
+- name: Create the celerybeat _start script for running our app from systemd service
+  template: src=celerybeat_start
+                    dest={{ deploy_dir }}/celerybeat_start
+  become: yes
+
+
+- name: Make the celery_worker_start script executable
+  raw: cd {{ deploy_dir }}; chmod +x celery_worker_start
+  become: yes
+
+- name: Make the celery_worker_start script executable
+  raw: cd {{ deploy_dir }}; chmod +x celerybeat_start
+  become: yes

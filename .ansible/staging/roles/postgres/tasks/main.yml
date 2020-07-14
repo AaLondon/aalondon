@@ -1,0 +1,3 @@
+- name: Create a PostgreSQL user
+  postgresql_user: name={{ app_name }} password={{ db_password }} role_attr_flags=CREATEDB state=present
+  become: yes

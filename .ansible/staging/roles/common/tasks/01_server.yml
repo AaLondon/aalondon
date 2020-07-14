@@ -1,0 +1,34 @@
+##
+# Update the DNF package cache and install packages as a root user
+##
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 86400 #One day
+
+- name: deadsnakes
+  apt_repository:
+    repo: ppa:deadsnakes/ppa
+  become: true
+
+- name: curl for nodejs
+  shell: curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -     
+  become: true
+
+
+
+- name: Install required packages
+  apt: 
+    name: ['software-properties-common','build-essential' ,'libssl-dev','libffi-dev' ,'python3.6','postgresql-11','postgresql-contrib-11'
+      ,'virtualenv'
+      ,'redis-server'
+      ,'nodejs','python3-psycopg2'
+    ]
+    state: latest 
+  become: yes
+    
+
+    

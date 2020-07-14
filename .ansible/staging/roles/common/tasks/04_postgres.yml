@@ -1,0 +1,38 @@
+##
+# Set up and configure postgres
+##
+
+
+- name: Install and configure db
+  apt: name={{item}} state=latest
+  become: yes
+  with_items:
+    - postgresql 
+    - postgresql-contrib
+    - python-psycopg2
+    
+- name: Create a PostgreSQL user
+  postgresql_user: name={{deployer_user}} db=postgres password=Tw@ngers18 role_attr_flags=CREATEDB state=present
+  become: yes
+  become_user: postgres
+  become_method: sudo
+  
+- name: Create a PostgreSQL database 
+  postgresql_db: name=aalondon owner={{deployer_user}} state=present
+  become: yes
+  become_user: postgres
+  become_method: sudo
+
+- name: Add dbowner permission  
+  postgresql_owner: db={{ app_name }}   new_owner={{deployer_user}}
+  become: yes
+  become_user: postgres
+  become_method: sudo
+
+- name: Configure a new postgresql user
+  postgresql_user: db={{ app_name }} password={{ db_password}}  user={{deployer_user}}  
+                   state=present priv=ALL role_attr_flags=NOSUPERUSER
+  become: yes
+  become_user: postgres
+  notify:
+    - restart postgres
