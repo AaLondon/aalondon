@@ -1,0 +1,31 @@
+##
+# Run db migrations and get all static files
+##
+- name: Django check
+  shell: ". {{ app_dir }}/.env; {{ venv_python }} {{ app_dir }}/manage.py check "
+  become: yes
+
+- name: Make migrations
+  shell: ". {{ app_dir }}/.env; {{ venv_python }} {{ app_dir }}/manage.py makemigrations "
+  become: yes
+
+- name: Migrate database
+  shell: ". {{ app_dir }}/.env; {{ venv_python }} {{ app_dir }}/manage.py migrate "
+  become: yes
+
+- name: npm install
+  shell: "cd {{ app_dir }};npm install "
+  become: yes
+
+- name: npm build
+  shell: "cd {{ app_dir }};npm run build-prod "
+  become: yes
+
+- name: Django collect static
+  shell: ". {{ app_dir }}/.env; {{ venv_python }} {{ app_dir }}/manage.py collectstatic --noinput "
+  become: yes
+
+- name: Django crawl
+  shell: ". {{ app_dir }}/.env;cd  {{ app_dir }} ;{{ venv_python }} {{ app_dir }}/manage.py crawl "
+  
+  

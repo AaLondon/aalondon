@@ -1,0 +1,36 @@
+#!/bin/bash
+
+### Define script variables
+echo "WTF"
+echo `whoami`
+# Name of the app
+NAME='{{ app_name }}'
+# Path to virtualenv
+VIRTUALENV='{{ venv_dir }}'
+# Django Project Directory
+DJANGODIR='{{ app_dir }}'
+# The user to run as
+USER={{ deployer_user }}
+# The group to run as
+GROUP={{deployer_group }}
+# Number of worker processes Gunicorn should spawn
+NUM_WORKERS=3
+# Settings file that Gunicorn should use
+DJANGO_SETTINGS_MODULE={{django_settings_module}}
+# WSGI module name
+DJANGO_WSGI_MODULE={{ django_wsgi_module }}
+
+
+cd $DJANGODIR
+
+source /home/deployer/aalondon/.env
+
+echo "THIS IS MY CELRY NODE  : ${CELERYD_NODES}"
+echo "THIS IS MY CELRY LOG  : ${CELERYD_LOG_FILE}"
+
+mkdir -p /var/run/celery
+
+
+${CELERY_BIN} multi start ${CELERYD_NODES} \
+  -A ${CELERY_APP} --pidfile=${CELERYD_PID_FILE} \
+  --logfile=${CELERYD_LOG_FILE} --loglevel=${CELERYD_LOG_LEVEL} ${CELERYD_OPTS}
