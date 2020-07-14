@@ -12,7 +12,7 @@
     - python-psycopg2
     
 - name: Create a PostgreSQL user
-  postgresql_user: name={{deployer_user}} db=postgres password=Tw@ngers18 role_attr_flags=CREATEDB state=present
+  postgresql_user: name={{deployer_user}} db=postgres password={db_password} role_attr_flags=CREATEDB state=present
   become: yes
   become_user: postgres
   become_method: sudo
