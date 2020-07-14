@@ -1,6 +1,8 @@
 name: Python package
 
-on: [push]
+on: push
+    branches:
+        staging
 
 jobs:
   build:
@@ -11,12 +13,6 @@ jobs:
       matrix:
         python-version: [3.7]
 
-    services:
-      postgres:
-        image: postgres:11
-        env:
-          - POSTGRES_HOST_AUTH_METHOD=trust
-          - POSTGRES_DB=aalondon
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python ${{ matrix.python-version }}
@@ -34,9 +30,11 @@ jobs:
    #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
    #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
-      run: |
-        pip install pytest
-        pip install pytest-django
-        pytest -h
-        pytest
+    - name: Run playbook
+      uses: saubermacherag/ansible-playbook-docker-action@v1.3
+      with:
+        playbookName: '.ansible/staging/deploy.yml'
+        inventoryFile: '.ansible/staging/hosts'
+        keyFile: ".ansible/staging/connect.pem"
+        keyFileVaultPass: ${{ secrets.KEYFILE_VAULT_PASS }}
+        verbosity: "vvvv"

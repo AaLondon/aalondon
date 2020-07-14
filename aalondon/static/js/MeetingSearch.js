@@ -70,10 +70,8 @@ class MeetingSearch extends Component {
     }
 
     let currentPage = 1
-
-
     var strr = [];
-    let onlineQueryString = `/api/onlinemeetingsearch/?search=${search}&day=${daySend}`
+    let onlineQueryString = `/api/onlinemeetingsearch/?search=${search}&day=${daySend}&time_band=${timeBandSend}`
 
     const onlineMeetingRequest = axios.get(onlineQueryString);
     const physicalMeetingRequest = axios.get(queryString);
@@ -374,7 +372,7 @@ class MeetingSearch extends Component {
         <Container>
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
           {slider}
-          <div>No meetings found :(  </div><div>Please update your search</div>
+          <h2><b>Unfortunately no meetings found have matched your search criteria. Please clear filters and try again</b></h2>
 
 
         </Container>

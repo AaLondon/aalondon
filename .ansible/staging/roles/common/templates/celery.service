@@ -1,0 +1,15 @@
+[Unit]
+Description=Celery Service
+
+After=network.target
+
+[Service]
+Type=forking
+User=deployer
+Group=deployers
+EnvironmentFile=/etc/default/celeryd
+WorkingDirectory={{ app_dir}}
+ExecStart=/bin/bash {{ deploy_dir }}/celery_worker_start
+Restart=on-abort
+[Install]
+WantedBy=multi-user.target

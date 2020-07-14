@@ -1,0 +1,40 @@
+upstream app_server {
+    server unix:/home/deploy/aalondon/run/gunicorn.sock fail_timeout=0; 
+}
+
+server {
+  server_name  staging.alcoholicsanonymouslondon.com;
+  
+  location /static/ {
+         alias /home/deploy/aalondon/collect_static/;
+    }
+
+  location / {
+        try_files $uri @proxy_to_app;
+    }
+
+    location @proxy_to_app {
+      proxy_set_header X-Forwarded-Proto https;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+      proxy_pass http://app_server;
+    }  
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/staging.alcoholicsanonymouslondon.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/staging.alcoholicsanonymouslondon.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    if ($host = staging.alcoholicsanonymouslondon.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+  listen 80;
+  server_name  staging.alcoholicsanonymouslondon.com;
+    return 404; # managed by Certbot

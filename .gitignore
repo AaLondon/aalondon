@@ -343,7 +343,7 @@ imports/*.csv
 
 
 production/
-staging/
+
 
 
 
@@ -360,3 +360,7 @@ webpack-stats.json
 scraper/scraper/aameetings.csv
 
 /imports
+
+# PostgreSQL database
+
+aalondon.sql
