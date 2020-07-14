@@ -39,4 +39,4 @@ jobs:
           inventoryFile: ".ansible/staging/hosts"
           keyFile: ".ansible/staging/connect.pem"
           keyFileVaultPass: ${{ secrets.KEYFILE_VAULT_PASS }}
-          verbosity: "vvvv"
+          verbosity: "v"
