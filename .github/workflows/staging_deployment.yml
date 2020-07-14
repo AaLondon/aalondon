@@ -2,7 +2,7 @@ name: Python package
 
 on: push
     branches:
-        ansible_staging
+        staging
 
 jobs:
   build:
@@ -33,8 +33,8 @@ jobs:
     - name: Run playbook
       uses: saubermacherag/ansible-playbook-docker-action@v1.3
       with:
-        playbookName: 'staging/deploy.yml'
-        inventoryFile: 'staging/hosts'
-        keyFile: ".ansible/random-ssh-key.pem"
+        playbookName: '.ansible/staging/deploy.yml'
+        inventoryFile: '.ansible/staging/hosts'
+        keyFile: ".ansible/staging/connect.pem"
         keyFileVaultPass: ${{ secrets.KEYFILE_VAULT_PASS }}
-        verbosity: "vv"
+        verbosity: "vvvv"
