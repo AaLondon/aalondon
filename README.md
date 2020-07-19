@@ -2,9 +2,9 @@
 
 The following are instructions on how to contribute to this project.
 
-# Prerequisites
+## Prerequisites
 
-## Docker
+### Docker
 
 In order to make it easier to maintain the project we only support developers using
 docker. 
@@ -17,17 +17,32 @@ your operating system.
 
 ## Follow this sequence to get up and running
 
+In a terminal, run:
+
 ```bash
-$ docker-compose -f docker-compose.yml build
-$ docker-compose -f docker-compose.yml up -d
-$ docker-compose -f docker-compose.yml run web python manage.py migrate
-$ docker-compose -f docker-compose.yml run web python manage.py createsuperuser
-$ docker-compose -f docker-compose.yml run web python manage.py cms_setup
-$ docker-compose -f docker-compose.yml run web python manage.py loaddata physical_meetings
-$ docker-compose -f docker-compose.yml run web python manage.py loaddata online_meetings
-$ npm install
-$ npm run build
+docker-compose -f docker-compose.yml build
 ```
+
+Then,
+
+* At the prompt `Continue with the new image? [yN]` type `Y` to continue.
+* Enter to use username 'root' (or type in whichever name you prefer).
+* Enter email address
+* Enter a password
+
+In the same terminal, run:
+
+```bash
+docker-compose -f docker-compose.yml up -d
+docker-compose -f docker-compose.yml run web python manage.py migrate
+docker-compose -f docker-compose.yml run web python manage.py createsuperuser
+docker-compose -f docker-compose.yml run web python manage.py cms_setup
+docker-compose -f docker-compose.yml run web python manage.py loaddata physical_meetings
+docker-compose -f docker-compose.yml run web python manage.py loaddata online_meetings
+npm install
+npm run build
+```
+
 Go to http://0.0.0.0:8000/
 
 ## Postgres Database in docker
@@ -35,7 +50,7 @@ Go to http://0.0.0.0:8000/
 If you need to drop and recreate the postgres database in your docker container do the following:
 
 ```bash
-$ docker-compose -f docker-compose.yml run web python manage.py dbshell
+docker-compose -f docker-compose.yml run web python manage.py dbshell
 ```
 in psql shell
 
@@ -45,6 +60,3 @@ postgres=# DROP DATABASE aalondon;
 postgres=# CREATE DATABASE aalondon;
 postgres=# exit
 ```
-
-
-
