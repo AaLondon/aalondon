@@ -52,12 +52,18 @@ class AASpider(scrapy.Spider):
             marker_hearing = meeting.get('hearing')
             marker_time = marker_time.replace(".",":")
             marker_url = response.url
+            marker_open_again = meeting.get('oa')
+            if marker_open_again == 'True':
+                covid_open_status = True
+            else:
+                covid_open_status = False
+                
             hour = int(marker_time[:2])
             minute = int(marker_time[3:5]) 
             meeting_time = datetime.time(hour,minute)
             
             meeting_data = {'code':marker_code,'day':marker_day,'hearing':marker_hearing,'lat':marker_lat,'lng':marker_lng,'postcode':marker_postcode,'time':meeting_time,\
-               'duration':'','title':marker_title,'wheelchair':marker_wheelchair,'intergroup':''}     
+               'duration':'','title':marker_title,'wheelchair':marker_wheelchair,'intergroup':'','covid_open_status':covid_open_status}     
           
 
             url = f'https://www.alcoholics-anonymous.org.uk/detail.do?id={marker_code}'
