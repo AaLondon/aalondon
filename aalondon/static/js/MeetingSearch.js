@@ -107,6 +107,7 @@ class MeetingSearch extends Component {
           newMeeting['day'] = day;
           newMeeting['code'] = currentCode + '_' + day;
           newMeeting['day_number'] = weekDays[day];
+          onlineMeetingsExcludesAll.push(newMeeting);
         }
       }
 
