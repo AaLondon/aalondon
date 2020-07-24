@@ -10,14 +10,9 @@ jobs:
       max-parallel: 4
       matrix:
         python-version: [3.7]
-
-    services:
-      postgres:
-        image: postgres:11
-        env:
-          - POSTGRES_HOST_AUTH_METHOD=trust
-          - POSTGRES_DB=aalondon
     steps:
+    - name: psycopg2 prerequisites
+      run: sudo apt-get install python-dev libpq-dev
     - uses: actions/checkout@v1
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
@@ -34,6 +29,11 @@ jobs:
    #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
    #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - uses: harmon758/postgresql-action@v1
+      with:
+          postgresql version: '11'
+    - name: Run migrations
+      run: python manage.py migrate
     - name: Test with pytest
       run: |
         pip install pytest
