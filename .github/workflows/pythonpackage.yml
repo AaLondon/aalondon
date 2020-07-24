@@ -4,7 +4,8 @@ on: [push]
 
 jobs:
   build:
-
+    env:
+      DATABASE_URL: 'postgres://postgres:postgres@localhost:5432/aalondon' 
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
