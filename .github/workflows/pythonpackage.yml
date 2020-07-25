@@ -13,7 +13,7 @@ jobs:
         python-version: [3.7]
     services:
       postgres:
-        image: postgres:10.8
+        image: postgres:11
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -45,7 +45,4 @@ jobs:
     - name: Run migrations
       run: python manage.py migrate
     - name: Test with pytest
-      run: |
-        pip install pytest
-        pip install pytest-django
-        pytest
+      run: pytest
