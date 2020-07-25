@@ -48,5 +48,4 @@ jobs:
       run: |
         pip install pytest
         pip install pytest-django
-        pytest -h
         pytest
