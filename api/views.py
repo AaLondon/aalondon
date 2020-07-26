@@ -24,18 +24,6 @@ class MeetingViewSet(viewsets.ModelViewSet):
 
 
 
-class MeetingsList3(views.APIView):
-    
-
-    def get(self, request, format=None):
-        """
-        Return a list of all users.
-        """
-        serializer = MeetingSerializer(Meeting.objects.all(), many=True)
-        print(type(serializer.data))
-        meetings = [meeting.title for meeting in Meeting.objects.all()]
-        return Response(serializer.data)
-
 
 class MeetingsList(generics.ListAPIView):
     """
