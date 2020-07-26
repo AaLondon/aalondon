@@ -45,12 +45,6 @@ class OnlineMeetingCreateView(CreateView):
 
         return form
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['description'] = 'Online meeting create'
-
-        return context
-
 
 class OnlineMeetingThanksView(TemplateView):
     template_name = 'online/onlinemeeting_thanks.html'
@@ -64,7 +58,6 @@ class OnlineMeetingSearchView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['description'] = 'Online meeting search'
 
         return context
  
