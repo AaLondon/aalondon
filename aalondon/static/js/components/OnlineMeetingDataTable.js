@@ -1,5 +1,5 @@
 import sortBy from 'lodash/sortBy'
-
+import map from 'lodash/map'
 import React, { Component } from 'react'
 import { Table } from 'semantic-ui-react'
 
@@ -55,7 +55,7 @@ export default class MeetingDataTable extends Component {
     let showPostcode = this.props.showPostcode;
    
 
-    let tbl = _.map(data, ({ id, title, time, day, link, description,slug,friendly_time,zoom_password,platform }) => {
+    let tbl = map(data, ({ id, title, time, day, link, description,slug,friendly_time,zoom_password,platform }) => {
       
       
         console.log('ZOOM meeting:'+platform);
