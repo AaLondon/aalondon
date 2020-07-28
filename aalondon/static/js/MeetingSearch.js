@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 /*import Meetings from 'Meetings-api';*/
-import Pagination from './components/Pagination';
-import Meeting from './components/Meeting';
 import axios from 'axios';
 import MeetingSearchForm from './components/MeetingSearchForm';
-import Button from 'react-bootstrap/Button';
+
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import * as geolib from 'geolib';
-import Table from 'react-bootstrap/Table';
 import MeetingTableData from './components/MeetingDataTable';
 import Spinner from 'react-bootstrap/Spinner'
-import _ from 'lodash'
+import includes from 'lodash/includes'
+import cloneDeep from 'lodash/cloneDeep'
+import sortBy from 'lodash/sortBy'
+
 
 
 class MeetingSearch extends Component {
@@ -88,14 +87,14 @@ class MeetingSearch extends Component {
     
       
       //get online meetings that are ""all""
-      let onlineMeetingsAll = onlineMeetings.filter(v => _.includes(['All'], v.day));
-      let onlineMeetingsExcludesAll = onlineMeetings.filter(v => !_.includes(['All'], v.day));
+      let onlineMeetingsAll = onlineMeetings.filter(v => includes(['All'], v.day));
+      let onlineMeetingsExcludesAll = onlineMeetings.filter(v => !includes(['All'], v.day));
       //iterate over the all onlineMeetingsall 
       for (var value of onlineMeetingsAll) {
         let currentCode = value['code'];
         if (day === 'all') {
           for (const [i, dayName] of ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].entries()) {
-            var newMeeting = _.cloneDeep(value);
+            var newMeeting = cloneDeep(value);
             newMeeting['day'] = dayName;
             newMeeting['code'] = currentCode + '_' + dayName;
             newMeeting['day_number'] = i;
@@ -103,7 +102,7 @@ class MeetingSearch extends Component {
           }
         } else {
           let weekDays = { "Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3, "Friday": 4, "Saturday": 5, "Sunday": 6 }
-          var newMeeting = _.cloneDeep(value);
+          var newMeeting = cloneDeep(value);
           newMeeting['day'] = day;
           newMeeting['code'] = currentCode + '_' + day;
           newMeeting['day_number'] = weekDays[day];
@@ -124,7 +123,7 @@ class MeetingSearch extends Component {
       }
 
       
-      currentMeetings = _.sortBy(currentMeetings, ['day_number', 'time', 'title']);
+      currentMeetings = sortBy(currentMeetings, ['day_number', 'time', 'title']);
      
       const totalMeetings = currentMeetings.length;
       const totalPages = currentMeetings.length / 10;

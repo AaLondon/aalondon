@@ -1,4 +1,5 @@
-import _ from 'lodash'
+import sortBy from 'lodash/sortBy'
+
 import React, { Component } from 'react'
 import { Table } from 'semantic-ui-react'
 
@@ -35,7 +36,7 @@ export default class MeetingDataTable extends Component {
     if (column !== clickedColumn) {
       this.setState({
         column: clickedColumn,
-        data: _.sortBy(data, [clickedColumn]),
+        data: sortBy(data, [clickedColumn]),
         direction: 'ascending',
       })
 

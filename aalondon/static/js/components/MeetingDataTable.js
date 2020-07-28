@@ -1,4 +1,5 @@
-import _ from 'lodash'
+import map from 'lodash/map'
+import sortBy from 'lodash/sortBy'
 import React, { Component } from 'react'
 import { Table } from 'semantic-ui-react'
 
@@ -33,7 +34,7 @@ export default class MeetingDataTable extends Component {
     if (column !== clickedColumn) {
       this.setState({
         column: clickedColumn,
-        data: _.sortBy(data, [clickedColumn,'day_number']),
+        data: sortBy(data, [clickedColumn,'day_number']),
         direction: 'ascending',
       })
 
@@ -52,7 +53,7 @@ export default class MeetingDataTable extends Component {
     let showPostcode = this.props.showPostcode;
 
 
-    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day,covid_open_status,place }) => {
+    let tbl = map(data, ({ code, friendly_time, title, distance_from_client, slug, postcode_prefix, day,covid_open_status,place }) => {
       let placeText = '';
       let img='/static/images/zoom.png';
       let meetingUrlPath = '/onlinemeetings/'
