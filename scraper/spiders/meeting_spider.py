@@ -57,13 +57,24 @@ class AASpider(scrapy.Spider):
                 covid_open_status = True
             else:
                 covid_open_status = False
+
+            ph = meeting.get('ph')
+            if ph == '0':
+                meeting_type = 1
+                if 'hybrid' in marker_title.lower():
+                    meeting_type = 2
+            else:
+                meeting_type = 0
+            
+
                 
             hour = int(marker_time[:2])
             minute = int(marker_time[3:5]) 
             meeting_time = datetime.time(hour,minute)
             
             meeting_data = {'code':marker_code,'day':marker_day,'hearing':marker_hearing,'lat':marker_lat,'lng':marker_lng,'postcode':marker_postcode,'time':meeting_time,\
-               'duration':'','title':marker_title,'wheelchair':marker_wheelchair,'intergroup':'','covid_open_status':covid_open_status}     
+               'duration':'','title':marker_title,'wheelchair':marker_wheelchair,'intergroup':'','covid_open_status':covid_open_status
+               , 'meeting_type':meeting_type}     
           
 
             url = f'https://www.alcoholics-anonymous.org.uk/detail.do?id={marker_code}'

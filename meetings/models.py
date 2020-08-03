@@ -5,6 +5,12 @@ from datetime import time
 
 # Create your models here.
 
+
+MEETING_TYPE_CHOICES = [
+    (0, 'Physical'),
+    (1, 'Online'),
+    (2, 'Hybrid'),   
+]
 class Meeting(models.Model):
     address = models.TextField(blank=True,max_length=300)
     code = models.IntegerField(blank=True,)
@@ -23,7 +29,9 @@ class Meeting(models.Model):
     intergroup = models.CharField(blank=True,max_length=100,null=True)
     detail = models.TextField(blank=True,null=True)
     time_band = models.CharField(blank=True,max_length=10,null=True)
-    covid_open_status = models.BooleanField(null=False,default=False)    
+    covid_open_status = models.BooleanField(null=False,default=False)
+    meeting_type = models.IntegerField(choices=MEETING_TYPE_CHOICES,default=0)
+
 
     
     
