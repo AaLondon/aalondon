@@ -59,12 +59,12 @@ class AASpider(scrapy.Spider):
                 covid_open_status = False
 
             ph = meeting.get('ph')
-            if ph == '0':
-                meeting_type = 1
+            if ph == '1':
+                meeting_type = 0
                 if 'hybrid' in marker_title.lower():
                     meeting_type = 2
             else:
-                meeting_type = 0
+                meeting_type = 1
             
 
                 
