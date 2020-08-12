@@ -19,7 +19,7 @@ class MeetingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Meeting
         fields = ['code','title','time','address','day','actual_datetime','postcode','slug','lat','lng',
-                    'day_rank','friendly_time','postcode_prefix','day_number','intergroup','distance_from_client','time_band','covid_open_status','place']
+                    'day_rank','friendly_time','postcode_prefix','day_number','intergroup','distance_from_client','time_band','covid_open_status','place','meeting_type']
 
 
     def get_actual_datetime(self, obj):
@@ -132,3 +132,10 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
         if obj.day == 'All':
             return -1
         return  time.strptime(obj.day, '%A').tm_wday
+
+
+class MeetingGuideSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Meeting
+        fields = '__all__'
