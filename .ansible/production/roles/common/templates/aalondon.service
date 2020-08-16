@@ -1,0 +1,17 @@
+#!/bin/sh
+
+[Unit]
+Description=aalondon
+After=network.target
+
+[Service]
+PIDFile=/var/run/aalondon.pid
+User={{ deployer_user }}
+Group={{ deployer_group }}
+ExecStart=/bin/bash {{ deploy_dir }}/gunicorn_start
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+
+

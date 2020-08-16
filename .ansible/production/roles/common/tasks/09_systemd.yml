@@ -1,0 +1,17 @@
+##
+# Set up systemd for executing gunicorn_start script
+##
+- name: write a systemd service file
+  template: src=aalondon.service
+                    dest=/etc/systemd/system
+  become: yes
+  notify:
+    - restart app
+    - restart nginx
+
+- name: restart aalondon
+  become: yes
+  systemd:
+    state: restarted
+    name: aalondon
+

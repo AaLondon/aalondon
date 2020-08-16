@@ -1,0 +1,13 @@
+##
+# Configure nginx web server
+##
+- name: Set up nginx config
+  apt: name=nginx state=latest
+  become: yes
+
+
+- name: Write nginx conf file new
+  template: src=aa-london.conf dest=/etc/nginx/conf.d/aa-london.conf
+  become: yes
+  notify:
+    - restart nginx
