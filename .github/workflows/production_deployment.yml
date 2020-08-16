@@ -1,4 +1,4 @@
-name: Python package
+name: Production Deployment
 
 on:
   # Trigger the workflow on push or pull request,
