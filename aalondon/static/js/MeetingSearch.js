@@ -34,7 +34,7 @@ class MeetingSearch extends Component {
     this.state = {
       totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, day: 'all', showSpinner: 1, intergroup: '',
       clientLng: null, clientLat: null, showPostcode: 1, minMiles: 0, maxMiles: 1000000, geoFail: 0, search: '', 
-      timeBand: 'all', access: '', covid: '', meetingType: ''
+      timeBand: 'all', access: '', covid: 'active', meetingType: ''
     };
   }
 

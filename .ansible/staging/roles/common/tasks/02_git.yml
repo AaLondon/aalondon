@@ -10,7 +10,7 @@
 - name: Clone a private repository into /opt.
   git:
     repo: "{{ code_repository_url }}"
-    version: staging
+    version: master
     dest: "{{ app_dir }}"
     accept_hostkey: yes
   # ssh-agent doesn't allow key to pass through remote sudo commands.
