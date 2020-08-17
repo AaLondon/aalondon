@@ -5,8 +5,11 @@
   apt: name=git state=latest
   become: yes
 
-- git: 
+- name: Clone a private repository
+  git:
     repo: "{{ code_repository_url }}"
+    version: production
     dest: "{{ app_dir }}"
-    force: yes
-    
+    accept_hostkey: yes
+  # ssh-agent doesn't allow key to pass through remote sudo commands.
+  become: no
