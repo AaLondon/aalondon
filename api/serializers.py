@@ -165,6 +165,8 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     square = serializers.SerializerMethodField()
     paypal = serializers.SerializerMethodField()
     last_contact = serializers.SerializerMethodField()
+    postal_code = serializers.SerializerMethodField()
+    country = serializers.SerializerMethodField()
 
     class Meta:
         model = Meeting
@@ -175,7 +177,7 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
                        'district_id', 'sub_district', 'group_notes', 'website', 'website_2',
                          'location_url', 'formatted_address', 'latitude', 'longitude',
                         'email', 'phone', 'mailing_address', 'venmo', 'square', 'paypal',
-                       'last_contact']
+                       'last_contact','postal_code','country']
                   
 
     def get_id(self, obj):
@@ -244,8 +246,10 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     def get_website_2(self, obj): return ""
     def get_location_url(self, obj): return ""
     def get_formatted_address(self, obj): return ""
-    def get_latitude(self, obj): return ""
-    def get_longitude(self, obj): return ""
+    def get_latitude(self, obj): 
+        return obj.lat
+    def get_longitude(self, obj): 
+        return obj.lng
     def get_email(self, obj): return ""
     def get_phone(self, obj): return ""
     def get_mailing_address(self, obj): return ""
@@ -253,6 +257,12 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     def get_square(self, obj): return ""
     def get_paypal(self, obj): return ""
     def get_last_contact(self, obj): return ""
+    def get_postal_code(self, obj): 
+        return obj.postcode
+    
+    def get_country(self, obj): 
+        return "UK"
+    
     
     
 
