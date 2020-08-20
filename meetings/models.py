@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 from django_extensions.db.fields import AutoSlugField
 from datetime import time
@@ -24,6 +25,8 @@ class Meeting(models.Model):
     detail = models.TextField(blank=True,null=True)
     time_band = models.CharField(blank=True,max_length=10,null=True)
     covid_open_status = models.BooleanField(null=False,default=False)    
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     
     
@@ -46,3 +49,7 @@ class Meeting(models.Model):
         
         
         super(Meeting, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):  
+
+        return reverse("meeting-detail", kwargs={"pk": self.pk})
