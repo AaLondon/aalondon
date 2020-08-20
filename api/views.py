@@ -2,7 +2,7 @@ from django.shortcuts import render
 from meetings.models import Meeting
 from online.models import OnlineMeeting
 from rest_framework import viewsets, generics,views
-from api.serializers import MeetingSerializer,OnlineMeetingSerializer
+from api.serializers import MeetingSerializer,OnlineMeetingSerializer, MeetingGuideSerializer
 from datetime import datetime,timedelta
 from django.db.models import Q
 from django.db.models import IntegerField, Value
@@ -177,4 +177,14 @@ class OnlineMeetingSearch(generics.ListAPIView):
         return queryset.order_by('time')
     
 
-  
+class MeetingGuideListView(generics.ListAPIView):
+    """
+    Return a list of meetings for the meetingguide app.
+    """
+    
+    model = Meeting
+    serializer_class = MeetingGuideSerializer
+    queryset = Meeting.objects.all()
+    pagination_class = None
+
+    
