@@ -1,0 +1,14 @@
+[Unit]
+Description=Celery Beat Service
+After=network.target
+
+[Service]
+Type=simple
+User=deployer
+Group=deployers
+EnvironmentFile=/etc/default/celeryd
+WorkingDirectory={{ app_dir}}
+ExecStart=/bin/bash {{ deploy_dir }}/celerybeat_start
+
+[Install]
+WantedBy=multi-user.target

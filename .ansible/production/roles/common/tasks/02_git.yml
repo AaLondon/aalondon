@@ -1,0 +1,15 @@
+##
+# Clone and pull the repo
+##
+- name: Set up git configuration
+  apt: name=git state=latest
+  become: yes
+
+- name: Clone a private repository
+  git:
+    repo: "{{ code_repository_url }}"
+    version: production
+    dest: "{{ app_dir }}"
+    accept_hostkey: yes
+  # ssh-agent doesn't allow key to pass through remote sudo commands.
+  become: no
