@@ -19,7 +19,7 @@ class Meeting(models.Model):
     title = models.TextField()
     wheelchair = models.BooleanField()
     day_number = models.IntegerField(blank=True,null=True)
-    slug = AutoSlugField(populate_from=['title','day','postcode'], max_length=100)
+    slug = AutoSlugField(populate_from=['title','day','postcode','time'], max_length=100)
     day_rank = models.IntegerField(blank=True,null=True)
     intergroup = models.CharField(blank=True,max_length=100,null=True)
     detail = models.TextField(blank=True,null=True)
@@ -37,7 +37,7 @@ class Meeting(models.Model):
     
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(f'{self.title} {self.day}')
+        self.slug = slugify(f'{self.title} {self.day} {self.time} ')
         meeting_time = self.time
         
         if meeting_time > time(0, 0) and meeting_time <= time(12,0):
