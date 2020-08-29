@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 from django_extensions.db.fields import AutoSlugField
 from datetime import time
@@ -18,12 +19,14 @@ class Meeting(models.Model):
     title = models.TextField()
     wheelchair = models.BooleanField()
     day_number = models.IntegerField(blank=True,null=True)
-    slug = AutoSlugField(populate_from=['title','day','postcode'], max_length=100)
+    slug = AutoSlugField(populate_from=['title','day','postcode','time'], max_length=100)
     day_rank = models.IntegerField(blank=True,null=True)
     intergroup = models.CharField(blank=True,max_length=100,null=True)
     detail = models.TextField(blank=True,null=True)
     time_band = models.CharField(blank=True,max_length=10,null=True)
     covid_open_status = models.BooleanField(null=False,default=False)    
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     
     
@@ -34,7 +37,7 @@ class Meeting(models.Model):
     
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(f'{self.title} {self.day}')
+        self.slug = slugify(f'{self.title} {self.day} {self.time} ')
         meeting_time = self.time
         
         if meeting_time > time(0, 0) and meeting_time <= time(12,0):
@@ -46,3 +49,7 @@ class Meeting(models.Model):
         
         
         super(Meeting, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):  
+
+        return reverse("meeting-detail", kwargs={"pk": self.pk})
