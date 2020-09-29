@@ -59,7 +59,7 @@ export default class MeetingDataTable extends Component {
       if (place !== 'zoom'){
         placeText = place;
         meetingUrlPath = '/meetings/'
-        img = '/static/images/zoomAA-location-pin.png'
+        img = '/static/images/building-location-pin.png'
       }
 
 
