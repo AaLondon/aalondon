@@ -1,23 +1,18 @@
-{% extends "base.html" %}
-{% load render_bundle from webpack_loader %}
-
-{% block content %}
+{% extends "base.html" %} {% load render_bundle from webpack_loader %} {% block content %}
 <!-- Post -->
 <article class="post">
-  <header>
-      <div class="title">
-          <h2><a>Meetings</a></h2>
-          </div>
-      
-  </header>
-
-    <h1>{{object.title}} {{object.day}}</h1>
-    <div class="container">
-    
-    
-    
-    
-    <div id="meetingmap" class="row"><div class="col-md-6" id='map' ></div>
+  <h1>{{object.title}} {{object.day}}</h1>
+  <div class="meeting-container">
+    <div class="meeting-title">meeting-title</div>
+    <div class="meeting-box">meeting-box</div>
+    <div class="meeting-address-time">meeting-address-time</div>
+    <div class="meeting-type">meeting-type</div>
+    <div class="meeting-whatsapp">meeting-whatsapp</div>
+    <div class="meeting-details">meeting-details</div>
+    <div class="meeting-map">meeting-map</div>
+    <div class="meeting-city-mapper">meeting-city-mapper</div>
+  </div>
+  <div id="meetingmap" class="row"><div class="col-md-6" id='map' ></div>
     <div class="col-md-6" style="padding-left: 29px;" ><div class="row"><div>{{object.title}}</div></div>
     <div class="row"><div>{{object.detail|linebreaks}}</div></div>
     <div class="row"><a href="https://citymapper.com/directions?endcoord={{object.lat}}%2C{{object.lng}}&endname={{object.title}}" target="_blank"><img src="https://static.citymapper.com/img/embed/GetMeThere_Citymapper.png" alt="Get directions with Citymapper" /></a></div>
@@ -41,13 +36,9 @@ var marker = new mapboxgl.Marker()
   .setLngLat([lng, lat])
   .addTo(map);
 </script>
-    </div>
+  <div>
+   
+
 </article>
 
 {% endblock %}
-
-
-
-
-
- 

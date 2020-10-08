@@ -4188,3 +4188,66 @@ and (max-device-width : 1024px)  {
 
 
 
+/* Meeting Detail*/
+
+.meeting-container{
+	display: grid;
+	width: 100%;
+	height: 500px;
+  
+	  grid-template-areas: "a a a a a"
+                       "b c c d e"
+					   ". f f f f"
+					   ". g g g g"
+					   ". h . . .";
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+}
+
+.meeting-title
+{
+	grid-area:a;
+	background-color: green;
+}
+
+.meeting-box
+{
+	grid-area:b;
+	background-color: blue;
+}
+
+.meeting-address-time{
+	grid-area:c;
+	background-color: orange;
+}
+
+ .meeting-type{
+	grid-area:d;
+	background-color: red;
+}
+
+
+.meeting-whatsapp{
+	grid-area:e;
+	background-color: grey;
+
+}
+
+.meeting-details{
+	grid-area: f;
+	background-color: purple;
+	
+}
+
+.meeting-map{
+	grid-area:g;
+	background-color: yellow;
+	
+}
+
+.meeting-city-mapper{
+	grid-area:h;
+	background-color: lightgreen;
+	
+}
