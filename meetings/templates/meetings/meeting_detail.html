@@ -1,11 +1,13 @@
-{% extends "base.html" %} {% load render_bundle from webpack_loader %} {% block content %}
+{% extends "base.html" %} {% load render_bundle from webpack_loader %} 
+{% load static wagtailuserbar %}
+{% block content %}
 <!-- Post -->
 <article class="post">
-  <h1>{{object.title}} {{object.day}}</h1>
+  
   <div class="meeting-container">
-    <div class="meeting-title">meeting-title</div>
-    <div class="meeting-box">meeting-box</div>
-    <div class="meeting-address-time">meeting-address-time</div>
+    <div class="meeting-title">{{object.title}}</div>
+    <div class="meeting-box"><div class="notice-arrow"><img src="{% static 'images/white-arrow.png' %}" alt="" /></div></div>
+    <div class="meeting-address-time">{{object.day}}</div>
     <div class="meeting-type">meeting-type</div>
     <div class="meeting-whatsapp">meeting-whatsapp</div>
     <div class="meeting-details">meeting-details</div>
