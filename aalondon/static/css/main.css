@@ -4012,8 +4012,8 @@ body.is-menu-visible #menu {
 
 @media screen and (min-width: 480px) {
   #map {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 400px;
   }
 }
 
@@ -4106,22 +4106,28 @@ body.is-menu-visible #menu {
 
 /* Meeting Detail*/
 /* Mobile first */
+
+.meeting-detail-text{
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+}
 .meeting-container {
   display: grid;
   width: 100%;
 
   grid-template-areas:
-    "a"
-    "b"
-    "c"
-    "d"
-    "e"
-    "f"
-    "g";
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr;
-}
+	"a a"
+	"b c"
+    "d e"
+    "f f"
+	"g g"
+	"h h";
+    
+  grid-template-rows: 1fr 1fr 1fr 2fr 2fr;
+  grid-template-columns: 1fr 1fr;
 
+}
 .meeting-title {
   grid-area: a;
   font-size: 2em;
@@ -4136,9 +4142,7 @@ body.is-menu-visible #menu {
 
 .meeting-address-time {
   grid-area: c;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 30px;
+ 
   border-right: 3px solid #A1A1A1;
   
 }
@@ -4147,10 +4151,8 @@ body.is-menu-visible #menu {
   
   grid-area: d;
   
-	font-size: 20px;
-	font-weight: 700;
-	line-height: 30px;
 	margin-left: 10%;
+	border-right: 3px solid #A1A1A1;
 }
 
 .meeting-type img { 
@@ -4159,37 +4161,43 @@ body.is-menu-visible #menu {
 }
 .meeting-whatsapp {
   grid-area: e;
-  background-color: grey;
+
+  margin-left: 10%;
+ 
 }
 
 .meeting-details {
   grid-area: f;
-  background-color: purple;
+ 
 }
 
 .meeting-map {
   grid-area: g;
-  background-color: yellow;
+ 
 }
 
 .meeting-city-mapper {
   grid-area: h;
-  background-color: lightgreen;
+  
 }
 
 @media only screen and (min-device-width: 768px) {
   .meeting-container {
     display: grid;
     width: 100%;
-    height: 500px;
+    height: 100%;
 
     grid-template-areas:
       "a a a a a"
       "b c c d e"
       ". f f f f"
-      ". g g g g"
+	  ". g g g ."
+	  ". g g g ."
+	  ". g g g ."
+	  ". g g g ."
+	  ". g g g ."
       ". h . . .";
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   }
 }
