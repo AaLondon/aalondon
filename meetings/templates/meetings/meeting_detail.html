@@ -5,10 +5,10 @@
 <article class="post">
   
   <div class="meeting-container">
-    <div class="meeting-title">{{object.title}}</div>
+    <div class="meeting-title"><h2>{{object.title}}</h2></div>
     <div class="meeting-box"><div class="notice-arrow"><img src="{% static 'images/white-arrow.png' %}" alt="" /></div></div>
-    <div class="meeting-address-time">{{object.day}}</div>
-    <div class="meeting-type">meeting-type</div>
+    <div class="meeting-address-time"><div>{{object.day|upper}}</div><div>{{object.time}}</div></div>
+    <div class="meeting-type"><div>TYPE</div><div><img src="{% static 'images/building-location-pin.png'  %}"></div></div>
     <div class="meeting-whatsapp">meeting-whatsapp</div>
     <div class="meeting-details">meeting-details</div>
     <div class="meeting-map">meeting-map</div>
