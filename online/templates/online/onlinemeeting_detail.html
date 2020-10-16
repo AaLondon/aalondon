@@ -1,36 +1,44 @@
-{% extends "base.html" %}
-{% load render_bundle from webpack_loader %}
-
-{% block content %}
+{% extends "base.html" %} {% load render_bundle from webpack_loader %} {% load static wagtailuserbar %} {% block content %}
 <!-- Post -->
 <article class="post">
-  <header>
-      <div class="title">
-          <h2><a>Meetings</a></h2>
-          </div>
-      
-  </header>
-
-    <h1>{{object.title}} {{object.day}}</h1>
-    <div class="container">
-    <div id="meetingmap" class="row">
-    
-    <div  style="padding-left: 29px;" >
-    <div class="row"><div>{{object.time}}</div></div>
-    <div class="row"><div><a href="{{object.link}}" target="_blank">{{object.link}}</a></div></div>
-    <div class="row"><div>{{object.description}}</div></div>
-    <div class="row"><div>Share meeting info on WhatsApp <a class="fa fa-whatsapp fa-2x" href="whatsapp://send?text={{object.title}} - {{object.day}} - {{ object.time}} - {% if object.description%} {{object.description}} {% endif %} {{object.link}}">
-          </a></div></div>
-    </div></div>
+  <div class="meeting-container">
+    <div class="meeting-title"><h2>{{object.title}}</h2></div>
+    <div class="meeting-box">
+      <div class="notice-arrow">
+        <img src="{% static 'images/white-arrow.png' %}" alt="" />
+      </div>
+    </div>
+    <div class="meeting-address-time meeting-detail-text">
+      <div>{{object.day|upper}}</div>
+      <div>{{object.time}}</div>
+    </div>
+    <div class="meeting-type">
+      <div class="meeting-detail-text">TYPE</div>
+      <div><img src="{% static 'images/zoom.png'  %}" /></div>
+    </div>
+    <div class="meeting-whatsapp">
+      <div class="meeting-detail-text">SHARE</div>
+      <div>
+        Whatsapp
+        
+        <a class="fa fa-whatsapp fa-2x" href="whatsapp://send?text={{object.title}} - {{object.day}} - {{ object.time}} - {% if object.description%} {{object.description}} {% endif %} {{object.link}}">
+          </a>
+      </div>
+    </div>
+    <div class="meeting-details">
+      <div class="meeting-detail-text">DETAILS</div>
+      <div>{{object.description}}</div>
+    </div>
+    <div class="meeting-map">
+      <div class="meeting-detail-text">MEETING LINK</div>
+      <div><a href="{{object.link}}" target="_blank">{{object.link}}</a></div>
+    </div>
    
 
-    </div>
+    
+
+    
+  </div>
 </article>
 
 {% endblock %}
-
-
-
-
-
- 
