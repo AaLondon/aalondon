@@ -20,12 +20,8 @@
       <div class="meeting-detail-text">SHARE</div>
       <div>
         Whatsapp
-        <a
-          class="fa fa-whatsapp fa-2x"
-          href="whatsapp://send?text=Eaton Square High Noon - Friday - noon -  https://us02web.zoom.us/j/84927816434"
-          aria-hidden="true"
-        >
-        </a>
+        <a class="fa fa-whatsapp fa-2x" href="whatsapp://send?text=https://citymapper.com/directions?endcoord={{object.lat}}%2C{{object.lng}}&endname={{object.title}} - {{object.title}} - {{object.day}} - {{ object.time}} - {% if object.description%} {{object.description}} {% endif %} ">
+          </a>
       </div>
     </div>
     <div class="meeting-details">

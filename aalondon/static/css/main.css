@@ -4006,7 +4006,7 @@ body.is-menu-visible #menu {
 /* Map */
 
 #map {
-  width: 250px;
+  width: 100%;
   height: 250px;
 }
 
@@ -4117,15 +4117,17 @@ body.is-menu-visible #menu {
   width: 100%;
 
   grid-template-areas:
-	"a a"
-	"b c"
-    "d e"
-    "f f"
+  "a a"
+  "b b"
+	"c c"
+  "d e"
+  "f f"
 	"g g"
 	"h h";
     
-  grid-template-rows: 1fr 1fr 1fr 2fr 2fr;
+  grid-auto-rows: minmax(min-content, max-content);
   grid-template-columns: 1fr 1fr;
+  grid-row-gap: 10px;
 
 }
 .meeting-title {
@@ -4135,6 +4137,7 @@ body.is-menu-visible #menu {
 }
 
 .meeting-box {
+  display: none;
  grid-area: b;
  background: #A1A1A1;
  margin-right: 25%;
@@ -4143,7 +4146,7 @@ body.is-menu-visible #menu {
 .meeting-address-time {
   grid-area: c;
  
-  border-right: 3px solid #A1A1A1;
+  
   
 }
 
@@ -4182,6 +4185,13 @@ body.is-menu-visible #menu {
 }
 
 @media only screen and (min-device-width: 768px) {
+  .meeting-address-time {
+    grid-area: c;
+   
+    border-right: 3px solid #A1A1A1;
+    
+  }
+
   .meeting-container {
     display: grid;
     width: 100%;
@@ -4191,13 +4201,23 @@ body.is-menu-visible #menu {
       "a a a a a"
       "b c c d e"
       ". f f f f"
-	  ". g g g ."
-	  ". g g g ."
-	  ". g g g ."
-	  ". g g g ."
-	  ". g g g ."
-      ". h . . .";
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+	    ". g g g g"
+      ". g g g g"
+      ". g g g g"
+      ". g g g g"
+      ". g g g g"
+        ". h . . .";
+    grid-auto-rows: minmax(min-content, max-content);
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-row-gap: 20px;
+
+    
   }
+  .meeting-box {
+    display: inline;
+    grid-area: b;
+    background: #A1A1A1;
+    margin-right: 25%;
+   }
+
 }
