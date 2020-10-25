@@ -11,6 +11,9 @@ from scrapy.utils.response import open_in_browser
 import datetime
 from meetings.models import Meeting
 
+zoom_pattern = r"https://[\w+?\.]*zoom\.us/j/.+?\b"
+ZOOM_RE = re.compile(zoom_pattern, re.IGNORECASE | re.MULTILINE)
+
 
 intergroups = {117:"City Of London",36:"East London",123:"Chelsea",124:"Chelsea & Fulham",118:"London North East",51:"London North",64:"London North Middlesex",
     63:"London North West",62:"London South Middlesex",119:"London West End",120:"London Westway",75:"London Croydon Epsom & Sutton",55:"London North Kent",
@@ -63,7 +66,7 @@ class AASpider(scrapy.Spider):
             meeting_time = datetime.time(hour,minute)
             
             meeting_data = {'code':marker_code,'day':marker_day,'hearing':marker_hearing,'lat':marker_lat,'lng':marker_lng,'postcode':marker_postcode,'time':meeting_time,\
-               'duration':'','title':marker_title,'wheelchair':marker_wheelchair,'intergroup':'','covid_open_status':covid_open_status}     
+               'duration':'','title':marker_title,'wheelchair':marker_wheelchair,'intergroup':'','covid_open_status':covid_open_status}
           
 
             url = f'https://www.alcoholics-anonymous.org.uk/detail.do?id={marker_code}'
@@ -86,9 +89,12 @@ class AASpider(scrapy.Spider):
 
         detail = "\n".join(lines[3:])
         meeting_data['detail'] = detail
+
+        matches = ZOOM_RE.findall(detail)
+        meeting_data['conference_url'] = None
+        if matches:
+            meeting_data['conference_url'] = matches[0]
+
         item = MeetingItem(meeting_data)
         print('yuyuyu')
         yield item
-        
-
-    
