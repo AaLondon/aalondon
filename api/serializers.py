@@ -225,7 +225,7 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
 
     def get_conference_url(self, obj):
         
-        return ""
+        return obj.link
 
     def get_conference_phone(self, obj): return ""
 
