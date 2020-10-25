@@ -138,7 +138,6 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     time = serializers.SerializerMethodField()
     end_time = serializers.SerializerMethodField()
     time_formatted = serializers.SerializerMethodField()
-    conference_url = serializers.SerializerMethodField()
     conference_phone = serializers.SerializerMethodField()
     types = serializers.SerializerMethodField()
     location = serializers.SerializerMethodField()
@@ -222,10 +221,6 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     def get_time_formatted(self, obj):
         
         return ""
-
-    def get_conference_url(self, obj):
-        
-        return obj.link
 
     def get_conference_phone(self, obj): return ""
 

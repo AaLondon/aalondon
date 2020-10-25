@@ -27,6 +27,7 @@ class Meeting(models.Model):
     covid_open_status = models.BooleanField(null=False,default=False)    
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    conference_url = models.URLField(blank=True,null=True)
 
     
     
