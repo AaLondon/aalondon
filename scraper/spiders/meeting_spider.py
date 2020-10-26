@@ -11,7 +11,7 @@ from scrapy.utils.response import open_in_browser
 import datetime
 from meetings.models import Meeting
 
-zoom_pattern = r"https://[\w+?\.]*zoom\.us/j/.+?\b"
+zoom_pattern = r"https://[\w+?\.]*zoom\.us/j/.+?[\?pwd=\w+?]+\b"
 ZOOM_RE = re.compile(zoom_pattern, re.IGNORECASE | re.MULTILINE)
 
 
