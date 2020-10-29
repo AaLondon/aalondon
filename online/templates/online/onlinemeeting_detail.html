@@ -14,7 +14,7 @@
     </div>
     <div class="meeting-type">
       <div class="meeting-detail-text">TYPE</div>
-      <div><img src="{% static 'images/zoom.png'  %}" /></div>
+      <div><a href="{{object.link}}" target="_blank"><img src="{% static 'images/zoom.png'  %}" /></a></div>
     </div>
     <div class="meeting-whatsapp">
       <div class="meeting-detail-text">SHARE</div>
@@ -30,8 +30,7 @@
       <div>{{object.description}}</div>
     </div>
     <div class="meeting-map">
-      <div class="meeting-detail-text">MEETING LINK</div>
-      <div><a href="{{object.link}}" target="_blank">{{object.link}}</a></div>
+      <div><a href="{{object.link}}" target="_blank" class="button">Go to meeting</a></div>
     </div>
    
 
