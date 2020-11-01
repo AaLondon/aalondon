@@ -11,6 +11,7 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import * as geolib from 'geolib';
 import Table from 'react-bootstrap/Table';
+import MeetingTableData from './components/MeetingDataTable';
 import Spinner from 'react-bootstrap/Spinner'
 import _ from 'lodash'
 
