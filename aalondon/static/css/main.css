@@ -3399,7 +3399,8 @@ table.alt tfoot {
   grid-template-areas:
     "header"
     "aside"
-    "main";
+    "main"
+    "footer";
   grid-template-columns: 1fr;
 }
 
@@ -3410,7 +3411,9 @@ table.alt tfoot {
 #wrapper > aside {
   grid-area: aside;
 }
-
+#wrapper > footer {
+  grid-area: footer;
+}
 #wrapper > main {
   grid-area: main;
   background: #ffffff;
@@ -3430,7 +3433,8 @@ body.is-menu-visible #wrapper {
     width: 100%;
     grid-template-areas:
       "header header header"
-      "aside  main  main";
+      "aside  main  main"
+      "footer footer footer";
     grid-template-columns: 1fr 1fr 1fr;
     grid-row-gap: 4rem;
   }
@@ -4257,5 +4261,18 @@ body.is-menu-visible #menu {
   .resp-iframe {
     width: 80%;
   }
+  
+}
+
+
+/* FOOTER */
+
+
+#footer-container {
+  display: grid;
+  width:100%;
+  grid-template-columns: 1fr 1fr;
+  background-color: white;
+  
   
 }
