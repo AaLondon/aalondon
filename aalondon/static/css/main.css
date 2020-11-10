@@ -3413,6 +3413,7 @@ table.alt tfoot {
 }
 #wrapper > footer {
   grid-area: footer;
+  background-color: white;
 }
 #wrapper > main {
   grid-area: main;
@@ -4268,11 +4269,25 @@ body.is-menu-visible #menu {
 /* FOOTER */
 
 
+
 #footer-container {
   display: grid;
-  width:100%;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 2fr;
+  grid-template-rows: 1fr 1fr;
   background-color: white;
+  grid-column-gap: 2%;
+  margin-left:4%;
+  margin-top:1%;
+  margin-right:10%;
   
   
+}
+
+#footer-links{
+  display:inline-grid;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-template-columns: repeat(11, auto);
+  font-family: "Raleway", Helvetica, sans-serif;
+  margin-top:3%;
 }
