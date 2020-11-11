@@ -4268,26 +4268,60 @@ body.is-menu-visible #menu {
 
 /* FOOTER */
 
-
+#wrapper > footer {
+  margin: 16px;
+}
 
 #footer-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr;
-  grid-template-rows: 1fr 1fr;
-  background-color: white;
+  grid-template-columns: 1fr ;
+ 
+  grid-row-gap: 10px;
   grid-column-gap: 2%;
-  margin-left:4%;
-  margin-top:1%;
-  margin-right:10%;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+ 
   
   
 }
 
 #footer-links{
   display:inline-grid;
-  grid-column-start: 1;
-  grid-column-end: 5;
-  grid-template-columns: repeat(11, auto);
+  text-transform: uppercase;
+  
+  
   font-family: "Raleway", Helvetica, sans-serif;
   margin-top:3%;
 }
+
+
+@media only screen and (min-device-width: 768px)
+{
+  
+  #footer-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    background-color: white;
+    grid-column-gap: 2%;
+    margin-left:4%;
+    margin-top:1%;
+    margin-right:10%;
+    
+    
+  }
+  
+  #footer-links{
+    display:inline-grid;
+    grid-column-start: 1;
+    grid-column-end: 5;
+    grid-template-columns: repeat(6, auto);
+    font-family: "Raleway", Helvetica, sans-serif;
+    margin-top:3%;
+  }
+}
+  
+
+
