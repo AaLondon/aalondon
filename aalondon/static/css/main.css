@@ -4300,6 +4300,9 @@ body.is-menu-visible #menu {
 @media only screen and (min-device-width: 768px)
 {
   
+  #wrapper > footer {
+    margin: 45px;
+  }
   #footer-container {
     display: grid;
     grid-template-columns: 1fr 1fr 2fr;
