@@ -95,6 +95,29 @@ class AASpider(scrapy.Spider):
         if matches:
             meeting_data['conference_url'] = matches[0]
 
+        # Now build up the `types` field
+
+        types = []
+
+        if meeting_data['conference_url']:
+            types.append("ONL") #  Online meeting
+
+        if meeting_data['covid_open_status'] == False:
+            types.append("TC") #  Temporary closure
+
+        if "Full wheelchair access" in meeting_data['detail']:
+            types.append("X") #  Wheelchair access
+
+        if "Women" in meeting_data['detail']:
+            types.append("W") #  Women's meeting
+        elif "Men" in meeting_data['detail']:
+            types.append("M") #  Men's meeting
+
+        if "Outdoor" in meeting_data['detail']:
+            types.append("OUT") #  Outdoor meeting
+
+        meeting_data['types'] = types
+
         item = MeetingItem(meeting_data)
         print('yuyuyu')
         yield item
