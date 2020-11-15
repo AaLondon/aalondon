@@ -13,11 +13,29 @@ from meetings.models import Meeting
 
 zoom_pattern = r"https://[\w+?\.]*zoom\.us/j/.+?[\?pwd=\w+?]+\b"
 ZOOM_RE = re.compile(zoom_pattern, re.IGNORECASE | re.MULTILINE)
+# Match https://zoom.us/j/<ID> URLs in the Description field of a meeting
+# scrape
 
 
-intergroups = {117:"City Of London",36:"East London",123:"Chelsea",124:"Chelsea & Fulham",118:"London North East",51:"London North",64:"London North Middlesex",
-    63:"London North West",62:"London South Middlesex",119:"London West End",120:"London Westway",75:"London Croydon Epsom & Sutton",55:"London North Kent",
-    122:"London South East (East)",121:"London South East (West)",77:"London South",42:"London South West"} 
+intergroups = {
+        117: "City Of London",
+        36: "East London",
+        123: "Chelsea",
+        124: "Chelsea & Fulham",
+        118: "London North East",
+        51: "London North",
+        64: "London North Middlesex",
+        63: "London North West",
+        62: "London South Middlesex",
+        119: "London West End",
+        120: "London Westway",
+        75: "London Croydon Epsom & Sutton",
+        55: "London North Kent",
+        122: "London South East (East)",
+        121: "London South East (West)",
+        77: "London South",
+        42: "London South West"
+        } 
 
 class AASpider(scrapy.Spider):
     name = 'aameetings'
@@ -30,6 +48,12 @@ class AASpider(scrapy.Spider):
             yield Request(url,callback=self.parse,meta={'intergroup_id':intergroup_id})
    
     def parse(self, response):
+        """
+        Parser for each intergroup.
+
+        For x in intergroups, parse
+        https://www.alcoholics-anonymous.org.uk/markers.do?ig={x}
+        """
 
         soup = BeautifulSoup(response.text, 'html.parser') 
         meetings=soup.find_all('marker')
@@ -65,16 +89,37 @@ class AASpider(scrapy.Spider):
             minute = int(marker_time[3:5]) 
             meeting_time = datetime.time(hour,minute)
             
-            meeting_data = {'code':marker_code,'day':marker_day,'hearing':marker_hearing,'lat':marker_lat,'lng':marker_lng,'postcode':marker_postcode,'time':meeting_time,\
-               'duration':'','title':marker_title,'wheelchair':marker_wheelchair,'intergroup':'','covid_open_status':covid_open_status}
+            meeting_data = {
+                    'code': marker_code,
+                    'day': marker_day,
+                    'hearing': marker_hearing,
+                    'lat': marker_lat,
+                    'lng': marker_lng,
+                    'postcode': marker_postcode,
+                    'time': meeting_time,
+                    'duration': '',
+                    'title': marker_title,
+                    'wheelchair': marker_wheelchair,
+                    'intergroup_id': response.meta['intergroup_id'],
+                    'intergroup': intergroups[response.meta['intergroup_id']],
+                    'covid_open_status': covid_open_status
+                    }
           
 
             url = f'https://www.alcoholics-anonymous.org.uk/detail.do?id={marker_code}'
             
-            yield Request(url=url,callback=self.get_meeting_detail,meta={'meeting_data':meeting_data})
+            yield Request(url=url, 
+                    callback=self.get_meeting_detail, 
+                    meta={'meeting_data': meeting_data})
 
     
     def get_meeting_detail(self,response):
+        """
+        Called by parse() for each meeting found.
+
+        For y in meeting, for meeting in intergroup, parse
+        https://www.alcoholics-anonymous.org.uk/detail.do?id={y}
+        """
         meeting_data = response.meta.get('meeting_data')
 
         data = response.text
@@ -96,5 +141,4 @@ class AASpider(scrapy.Spider):
             meeting_data['conference_url'] = matches[0]
 
         item = MeetingItem(meeting_data)
-        print('yuyuyu')
         yield item
