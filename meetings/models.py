@@ -31,9 +31,7 @@ class Meeting(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     conference_url = models.URLField(blank=True,null=True)
-
-    
-    
+    types = models.CharField(max_length=200,blank=True,null=True)
 
     def __str__(self):
 
@@ -57,3 +55,11 @@ class Meeting(models.Model):
     def get_absolute_url(self):  
 
         return reverse("meeting-detail", kwargs={"pk": self.pk})
+
+
+    def set_types(self, x):
+        self.types = json.dumps(x)
+
+    def get_types(self):
+        return json.loads(self.types)
+
