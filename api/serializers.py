@@ -166,6 +166,7 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     last_contact = serializers.SerializerMethodField()
     postal_code = serializers.SerializerMethodField()
     country = serializers.SerializerMethodField()
+    timezone = serializers.SerializerMethodField()
 
     class Meta:
         model = Meeting
@@ -176,7 +177,7 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
                        'district_id', 'sub_district', 'group_notes', 'website', 'website_2',
                          'location_url', 'formatted_address', 'latitude', 'longitude',
                         'email', 'phone', 'mailing_address', 'venmo', 'square', 'paypal',
-                       'last_contact','postal_code','country']
+                       'last_contact','postal_code','country', 'timezone']
                   
 
     def get_id(self, obj):
@@ -262,8 +263,6 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     
     def get_country(self, obj): 
         return "UK"
-    
-    
-    
 
-    
+    def get_timezone(self, obj):
+        return "Europe/London"
