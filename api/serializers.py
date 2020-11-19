@@ -224,17 +224,22 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
 
     def get_conference_phone(self, obj): return ""
 
+    def get_types(self, obj):
+        return obj.types
 
-    def get_types(self, obj): return ""
     def get_location(self, obj): return ""
     def get_location_notes(self, obj): return ""
     def get_region_id(self, obj): return ""
     def get_region(self, obj): return ""
     def get_sub_region(self, obj): return ""
-    def get_group_id(self, obj): return ""
-    def get_group(self, obj): return ""
-    def get_district(self, obj): return ""
-    def get_district_id(self, obj): return ""
+    def get_group_id(self, obj):
+        return obj.code
+    def get_group(self, obj):
+        return obj.title
+    def get_district(self, obj):
+        return obj.intergroup
+    def get_district_id(self, obj):
+        return obj.intergroup_id
     def get_sub_district(self, obj): return ""
     def get_group_notes(self, obj): return ""
     def get_website(self, obj): return ""
