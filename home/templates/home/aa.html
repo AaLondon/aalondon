@@ -12,26 +12,14 @@
 <!-- Post -->
 
   <header>
-          <h2>Online Meetings Now</h2>
+          <h2>Upcoming Meetings</h2>
   </header>
 
     
 
     <section id="meeting-search"></section>
-    <section id="online-meetings-link"><h2><a href='/onlinemeetingsearch'>see full list of meetings</a></h2></section>
-    <section id="new-to-aa"><h2>new to AA?</h2>
-
-    <div id="arrow-wrapper">
-    <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span>Call us any time on <a class="blue-text" href="tel:0800 9177 650">0800 9177 650</a></span></div>
-    <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span>Use our <a class="blue-text"href="https://www.alcoholics-anonymous.org.uk/Home" target="_blank" rel="noopener noreferrer">Chat Now</a> service</span></div>
-    <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span><a class="blue-text" href="mailto:help@aamail.org">Email Us</a></span></div>
-    <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span><a class="blue-text" href="https://www.alcoholics-anonymous.org.uk/About-AA/Newcomers" target="_blank" rel="noopener noreferrer">Learn more</a></span></div>
-    
-    </div>
-    
+    <section id="online-meetings-link"><h2><a href='meetingsearch'>see full list of meetings</a></h2></section>
    
- 
-    </section>
     <section id="notice-board"><h2>noticeboard</h2>
     {% for notice in notices%}
     <div class="notice-board-row">
