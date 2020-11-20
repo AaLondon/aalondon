@@ -3512,7 +3512,7 @@ body.is-menu-visible #wrapper {
   text-align: center;
 }
 
-#arrow-wrapper {
+.arrow-wrapper {
   display: grid;
 }
 
@@ -3719,7 +3719,7 @@ body.is-menu-visible #wrapper {
   #intro-aa header p {
     text-align: left;
     line-height: 20px;
-    font-size: 14px;
+    font-size: 18px;
     margin-left: 4%;
 
     border-top: rgba(160, 160, 160, 0.3);
@@ -4301,7 +4301,8 @@ body.is-menu-visible #menu {
 {
   
   #wrapper > footer {
-    margin: 45px;
+    margin-left: 40px;
+    margin-right: 20px;
   }
   #footer-container {
     display: grid;
@@ -4326,5 +4327,8 @@ body.is-menu-visible #menu {
   }
 }
   
-
+.side-bar-arrows
+{
+  margin-left: 7%;
+}
 
