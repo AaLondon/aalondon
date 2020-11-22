@@ -140,3 +140,17 @@ class HomePage(Page):
         
     ]
     subpage_types = ['event.EventIndexPage','service.ServiceIndexPage','online.OnlineIndexPage','StandardIndexPage','StandardPage','LinkPage']
+
+
+class Reflections(models.Model):
+    day = models.IntegerField(null=False)
+    month = models.CharField(null=False, max_length=10)
+    title = models.CharField(null=False, max_length=200)
+    quotation = models.CharField(null=False, max_length=1000)
+    citation = models.CharField(null=False, max_length=100)
+    reading = models.TextField(null=False)
+
+
+    def __str__(self):
+        return self.title
+    
