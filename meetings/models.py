@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django_extensions.db.fields import AutoSlugField
 from datetime import time
+import json
 
 # Create your models here.
 
@@ -61,5 +62,6 @@ class Meeting(models.Model):
         self.types = json.dumps(x)
 
     def get_types(self):
-        return json.loads(self.types)
+        # JSON only supports double-quoted values
+        return json.loads(self.types.replace("'", "\""))
 
