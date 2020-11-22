@@ -21,16 +21,17 @@ class Meeting(models.Model):
     day_number = models.IntegerField(blank=True,null=True)
     slug = AutoSlugField(populate_from=['title','day','postcode','time'], max_length=100)
     day_rank = models.IntegerField(blank=True,null=True)
+    group = models.TextField(blank=True,null=True)
+    group_id = models.IntegerField(blank=True,null=True)
     intergroup = models.CharField(blank=True,max_length=100,null=True)
+    intergroup_id = models.IntegerField(blank=True,null=True)
     detail = models.TextField(blank=True,null=True)
     time_band = models.CharField(blank=True,max_length=10,null=True)
     covid_open_status = models.BooleanField(null=False,default=False)    
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     conference_url = models.URLField(blank=True,null=True)
-
-    
-    
+    types = models.CharField(max_length=200,blank=True,null=True)
 
     def __str__(self):
 
@@ -54,3 +55,11 @@ class Meeting(models.Model):
     def get_absolute_url(self):  
 
         return reverse("meeting-detail", kwargs={"pk": self.pk})
+
+
+    def set_types(self, x):
+        self.types = json.dumps(x)
+
+    def get_types(self):
+        return json.loads(self.types)
+
