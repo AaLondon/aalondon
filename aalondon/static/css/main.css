@@ -4310,9 +4310,9 @@ body.is-menu-visible #menu {
     grid-template-rows: 1fr 1fr;
     background-color: white;
     grid-column-gap: 2%;
-    margin-left:4%;
+    
     margin-top:1%;
-    margin-right:10%;
+    
     
     
   }
@@ -4331,4 +4331,9 @@ body.is-menu-visible #menu {
 {
   margin-left: 7%;
 }
+
+#home-reading{
+  margin-bottom: 5%;
+}
+
 

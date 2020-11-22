@@ -19,8 +19,19 @@
 
     <section id="meeting-search"></section>
     <section id="online-meetings-link"><h2><a href='meetingsearch'>see full list of meetings</a></h2></section>
-   
+   <section id="home-preamble"><h2>About</h2><p>Alcoholics Anonymous is a fellowship of men and women who share 
+   their experience, strength and hope with each other that they may solve their common problem and help others 
+   to recover from alcoholism. 
+   <b>The only requirement for membership is a desire to stop drinking</b>. There are no dues or fees for A.A. membership; we are selfsupporting through our own contributions. A.A. is not allied with any sect, denomination, politics, organization or institution; does not wish to engage in any controversy, neither endorses nor opposes any causes. Our primary purpose is to stay sober and help other alcoholics to achieve sobriety.</p></section>
+    
+    <section id="home-reading"><h2>Daily reflections - {{reflection.title}}</h2>
+     <div>{{today|date:"F jS"}}</div>
+     <div>{{reflection.quotation}}</div>
+     <div>{{reflection.citation}}</div>
+     <div>{{reflection.reading}}</div>
+     </section>
     <section id="notice-board"><h2>noticeboard</h2>
+   
     {% for notice in notices%}
     <div class="notice-board-row">
       <div class="notice-arrow"><img src="{% static 'images/white-arrow.png' %}" alt="" /></div> 
