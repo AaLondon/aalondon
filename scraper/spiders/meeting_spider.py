@@ -155,7 +155,7 @@ class AASpider(scrapy.Spider):
 
         if "Women" in meeting_data['detail']:
             types.append("W") #  Women's meeting
-        elif "Men" in meeting_data['detail']:
+        elif "Men's" in meeting_data['detail'] or "Mens" in meeting_data['detail']:
             types.append("M") #  Men's meeting
 
         if "Outdoor" in meeting_data['detail']:

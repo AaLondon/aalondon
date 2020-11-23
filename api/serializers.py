@@ -226,7 +226,7 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     def get_conference_phone(self, obj): return ""
 
     def get_types(self, obj):
-        return obj.types
+        return obj.get_types()
 
     def get_location(self, obj): return ""
     def get_location_notes(self, obj): return ""
