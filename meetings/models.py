@@ -63,5 +63,8 @@ class Meeting(models.Model):
 
     def get_types(self):
         # JSON only supports double-quoted values
-        return json.loads(self.types.replace("'", "\""))
+        if self.types:
+            return json.loads(self.types.replace("'", "\""))
+        else:
+            return []
 
