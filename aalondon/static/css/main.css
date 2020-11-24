@@ -3399,7 +3399,8 @@ table.alt tfoot {
   grid-template-areas:
     "header"
     "aside"
-    "main";
+    "main"
+    "footer";
   grid-template-columns: 1fr;
 }
 
@@ -3410,7 +3411,10 @@ table.alt tfoot {
 #wrapper > aside {
   grid-area: aside;
 }
-
+#wrapper > footer {
+  grid-area: footer;
+  background-color: white;
+}
 #wrapper > main {
   grid-area: main;
   background: #ffffff;
@@ -3430,7 +3434,8 @@ body.is-menu-visible #wrapper {
     width: 100%;
     grid-template-areas:
       "header header header"
-      "aside  main  main";
+      "aside  main  main"
+      "footer footer footer";
     grid-template-columns: 1fr 1fr 1fr;
     grid-row-gap: 4rem;
   }
@@ -3507,7 +3512,7 @@ body.is-menu-visible #wrapper {
   text-align: center;
 }
 
-#arrow-wrapper {
+.arrow-wrapper {
   display: grid;
 }
 
@@ -3714,7 +3719,7 @@ body.is-menu-visible #wrapper {
   #intro-aa header p {
     text-align: left;
     line-height: 20px;
-    font-size: 14px;
+    font-size: 18px;
     margin-left: 4%;
 
     border-top: rgba(160, 160, 160, 0.3);
@@ -4259,3 +4264,78 @@ body.is-menu-visible #menu {
   }
   
 }
+
+
+/* FOOTER */
+
+#wrapper > footer {
+  margin: 16px;
+}
+
+#footer-container {
+  display: grid;
+  grid-template-columns: 1fr ;
+ 
+  grid-row-gap: 10px;
+  grid-column-gap: 2%;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+ 
+  
+  
+}
+
+#footer-links{
+  display:inline-grid;
+  text-transform: uppercase;
+  
+  
+  font-family: "Raleway", Helvetica, sans-serif;
+  margin-top:3%;
+}
+
+
+@media only screen and (min-device-width: 768px)
+{
+  
+  #wrapper > footer {
+    margin-left: 40px;
+    margin-right: 20px;
+  }
+  #footer-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    background-color: white;
+    grid-column-gap: 2%;
+    
+    margin-top:1%;
+    
+    
+    
+  }
+  
+  #footer-links{
+    display:inline-grid;
+    grid-column-start: 1;
+    grid-column-end: 5;
+    grid-template-columns: repeat(6, auto);
+    font-family: "Raleway", Helvetica, sans-serif;
+    margin-top:3%;
+  }
+}
+  
+.side-bar-arrows
+{
+  margin-left: 7%;
+}
+
+#home-reading{
+  margin-bottom: 5%;
+  padding:2%;
+  background: #E6EDFF;
+}
+
+
