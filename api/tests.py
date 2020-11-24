@@ -16,3 +16,6 @@ class TestURLSuccess(TestCase):
     def test_visit_onlinemeetingsearch(self):
         response = self.client.get('/api/onlinemeetingsearch/')
         assert response.status_code == 200
+    def test_visit_meetingguide(self):
+        response = self.client.get('/api/meetingguide/')
+        assert response.status_code == 200
