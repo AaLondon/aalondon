@@ -3461,8 +3461,9 @@ body.is-menu-visible #wrapper {
     "header"
     "meetings"
     "link"
-    "news"
-    "notices";
+    "about"
+    "notices"
+    "reading";
   grid-template-columns: 1fr;
   grid-row-gap: 50px;
 }
@@ -3497,6 +3498,14 @@ body.is-menu-visible #wrapper {
 
 #main-home > #notice-board {
   grid-area: notices;
+}
+
+#main-home > #home-preamble {
+  grid-area: about;
+}
+
+#main-home > #home-reading {
+  grid-area: reading;
 }
 
 #main-home > #notice-board h2 {
@@ -3577,7 +3586,8 @@ body.is-menu-visible #wrapper {
       "header header"
       "meetings meetings"
       "link link"
-      "news notices";
+      "about notices"
+      "reading notices";
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -3590,7 +3600,8 @@ body.is-menu-visible #wrapper {
       "header header"
       "meetings meetings"
       "link link"
-      "news notices";
+      "about notices"
+      "reading notices";
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -3603,7 +3614,8 @@ body.is-menu-visible #wrapper {
       "header header"
       "meetings meetings"
       "link link"
-      "news notices";
+      "about notices"
+      "reading notices";
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 50px;
   }
