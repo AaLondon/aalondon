@@ -23,9 +23,14 @@ class AASpider(scrapy.Spider):
     name = 'aameetings'
     intergroup_urls = {x[0]:f'https://www.alcoholics-anonymous.org.uk/markers.do?ig={x[0]}'  for x  in intergroups.items()}
     member_ids = []
+    source_meeting_codes = []
     
-
+    def closed(self, reason):
+        Meeting.objects.exclude(code__in=self.source_meeting_codes).delete()
+        print("Meeting codes crawled", (self.source_meeting_codes))
+        
     def start_requests(self):
+        print("Meeting codes before crawl", (Meeting.objects.all().values_list('code')))
         for intergroup_id,url in self.intergroup_urls.items():
             yield Request(url,callback=self.parse,meta={'intergroup_id':intergroup_id})
    
@@ -37,7 +42,9 @@ class AASpider(scrapy.Spider):
       
             marker_address = meeting.get('address')
             marker_code = meeting.get('code')
-
+            self.source_meeting_codes.append(int(marker_code))
+            
+        
             if marker_code == '13286':
                 marker_title = "Hampstead FARSI speaking به جلسه فارسی زبانان  لندن خوش آمدید."
             else:
@@ -72,7 +79,7 @@ class AASpider(scrapy.Spider):
             url = f'https://www.alcoholics-anonymous.org.uk/detail.do?id={marker_code}'
             
             yield Request(url=url,callback=self.get_meeting_detail,meta={'meeting_data':meeting_data})
-
+        
     
     def get_meeting_detail(self,response):
         meeting_data = response.meta.get('meeting_data')
