@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = "Release the spiders"
 
     def handle(self, *args, **options):
-        #Meeting.objects.all().delete()
+        # Meeting.objects.all().delete()
         process = CrawlerProcess(get_project_settings())
         process.crawl(AASpider)
         process.start()
