@@ -106,6 +106,7 @@
                             
                             <header>
                                 <h2>Alcoholics Anonymous London</h2>
+                          {% if page.title != 'Home' %}
                                 <p>Alcoholics Anonymous is a fellowship of men and women who
 share their experience, strength and hope with each other that
 they may solve their common problem and help others to recover
@@ -115,9 +116,26 @@ any sect, denomination, politics, organization or institution; does
 not wish to engage in any controversy, neither endorses nor
 opposes any causes. Our primary purpose is to stay sober and
 help other alcoholics to achieve sobriety. </p>
-                            
+{% endif%}
 
+{% if request.resolver_match.view_name == 'meeting_search' %}
+    <div class="resp-container">
+        <iframe class="resp-iframe" align="left" src="https://player.vimeo.com/video/471060027" gesture="media"  allow="encrypted-media" allowfullscreen></iframe>
+    </div> 
+{% endif %}
+    <h3 class="side-bar-arrows">New to AA?</h3>
+    <div  class="side-bar-arrows arrow-wrapper">
+    
+    <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span>Call us any time on <a class="blue-text" href="tel:0800 9177 650">0800 9177 650</a></span></div>
+    <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span>Use our <a class="blue-text"href="https://www.alcoholics-anonymous.org.uk/Home" target="_blank" rel="noopener noreferrer">Chat Now</a> service</span></div>
+    <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span><a class="blue-text" href="mailto:help@aamail.org">Email Us</a></span></div>
+    <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span><a class="blue-text" href="https://www.alcoholics-anonymous.org.uk/About-AA/Newcomers" target="_blank" rel="noopener noreferrer">Learn more</a></span></div>
+    
+    </div>
+    
                             </header>
+
+    
                         </section>
 
                     
@@ -127,8 +145,12 @@ help other alcoholics to achieve sobriety. </p>
                 
                         
 
+         
                 </aside>
-
+        <footer>
+        {% include "footer.html" %}
+        
+      </footer>
         </div>
        
 

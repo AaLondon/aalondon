@@ -12,27 +12,25 @@
 <!-- Post -->
 
   <header>
-          <h2>Online Meetings Now</h2>
+          <h2>Upcoming Meetings</h2>
   </header>
 
     
 
     <section id="meeting-search"></section>
-    <section id="online-meetings-link"><h2><a href='/onlinemeetingsearch'>see full list of meetings</a></h2></section>
-    <section id="new-to-aa"><h2>new to AA?</h2>
-
-    <div id="arrow-wrapper">
-    <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span>Call us any time on <a class="blue-text" href="tel:0800 9177 650">0800 9177 650</a></span></div>
-    <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span>Use our <a class="blue-text"href="https://www.alcoholics-anonymous.org.uk/Home" target="_blank" rel="noopener noreferrer">Chat Now</a> service</span></div>
-    <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span><a class="blue-text" href="mailto:help@aamail.org">Email Us</a></span></div>
-    <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span><a class="blue-text" href="https://www.alcoholics-anonymous.org.uk/About-AA/Newcomers" target="_blank" rel="noopener noreferrer">Learn more</a></span></div>
+    <section id="online-meetings-link"><h2><a href='meetingsearch'>see full list of meetings</a></h2></section>
+   <section id="home-preamble"><h2>About</h2><p>Alcoholics Anonymous is a fellowship of men and women who share 
+   their experience, strength and hope with each other that they may solve their common problem and help others 
+   to recover from alcoholism. 
+   <b>The only requirement for membership is a desire to stop drinking</b>. There are no dues or fees for A.A. membership; we are selfsupporting through our own contributions. A.A. is not allied with any sect, denomination, politics, organization or institution; does not wish to engage in any controversy, neither endorses nor opposes any causes. Our primary purpose is to stay sober and help other alcoholics to achieve sobriety.</p></section>
     
-    </div>
-    
-   
- 
-    </section>
+    <section id="home-reading"><h2>Daily reflections - {{today|date:"F jS"}}</h2>
+    <p><b>{{reflection.title}}</b></p>
+     <p><i>{{reflection.quotation}}</i>  {{reflection.citation}}</p>
+     <p><b>{{reflection.reading}}</b></p>
+     </section>
     <section id="notice-board"><h2>noticeboard</h2>
+   
     {% for notice in notices%}
     <div class="notice-board-row">
       <div class="notice-arrow"><img src="{% static 'images/white-arrow.png' %}" alt="" /></div> 
