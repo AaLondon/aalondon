@@ -66,7 +66,7 @@ class AASpider(scrapy.Spider):
       
             marker_address = meeting.get('address')
             marker_code = meeting.get('code')
-            self.source_meeting_codes.append(int(marker_code))
+            
             
         
             if marker_code == '13286':
@@ -86,8 +86,8 @@ class AASpider(scrapy.Spider):
             marker_hearing = meeting.get('hearing')
             marker_time = marker_time.replace(".",":")
             marker_url = response.url
-            marker_open_again = meeting.get('oa')
-            if marker_open_again == 'True':
+            marker_meeting_status = meeting.get('ms')
+            if marker_meeting_status in ['5']:
                 covid_open_status = True
             else:
                 covid_open_status = False
@@ -115,8 +115,10 @@ class AASpider(scrapy.Spider):
 
             url = f'https://www.alcoholics-anonymous.org.uk/detail.do?id={marker_code}'
             
-
-            yield Request(url=url,callback=self.get_meeting_detail,meta={'meeting_data':meeting_data})
+            #We dont want to scrape online meetings from aa-gb in this scrape
+            if marker_meeting_status != '4':
+                self.source_meeting_codes.append(int(marker_code))
+                yield Request(url=url,callback=self.get_meeting_detail,meta={'meeting_data':meeting_data})
         
 
     
