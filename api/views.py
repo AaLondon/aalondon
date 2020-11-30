@@ -187,4 +187,13 @@ class MeetingGuideListView(generics.ListAPIView):
     queryset = Meeting.objects.all()
     pagination_class = None
 
-    
+
+class MeetingGuideViewSet(viewsets.ModelViewSet):
+    """
+    Provide a ViewSet for Django Default Router so that MeetingGuide endpoint
+    can be accessed with `.json` suffix.
+    """
+
+    queryset = Meeting.objects.all()
+    serializer_class = MeetingGuideSerializer
+    pagination_class = None
