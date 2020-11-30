@@ -4,6 +4,7 @@ from api import views
 
 router = routers.DefaultRouter()
 router.register(r'meetings', views.MeetingViewSet)
+router.register(r'meetingguide', views.MeetingGuideViewSet)
 
 
 app_name = "api"
