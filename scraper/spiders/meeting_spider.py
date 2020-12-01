@@ -17,7 +17,9 @@ ZOOM_RE = re.compile(zoom_pattern, re.IGNORECASE | re.MULTILINE)
 # scrape
 
 
-intergroups = {
+
+
+INTERGROUPS = {
         117: "City Of London",
         36: "East London",
         123: "Chelsea",
@@ -37,9 +39,12 @@ intergroups = {
         42: "London South West"
         } 
 
+MEETING_STATUS_CODES = {"Back Open Again"    : "5",
+                        "Online"             : "4",
+                        "Temporarily Closed" : "3"}
 class AASpider(scrapy.Spider):
     name = 'aameetings'
-    intergroup_urls = {x[0]:f'https://www.alcoholics-anonymous.org.uk/markers.do?ig={x[0]}'  for x  in intergroups.items()}
+    intergroup_urls = {x[0]:f'https://www.alcoholics-anonymous.org.uk/markers.do?ig={x[0]}'  for x  in INTERGROUPS.items()}
     member_ids = []
     source_meeting_codes = []
     
@@ -86,8 +91,10 @@ class AASpider(scrapy.Spider):
             marker_hearing = meeting.get('hearing')
             marker_time = marker_time.replace(".",":")
             marker_url = response.url
+            
             marker_meeting_status = meeting.get('ms')
-            if marker_meeting_status in ['5']:
+
+            if marker_meeting_status == MEETING_STATUS_CODES["Back Open Again"]:
                 covid_open_status = True
             else:
                 covid_open_status = False
@@ -108,7 +115,7 @@ class AASpider(scrapy.Spider):
                     'title': marker_title,
                     'wheelchair': marker_wheelchair,
                     'intergroup_id': response.meta['intergroup_id'],
-                    'intergroup': intergroups[response.meta['intergroup_id']],
+                    'intergroup': INTERGROUPS[response.meta['intergroup_id']],
                     'covid_open_status': covid_open_status
                     }
           
@@ -116,7 +123,7 @@ class AASpider(scrapy.Spider):
             url = f'https://www.alcoholics-anonymous.org.uk/detail.do?id={marker_code}'
             
             #We dont want to scrape online meetings from aa-gb in this scrape
-            if marker_meeting_status != '4':
+            if marker_meeting_status != MEETING_STATUS_CODES["Online"]:
                 self.source_meeting_codes.append(int(marker_code))
                 yield Request(url=url,callback=self.get_meeting_detail,meta={'meeting_data':meeting_data})
         
