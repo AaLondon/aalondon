@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment, useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
-const LEFT_PAGE = 'LEFT';
-const RIGHT_PAGE = 'RIGHT';
+const LEFT_PAGE = "LEFT";
+const RIGHT_PAGE = "RIGHT";
 
 /**
  * Helper method for creating a range of numbers
@@ -18,68 +18,62 @@ const range = (from, to, step = 1) => {
   }
 
   return range;
-}
+};
 
-class Pagination extends Component {
+function Pagination({
+  totalRecords = null,
+  pageLimit = 30,
+  pageNeighbours = 0,
+  onPageChanged = (f) => f,
+}) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(null);
 
-  constructor(props) {
-    super(props);
-    const { totalRecords = null, pageLimit = 30, pageNeighbours = 0} = props;
-    
-    this.pageLimit = typeof pageLimit === 'number' ? pageLimit : 30;
-    this.totalRecords = typeof totalRecords === 'number' ? totalRecords : 0;
-    
-    // pageNeighbours can be: 0, 1 or 2
-    this.pageNeighbours = typeof pageNeighbours === 'number'
+  pageLimit = typeof pageLimit === "number" ? pageLimit : 30;
+  totalRecords = typeof totalRecords === "number" ? totalRecords : 0;
+
+  // pageNeighbours can be: 0, 1 or 2
+  pageNeighbours =
+    typeof pageNeighbours === "number"
       ? Math.max(0, Math.min(pageNeighbours, 2))
       : 0;
 
-    this.totalPages = Math.ceil(this.totalRecords / this.pageLimit);
-    
-    this.state = { currentPage: 1,totalPages: null };
-    
+  totalPages = Math.ceil(totalRecords / pageLimit);
 
-  }
+  const gotoPage = (page) => {
+    const currentPage = Math.max(0, Math.min(page, totalPages));
 
-  static getDerivedStateFromProps(props, state) {
+    setCurrentPage(currentPage);
+  };
 
-
-    state.totalPages =  Math.ceil(props.totalRecords / props.pageLimit);
-
-    return state;
-  }
-
-  componentDidMount() {
-    this.gotoPage(1);
-  }
-
-  gotoPage = page => {
-    const { onPageChanged = f => f } = this.props;
-    const currentPage = Math.max(0, Math.min(page, this.totalPages));
+  useEffect(() => {
     const paginationData = {
       currentPage,
-      totalPages: this.state.totalPages,
-      pageLimit: this.pageLimit,
-      totalRecords: this.totalRecords
+      totalPages: totalPages,
+      pageLimit: pageLimit,
+      totalRecords: totalRecords,
     };
+    onPageChanged(paginationData);
+  }, [currentPage, totalPages, pageLimit, totalRecords]);
 
-    this.setState({ currentPage }, () => onPageChanged(paginationData));
-  }
+  useEffect(() => {
+    gotoPage(1);
+  }, []);
 
-  handleClick = page => evt => {
+  const handleClick = (page) => (evt) => {
     evt.preventDefault();
-    this.gotoPage(page);
-  }
+    gotoPage(page);
+  };
 
-  handleMoveLeft = evt => {
+  const handleMoveLeft = (evt) => {
     evt.preventDefault();
-    this.gotoPage(this.state.currentPage - (this.pageNeighbours * 2) - 1);
-  }
+    gotoPage(currentPage - pageNeighbours * 2 - 1);
+  };
 
-  handleMoveRight = evt => {
+  const handleMoveRight = (evt) => {
     evt.preventDefault();
-    this.gotoPage(this.state.currentPage + (this.pageNeighbours * 2) + 1);
-  }
+    gotoPage(currentPage + pageNeighbours * 2 + 1);
+  };
 
   /**
    * Let's say we have 10 pages and we set pageNeighbours to 2
@@ -92,22 +86,15 @@ class Pagination extends Component {
    * [x] => represents current page
    * {...x} => represents page neighbours
    */
-  fetchPageNumbers = () => {
-  
-
-    const totalPages = this.state.totalPages;
-    const currentPage = this.state.currentPage;
-    const pageNeighbours = this.pageNeighbours;
-
+  const fetchPageNumbers = () => {
     /**
      * totalNumbers: the total page numbers to show on the control
      * totalBlocks: totalNumbers + 2 to cover for the left(<) and right(>) controls
      */
-    const totalNumbers = (this.pageNeighbours * 2) + 3;
+    const totalNumbers = pageNeighbours * 2 + 3;
     const totalBlocks = totalNumbers + 2;
 
     if (totalPages > totalBlocks) {
-
       const startPage = Math.max(2, currentPage - pageNeighbours);
       const endPage = Math.min(totalPages - 1, currentPage + pageNeighbours);
 
@@ -119,26 +106,26 @@ class Pagination extends Component {
        * spillOffset: number of hidden pages either to the left or to the right
        */
       const hasLeftSpill = startPage > 2;
-      const hasRightSpill = (totalPages - endPage) > 1;
+      const hasRightSpill = totalPages - endPage > 1;
       const spillOffset = totalNumbers - (pages.length + 1);
 
       switch (true) {
         // handle: (1) < {5 6} [7] {8 9} (10)
-        case (hasLeftSpill && !hasRightSpill): {
+        case hasLeftSpill && !hasRightSpill: {
           const extraPages = range(startPage - spillOffset, startPage - 1);
           pages = [LEFT_PAGE, ...extraPages, ...pages];
           break;
         }
 
         // handle: (1) {2 3} [4] {5 6} > (10)
-        case (!hasLeftSpill && hasRightSpill): {
+        case !hasLeftSpill && hasRightSpill: {
           const extraPages = range(endPage + 1, endPage + spillOffset);
           pages = [...pages, ...extraPages, RIGHT_PAGE];
           break;
         }
 
         // handle: (1) < {4 5} [6] {7 8} > (10)
-        case (hasLeftSpill && hasRightSpill):
+        case hasLeftSpill && hasRightSpill:
         default: {
           pages = [LEFT_PAGE, ...pages, RIGHT_PAGE];
           break;
@@ -146,65 +133,69 @@ class Pagination extends Component {
       }
 
       return [1, ...pages, totalPages];
-
     }
 
     return range(1, totalPages);
+  };
 
-  }
+  if (!totalRecords || totalPages === 1) return null;
 
-  render() {
-   
-    if (!this.totalRecords || this.totalPages === 1) return null;
+  Pagination.propTypes = {
+    totalRecords: PropTypes.number.isRequired,
+    pageLimit: PropTypes.number,
+    pageNeighbours: PropTypes.number,
+    onPageChanged: PropTypes.func,
+  };
 
-    const { currentPage } = this.state;
-    const pages = this.fetchPageNumbers();
-   
-    return (
-      <Fragment>
-        <nav aria-label="Countries Pagination">
-          <ul className="pagination">
-            { pages.map((page, index) => {
-
-              if (page === LEFT_PAGE) return (
+  return (
+    <Fragment>
+      <nav aria-label="Countries Pagination">
+        <ul className="pagination">
+          {fetchPageNumbers.pages.map((page, index) => {
+            if (page === LEFT_PAGE)
+              return (
                 <li key={index} className="page-item">
-                  <a className="page-link" href="#" aria-label="Previous" onClick={this.handleMoveLeft}>
+                  <a
+                    className="page-link"
+                    href="#"
+                    aria-label="Previous"
+                    onClick={handleMoveLeft}
+                  >
                     <span aria-hidden="true">&laquo;</span>
                     <span className="sr-only">Previous</span>
                   </a>
                 </li>
               );
 
-              if (page === RIGHT_PAGE) return (
+            if (page === RIGHT_PAGE)
+              return (
                 <li key={index} className="page-item">
-                  <a className="page-link" href="#" aria-label="Next" onClick={this.handleMoveRight}>
+                  <a
+                    className="page-link"
+                    href="#"
+                    aria-label="Next"
+                    onClick={handleMoveRight}
+                  >
                     <span aria-hidden="true">&raquo;</span>
                     <span className="sr-only">Next</span>
                   </a>
                 </li>
               );
 
-              return (
-                <li key={index} className={`page-item${ currentPage === page ? ' active' : ''}`}>
-                  <a className="page-link" href="#" onClick={ this.handleClick(page) }>{ page }</a>
-                </li>
-              );
-
-            }) }
-
-          </ul>
-        </nav>
-      </Fragment>
-    );
-
-  }
+            return (
+              <li
+                key={index}
+                className={`page-item${currentPage === page ? " active" : ""}`}
+              >
+                <a className="page-link" href="#" onClick={handleClick(page)}>
+                  {page}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </Fragment>
+  );
 }
-
-Pagination.propTypes = {
-  totalRecords: PropTypes.number.isRequired,
-  pageLimit: PropTypes.number,
-  pageNeighbours: PropTypes.number,
-  onPageChanged: PropTypes.func
-};
-
 export default Pagination;

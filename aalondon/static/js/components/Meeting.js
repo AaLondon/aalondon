@@ -1,13 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
-
-
-
-
-
-
+import { Row } from 'reactstrap';
 
 const Meeting = props => {
   const { code = null, title = null, time = null, day = null, slug = null, distance = null, dayRank = null } = props.meeting || {};
