@@ -165,6 +165,8 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     paypal = serializers.SerializerMethodField()
     last_contact = serializers.SerializerMethodField()
     postal_code = serializers.SerializerMethodField()
+    city = serializers.SerializerMethodField()
+    state = serializers.SerializerMethodField()
     country = serializers.SerializerMethodField()
     timezone = serializers.SerializerMethodField()
 
@@ -177,7 +179,7 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
                        'district_id', 'sub_district', 'group_notes', 'website', 'website_2',
                          'location_url', 'formatted_address', 'latitude', 'longitude',
                         'email', 'phone', 'mailing_address', 'venmo', 'square', 'paypal',
-                       'last_contact','postal_code','country', 'timezone']
+                       'last_contact','postal_code', 'city', 'state', 'country', 'timezone']
                   
 
     def get_id(self, obj):
@@ -260,6 +262,12 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     def get_last_contact(self, obj): return ""
     def get_postal_code(self, obj): 
         return obj.postcode
+
+    def get_city(self, obj):
+        return obj.intergroup
+
+    def get_state(self, obj):
+        return "London"
     
     def get_country(self, obj): 
         return "UK"
