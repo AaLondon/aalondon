@@ -57,7 +57,7 @@ export default class MeetingDataTable extends Component {
       let zoomImg = '/static/images/zoom.png';
       let physicalImg = '/static/images/building-location-pin.png'
       let meetingUrlPath = '/onlinemeetings/'
-      let img = <img src={physicalImg}></img>
+      let img = <img src={zoomImg}></img>
       if (place !== 'zoom') {
         placeText = place;
         meetingUrlPath = '/meetings/'
