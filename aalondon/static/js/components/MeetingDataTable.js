@@ -54,12 +54,21 @@ export default class MeetingDataTable extends Component {
 
     let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, link, slug, postcode_prefix, day,covid_open_status,place }) => {
       let placeText = '';
-      let img='/static/images/zoom.png';
+      let zoomImg = '/static/images/zoom.png';
+      let physicalImg = '/static/images/building-location-pin.png'
       let meetingUrlPath = '/onlinemeetings/'
-      if (place !== 'zoom'){
+      let img = <img src={physicalImg}></img>
+      if (place !== 'zoom') {
         placeText = place;
         meetingUrlPath = '/meetings/'
-        img = '/static/images/building-location-pin.png'
+
+        if (title.includes('Physical & Online')) {
+          title = title.replace('Physical & Online', '')
+          console.log(title)
+          img = <><img src={zoomImg}></img>+<img src={physicalImg}></img></>
+        } else {
+          img = <img src={physicalImg}></img>
+        }
       }
 
 
@@ -73,7 +82,7 @@ export default class MeetingDataTable extends Component {
           <Table.Cell textAlign="center">{day}</Table.Cell>
           <Table.Cell textAlign="center">{friendly_time}</Table.Cell>
           <Table.Cell textAlign="center"><a href={meetingUrlPath + slug }>{title}</a></Table.Cell>
-          <Table.Cell textAlign="center" className='meeting-cell'> <div><a href={link}><img src={img} alt=""></img></a></div><div>{placeText}</div></Table.Cell>
+          <Table.Cell textAlign="center" className='meeting-cell'> <div><a href={link}>{img}</a></div><div>{placeText}</div></Table.Cell>
           <Table.Cell textAlign="center">{covid_open_status === 0 ? 'Inactive':'Active'}</Table.Cell>
           
         </Table.Row>
