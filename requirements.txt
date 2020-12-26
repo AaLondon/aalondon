@@ -13,7 +13,7 @@ psycopg2-binary==2.8.6
 django-storages
 boto3==1.9.215
 geopy==1.21.0
-whitenoise[brotli]==5.0.1
+whitenoise[brotli]==5.2.0
 wagtailmenus==3.0.1
 sentry-sdk==0.14.3
 pytest==6.2.1
