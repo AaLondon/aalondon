@@ -9,6 +9,7 @@ module.exports = {
     meeting: './aalondon/static/js/MeetingApp.js',
     meetingsearch: './aalondon/static/js/MeetingSearch.js',
     onlinemeetingsearch: './aalondon/static/js/OnlineMeetingSearch.js',
+    meetingform:'./aalondon/static/js/MeetingForm.js',
 
 
 
@@ -18,6 +19,7 @@ module.exports = {
   output: {
     path: path.resolve('./aalondon/static/bundles/'),
     filename: "[name]-[hash].js",
+    publicPath: ''
   },
 
   plugins: [
@@ -28,13 +30,16 @@ module.exports = {
   module: {
     rules: [{
       test: /\.js$/,
+      
       exclude: /node_modules/,
-      loader: 'babel-loader',
+      loader:   'babel-loader',
+      
       options: {
         presets: ['@babel/preset-env',
           '@babel/react', {
-            'plugins': ['@babel/plugin-proposal-class-properties']
-          }
+            'plugins': ['@babel/plugin-proposal-class-properties','@babel/transform-runtime']
+          },
+          
         ]
       }
     },
@@ -45,7 +50,9 @@ module.exports = {
           loader: 'file-loader',
           options: {
             name: '[name].[ext]',
-            outputPath: 'images/'
+            outputPath: 'images/',
+            publicPath: ''
+
           }
         }
       ]
