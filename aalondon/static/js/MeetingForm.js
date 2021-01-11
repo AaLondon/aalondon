@@ -8,7 +8,7 @@ import PhysicalForm from "./components/PhysicalForm";
 import HybridForm from "./components/HybridForm";
 
 
-const formStages = [
+const formTypes = [
     {
         key: 'online',
         text: 'Online',
@@ -29,30 +29,33 @@ const formStages = [
     }]
 
 
+
+
 function MeetingForm() {
-    const [formStage, setFormStage] = React.useState('select')
+    const [formType, setFormType] = React.useState('select')
     let activeForm =<></>
-    if (formStage == 'online') {
-        activeForm = <OnlineForm />
+    if (formType == 'online') {
+        activeForm = <OnlineForm  formType={formType}/>
 
     }
-    else if (formStage == 'physical') {
-        activeForm = <PhysicalForm />
+    else if (formType == 'physical') {
+        activeForm = <PhysicalForm formType={formType} />
 
     }
-    else if (formStage == 'hybrid') {
-        activeForm = <HybridForm />
+    else if (formType == 'hybrid') {
+        activeForm = <HybridForm formType={formType}/>
 
     }
     return (
         <>
+            <label htmlFor="notes">Meeting Type(Hybrid,Online or Physical)</label>
             <Dropdown
                 placeholder='Please choose meeting type'
                 // fluid
                 selection
-                options={formStages}
+                options={formTypes}
                 icon='dropdown'
-                onChange={(e, data) => setFormStage(data.value)}
+                onChange={(e, data) => setFormType(data.value)}
                 scrolling={false}
             />
             {activeForm}
