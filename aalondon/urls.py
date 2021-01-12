@@ -13,6 +13,8 @@ from meetings.views import MeetingSearchView,MeetingDetailView
 
 from online.views import OnlineMeetingDetailView,redirect_view,OnlineMeetingCreateView,OnlineMeetingThanksView,OnlineMeetingSearchView
 from wagtail.contrib.sitemaps.views import sitemap
+from django.views.generic import TemplateView
+
 
 
 def trigger_error(request):
@@ -37,6 +39,8 @@ urlpatterns = [
     
     path('online/zoom-meetings/', redirect_view,name='online-zoom-meetings-redirect'),
     url('^sitemap\.xml$', sitemap),
+    path('addmeeting/', TemplateView.as_view(template_name='meetings/meeting_form.html'), name='meeting_form'),
+
     
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
