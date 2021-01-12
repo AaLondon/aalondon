@@ -264,7 +264,7 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
         return obj.postcode
 
     def get_city(self, obj):
-        return obj.intergroup
+        return "London"
 
     def get_state(self, obj):
         return "London"

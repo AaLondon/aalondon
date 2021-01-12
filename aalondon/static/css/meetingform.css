@@ -1,0 +1,58 @@
+.ui.selection.dropdown {
+
+    /*border-radius: 0;*/
+    min-width: 100%;
+    background:#ffffff
+}
+
+.ui.selection.dropdown .menu {
+     max-height: none; 
+}
+
+.form-group > input {
+    background:#ffffff
+}
+
+
+
+.checkbox-title{
+    padding-right:7px
+
+}
+
+.ui.checkbox .box, .ui.checkbox label {
+    margin-top:4px;
+    margin-right:15px;
+
+
+}
+
+
+
+
+.ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
+    color:#757575;
+}
+
+input[type=checkbox] {
+    display: block;
+}
+
+
+.auto-grid {
+    --auto-grid-min-size: 20rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
+    grid-gap: 1rem;
+  }
+
+
+  input::placeholder {
+    color: #757575 !important;
+    font-size: 16px;
+
+  }
+
+  #autosuggest{
+      min-width: 100%;
+  }

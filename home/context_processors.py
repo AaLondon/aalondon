@@ -1,4 +1,5 @@
 # context_processors.py
+from aalondon.settings.base import WHAT_THREE_WORDS_API_KEY
 import environ
 from service.models import ServicePage
 from online.models import OnlinePage
@@ -6,6 +7,8 @@ from wagtail.documents.models import Document
 from home.models import Reflections 
 env = environ.Env()
 GA_TRACKING_ID = env('GA_TRACKING_ID',default='None')
+WHAT_THREE_WORDS_API_KEY = env('WHAT_THREE_WORDS_API_KEY',default='None')
+print(f'WHAT_THREE_WORDS_API_KEY:{WHAT_THREE_WORDS_API_KEY}')
 from datetime import date
 
 def servicepages(request):
@@ -26,6 +29,7 @@ def servicepages(request):
        "ga_tracking_id": GA_TRACKING_ID,
        "pdf_url":  pdf_url,
        "reflection": reflection,
-       "today": today
+       "today": today,
+       "what_three_words_api_key":WHAT_THREE_WORDS_API_KEY
 
     }
