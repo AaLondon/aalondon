@@ -3,19 +3,14 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Dropdown, TextArea, Checkbox } from 'semantic-ui-react'
 import moment from 'moment';
-import  SemanticField  from '../components/SemanticField'
+import SemanticField from '../components/SemanticField'
 
 
 
 
 
 const dayOptions = [
-  {
-    key: 'all',
-    text: 'All',
-    value: 'all',
 
-  },
   {
     key: 'Monday',
     text: 'Monday',
@@ -72,7 +67,7 @@ function PhysicalForm(props) {
   return (
     <Formik
       initialValues={{
-        formType:props.formType,
+        formType: props.formType,
         day: '',
         startTime: '',
         paymentLink: '',
@@ -92,8 +87,8 @@ function PhysicalForm(props) {
         temporaryClosure: false
       }}
       validationSchema={Yup.object().shape({
-        day: Yup.string()
-          .required('Day is required'),
+        day: Yup.array()
+          .required('Day of week is required'),
         startTime: Yup.string()
           .required('Start time is required')
           .test("is-valid", "Start time needs to be in 24 hour format e.g. 13:30", function (value) {
@@ -113,6 +108,7 @@ function PhysicalForm(props) {
         alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
       }}>
       {({ errors, status, touched }) => (
+
         <Form>
           <div className="form-group">
             <label htmlFor="day">Day</label>
@@ -120,13 +116,17 @@ function PhysicalForm(props) {
               name="day"
               component={Dropdown}
               options={dayOptions}
+              multiple
               selection
               placeholder="Please select day of week"
-              value=""
               id={"day"}
+              value={[]}
+              className={'form-control' + (errors.day && touched.day ? ' is-invalid' : '')}
+
+
 
             />
-            
+
 
             <ErrorMessage name="day" component="div" className="invalid-feedback" />
           </div>
@@ -148,7 +148,7 @@ function PhysicalForm(props) {
           </div>
           <div className="form-group">
             <label htmlFor="paymentLink">Payment Link</label>
-            <Field placeholder="Paypal,Cashapp,Square... etc link"name="paymentLink" type="text" className={'form-control' + (errors.paymentLink && touched.paymentLink ? ' is-invalid' : '')} />
+            <Field placeholder="Paypal,Cashapp,Square... etc link" name="paymentLink" type="text" className={'form-control' + (errors.paymentLink && touched.paymentLink ? ' is-invalid' : '')} />
             <ErrorMessage name="paymentLink" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
@@ -173,70 +173,70 @@ function PhysicalForm(props) {
             <Field name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
             <ErrorMessage name="notes" component="div" className="invalid-feedback" />
           </div>
-          
+
           <div className="auto-grid" role="group" aria-labelledby="checkbox-group">
-          <div><span className="checkbox-title" htmlFor="wheelchair">Wheel Chair</span>
-            <SemanticField
-              name="wheelchair"
-              component={Checkbox}
+            <div><span className="checkbox-title" htmlFor="wheelchair">Wheel Chair</span>
+              <SemanticField
+                name="wheelchair"
+                component={Checkbox}
               />
-          </div>
-          <div>
-          <span className="checkbox-title" htmlFor="creche">Creche</span>
-            <SemanticField
-              name="creche"
-              component={Checkbox}
-              />
-
-          </div>
-          <div>
-          <span className="checkbox-title" htmlFor="signed">Signed</span>
-            <SemanticField
-              name="signed"
-              component={Checkbox}
+            </div>
+            <div>
+              <span className="checkbox-title" htmlFor="creche">Creche</span>
+              <SemanticField
+                name="creche"
+                component={Checkbox}
               />
 
-          </div>
-          <div>
-          <span className="checkbox-title" htmlFor="lgbt">LGBT</span>
-            <SemanticField
-              name="lgbt"
-              component={Checkbox}
+            </div>
+            <div>
+              <span className="checkbox-title" htmlFor="signed">Signed</span>
+              <SemanticField
+                name="signed"
+                component={Checkbox}
               />
 
-          </div>
-          <div>
-          <span className="checkbox-title" htmlFor="chits">Chits</span>
-            <SemanticField
-              name="chits"
-              component={Checkbox}
+            </div>
+            <div>
+              <span className="checkbox-title" htmlFor="lgbt">LGBT</span>
+              <SemanticField
+                name="lgbt"
+                component={Checkbox}
               />
 
-          </div>
-          <div>
-          <span className="checkbox-title" htmlFor="childFriendly">Child Friendly</span>
-            <SemanticField
-              name="childFriendly"
-              component={Checkbox}
+            </div>
+            <div>
+              <span className="checkbox-title" htmlFor="chits">Chits</span>
+              <SemanticField
+                name="chits"
+                component={Checkbox}
               />
 
-          </div>
-          <div>
-          <span className="checkbox-title" htmlFor="outdoors">Outdoors</span>
-            <SemanticField
-              name="outdoors"
-              component={Checkbox}
+            </div>
+            <div>
+              <span className="checkbox-title" htmlFor="childFriendly">Child Friendly</span>
+              <SemanticField
+                name="childFriendly"
+                component={Checkbox}
               />
 
-          </div>
-          <div>
-          <span className="checkbox-title" htmlFor="temporaryClosure">Temporary Closure</span>
-            <SemanticField
-              name="temporaryClosure"
-              component={Checkbox}
+            </div>
+            <div>
+              <span className="checkbox-title" htmlFor="outdoors">Outdoors</span>
+              <SemanticField
+                name="outdoors"
+                component={Checkbox}
               />
 
-          </div>
+            </div>
+            <div>
+              <span className="checkbox-title" htmlFor="temporaryClosure">Temporary Closure</span>
+              <SemanticField
+                name="temporaryClosure"
+                component={Checkbox}
+              />
+
+            </div>
           </div>
 
           <div className="form-group">
