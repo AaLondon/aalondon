@@ -5,8 +5,7 @@ import { Radio,Checkbox,Dropdown } from 'semantic-ui-react';
 const SemanticField = ({ component, ...fieldProps }) => {
   const { showErrorsInline, ...rest } = fieldProps;
 
-  
-
+ 
   return (
     <Field {...rest}>
       {({
@@ -23,7 +22,7 @@ const SemanticField = ({ component, ...fieldProps }) => {
                 checked:
                   component === Radio ? fieldProps.value === value : value,
               }
-            : (component === Dropdown)?{
+            : (component === Dropdown && fieldProps.multiple === true)?{
                 value: value || [],
                 error:false
               }:{
@@ -35,7 +34,7 @@ const SemanticField = ({ component, ...fieldProps }) => {
                 error:
                     
                   //showErrorsInline == false
-                  (component === Dropdown)
+                  (component === Dropdown & fieldProps.multiple === true)
                     ? true
                     : {
                         content: errors[field.name],

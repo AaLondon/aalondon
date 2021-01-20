@@ -6,16 +6,21 @@ import moment from 'moment';
 import  SemanticField  from '../components/SemanticField'
 
 
-
-
-
-const dayOptions = [
+const submitOptions = [
   {
-    key: 'all',
-    text: 'All',
-    value: 'all',
+    key: 'new',
+    text: 'New',
+    value: 'new',
 
   },
+  {
+    key: 'existing',
+    text: 'Existing',
+    value: 'existing',
+
+  }]
+
+const dayOptions = [
   {
     key: 'Monday',
     text: 'Monday',
@@ -82,8 +87,19 @@ function OnlineForm(props) {
         notes: '',
       }}
       validationSchema={Yup.object().shape({
-        day: Yup.string()
-          .required('Day is required'),
+        day: Yup.array()
+          .test("not-empty","You must select at least one day of the week", function(value){
+            if (value === undefined){
+              return false
+            }else if (value.length === 0)
+            {
+              return false
+            }
+            else {
+              return true
+            }
+            
+          }),
         startTime: Yup.string()
           .required('Start time is required')
           .test("is-valid", "Start time needs to be in 24 hour format e.g. 13:30", function (value) {
@@ -109,11 +125,28 @@ function OnlineForm(props) {
               name="day"
               component={Dropdown}
               options={dayOptions}
+              multiple
               selection
               placeholder="Please select day of week"
-              value=""
               id={"day"}
+              value={[]}
+              className={'form-control' + (errors.day && touched.day ? ' is-invalid' : '')}
+            />
+            
 
+            <ErrorMessage name="day" component="div" className="invalid-feedback" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="day">Day</label>
+            <SemanticField
+              name="submission"
+              component={Dropdown}
+              options={dayOptions}
+              selection
+              placeholder="Is this a new meeting or are you updating an existing one?"
+              id={"day"}
+              value={[]}
+              className={'form-control' + (errors.day && touched.day ? ' is-invalid' : '')}
             />
             
 

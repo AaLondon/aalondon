@@ -88,7 +88,18 @@ function PhysicalForm(props) {
       }}
       validationSchema={Yup.object().shape({
         day: Yup.array()
-          .required('Day of week is required'),
+          .test("not-empty","You must select at least one day of the week", function(value){
+            if (value === undefined){
+              return false
+            }else if (value.length === 0)
+            {
+              return false
+            }
+            else {
+              return true
+            }
+            
+          }),
         startTime: Yup.string()
           .required('Start time is required')
           .test("is-valid", "Start time needs to be in 24 hour format e.g. 13:30", function (value) {

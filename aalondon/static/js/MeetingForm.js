@@ -11,14 +11,14 @@ import HybridForm from "./components/HybridForm";
 const formTypes = [
     {
         key: 'online',
-        text: 'Online',
+        text: 'Online only',
         value: 'online',
 
     },
     {
-        key: 'physical',
-        text: 'Physical',
-        value: 'physical',
+        key: 'faceToFace',
+        text: 'Face to Face',
+        value: 'faceToFace',
 
     },
     {
