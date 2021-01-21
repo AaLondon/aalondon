@@ -6,7 +6,7 @@
 }
 
 .ui.selection.dropdown .menu {
-     max-height: none; 
+     max-height: 200px; 
 }
 
 .form-group > input {
