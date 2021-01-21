@@ -25,7 +25,7 @@ const intergroupOptions = [
   {
     key: 'City Of London',
     text: 'City Of London',
-    value: 'City Of London"',
+    value: 'City Of London',
   },
   {
     key: 'East London',
@@ -90,9 +90,9 @@ const intergroupOptions = [
     value: 'London North Kent',
   },
   {
-    key: 'London South East (East)"',
-    text: 'London South East (East)"',
-    value: 'London South East (East)"',
+    key: 'London South East (East)',
+    text: 'London South East (East)',
+    value: 'London South East (East)',
   },
   {
     key: 'London South East (West)',
