@@ -1,10 +1,11 @@
 import React from 'react';
 import { Field } from 'formik';
-import { Radio,Checkbox } from 'semantic-ui-react';
+import { Radio,Checkbox,Dropdown } from 'semantic-ui-react';
 
 const SemanticField = ({ component, ...fieldProps }) => {
   const { showErrorsInline, ...rest } = fieldProps;
 
+ 
   return (
     <Field {...rest}>
       {({
@@ -21,14 +22,19 @@ const SemanticField = ({ component, ...fieldProps }) => {
                 checked:
                   component === Radio ? fieldProps.value === value : value,
               }
-            : {
+            : (component === Dropdown && fieldProps.multiple === true)?{
+                value: value || [],
+                error:false
+              }:{
                 value: value || '',
               }),
 
           ...((submitCount >= 1 || touched[field.name]) && errors[field.name]
             ? {
                 error:
-                  showErrorsInline == false
+                    
+                  //showErrorsInline == false
+                  (component === Dropdown & fieldProps.multiple === true)
                     ? true
                     : {
                         content: errors[field.name],
@@ -45,3 +51,5 @@ const SemanticField = ({ component, ...fieldProps }) => {
 };
 
 export default SemanticField;
+
+
