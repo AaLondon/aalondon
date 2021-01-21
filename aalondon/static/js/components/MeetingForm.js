@@ -237,7 +237,7 @@ function MeetingForm(props) {
         paymentLink: '',
         address: '',
         postcode: '',
-        whatThreeWords: '',
+        '3wa': '',
         email: '',
         description: '',
         notes: '',
@@ -252,6 +252,9 @@ function MeetingForm(props) {
       }}
       validationSchema={validationSchema}
       onSubmit={fields => {
+
+        const n = document.getElementsByClassName("what3words-input").value;
+        console.log('what3words-input:', n)
 
 
         alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
@@ -279,7 +282,7 @@ function MeetingForm(props) {
             <ErrorMessage name="day" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
-            <label htmlFor="submission">Submission</label>
+            <label htmlFor="submission">Is this a new entry to AALondon, or an update to an existing entry?</label>
             <SemanticField
               name="submission"
               component={Dropdown}
@@ -340,11 +343,11 @@ function MeetingForm(props) {
           </div>
           {formType !== 'online' &&
           <div className="form-group">
-            <label htmlFor="whatThreeWords">What Three Words(<a target="_blank" href="https://what3words.com/">Click here</a>)</label>
+            <label htmlFor="3wa">What Three Words(<a target="_blank" href="https://what3words.com/">Click here</a>)</label>
             <what3words-autosuggest
-              id="autosuggest"
+              id="autosuggest" 
               placeholder="What three words tells us precisely where you are. Click above for info." />
-            <ErrorMessage name="whatThreeWords" component="div" className="invalid-feedback" />
+            <ErrorMessage name="3wa" component="div" className="invalid-feedback" />
           </div>}
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -364,7 +367,7 @@ function MeetingForm(props) {
 
           <div className="auto-grid" role="group" aria-labelledby="checkbox-group">
           {formType !== 'online' &&
-            <><div><span className="checkbox-title" htmlFor="wheelchair">Wheel Chair</span>
+            <><div><span className="checkbox-title" htmlFor="wheelchair">Wheelchair accessible</span>
               <SemanticField
                 name="wheelchair"
                 component={Checkbox}
@@ -379,7 +382,7 @@ function MeetingForm(props) {
 
             </div></>}
             <div>
-              <span className="checkbox-title" htmlFor="signed">Signed</span>
+              <span className="checkbox-title" htmlFor="signed">Sign Language interpreted</span>
               <SemanticField
                 name="signed"
                 component={Checkbox}
