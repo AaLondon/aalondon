@@ -3,9 +3,7 @@ import ReactDOM from "react-dom";
 import { Formik, Field, Form } from "formik";
 import "../css/meetingform.css";
 import { Dropdown, Input } from 'semantic-ui-react'
-import OnlineForm from './components/OnlineForm'
-import PhysicalForm from "./components/PhysicalForm";
-import HybridForm from "./components/HybridForm";
+import MeetingForm from "./components/MeetingForm";
 
 
 const formTypes = [
@@ -31,21 +29,12 @@ const formTypes = [
 
 
 
-function MeetingForm() {
+function MeetingFormSelector() {
     const [formType, setFormType] = React.useState('select')
     let activeForm =<></>
-    if (formType == 'online') {
-        activeForm = <OnlineForm  formType={formType}/>
-
-    }
-    else if (formType == 'physical') {
-        activeForm = <PhysicalForm formType={formType} />
-
-    }
-    else if (formType == 'hybrid') {
-        activeForm = <HybridForm formType={formType}/>
-
-    }
+  
+    activeForm = formType === 'select' ? <></> : <MeetingForm formType={formType}/> 
+    
     return (
         <>
             <label htmlFor="notes">Meeting Type(Hybrid,Online or Physical)</label>
@@ -67,4 +56,4 @@ function MeetingForm() {
 
 
 
-ReactDOM.render(<MeetingForm />, document.getElementById("root"));
+ReactDOM.render(<MeetingFormSelector />, document.getElementById("root"));
