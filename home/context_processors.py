@@ -6,9 +6,10 @@ from online.models import OnlinePage
 from wagtail.documents.models import Document
 from home.models import Reflections 
 env = environ.Env()
-GA_TRACKING_ID = env('GA_TRACKING_ID',default='None')
+GA_TRACKING_ID = env('GA_TRACKING_ID',default=None)
+GOOGLE_TAG_MANAGER_ID = env('GOOGLE_TAG_MANAGER_ID',default=None)
 WHAT_THREE_WORDS_API_KEY = env('WHAT_THREE_WORDS_API_KEY',default='None')
-print(f'WHAT_THREE_WORDS_API_KEY:{WHAT_THREE_WORDS_API_KEY}')
+
 from datetime import date
 
 def servicepages(request):
@@ -30,6 +31,7 @@ def servicepages(request):
        "pdf_url":  pdf_url,
        "reflection": reflection,
        "today": today,
-       "what_three_words_api_key":WHAT_THREE_WORDS_API_KEY
+       "what_three_words_api_key":WHAT_THREE_WORDS_API_KEY,
+       "google_tag_manager_id":GOOGLE_TAG_MANAGER_ID
 
     }
