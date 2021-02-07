@@ -1,7 +1,7 @@
 # Contributing to aalondon
 
 Thank you for taking an interest in aa-london. We welcome any contribution you can give.
-Please fork this repository and create any pull requests from aa-london in your repository
+Please fork this repository and create any pull requests from aa-london in your repository.
 
 # Site Architecture
 The site is run on [Python](Python.org) using [Django](https://www.djangoproject.com/) with [Wagtail](https://wagtail.io/) as its CMS. Our database is [Postgresql](https://www.postgresql.org/).
