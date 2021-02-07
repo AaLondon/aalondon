@@ -261,6 +261,8 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     def get_paypal(self, obj): return ""
     def get_last_contact(self, obj): return ""
     def get_postal_code(self, obj): 
+        if 'online' in obj.title.lower():
+            return ''
         return obj.postcode
 
     def get_city(self, obj):
