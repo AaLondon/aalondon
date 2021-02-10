@@ -11,7 +11,7 @@ module.exports = {
     meetingsearch: './aalondon/static/js/MeetingSearch.js',
     onlinemeetingsearch: './aalondon/static/js/OnlineMeetingSearch.js',
     meetingformselector:'./aalondon/static/js/MeetingFormSelector.js',
-
+    chatbot:'./aalondon/static/js/ChatBot.js'
 
 
   }
