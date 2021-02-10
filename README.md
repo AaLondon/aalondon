@@ -1,8 +1,17 @@
 # Contributing to aalondon
 
-The following are instructions on how to contribute to this project.
+Thank you for taking an interest in aa-london. We welcome any contribution you can give.
+Please fork this repository and create any pull requests from aa-london in your repository.
 
-# Prerequisites
+# Site Architecture
+The site is run on [Python](Python.org) using [Django](https://www.djangoproject.com/) with [Wagtail](https://wagtail.io/) as its CMS. Our database is [Postgresql](https://www.postgresql.org/).
+For our frontend we have a number of [React](https://reactjs.org/) components.
+If you are not familiar with these technologies then we highly recommend going through their respective tutorials
+before contributing.
+
+# Setup options
+You can get up and running using [Docker](https://www.docker.com/) or running your development environment locally.If you are running locally you will need to have Postgresql>=12 and Python>=3.8 installed.  
+
 
 ## Docker
 
@@ -49,11 +58,11 @@ postgres=# exit
 ```
 
 
-## Virtualenv
+## Linux/OSX
 
 You may choose to use Virtualenv instead of docker. The following are details
 on how to get set up with Python Virtualenv. You will need Python3 and Python3
-Virtualenv already installed.
+Virtualenv already installed and a locally running Postgresql>=12 running.
 
 
 ```bash
