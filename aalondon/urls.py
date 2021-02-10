@@ -40,6 +40,7 @@ urlpatterns = [
     path('online/zoom-meetings/', redirect_view,name='online-zoom-meetings-redirect'),
     url('^sitemap\.xml$', sitemap),
     path('addmeeting/', TemplateView.as_view(template_name='meetings/meeting_form.html'), name='meeting_form'),
+    path('chatbot/', TemplateView.as_view(template_name='chatbot/chatbot.html'), name='chatbot'),
 
     
     # For anything not caught by a more specific rule above, hand over to
