@@ -8,21 +8,21 @@ import MeetingForm from "./components/MeetingForm";
 
 const formTypes = [
     {
-        key: 'online',
+        key: 'ONL',
         text: 'Online only',
-        value: 'online',
+        value: 'ONLY',
 
     },
     {
-        key: 'faceToFace',
+        key: 'F2F',
         text: 'Face to Face',
-        value: 'faceToFace',
+        value: 'F2F',
 
     },
     {
-        key: 'hybrid',
+        key: 'HYB',
         text: 'Hybrid',
-        value: 'hybrid',
+        value: 'HYB',
 
     }]
 

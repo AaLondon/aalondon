@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^documents/', include(wagtaildocs_urls)),
 
     url(r'^search/$', search_views.search, name='search'),
+    path('api/meetingneuf/', include('meetings.api.urls')), 
     url(r'^api/', include(api_urls)),
     path('meetingsearch/', MeetingSearchView.as_view(), name='meeting_search'),
     path('onlinemeetingsearch/', OnlineMeetingSearchView.as_view(), name='online_meeting_search'),
