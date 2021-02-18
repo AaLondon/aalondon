@@ -139,32 +139,7 @@ def migrate_physical_meeting_data(apps, schema_editor):
         meeting.save()
 
 
-def migrate_online_meeting_data(apps, schema_editor):
-    Meeting = apps.get_model("meetings", "Meeting")
-    MeetingDay = apps.get_model("meetings", "MeetingDay")
-    OnlineMeeting = apps.get_model("online", "OnlineMeeting")
 
-    online_meetings = OnlineMeeting.objects.all()
-    for online_meeting in online_meetings:
-        
-        meeting=Meeting.objects.create(
-            title=online_meeting.title,
-            time=online_meeting.time,
-            type="ONL",
-            submission="Existing",
-            online_link=online_meeting.link,
-            description=online_meeting.description,
-            notes = online_meeting.additional_comments,
-            email = online_meeting.email or 'noemailgiven@aalondon.com',
-            code = -1,
-            hearing=online_meeting.hearing,
-            wheelchair=False)
-        print(online_meeting.title)
-        meeting_day = MeetingDay.objects.get(value=online_meeting.day)
-        print('A')
-        meeting.days.add(meeting_day)
-        print('B')
-        meeting.save()
 
 
 class Migration(migrations.Migration):
@@ -176,5 +151,5 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(create_meeting_references),
         migrations.RunPython(migrate_physical_meeting_data),
-        migrations.RunPython(migrate_online_meeting_data),
+       
     ]
