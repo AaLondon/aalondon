@@ -10,7 +10,7 @@ const formTypes = [
     {
         key: 'ONL',
         text: 'Online only',
-        value: 'ONLY',
+        value: 'ONL',
 
     },
     {

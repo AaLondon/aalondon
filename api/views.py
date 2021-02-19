@@ -118,7 +118,7 @@ class OnlineMeetingSearch(generics.ListAPIView):
     Return a list of all the products that the authenticated
     user has ever purchased, with optional filtering.
     """
-    model = OnlineMeeting
+    model = Meeting
     serializer_class = OnlineMeetingSerializer
     filter_backends = [DjangoFilterBackend,filters.OrderingFilter, filters.SearchFilter]
     filterset_fields = ['time_band',]
@@ -134,7 +134,7 @@ class OnlineMeetingSearch(generics.ListAPIView):
         tz = pytz.timezone('Europe/London') 
         dt_now = datetime.now(tz=tz) - timedelta(minutes=10)    
         day_name_today = dt_now.strftime("%A")
-        queryset = OnlineMeeting.objects.annotate(search=SearchVector('description','title'),)
+        queryset = Meeting.objects.annotate(search=SearchVector('description','title'),)
         queryset = queryset.filter(published=True)
 
         search = self.request.query_params.get('search', None)
@@ -144,7 +144,8 @@ class OnlineMeetingSearch(generics.ListAPIView):
 
         now = self.request.query_params.get('now',None)
         top = int(self.request.query_params.get('top',0))
-        if day=='now':
+        print(now)
+        if day=='now' or now=="1":
              
             
             date_today = dt_now.date()
@@ -154,8 +155,8 @@ class OnlineMeetingSearch(generics.ListAPIView):
             tomorrow = dt_now + timedelta(days=1) 
             day_name_tomorrow = tomorrow.strftime("%A")
             
-            meetings_today = OnlineMeeting.objects.filter(((Q(day=day_name_today) | Q(day='All'))   & Q(time__gte=dt_now.time())))#.order_by('time')
-            meetings_tomorrow = OnlineMeeting.objects.filter((Q(day=day_name_tomorrow) & Q(time__lte=dt_now.time())))#.order_by('time')
+            meetings_today = Meeting.objects.filter(type="ONL").filter(((Q(days__value=day_name_today))   & Q(time__gte=dt_now.time())))#.order_by('time')
+            meetings_tomorrow = Meeting.objects.filter(type="ONL").filter((Q(days__value=day_name_tomorrow) & Q(time__lte=dt_now.time())))#.order_by('time')
             
 
             all = meetings_today #| meetings_tomorrow

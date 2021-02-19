@@ -54,7 +54,7 @@ class MeetingSerializer(serializers.ModelSerializer):
 
     def get_day_number(self, obj):
 
-        return time.strptime(obj.day, '%A').tm_wday
+        return 0#time.strptime(obj.day, '%A').tm_wday
 
     def get_covid_open_status(self, obj):
 
@@ -81,9 +81,9 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
     day_number = serializers.SerializerMethodField()
 
     class Meta:
-        model = OnlineMeeting
-        fields = ['id', 'title', 'time', 'day', 'actual_datetime', 'link', 'description', 'slug',
-                  'friendly_time', 'zoom_password', 'platform', 'code', 'place', 'day_number']
+        model = Meeting
+        fields = ['id', 'title', 'time', 'day', 'actual_datetime', 'online_link', 'description', 'slug',
+                  'friendly_time', 'zoom_password', 'code', 'place', 'day_number']
 
     def get_actual_datetime(self, obj):
         now = datetime.now()
@@ -108,7 +108,7 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
 
     def get_zoom_password(self, obj):
 
-        link = obj.link
+        #link = obj.online_link
         description = obj.description or ''
 
         return 0
@@ -124,7 +124,7 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
     def get_day_number(self, obj):
         if obj.day == 'All':
             return -1
-        return time.strptime(obj.day, '%A').tm_wday
+        return -1#time.strptime(obj.day, '%A').tm_wday
 
 
 class MeetingGuideSerializer(serializers.ModelSerializer):

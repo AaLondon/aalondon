@@ -87,4 +87,24 @@ class Migration(migrations.Migration):
             name='sub_types',
             field=models.ManyToManyField(blank=True, to='meetings.MeetingSubType'),
         ),
+         migrations.AddField(
+            model_name='meeting',
+            name='published',
+            field=models.BooleanField(default=False),
+        ),
+         migrations.AlterField(
+            model_name='meeting',
+            name='code',
+            field=models.IntegerField(blank=True, default=-1, null=True),
+        ),
+         migrations.AlterField(
+            model_name='meeting',
+            name='hearing',
+            field=models.BooleanField(default=False, null=True),
+        ),
+        migrations.AlterField(
+            model_name='meeting',
+            name='wheelchair',
+            field=models.BooleanField(default=False, null=True),
+        ),
     ]

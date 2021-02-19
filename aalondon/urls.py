@@ -11,7 +11,7 @@ from api import urls as api_urls
 from search import views as search_views
 from meetings.views import MeetingSearchView,MeetingDetailView
 
-from online.views import OnlineMeetingDetailView,redirect_view,OnlineMeetingCreateView,OnlineMeetingThanksView,OnlineMeetingSearchView
+from online.views import OnlineMeetingDetailView,redirect_view,OnlineMeetingThanksView,OnlineMeetingSearchView
 from wagtail.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
 
@@ -35,12 +35,11 @@ urlpatterns = [
     path('onlinemeetingsearch/', OnlineMeetingSearchView.as_view(), name='online_meeting_search'),
     path('meetings/<slug:slug>/', MeetingDetailView.as_view(), name='meeting-detail'),
     path('onlinemeetings/thanks/', OnlineMeetingThanksView.as_view(), name='online-meeting-thanks'),
-    path('onlinemeetings/create/', OnlineMeetingCreateView.as_view(), name='online-meeting-create'),
     path('onlinemeetings/<slug:slug>/', OnlineMeetingDetailView.as_view(), name='online-meeting-detail'),
     
     path('online/zoom-meetings/', redirect_view,name='online-zoom-meetings-redirect'),
     url('^sitemap\.xml$', sitemap),
-    path('addmeeting/', TemplateView.as_view(template_name='meetings/meeting_form.html'), name='meeting_form'),
+    path('update/', TemplateView.as_view(template_name='meetings/meeting_form.html'), name='meeting_form'),
     path('chatbot/', TemplateView.as_view(template_name='chatbot/chatbot.html'), name='chatbot'),
 
     

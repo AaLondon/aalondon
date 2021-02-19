@@ -23,7 +23,8 @@ def migrate_online_meeting_data(apps, schema_editor):
             code = -1,
             hearing=online_meeting.hearing,
             wheelchair=False,
-            types="")
+            types="",
+            published=online_meeting.published)
      
         
         if online_meeting.day == "All":

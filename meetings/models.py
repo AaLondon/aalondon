@@ -25,39 +25,6 @@ class MeetingSubType(models.Model):
     def __str__(self):
         return f'{self.code} - {self.value}'
 
-""" class MeetingNeuf(models.Model):
-    MEETING_TYPES = [
-    ('F2F', 'Face To Face'),
-    ('ONL', 'Online'),
-    ('HYB', 'Hybrid'),    
-    ]
-    type = models.CharField(
-        max_length=3,
-        choices=MEETING_TYPES,
-        null=False,
-        blank=False
-        
-    )
-    title = models.CharField(max_length=400,null=False,blank=False)
-    submission = models.CharField(max_length=10,null=False,blank=False)
-    day = models.ManyToManyField(to=MeetingDay,related_name='meeting_days')
-    intergroup = models.ForeignKey(to=MeetingIntergroup,related_name='meeting_intergroup',null=True,blank=True,on_delete=models.CASCADE)
-    time = models.TimeField(null=False,blank=False)
-    online_link = models.URLField(null=True,blank=True)
-    online_password = models.CharField(max_length=50,null=True,blank=True)
-    address = models.TextField(null=True,blank=True)
-    postcode = models.CharField(max_length=10,null=True,blank=True)
-    payment_details = models.TextField(null=True,blank=True)
-    what_three_words = models.CharField(max_length=100,null=True,blank=True)
-    email = models.EmailField(null=False,blank=False)
-    description = models.TextField(null=True,blank=True)
-    notes = models.TextField(null=True,blank=True)
-    sub_types = models.ManyToManyField(to=MeetingSubType,blank=True)
-
-
-    def __str__(self):
-        return self.title
- """
 
 class Meeting(models.Model):
     MEETING_TYPES = [
@@ -74,7 +41,7 @@ class Meeting(models.Model):
     )
     submission = models.CharField(max_length=10,null=False,blank=False,default='existing')
     address = models.TextField(blank=True,max_length=300)
-    code = models.IntegerField(blank=True,)
+    code = models.IntegerField(blank=True,null=True,default=-1)
     day = models.TextField(max_length=10)
     days = models.ManyToManyField(to=MeetingDay,related_name='meeting_days')
     intergroup = models.ForeignKey(to=MeetingIntergroup,related_name='meeting_intergroup',null=True,blank=True,on_delete=models.CASCADE)
@@ -84,14 +51,14 @@ class Meeting(models.Model):
     payment_details = models.TextField(null=True,blank=True)
     what_three_words = models.CharField(max_length=100,null=True,blank=True)
     email = models.EmailField(null=False,blank=False,default='doesnotexist@aalondon.com')
-    hearing = models.BooleanField()
+    hearing = models.BooleanField(null=True,default=False)
     lat = models.FloatField(blank=True,null=True)
     lng = models.FloatField(blank=True,null=True)
     postcode = models.TextField(max_length=10)
     time = models.TimeField()
     duration = models.TextField(blank=True,max_length=20)
     title = models.TextField()
-    wheelchair = models.BooleanField()
+    wheelchair = models.BooleanField(null=True,default=False)
     day_number = models.IntegerField(blank=True,null=True)
     slug = AutoSlugField(populate_from=['title','postcode','time'], max_length=100)
     day_rank = models.IntegerField(blank=True,null=True)
@@ -109,6 +76,7 @@ class Meeting(models.Model):
     description = models.TextField(null=True,blank=True)
     notes = models.TextField(null=True,blank=True)
     sub_types = models.ManyToManyField(to=MeetingSubType,blank=True)
+    published = models.BooleanField(null=False,blank=False,default=False)
 
     def __str__(self):
 
@@ -116,7 +84,7 @@ class Meeting(models.Model):
     
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(f'{self.title} {self.time} {self.days.first()} {self.days.last()}')
+        self.slug = slugify(f'{self.title} {self.time} {self.type} {self.id}')
      
         meeting_time = self.time
         

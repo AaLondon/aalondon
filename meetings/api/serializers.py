@@ -4,7 +4,7 @@ from rest_framework.serializers import (
     ListSerializer,
     StringRelatedField,
 )
-from meetings.models import MeetingIntergroup, Meeting, MeetingDay
+from meetings.models import MeetingIntergroup, Meeting, MeetingDay,MeetingSubType
 
 
 class MeetingDaySerializer(serializers.ModelSerializer):
@@ -12,9 +12,15 @@ class MeetingDaySerializer(serializers.ModelSerializer):
         model = MeetingDay
         fields = ["value"]
 
+class MeetingSubTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MeetingSubType
+        fields = ["value"]
+
 
 class MeetingNeufSerializer(serializers.ModelSerializer):
     day = MeetingDaySerializer(many=True)
+    sub_types = MeetingSubTypeSerializer(many=True)
 
     class Meta:
         model = Meeting
@@ -33,13 +39,18 @@ class MeetingNeufSerializer(serializers.ModelSerializer):
             "email",
             "description",
             "notes",
+            "sub_types"
         ]
 
     def create(self, validated_data):
         days = validated_data.pop("day")
-        meeting = MeetingNeuf.objects.create(**validated_data)
+        sub_types = validated_data.pop("sub_types")
+        meeting = Meeting.objects.create(**validated_data)
         meeting.save()
         for day in days:
-            meeting_day, _ = MeetingDay.objects.get_or_create(value=day["value"])
-            meeting.day.add(meeting_day)
+            meeting_day, _ = MeetingDay.objects.get(value=day["value"])
+            meeting.days.add(meeting_day)
+        for sub_type in sub_types:
+            meeting_sub_type,_ = MeetingSubType.objects.get(value=sub_type["value"])
+            meeting.sub_types.add(meeting_sub_type)
         return meeting
