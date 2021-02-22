@@ -2,7 +2,7 @@ from django.shortcuts import render
 from meetings.models import Meeting
 from online.models import OnlineMeeting
 from rest_framework import viewsets, generics,views
-from api.serializers import MeetingSerializer,OnlineMeetingSerializer, MeetingGuideSerializer
+from api.serializers import MeetingSearchSerializer,OnlineMeetingSerializer, MeetingGuideSerializer
 from datetime import datetime,timedelta
 from django.db.models import Q
 from django.db.models import IntegerField, Value
@@ -20,7 +20,7 @@ from django.contrib.postgres.search import SearchVector
 
 class MeetingViewSet(viewsets.ModelViewSet):
     queryset = Meeting.objects.all().order_by('time')
-    serializer_class = MeetingSerializer
+    serializer_class = MeetingSearchSerializer
 
 
 
@@ -31,7 +31,7 @@ class MeetingsList(generics.ListAPIView):
     user has ever purchased, with optional filtering.
     """
     model = Meeting
-    serializer_class = MeetingSerializer
+    serializer_class = MeetingSearchSerializer
     
     
     
@@ -69,7 +69,7 @@ class MeetingsList(generics.ListAPIView):
 class MeetingSearch(generics.ListAPIView):
    
     model = Meeting
-    serializer_class = MeetingSerializer
+    serializer_class = MeetingSearchSerializer
     filter_backends = [DjangoFilterBackend ,OrderingFilter]
     filterset_fields = ['time_band','hearing','wheelchair','covid_open_status']
     ordering_fields = ['day_number','time']
@@ -85,28 +85,14 @@ class MeetingSearch(generics.ListAPIView):
             queryset = queryset.filter(search=search)
 
         day = self.request.query_params.get('day',None)
-        if day == 'now':
-            
-            now = datetime.now() 
-            date_today = now.date()
-            time_now = now.time()
-            datetime_now = datetime.combine(date_today,time_now)
-            day_name_today = now.strftime("%A")
-            tomorrow = now + timedelta(days=1) 
-            day_name_tomorrow = tomorrow.strftime("%A")
-            
-            meetings_today = Meeting.objects.filter((Q(day=day_name_today) & Q(time__gte=now.time())))
-            meetings_tomorrow = Meeting.objects.filter((Q(day=day_name_tomorrow) & Q(time__lte=now.time())))
-            
-
-            all = meetings_today 
-            if day_name_today == 'sunday':
-                all_ordered = all.order_by('-day_number','time')
-            else:
-                all_ordered = all.order_by('day_number','time')
-            queryset = queryset.filter((Q(day=day_name_today) & Q(time__gte=now.time())))
-        elif day in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']:
-            queryset = queryset.filter(day=day)
+        if day:
+            if day == 'now':
+                now = datetime.now() 
+                time_now = now.time()
+                day_name_today = now.strftime("%A")
+                queryset = queryset.filter(((Q(days__value=day_name_today))   & Q(time__gte=time_now)))#.order_by('time')
+            else: 
+                queryset = queryset.filter(days__value=day)
     
         return queryset.order_by('day_number','time')
     
@@ -150,13 +136,10 @@ class OnlineMeetingSearch(generics.ListAPIView):
             
             date_today = dt_now.date()
             time_now = dt_now.time()
-            datetime_now = datetime.combine(date_today,time_now)
             
             tomorrow = dt_now + timedelta(days=1) 
-            day_name_tomorrow = tomorrow.strftime("%A")
             
             meetings_today = Meeting.objects.filter(type="ONL").filter(((Q(days__value=day_name_today))   & Q(time__gte=dt_now.time())))#.order_by('time')
-            meetings_tomorrow = Meeting.objects.filter(type="ONL").filter((Q(days__value=day_name_tomorrow) & Q(time__lte=dt_now.time())))#.order_by('time')
             
 
             all = meetings_today #| meetings_tomorrow
@@ -169,7 +152,7 @@ class OnlineMeetingSearch(generics.ListAPIView):
                 all_ordered = all_ordered[:top]
             return all_ordered#.annotate(the_rank=rank_by_day)
         elif day in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']:
-            queryset = queryset.filter(Q(day=day) | Q(day='All') )
+            queryset = queryset.filter(Q(days__value=day))
             
         
         

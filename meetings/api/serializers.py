@@ -1,16 +1,14 @@
 from rest_framework import serializers
-from rest_framework.serializers import (
-    ModelSerializer,
-    ListSerializer,
-    StringRelatedField,
-)
 from meetings.models import MeetingIntergroup, Meeting, MeetingDay,MeetingSubType
+import what3words
+from django.conf import settings
 
+WHAT_THREE_WORDS_API_KEY = settings.WHAT_THREE_WORDS_API_KEY
 
 class MeetingDaySerializer(serializers.ModelSerializer):
     class Meta:
         model = MeetingDay
-        fields = ["value"]
+        fields = ["id","value"]
 
 class MeetingSubTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,7 +17,7 @@ class MeetingSubTypeSerializer(serializers.ModelSerializer):
 
 
 class MeetingNeufSerializer(serializers.ModelSerializer):
-    day = MeetingDaySerializer(many=True)
+    days = MeetingDaySerializer(many=True)
     sub_types = MeetingSubTypeSerializer(many=True)
 
     class Meta:
@@ -28,7 +26,7 @@ class MeetingNeufSerializer(serializers.ModelSerializer):
             "type",
             "title",
             "intergroup",
-            "day",
+            "days",
             "time",
             "online_link",
             "online_password",
@@ -43,14 +41,24 @@ class MeetingNeufSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        days = validated_data.pop("day")
+        days = validated_data.pop("days")
         sub_types = validated_data.pop("sub_types")
+        what_three_words=validated_data['what_three_words']
         meeting = Meeting.objects.create(**validated_data)
+        meeting.covid_open_status = True
+        geocoder = what3words.Geocoder(WHAT_THREE_WORDS_API_KEY)
+        res = geocoder.convert_to_coordinates(what_three_words)
+        if 'coordinates' in res:
+            meeting.lat = res['coordinates']['lat']
+            meeting.lng = res['coordinates']['lng']
         meeting.save()
         for day in days:
-            meeting_day, _ = MeetingDay.objects.get(value=day["value"])
+            meeting_day = MeetingDay.objects.get(value=day["value"])
             meeting.days.add(meeting_day)
         for sub_type in sub_types:
-            meeting_sub_type,_ = MeetingSubType.objects.get(value=sub_type["value"])
+            if sub_type == 'Location Temporarily Closed':
+                meeting.covid_open_status = False
+                meeting.save()
+            meeting_sub_type = MeetingSubType.objects.get(value=sub_type["value"])
             meeting.sub_types.add(meeting_sub_type)
         return meeting

@@ -41,8 +41,7 @@ INSTALLED_APPS = [
     'postcodes',
     'service',
     'online',
-
-
+    'wagtail.contrib.search_promotions',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -199,9 +198,12 @@ WEBPACK_LOADER = {
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 1000,
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    
 }
 
 
 
 WHAT_THREE_WORDS_API_KEY = env('WHAT_THREE_WORDS_API_KEY',default="")
+
+

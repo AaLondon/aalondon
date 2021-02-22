@@ -9,8 +9,9 @@
       </div>
     </div>
     <div class="meeting-address-time meeting-detail-text">
-      <div>{{object.day|upper}}</div>
+      {% for day in object.days.all %}{{ day|upper }}<br/>{% endfor %}
       <div>{{object.time}}</div>
+    
     </div>
     <div class="meeting-type">
       <div class="meeting-detail-text">TYPE</div>
@@ -26,8 +27,12 @@
     </div>
     <div class="meeting-details">
       <div class="meeting-detail-text">DETAILS</div>
-      <div>{{object.detail}}</div>
+      <div>{{object.description}}</div>
+      <div class="meeting-detail-text">CATEGORIES</div>
+      <div>{% for sub_type in object.sub_types.all %}{{ sub_type.value }}<br/>{% endfor %}</div>
     </div>
+    
+    
     <div class="meeting-map">
       <div class="meeting-detail-text">OUR LOCATION</div>
       <div id="map"></div>

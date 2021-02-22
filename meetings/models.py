@@ -42,7 +42,6 @@ class Meeting(models.Model):
     submission = models.CharField(max_length=10,null=False,blank=False,default='existing')
     address = models.TextField(blank=True,max_length=300)
     code = models.IntegerField(blank=True,null=True,default=-1)
-    day = models.TextField(max_length=10)
     days = models.ManyToManyField(to=MeetingDay,related_name='meeting_days')
     intergroup = models.ForeignKey(to=MeetingIntergroup,related_name='meeting_intergroup',null=True,blank=True,on_delete=models.CASCADE)
     time = models.TimeField(null=False,blank=False)
@@ -54,7 +53,7 @@ class Meeting(models.Model):
     hearing = models.BooleanField(null=True,default=False)
     lat = models.FloatField(blank=True,null=True)
     lng = models.FloatField(blank=True,null=True)
-    postcode = models.TextField(max_length=10)
+    postcode = models.TextField(max_length=10,null=True,blank=True)
     time = models.TimeField()
     duration = models.TextField(blank=True,max_length=20)
     title = models.TextField()
@@ -81,6 +80,9 @@ class Meeting(models.Model):
     def __str__(self):
 
         return self.title
+
+    def meeting_days(self):
+        return ",".join([str(p) for p in self.days.all()])
     
     
     def save(self, *args, **kwargs):

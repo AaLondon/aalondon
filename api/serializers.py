@@ -1,4 +1,5 @@
 from meetings.models import Meeting
+from meetings.api.serializers import  MeetingDaySerializer
 from online.models import OnlineMeeting
 from rest_framework.reverse import reverse
 from rest_framework import serializers
@@ -7,7 +8,7 @@ import time
 from geopy.distance import geodesic
 
 
-class MeetingSerializer(serializers.ModelSerializer):
+class MeetingSearchSerializer(serializers.ModelSerializer):
     actual_datetime = serializers.SerializerMethodField()
     friendly_time = serializers.SerializerMethodField()
     postcode_prefix = serializers.SerializerMethodField()
@@ -16,10 +17,11 @@ class MeetingSerializer(serializers.ModelSerializer):
     covid_open_status = serializers.SerializerMethodField()
     code = serializers.SerializerMethodField()
     place = serializers.SerializerMethodField()
-
+    days =  MeetingDaySerializer(many=True)
+   
     class Meta:
         model = Meeting
-        fields = ['code', 'title', 'time', 'address', 'day', 'actual_datetime', 'postcode', 'slug', 'lat', 'lng',
+        fields = ['code', 'title', 'time', 'address','days', 'actual_datetime', 'postcode', 'slug', 'lat', 'lng',
                   'day_rank', 'friendly_time', 'postcode_prefix', 'day_number', 'intergroup', 'distance_from_client', 'time_band', 'covid_open_status', 'place', ]
 
     def get_actual_datetime(self, obj):
@@ -31,9 +33,9 @@ class MeetingSerializer(serializers.ModelSerializer):
         date_tomorrow = now + timedelta(days=1)
         day_name_tomorrow = date_tomorrow.strftime("%A")
 
-        if obj.day == day_name_today:
+        if obj.days == day_name_today:
             actual_datetime = datetime.combine(date_today, obj.time)
-        elif obj.day == day_name_tomorrow:
+        elif obj.days == day_name_tomorrow:
             actual_datetime = datetime.combine(date_tomorrow, obj.time)
         else:
             actual_datetime = None
@@ -44,7 +46,9 @@ class MeetingSerializer(serializers.ModelSerializer):
         return f'{time}'
 
     def get_postcode_prefix(self, obj):
-        return obj.postcode.split(' ')[0]
+        if obj.postcode:
+            return obj.postcode.split(' ')[0]
+        return ''
 
     def get_distance_from_client(self, obj):
         qp = self.context['request'].query_params
@@ -69,7 +73,9 @@ class MeetingSerializer(serializers.ModelSerializer):
 
     def get_place(self, obj):
 
-        return obj.postcode.split(' ')[0]
+        if obj.postcode:
+            return obj.postcode.split(' ')[0]
+        return ''
 
 
 class OnlineMeetingSerializer(serializers.ModelSerializer):
@@ -82,7 +88,7 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Meeting
-        fields = ['id', 'title', 'time', 'day', 'actual_datetime', 'online_link', 'description', 'slug',
+        fields = ['id', 'title', 'time', 'days', 'actual_datetime', 'online_link', 'description', 'slug',
                   'friendly_time', 'zoom_password', 'code', 'place', 'day_number']
 
     def get_actual_datetime(self, obj):
@@ -94,9 +100,9 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
         date_tomorrow = now + timedelta(days=1)
         day_name_tomorrow = date_tomorrow.strftime("%A")
 
-        if obj.day == day_name_today:
+        if obj.days == day_name_today:
             actual_datetime = datetime.combine(date_today, obj.time)
-        elif obj.day == day_name_tomorrow:
+        elif obj.days == day_name_tomorrow:
             actual_datetime = datetime.combine(date_tomorrow, obj.time)
         else:
             actual_datetime = None
@@ -122,8 +128,8 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
         return 'zoom'
 
     def get_day_number(self, obj):
-        if obj.day == 'All':
-            return -1
+       # if obj.day == 'All':
+        #    return -1
         return -1#time.strptime(obj.day, '%A').tm_wday
 
 
@@ -210,8 +216,8 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
         days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
                 'Thursday', 'Friday', 'Saturday', ]
 
-        day_number = days.index(obj.day)
-        return day_number
+        #day_number = days.index(obj.days)
+        return -1#day_number
     
     def get_time(self, obj):
         time = obj.time.strftime('%H:%M')
