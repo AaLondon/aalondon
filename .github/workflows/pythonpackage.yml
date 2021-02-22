@@ -44,6 +44,8 @@ jobs:
   
     - name: Run migrations
       run: python manage.py migrate
+    - name: Npm build
+      run: npm run build
     - name: Collect static files
       run: python manage.py collectstatic --no-input
     - name: Test with pytest
