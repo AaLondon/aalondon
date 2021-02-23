@@ -25,7 +25,6 @@
   shell: ". {{ app_dir }}/.env; {{ venv_python }} {{ app_dir }}/manage.py collectstatic --noinput "
   become: yes
 
-- name: Django crawl
-  shell: ". {{ app_dir }}/.env;cd  {{ app_dir }} ;{{ venv_python }} {{ app_dir }}/manage.py crawl "
+
   
   
