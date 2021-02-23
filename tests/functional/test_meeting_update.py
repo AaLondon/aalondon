@@ -40,12 +40,12 @@ class TestUpdateMeetingPage(LiveServerTestCase):
         dropdown.send_keys(Keys.RETURN)
         dropdown.send_keys(Keys.TAB)
         
-        
+        assert 1==1
  """
         
 
         
-        assert 1==1
+        
 
     
      
