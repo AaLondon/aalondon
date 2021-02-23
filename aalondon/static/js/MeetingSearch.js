@@ -47,7 +47,14 @@ class MeetingSearch extends Component {
 
     let timeBandSend = timeBand === 'all' ? '' : timeBand
     let daySend = day === 'all' ? '' : day
-    
+    let dateObj = new Date()
+    let nowDay
+    if (daySend === 'now'){
+   
+      nowDay = dateObj.toLocaleString("default", { weekday: "long" })
+      
+    }
+    console.log(nowDay)
     let queryString = `/api/meetingsearch/?search=${search}&day=${daySend}&time_band=${timeBandSend}&type=${meetingType}`;
     if (access === 'wheelchair') {
       queryString += '&wheelchair=1'
@@ -78,10 +85,14 @@ class MeetingSearch extends Component {
       let currentMeetings = []
       for (let meeting of responses[0].data.results) {
         for (let day of meeting.days) {
-          console.log('daySend')
-          console.log(daySend)
-          console.log('daySend')
-          if (daySend === day.value || daySend === 'now'||daySend === '') {
+          
+          
+         console.log(daySend)
+         console.log(nowDay)
+         console.log(day.value)
+         
+
+          if (daySend === day.value || nowDay === day.value||daySend === '') {
             let newMeeting = { ...meeting }
             newMeeting.day = day.value
             newMeeting.day_rank = day.id
@@ -91,7 +102,9 @@ class MeetingSearch extends Component {
 
         }
       }
-
+      console.log('currentMeetings')
+      console.log(currentMeetings)
+      console.log('currentMeetings')
 
       currentMeetings = _.sortBy(currentMeetings, ['day_rank', 'time', 'title']);
       const totalMeetings = currentMeetings.length;

@@ -53,8 +53,10 @@ export default class MeetingDataTable extends Component {
       }else if(type === 'F2F')
       {
         img = <><img src={physicalImg}></img></>
+        meetingUrlPath = '/meetings/'
       }else{
         img = <><img src={zoomImg}></img>+<img src={physicalImg}></img></>
+        meetingUrlPath = '/meetings/'
       }
         
 
