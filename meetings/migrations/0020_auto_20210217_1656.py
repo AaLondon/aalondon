@@ -143,8 +143,12 @@ def migrate_physical_meeting_data(apps, schema_editor):
         meeting.days.add(meeting_day)
         meeting.description = meeting.detail
         meeting.published = True
-        if 'physical' in meeting.title.lower() and 'physical' in meeting.title.lower():
+        if 'physical' in meeting.title.lower() and 'online' in meeting.title.lower():
             meeting.type="HYB"   
+
+        if 'hybrid' in meeting.title.lower():
+            meeting.type="HYB"   
+    
         
         meeting.slug = slugify(f'{meeting.title} {meeting.time} {meeting.type} {meeting.id}')
         
