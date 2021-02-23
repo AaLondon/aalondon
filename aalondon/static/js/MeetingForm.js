@@ -23,28 +23,12 @@ function MeetingForm(props) {
   console.log('sasas')
   async function _submitForm(fields, actions) {
  
- 
-    console.log('lezza')
-    console.log(fields)
-    console.log('lezza')
-    
         const w3w = threeWords;
-        console.log('what3words-input:', w3w)
-        console.log(fields)
-
-
-
         let csrftoken = getCookie('csrftoken');
-        console.log('csrftoken')
-        console.log(csrftoken)
-        console.log('csrftoken')
-
-
-          let days = fields.days.map((day,index)=>{
+        let days = fields.days.map((day,index)=>{
             return {value:day}
           })
 
-          console.log('a')
           let subTypes=[]
           if (fields.wheelchair) subTypes.push({value:"Wheelchair Access"})
           if (fields.signed) subTypes.push({value:"British Sign Language"})
@@ -86,12 +70,6 @@ function MeetingForm(props) {
             .catch(error => {
               console.log(error.response);
             });
-        
-          
-
-
-        
-    
   }
 
   function _renderStepContent(step,errors,touched) {
@@ -105,8 +83,6 @@ function MeetingForm(props) {
         return <div>Not Found</div>;
     }
   }
-  
-  
   
   let validationAllShape = {
 
@@ -132,9 +108,6 @@ function MeetingForm(props) {
       .test("is-valid", "Start time needs to be in 24 hour format e.g. 13:30", function (value) {
         return moment(value, "HH:mm", true).isValid();
       }),
-
-
-
     email: Yup.string()
       .email('Email is invalid')
       .required('Email is required'),
@@ -172,20 +145,20 @@ function MeetingForm(props) {
     <Formik
       initialValues={{
         formType: '',
-        title:'Canary Wharf Sunday 5PM',
+        title:'',
         days: '',
-        submission: 'new',
-        intergroup: 'East London',
-        startTime: '10:30',
-        link: 'http://127.0.0.1:8000/addmeeting/',
-        password: 'asasa',
-        paymentLink: 'http://127.0.0.1:8000/addmeeting/',
-        address: '7 PORTMAN RD',
-        postcode: 'KT1 3DY',
-        '3wa': 'sss.sss.sss',
-        email: 'wedgemail@gmail.com',
-        description: 'asasa',
-        notes: 'ASAS',
+        submission: '',
+        intergroup: '',
+        startTime: '',
+        link: '',
+        password: '',
+        paymentLink: '',
+        address: '',
+        postcode: '',
+        '3wa': '',
+        email: '',
+        description: '',
+        notes: '',
         wheelchair: true,
         signed: false,
         lgbt: false,
