@@ -71,7 +71,7 @@ class MeetingSearch(generics.ListAPIView):
     model = Meeting
     serializer_class = MeetingSearchSerializer
     filter_backends = [DjangoFilterBackend ,OrderingFilter]
-    filterset_fields = ['time_band','hearing','wheelchair','covid_open_status']
+    filterset_fields = ['time_band','hearing','wheelchair','covid_open_status','type']
     ordering_fields = ['day_number','time']
    
         
@@ -93,7 +93,7 @@ class MeetingSearch(generics.ListAPIView):
                 queryset = queryset.filter(((Q(days__value=day_name_today))   & Q(time__gte=time_now)))#.order_by('time')
             else: 
                 queryset = queryset.filter(days__value=day)
-    
+        
         return queryset.order_by('day_number','time')
     
 

@@ -22,7 +22,7 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Meeting
         fields = ['code', 'title', 'time', 'address','days', 'actual_datetime', 'postcode', 'slug', 'lat', 'lng',
-                  'day_rank', 'friendly_time', 'postcode_prefix', 'day_number', 'intergroup', 'distance_from_client', 'time_band', 'covid_open_status', 'place', ]
+                  'day_rank', 'friendly_time', 'postcode_prefix', 'day_number', 'intergroup', 'distance_from_client', 'time_band', 'covid_open_status', 'place','type' ]
 
     def get_actual_datetime(self, obj):
         now = datetime.now()

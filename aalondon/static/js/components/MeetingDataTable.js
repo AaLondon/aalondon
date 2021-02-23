@@ -42,26 +42,21 @@ export default class MeetingDataTable extends Component {
     const { column, data, direction } = this.state
     let thirdColumnHeader = "Distance(miles)";
     let showPostcode = this.props.showPostcode;
-    console.log(data)
-
-    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, link, slug, postcode_prefix, day, covid_open_status, place }) => {
+    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, link, slug, postcode_prefix, day, covid_open_status, place,type }) => {
       let placeText = '';
       let zoomImg = '/static/images/zoom.png';
       let physicalImg = '/static/images/building-location-pin.png'
       let meetingUrlPath = '/onlinemeetings/'
       let img = <img src={zoomImg}></img>
-      if (place !== 'zoom') {
-        placeText = place;
-        meetingUrlPath = '/meetings/'
-
-        if (title.includes('Physical & Online')) {
-          title = title.replace('Physical & Online', '')
-          console.log(title)
-          img = <><img src={zoomImg}></img>+<img src={physicalImg}></img></>
-        } else {
-          img = <img src={physicalImg}></img>
-        }
+      if (type === 'ONL') {
+        img = <><img src={zoomImg}></img></>
+      }else if(type === 'F2F')
+      {
+        img = <><img src={physicalImg}></img></>
+      }else{
+        img = <><img src={zoomImg}></img>+<img src={physicalImg}></img></>
       }
+        
 
 
 

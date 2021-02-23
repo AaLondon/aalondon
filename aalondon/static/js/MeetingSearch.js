@@ -47,8 +47,8 @@ class MeetingSearch extends Component {
 
     let timeBandSend = timeBand === 'all' ? '' : timeBand
     let daySend = day === 'all' ? '' : day
-
-    let queryString = `/api/meetingsearch/?search=${search}&day=${daySend}&time_band=${timeBandSend}`;
+    
+    let queryString = `/api/meetingsearch/?search=${search}&day=${daySend}&time_band=${timeBandSend}&type=${meetingType}`;
     if (access === 'wheelchair') {
       queryString += '&wheelchair=1'
 
@@ -114,7 +114,7 @@ class MeetingSearch extends Component {
 
   componentDidMount() {
 
-    this.getResults(this.state.day, this.state.search, this.state.timeBand, this.state.access, 0, this.state.covid);
+    this.getResults(this.state.day, this.state.search, this.state.timeBand, this.state.access, 0, this.state.covid,this.state.meetingType);
   }
 
   getQueryString() {
@@ -274,7 +274,7 @@ class MeetingSearch extends Component {
 
   onClearFilters = () => {
     this.setState({ showSpinner: 1, day: 'all', search: '', timeBand: 'all', access: '', coivid: 'all' })
-    this.getResults('all', '', 'all', '', 0, 'all');
+    this.getResults('all', '', 'all', '', 0, 'all','');
   }
 
   onMeetingTypeChange = data => {
