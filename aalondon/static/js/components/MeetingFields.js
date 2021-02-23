@@ -229,7 +229,7 @@ export default function MeetingFields(props) {
       <>
       <div className="form-group">
         <label htmlFor="title">Title</label>
-        <Field placeholder="Pleas supply your meeting name" name="title" type="text" className={'form-control' + (errors.title && touched.title ? ' is-invalid' : '')} />
+        <Field placeholder="Please supply your meeting name" name="title" type="text" className={'form-control' + (errors.title && touched.title ? ' is-invalid' : '')} />
         <ErrorMessage name="title" component="div" className="invalid-feedback" />
       </div>
       <div className="form-group">

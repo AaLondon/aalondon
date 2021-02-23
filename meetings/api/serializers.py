@@ -16,7 +16,7 @@ class MeetingSubTypeSerializer(serializers.ModelSerializer):
         fields = ["value"]
 
 
-class MeetingNeufSerializer(serializers.ModelSerializer):
+class MeetingSerializer(serializers.ModelSerializer):
     days = MeetingDaySerializer(many=True)
     sub_types = MeetingSubTypeSerializer(many=True)
 

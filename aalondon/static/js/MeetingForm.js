@@ -39,7 +39,7 @@ function MeetingForm(props) {
           if (fields.creche) subTypes.push({value:"Creche"})
           if (fields.temporaryClosure) subTypes.push({value:"Location Temporarily Closed"})
 
-          axios.post('/api/meetingneuf/', {
+          axios.post('/api/meetingadd/', {
             title: fields.title,
             type: formType,
             time:fields.startTime,
