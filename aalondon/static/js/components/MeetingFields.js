@@ -193,7 +193,7 @@ export default function MeetingFields(props) {
     = props;
 
   useEffect(() => {
-    console.log("useeffect")
+    
     if (whatThreeRef && whatThreeRef.current){
     const autosuggest = window.document.querySelector('what3words-autosuggest')
     autosuggest.addEventListener('change', e => {
@@ -210,7 +210,7 @@ export default function MeetingFields(props) {
    
   return (
     <React.Fragment>
-      <label htmlFor="notes">Meeting Type(Hybrid,Online or Physical)</label>
+      <label htmlFor="notes">Meeting Type(Hybrid,Online or Face to Face)</label>
       <Dropdown
         placeholder='Please choose meeting type'
         // fluid

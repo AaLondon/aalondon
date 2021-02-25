@@ -20,7 +20,7 @@ function MeetingForm(props) {
   const [threeWords, setThreeWords] = useState('')
   const [activeStep, setActiveStep] = useState(0);
   const [formType, setFormType] = useState('')
-  console.log('sasas')
+  
   async function _submitForm(fields, actions) {
  
         const w3w = threeWords;
