@@ -4350,4 +4350,7 @@ body.is-menu-visible #menu {
   background: #E6EDFF;
 }
 
+.rich-text .responsive-object{
+  padding-bottom: 0px!important;
 
+}

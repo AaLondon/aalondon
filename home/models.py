@@ -117,8 +117,8 @@ class HomePage(Page):
         day_name_tomorrow = tomorrow.strftime("%A")
         #meetings = Meeting.objects.filter((Q(day=day_name_now) & Q(time__gte=now.time()))|(Q(day=day_name_tomorrow) & Q(time__lte=now.time())))
         
-        meetings_today = Meeting.objects.filter((Q(day=day_name_today) & Q(time__gte=now.time()))).order_by('time')
-        meetings_tomorrow = Meeting.objects.filter((Q(day=day_name_tomorrow) & Q(time__lte=now.time()))).order_by('time')
+        meetings_today = Meeting.objects.filter((Q(days__value=day_name_today) & Q(time__gte=now.time()))).order_by('time')
+        meetings_tomorrow = Meeting.objects.filter((Q(days__value=day_name_tomorrow) & Q(time__lte=now.time()))).order_by('time')
         
         data = serializers.serialize('json', list(meetings_today), fields=('title','time'))
         context['meetings_today'] = data 

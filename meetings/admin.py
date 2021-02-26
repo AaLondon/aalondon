@@ -7,3 +7,4 @@ class MeetingAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
 admin.site.register(Meeting,MeetingAdmin)
+

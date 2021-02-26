@@ -1,42 +1,40 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Formik, Field, Form } from "formik";
-import "../css/meetingform.css";
+import "../../css/meetingform.css";
 import { Dropdown, Input } from 'semantic-ui-react'
-import MeetingForm from "./components/MeetingForm";
+
 
 
 const formTypes = [
     {
-        key: 'online',
+        key: 'ONL',
         text: 'Online only',
-        value: 'online',
+        value: 'ONL',
 
     },
     {
-        key: 'faceToFace',
+        key: 'F2F',
         text: 'Face to Face',
-        value: 'faceToFace',
+        value: 'F2F',
 
     },
     {
-        key: 'hybrid',
+        key: 'HYB',
         text: 'Hybrid',
-        value: 'hybrid',
+        value: 'HYB',
 
     }]
 
 
 
 
-function MeetingFormSelector() {
-    const [formType, setFormType] = React.useState('select')
-    let activeForm =<></>
-  
-    activeForm = formType === 'select' ? <></> : <MeetingForm formType={formType}/> 
+export default function MeetingFormType(props) {
+    
+   const { setFormType ,setActiveStep} = props;
     
     return (
-        <>
+        <React.Fragment>
             <label htmlFor="notes">Meeting Type(Hybrid,Online or Physical)</label>
             <Dropdown
                 placeholder='Please choose meeting type'
@@ -44,11 +42,15 @@ function MeetingFormSelector() {
                 selection
                 options={formTypes}
                 icon='dropdown'
-                onChange={(e, data) => setFormType(data.value)}
+                onChange={(e, data) => {
+                setFormType(data.value)
+                setActiveStep(1)
+                
+                }}
                 scrolling={false}
             />
-            {activeForm}
-        </>
+       
+       </React.Fragment>
     )
 
 }
@@ -56,4 +58,4 @@ function MeetingFormSelector() {
 
 
 
-ReactDOM.render(<MeetingFormSelector />, document.getElementById("root"));
+ReactDOM.render(<MeetingFormType />, document.getElementById("root"));
