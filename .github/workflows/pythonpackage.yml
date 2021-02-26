@@ -41,8 +41,18 @@ jobs:
    #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
    #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-  
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+          node-version: 12
+
+    - name: Install and build npm project
+      run: |
+        npm install
+        npm run build
     - name: Run migrations
       run: python manage.py migrate
+    - name: Collect static files
+      run: python manage.py collectstatic --no-input
     - name: Test with pytest
       run: pytest

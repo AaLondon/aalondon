@@ -218,15 +218,21 @@ class MeetingSearchForm extends React.Component {
       }]
     const meetingTypes = [
       {
-        key: 'online',
+        key: 'ONL',
         text: 'Online',
-        value: 'online',
+        value: 'ONL',
 
       },
       {
-        key: 'faceToFace',
+        key: 'F2F',
         text: 'Face to Face',
-        value: 'faceToFace',
+        value: 'F2F',
+
+      },
+      {
+        key: 'HYB',
+        text: 'Hybrid',
+        value: 'HYB',
 
       }]
     let zoomImg = '/static/images/zoom.png';
@@ -301,7 +307,7 @@ class MeetingSearchForm extends React.Component {
           <div><a className="clear-filters" onClick={this.handleClearFilters}>Clear Filters</a></div>
           <div className='meeting-key'><span><img src={zoomImg}></img></span><span> = Zoom</span></div>
           <div className='meeting-key'><img src={physicalImg}></img><span> = Face To Face</span></div>
-          <div className='meeting-key'><img src={zoomImg}></img>+<img src={physicalImg}></img><span> = Zoom + Face To Face</span></div>
+          <div className='meeting-key'><img src={zoomImg}></img>+<img src={physicalImg}></img><span> = Hybrid</span></div>
       </div>
       </div>
     );

@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-/*import Meetings from 'Meetings-api';*/
-import Pagination from './components/Pagination';
-import Meeting from './components/Meeting';
 import axios from 'axios';
 import MeetingSearchForm from './components/MeetingSearchForm';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import * as geolib from 'geolib';
-import Table from 'react-bootstrap/Table';
 import MeetingTableData from './components/MeetingDataTable';
 import Spinner from 'react-bootstrap/Spinner'
 import _ from 'lodash'
@@ -33,7 +27,7 @@ class MeetingSearch extends Component {
 
     this.state = {
       totalMeetings: 0, currentMeetings: [], currentPage: 1, totalPages: null, day: 'now', showSpinner: 1, intergroup: '',
-      clientLng: null, clientLat: null, showPostcode: 1, minMiles: 0, maxMiles: 1000000, geoFail: 0, search: '', 
+      clientLng: null, clientLat: null, showPostcode: 1, minMiles: 0, maxMiles: 1000000, geoFail: 0, search: '',
       timeBand: 'all', access: '', covid: 'active', meetingType: ''
     };
   }
@@ -53,9 +47,15 @@ class MeetingSearch extends Component {
 
     let timeBandSend = timeBand === 'all' ? '' : timeBand
     let daySend = day === 'all' ? '' : day
-    let meetingTypeSend = meetingType === 'all' ? '' : meetingType
-
-    let queryString = `/api/meetingsearch/?search=${search}&day=${daySend}&time_band=${timeBandSend}`;
+    let dateObj = new Date()
+    let nowDay
+    if (daySend === 'now'){
+   
+      nowDay = dateObj.toLocaleString("default", { weekday: "long" })
+      
+    }
+    console.log(nowDay)
+    let queryString = `/api/meetingsearch/?search=${search}&day=${daySend}&time_band=${timeBandSend}&type=${meetingType}`;
     if (access === 'wheelchair') {
       queryString += '&wheelchair=1'
 
@@ -70,74 +70,54 @@ class MeetingSearch extends Component {
     }
 
     let currentPage = 1
-    var strr = [];
-    let onlineQueryString = `/api/onlinemeetingsearch/?search=${search}&day=${daySend}&time_band=${timeBandSend}`
 
-    const onlineMeetingRequest = axios.get(onlineQueryString);
     const physicalMeetingRequest = axios.get(queryString);
-    console.log(onlineQueryString)
+
     console.log(queryString)
 
 
-    axios.all([onlineMeetingRequest, physicalMeetingRequest]).then(axios.spread((...responses) => {
-   
-      let onlineMeetings = responses[0].data.results;
-      let physicalMeetings = responses[1].data.results;
-      let currentMeetings = [];
+    axios.all([physicalMeetingRequest]).then(axios.spread((...responses) => {
+
+      console.log('responses[0].data.results')
+      console.log(responses[0].data.results)
+      console.log('responses[0].data.results')
       
-    
-      
-      //get online meetings that are ""all""
-      let onlineMeetingsAll = onlineMeetings.filter(v => _.includes(['All'], v.day));
-      let onlineMeetingsExcludesAll = onlineMeetings.filter(v => !_.includes(['All'], v.day));
-      //iterate over the all onlineMeetingsall 
-      for (var value of onlineMeetingsAll) {
-        let currentCode = value['code'];
-        if (day === 'all') {
-          for (const [i, dayName] of ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].entries()) {
-            var newMeeting = _.cloneDeep(value);
-            newMeeting['day'] = dayName;
-            newMeeting['code'] = currentCode + '_' + dayName;
-            newMeeting['day_number'] = i;
-            onlineMeetingsExcludesAll.push(newMeeting);
+      let currentMeetings = []
+      for (let meeting of responses[0].data.results) {
+        for (let day of meeting.days) {
+          
+          
+         console.log(daySend)
+         console.log(nowDay)
+         console.log(day.value)
+         
+
+          if (daySend === day.value || nowDay === day.value||daySend === '') {
+            let newMeeting = { ...meeting }
+            newMeeting.day = day.value
+            newMeeting.day_rank = day.id
+            newMeeting.code = `${meeting.code}_${day.value}`
+            currentMeetings.push(newMeeting)
           }
-        } else {
-          let weekDays = { "Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3, "Friday": 4, "Saturday": 5, "Sunday": 6 }
-          var newMeeting = _.cloneDeep(value);
-          newMeeting['day'] = day;
-          newMeeting['code'] = currentCode + '_' + day;
-          newMeeting['day_number'] = weekDays[day];
-          onlineMeetingsExcludesAll.push(newMeeting);
+
         }
       }
+      console.log('currentMeetings')
+      console.log(currentMeetings)
+      console.log('currentMeetings')
 
-    
-      if (meetingType === 'faceToFace'){
-        currentMeetings = physicalMeetings
-        
-      } else if (meetingType === 'online')
-      {
-        currentMeetings = onlineMeetingsExcludesAll
-        
-      }else{
-        currentMeetings = physicalMeetings.concat(onlineMeetingsExcludesAll);
-      }
-
-      
-      currentMeetings = _.sortBy(currentMeetings, ['day_number', 'time', 'title']);
-     
+      currentMeetings = _.sortBy(currentMeetings, ['day_rank', 'time', 'title']);
       const totalMeetings = currentMeetings.length;
       const totalPages = currentMeetings.length / 10;
 
       if ((isSearchChange === 1 && currentMeetings.length > 0) || isSearchChange === 0) {
-
-        
-
-        this.setState({ totalMeetings, currentMeetings, currentPage, totalPages, showSpinner: 0, day: day, search: search, 
-          meetingType: meetingType });
+        this.setState({
+          totalMeetings, currentMeetings, currentPage, totalPages, showSpinner: 0, day: day, search: search,
+          meetingType: meetingType
+        });
       }
 
-      
+
     }))
 
 
@@ -147,15 +127,7 @@ class MeetingSearch extends Component {
 
   componentDidMount() {
 
-
-    //let day = new Date().toLocaleString('en-us', { weekday: 'long' });
-
-    //this.setState({ showPostcode: 1 })
-    //day, search, timeBand, access, isSearchChange, covid
-    this.getResults(this.state.day, this.state.search, this.state.timeBand, this.state.access, 0, this.state.covid);
-
-
-
+    this.getResults(this.state.day, this.state.search, this.state.timeBand, this.state.access, 0, this.state.covid,this.state.meetingType);
   }
 
   getQueryString() {
@@ -256,7 +228,7 @@ class MeetingSearch extends Component {
 
           this.setState({
             totalMeetings: totalMeetings, currentMeetings: currentMeetings,
-            totalPages: totalPages, showSpinner: 0, currentPage: 1, clientLat: lat, clientLng: lng, 
+            totalPages: totalPages, showSpinner: 0, currentPage: 1, clientLat: lat, clientLng: lng,
             showPostcode: showPostcode, minMiles: minMiles, maxMiles: maxMiles, geoFail: geoFail
           });
 
@@ -309,19 +281,19 @@ class MeetingSearch extends Component {
   onCovidChange = data => {
 
     this.setState({ showSpinner: 1, covid: data });
-    this.getResults(this.state.day, this.state.search, this.state.timeBand, this.state.access, 0, data, this.state.meetingType );
+    this.getResults(this.state.day, this.state.search, this.state.timeBand, this.state.access, 0, data, this.state.meetingType);
 
   }
 
   onClearFilters = () => {
     this.setState({ showSpinner: 1, day: 'all', search: '', timeBand: 'all', access: '', coivid: 'all' })
-    this.getResults('all', '', 'all', '', 0, 'all');
+    this.getResults('all', '', 'all', '', 0, 'all','');
   }
 
   onMeetingTypeChange = data => {
 
     this.setState({ showSpinner: 1, meetingType: data });
-    this.getResults(this.state.day, this.state.search, this.state.timeBand, this.state.access, 0, this.state.covid ,data);
+    this.getResults(this.state.day, this.state.search, this.state.timeBand, this.state.access, 0, this.state.covid, data);
 
   }
 
@@ -360,8 +332,8 @@ class MeetingSearch extends Component {
           onClearFilters={this.onClearFilters}
           onMeetingTypeChange={this.onMeetingTypeChange}
           onIntergroupChange={this.onIntergroupChange} day={this.state.day} intergroup={this.state.intergroup}
-          search={this.state.search} timeBand={this.state.timeBand} access={this.state.access} covid={this.state.covid} 
-          meetingType={this.state.meetingType}/>
+          search={this.state.search} timeBand={this.state.timeBand} access={this.state.access} covid={this.state.covid}
+          meetingType={this.state.meetingType} />
         <Row className="justify-content-center"><Col xs={2}> <Spinner size="lg" animation="border" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner></Col></Row>
@@ -385,7 +357,7 @@ class MeetingSearch extends Component {
 
 
     let firstCode = currentMeetings[0].code + currentMeetings.length;
-    
+
 
 
     return (

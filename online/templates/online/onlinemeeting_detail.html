@@ -9,12 +9,14 @@
       </div>
     </div>
     <div class="meeting-address-time meeting-detail-text">
-      <div>{{object.day|upper}}</div>
+      {% for day in object.days.all %}{{ day|upper }}<br/>{% endfor %}
       <div>{{object.time}}</div>
+
+      
     </div>
     <div class="meeting-type">
       <div class="meeting-detail-text">TYPE</div>
-      <div><a href="{{object.link}}" target="_blank"><img src="{% static 'images/zoom.png'  %}" /></a></div>
+      <div><a href="{{object.online_link}}" target="_blank"><img src="{% static 'images/zoom.png'  %}" /></a></div>
     </div>
     <div class="meeting-whatsapp">
       <div class="meeting-detail-text">SHARE</div>
@@ -30,7 +32,7 @@
       <div>{{object.description}}</div>
     </div>
     <div class="meeting-map">
-      <div><a href="{{object.link}}" target="_blank" class="button">Go to meeting</a></div>
+      <div><a href="{{object.online_link}}" target="_blank" class="button">Go to meeting</a></div>
     </div>
    
 

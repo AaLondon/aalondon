@@ -9,8 +9,9 @@
       </div>
     </div>
     <div class="meeting-address-time meeting-detail-text">
-      <div>{{object.day|upper}}</div>
+      {% for day in object.days.all %}{{ day|upper }}<br/>{% endfor %}
       <div>{{object.time}}</div>
+    
     </div>
     <div class="meeting-type">
       <div class="meeting-detail-text">TYPE</div>
@@ -25,15 +26,21 @@
       </div>
     </div>
     <div class="meeting-details">
+      <div class="meeting-detail-text">ADDRESS</div>
+      <div>{{object.address}}</div>
+      <div>{{object.postcode}}</div>
       <div class="meeting-detail-text">DETAILS</div>
-      <div>{{object.detail}}</div>
+      <div>{{object.description}}</div>
+      {% if object.sub_types.all%}
+      <div class="meeting-detail-text">CATEGORIES</div>
+      <div>{% for sub_type in object.sub_types.all %}{{ sub_type.value }}<br/>{% endfor %}</div>
+      {% endif %}
     </div>
+    
+    {% if object.lat %}
     <div class="meeting-map">
       <div class="meeting-detail-text">OUR LOCATION</div>
-      <div id="map"></div>
-    </div>
-    <div class="meeting-city-mapper">
-      <div class="meeting-detail-text">GET ME THERE</div>
+      
       <div>
         <a
           href="https://citymapper.com/directions?endcoord={{object.lat}}%2C{{object.lng}}&endname={{object.title}}"
@@ -43,7 +50,9 @@
             alt="Get directions with Citymapper"
         /></a>
       </div>
+      <div id="map"></div>
     </div>
+    {% endif %}
 
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js"></script>
     <link
@@ -52,8 +61,8 @@
     />
 
     <script>
-      var lat = {{ object.lat }};
-      var lng = {{object.lng}};
+      var lat = '{{ object.lat }}';
+      var lng = '{{object.lng}}';
       console.log(lat);
       mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3ZWRnd29vZCIsImEiOiJjazJ3M2xyOGkwYXppM29xbGlreGxtZWk1In0.wB4JKWEScmQogF0I9aSNoA';
       var map = new mapboxgl.Map({
