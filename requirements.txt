@@ -12,7 +12,7 @@ pandas==0.25.3
 psycopg2-binary==2.8.6
 django-storages
 boto3==1.17.17
-geopy==1.21.0
+geopy==2.1.0
 whitenoise[brotli]==5.0.1
 wagtailmenus==3.0.2
 sentry-sdk==0.14.3
