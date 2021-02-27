@@ -159,7 +159,7 @@ function MeetingForm(props) {
         email: '',
         description: '',
         notes: '',
-        wheelchair: true,
+        wheelchair: false,
         signed: false,
         lgbt: false,
         chits: false,
