@@ -1,10 +1,14 @@
 from django.db import models
+from django.conf import settings
 from django.urls import reverse
 from django.utils.text import slugify
 from django_extensions.db.fields import AutoSlugField
 from datetime import time
 import json
+import what3words
 
+
+WHAT_THREE_WORDS_API_KEY = settings.WHAT_THREE_WORDS_API_KEY
 # Create your models here.
 class MeetingDay(models.Model):
     value = models.CharField(max_length=10,null=False,blank=False)
@@ -87,8 +91,12 @@ class Meeting(models.Model):
     
     def save(self, *args, **kwargs):
         self.slug = slugify(f'{self.title} {self.time} {self.type} {self.id}')
-     
         meeting_time = self.time
+        geocoder = what3words.Geocoder(WHAT_THREE_WORDS_API_KEY)
+        res = geocoder.convert_to_coordinates(self.what_three_words)
+        if 'coordinates' in res:
+            self.lat = res['coordinates']['lat']
+            self.lng = res['coordinates']['lng']
         
         if meeting_time > time(0, 0) and meeting_time <= time(12,0):
             self.time_band = 'morning'

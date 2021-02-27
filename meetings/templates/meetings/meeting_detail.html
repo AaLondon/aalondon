@@ -15,7 +15,13 @@
     </div>
     <div class="meeting-type">
       <div class="meeting-detail-text">TYPE</div>
-      <div><img src="{% static 'images/building-location-pin.png'  %}" /></div>
+      {% if object.type == 'PHY'%}
+      <div><img src="{% static 'images/building-location-pin.png'%}" /></div>
+      {% else %}
+  
+      <div><img src="{% static 'images/building-location-pin.png'%}" /><img src="{% static 'images/zoom.png'%}" /></div>
+      
+      {% endif %}
     </div>
     <div class="meeting-whatsapp">
       <div class="meeting-detail-text">SHARE</div>
@@ -34,6 +40,10 @@
       {% if object.sub_types.all%}
       <div class="meeting-detail-text">CATEGORIES</div>
       <div>{% for sub_type in object.sub_types.all %}{{ sub_type.value }}<br/>{% endfor %}</div>
+      {% endif %}
+      {% if object.type == 'HYB'%}
+      <div class="meeting-detail-text">ONLINE LINK</div>
+      <div><a href="{{object.online_link}}" target="_blank">{{object.online_link}}</a></div>
       {% endif %}
     </div>
     

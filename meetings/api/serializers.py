@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from meetings.models import MeetingIntergroup, Meeting, MeetingDay,MeetingSubType
-import what3words
+
 from django.conf import settings
 
 WHAT_THREE_WORDS_API_KEY = settings.WHAT_THREE_WORDS_API_KEY
@@ -46,11 +46,7 @@ class MeetingSerializer(serializers.ModelSerializer):
         what_three_words=validated_data['what_three_words']
         meeting = Meeting.objects.create(**validated_data)
         meeting.covid_open_status = True
-        geocoder = what3words.Geocoder(WHAT_THREE_WORDS_API_KEY)
-        res = geocoder.convert_to_coordinates(what_three_words)
-        if 'coordinates' in res:
-            meeting.lat = res['coordinates']['lat']
-            meeting.lng = res['coordinates']['lng']
+        
         meeting.save()
         for day in days:
             meeting_day = MeetingDay.objects.get(value=day["value"])
