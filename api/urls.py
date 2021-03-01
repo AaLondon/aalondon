@@ -14,6 +14,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('meetings/', views.MeetingsList.as_view(), name='api-meetings'),
     path('meetingsearch/', views.MeetingSearch.as_view(), name='api-meeting-search'),
+    path('meetingautofill/', views.MeetingAutofillSearch.as_view(), name='api-meeting-autofill-search'),
     path('onlinemeetingsearch/', views.OnlineMeetingSearch.as_view(),
          name='api-online-meeting-search'),
     path('meetingguide/',views.MeetingGuideListView.as_view()),
