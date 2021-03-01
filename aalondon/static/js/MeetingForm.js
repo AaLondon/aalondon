@@ -23,7 +23,6 @@ function MeetingForm(props) {
   
   async function _submitForm(fields, actions) {
  
-        const w3w = threeWords;
         let csrftoken = getCookie('csrftoken');
         let days = fields.days.map((day,index)=>{
             return {value:day}
@@ -52,7 +51,7 @@ function MeetingForm(props) {
             intergroup:fields.intergroup,
             submission:fields.submission,
             payment_details:fields.paymentLink,
-            what_three_words:w3w,
+            what_three_words:fields.whatThreeWords,
             description: fields.description,
             notes:fields.notes,
             sub_types:subTypes,
@@ -62,21 +61,21 @@ function MeetingForm(props) {
                 'XCSRF-TOKEN': csrftoken,
               },
             }).then(response => {
-              console.log(response.data);
+              
               setActiveStep(1);
               return response.data;
               
             })
             .catch(error => {
-              console.log(error.response);
+              return error.response;
             });
   }
 
-  function _renderStepContent(step,errors,touched) {
+  function _renderStepContent(step,errors,touched,values) {
    
     switch (step) {
       case 0:
-        return <MeetingFields setFormType={setFormType} setThreeWords={setThreeWords} errors={errors} touched={touched} formType={formType}/> ;
+        return <MeetingFields setFormType={setFormType} setThreeWords={setThreeWords} errors={errors} touched={touched} formType={formType} values={values}/> ;
       case 1:
         return <MeetingFormSuccess />;
       default:
@@ -155,7 +154,7 @@ function MeetingForm(props) {
         paymentLink: '',
         address: '',
         postcode: '',
-        '3wa': '',
+        whatThreeWords: '',
         email: '',
         description: '',
         notes: '',
@@ -170,10 +169,10 @@ function MeetingForm(props) {
       }}
       validationSchema={validationSchema}
       onSubmit={_submitForm}>
-      {({ errors, status, touched }) => (
+      {({ errors, status, touched,values }) => (
        
         <Form id="new-meeting-form">
-          {_renderStepContent(activeStep,errors,touched)}
+          {_renderStepContent(activeStep,errors,touched,values)}
 
      {formType && activeStep===0  &&
         <div className="form-group">
