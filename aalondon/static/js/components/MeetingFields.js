@@ -210,23 +210,26 @@ export default function MeetingFields(props) {
 
   function onSubmissionTypeChangeAutofill(e, data, setFieldValue) {
     let title = props.values.title
+    let type = formType
     let submission = data
+    
 
     if (submission === 'existing') {
-      axios.get(`/api/meetingautofill/?title=${title}`)
+      axios.get(`/api/meetingautofill/?title=${title}&type=${type}`)
         .then(response => {
+    
           let result = response.data.results[0]
-          console.log(result)
-          setFieldValue('address', result.address)
+          if(result){
+          setFieldValue('address', result.address ? result.address :'')
           setFieldValue('startTime', result.friendly_time)
           setFieldValue('type', result.type)
-          setFieldValue('postcode', result.postcode)
-          setFieldValue('intergroup', result.intergroup)
-          setFieldValue('link', result.online_link)
-          setFieldValue('password', result.online_password)
-          setFieldValue('address', result.address)
-          setFieldValue('paymentLink', result.payment_details)
-          setFieldValue('whatThreeWords', result.what_three_words)
+          setFieldValue('postcode', result.postcode ? result.postcode :'' )
+          setFieldValue('intergroup', result.intergroup ? result.intergroup:'')
+          setFieldValue('link', result.online_link ? result.online_link:'')
+          setFieldValue('password', result.online_password ? result.online_password:'')
+          setFieldValue('address', result.address ? result.address :'')
+          setFieldValue('paymentLink', result.payment_details ? result.payment_details:'')
+          setFieldValue('whatThreeWords', result.what_three_words ? result.what_three_words:'')
           setFieldValue('description', result.description)
           setFieldValue('days', result.days.map(day => day.value))
           let subTypes = result.sub_types.map(sub_type => sub_type.value)
@@ -251,7 +254,7 @@ export default function MeetingFields(props) {
             }
           }
 
-
+        }
 
 
         });

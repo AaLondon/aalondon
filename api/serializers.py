@@ -49,6 +49,7 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
             "description",
             "what_three_words",
             "sub_types",
+            "type",
         ]
 
     def get_actual_datetime(self, obj):

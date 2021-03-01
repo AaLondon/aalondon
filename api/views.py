@@ -71,7 +71,8 @@ class MeetingAutofillSearch(generics.ListAPIView):
     def get_queryset(self):
         
         title = self.request.query_params.get('title','').lower()
-        return Meeting.objects.filter(title=title).order_by('-created')
+        type = self.request.query_params.get('type','')
+        return Meeting.objects.filter(type=type).filter(published=True).filter(title__iexact=title).order_by('-created')
         
 
     
