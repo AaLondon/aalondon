@@ -1,29 +1,29 @@
-import React, { useEffect, useState ,useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Field, ErrorMessage } from 'formik';
 import SemanticField from './SemanticField'
 import { Dropdown, TextArea, Checkbox } from 'semantic-ui-react'
-import getCookie from './getCookie';
+import axios from 'axios'
 
 
 
 
 const formTypes = [
   {
-      key: 'ONL',
-      text: 'Online only',
-      value: 'ONL',
+    key: 'ONL',
+    text: 'Online only',
+    value: 'ONL',
 
   },
   {
-      key: 'F2F',
-      text: 'Face to Face',
-      value: 'F2F',
+    key: 'F2F',
+    text: 'Face to Face',
+    value: 'F2F',
 
   },
   {
-      key: 'HYB',
-      text: 'Hybrid',
-      value: 'HYB',
+    key: 'HYB',
+    text: 'Hybrid',
+    value: 'HYB',
 
   }]
 
@@ -184,30 +184,85 @@ const dayOptions = [
 
 
 export default function MeetingFields(props) {
-  
+
 
   const whatThreeRef = useRef(null);
 
   const
-  { errors, touched,activeStep, formType , setFormType,setThreeWords}
-    = props;
+    { errors, touched, activeStep, formType, setFormType, setThreeWords, values }
+      = props;
 
   useEffect(() => {
-    
-    if (whatThreeRef && whatThreeRef.current){
-    const autosuggest = window.document.querySelector('what3words-autosuggest')
-    autosuggest.addEventListener('change', e => {
-      const words = e.detail
-      setThreeWords(words)
-    })
-    console.log("Created");
-    return () => {
-      console.log("Cleaned up");
-      autosuggest.removeEventListener('change', e => { })
-    };
-  }}, [formType]);
 
-   
+    if (whatThreeRef && whatThreeRef.current) {
+      const autosuggest = window.document.querySelector('what3words-autosuggest')
+      autosuggest.addEventListener('change', e => {
+        const words = e.detail
+        setThreeWords(words)
+      })
+      console.log("Created");
+      return () => {
+        console.log("Cleaned up");
+        autosuggest.removeEventListener('change', e => { })
+      };
+    }
+  }, [formType]);
+
+  function onSubmissionTypeChangeAutofill(e, data, setFieldValue) {
+    let title = props.values.title
+    let type = formType
+    let submission = data
+    
+
+    if (submission === 'existing') {
+      axios.get(`/api/meetingautofill/?title=${title}&type=${type}`)
+        .then(response => {
+    
+          let result = response.data.results[0]
+          if(result){
+          setFieldValue('address', result.address ? result.address :'')
+          setFieldValue('startTime', result.friendly_time)
+          setFieldValue('type', result.type)
+          setFieldValue('postcode', result.postcode ? result.postcode :'' )
+          setFieldValue('intergroup', result.intergroup ? result.intergroup:'')
+          setFieldValue('link', result.online_link ? result.online_link:'')
+          setFieldValue('password', result.online_password ? result.online_password:'')
+          setFieldValue('address', result.address ? result.address :'')
+          setFieldValue('paymentLink', result.payment_details ? result.payment_details:'')
+          setFieldValue('whatThreeWords', result.what_three_words ? result.what_three_words:'')
+          setFieldValue('description', result.description)
+          setFieldValue('days', result.days.map(day => day.value))
+          let subTypes = result.sub_types.map(sub_type => sub_type.value)
+
+          for (const subType of subTypes) {
+            if (subType === "Child-Friendly") {
+              setFieldValue('childFriendly', true)
+            } else if (subType === "LGBTQ") {
+              setFieldValue('lgbt', true)
+            } else if (subType === "Location Temporarily Closed") {
+              setFieldValue('temporaryClosure', true)
+            } else if (subType === "Outdoor") {
+              setFieldValue('outdoors', true)
+            } else if (subType === "Wheelchair Access") {
+              setFieldValue('wheelchair', true)
+            } else if (subType === "British Sign Language") {
+              setFieldValue('signed', true)
+            } else if (subType === "Chits") {
+              setFieldValue('chits', true)
+            } else if (subType === "Creche") {
+              setFieldValue('creche', true)
+            }
+          }
+
+        }
+
+
+        });
+    }
+
+    console.log('onSubmissionTypeChangeAutofill')
+  }
+
   return (
     <React.Fragment>
       <label htmlFor="notes">Meeting Type(Hybrid,Online or Face to Face)</label>
@@ -218,192 +273,193 @@ export default function MeetingFields(props) {
         options={formTypes}
         icon='dropdown'
         onChange={(e, data) => {
-      
+
           setFormType(data.value)
-       
+
 
         }}
         scrolling={false}
       />
       { formType &&
-      <>
-      <div className="form-group">
-        <label htmlFor="title">Title</label>
-        <Field placeholder="Please supply your meeting name" name="title" type="text" className={'form-control' + (errors.title && touched.title ? ' is-invalid' : '')} />
-        <ErrorMessage name="title" component="div" className="invalid-feedback" />
-      </div>
-      <div className="form-group">
-        <label htmlFor="days">Days</label>
-        <SemanticField
-          name="days"
-          component={Dropdown}
-          options={dayOptions}
-          multiple
-          selection
-          placeholder="Please select day of week"
-          id={"days"}
-          value={[]}
-          className={'form-control' + (errors.day && touched.day ? ' is-invalid' : '')}
-
-        />
-
-        <ErrorMessage name="days" component="div" className="invalid-feedback" />
-      </div>
-      
-      <div className="form-group">
-        <label htmlFor="submission">Is this a new entry to AALondon, or an update to an existing entry?</label>
-        <SemanticField
-          name="submission"
-          component={Dropdown}
-          options={submitOptions}
-          selection
-          placeholder="Is this a new meeting or are you updating an existing one?"
-          id={"submission"}
-          className={'form-control' + (errors.submission && touched.submission ? ' is-invalid' : '')}
-        />
-
-        <ErrorMessage name="submission" component="div" className="invalid-feedback" />
-      </div>
-      <div className="form-group">
-        <label htmlFor="intergroup">Intergroup</label>
-        <SemanticField
-          name="intergroup"
-          component={Dropdown}
-          options={intergroupOptions}
-          selection
-          placeholder="Intergroup if your group is part of one?"
-          id={"intergroup"}
-          className={'form-control' + (errors.intergroup && touched.intergroup ? ' is-invalid' : '')}
-        />
-        <ErrorMessage name="intergroup" component="div" className="invalid-feedback" />
-      </div>
-      <div className="form-group">
-        <label htmlFor="startTime">Start Time</label>
-        <Field placeholder="Start time needs to be in 24 hour format e.g. 13:30" name="startTime" type="text" className={'form-control' + (errors.startTime && touched.startTime ? ' is-invalid' : '')} />
-        <ErrorMessage name="startTime" component="div" className="invalid-feedback" />
-      </div>
-      {formType !== 'F2F' &&
-        <><div className="form-group">
-          <label htmlFor="link">Online Meeting Link</label>
-          <Field placeholder="Please enter online meeting link. Zoom,Skype etc" name="link" type="text" className={'form-control' + (errors.link && touched.link ? ' is-invalid' : '')} />
-          <ErrorMessage name="link" component="div" className="invalid-feedback" />
-        </div>
+        <>
+          <div className="form-group">
+            <label htmlFor="title">Title</label>
+            <Field placeholder="Please supply your meeting name" name="title" type="text" className={'form-control' + (errors.title && touched.title ? ' is-invalid' : '')} />
+            <ErrorMessage name="title" component="div" className="invalid-feedback" />
+          </div>
 
           <div className="form-group">
-            <label htmlFor="password">Online Meeting Password</label>
-            <Field placeholder="Please enter password" name="password" type="text" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
-            <ErrorMessage name="password" component="password" className="invalid-feedback" />
-          </div></>}
-      {formType !== 'ONL' &&
-        <><div className="form-group">
-          <label htmlFor="address">Address</label>
-          <Field name="address" type="text" className={'form-control' + (errors.address && touched.address ? ' is-invalid' : '')} />
-          <ErrorMessage name="address" component="div" className="invalid-feedback" />
-        </div>
+            <label htmlFor="submission">Is this a new entry to AALondon, or an update to an existing entry? </label>
+            <SemanticField
+              name="submission"
+              component={Dropdown}
+              options={submitOptions}
+              onChange={onSubmissionTypeChangeAutofill}
+              selection
+              placeholder="Is this a new meeting or are you updating an existing one?"
+              id={"submission"}
+              className={'form-control' + (errors.submission && touched.submission ? ' is-invalid' : '')}
+            />
+
+            <ErrorMessage name="submission" component="div" className="invalid-feedback" />
+          </div>
           <div className="form-group">
-            <label htmlFor="postcode">Postcode</label>
-            <Field name="postcode" type="text" className={'form-control' + (errors.postcode && touched.postcode ? ' is-invalid' : '')} />
-            <ErrorMessage name="postcode" component="div" className="invalid-feedback" />
-          </div></>}
-      <div className="form-group">
-        <label htmlFor="paymentLink">Payment Link</label>
-        <Field placeholder="Paypal,Cashapp,Square... etc link" name="paymentLink" type="text" className={'form-control' + (errors.paymentLink && touched.paymentLink ? ' is-invalid' : '')} />
-        <ErrorMessage name="paymentLink" component="div" className="invalid-feedback" />
-      </div>
-      {formType !== 'ONL' &&
-        <div className="form-group">
-          <label htmlFor="3wa">What Three Words(<a target="_blank" href="https://what3words.com/">Click here</a>)</label>
-          <what3words-autosuggest ref={whatThreeRef}
-            id="autosuggest"
-            placeholder="What three words tells us precisely where you are. Click above for info." />
-          <ErrorMessage name="3wa" component="div" className="invalid-feedback" />
-        </div>}
-      <div className="form-group">
-        <label htmlFor="email">Email</label>
-        <Field placeholder="Please use a generic group email address." name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
-        <ErrorMessage name="email" component="div" className="invalid-feedback" />
-      </div>
-      <div className="form-group">
-        <label htmlFor="description">Description</label>
-        <Field name="description" component="textarea" type="text" className={'form-control' + (errors.description && touched.description ? ' is-invalid' : '')} />
-        <ErrorMessage name="description" component="div" className="invalid-feedback" />
-      </div>
-      <div className="form-group">
-        <label htmlFor="notes">Notes</label>
-        <Field name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
-        <ErrorMessage name="notes" component="div" className="invalid-feedback" />
-      </div>
-
-      <div className="auto-grid" role="group" aria-labelledby="checkbox-group">
-        {formType !== 'ONL' &&
-          <><div><span className="checkbox-title" htmlFor="wheelchair">Wheelchair accessible</span>
+            <label htmlFor="days">Days</label>
             <SemanticField
-              name="wheelchair"
-              component={Checkbox}
-            />
-          </div>
-            <div>
-              <span className="checkbox-title" htmlFor="creche">Creche</span>
-              <SemanticField
-                name="creche"
-                component={Checkbox}
-              />
+              name="days"
+              component={Dropdown}
+              options={dayOptions}
+              multiple
+              selection
+              placeholder="Please select day of week"
+              id={"days"}
+              value={[]}
+              className={'form-control' + (errors.day && touched.day ? ' is-invalid' : '')}
 
-            </div></>}
-        <div>
-          <span className="checkbox-title" htmlFor="signed">Sign Language interpreted</span>
-          <SemanticField
-            name="signed"
-            component={Checkbox}
-          />
-
-        </div>
-        <div>
-          <span className="checkbox-title" htmlFor="lgbt">LGBT</span>
-          <SemanticField
-            name="lgbt"
-            component={Checkbox}
-          />
-
-        </div>
-        <div>
-          <span className="checkbox-title" htmlFor="chits">Chits</span>
-          <SemanticField
-            name="chits"
-            component={Checkbox}
-          />
-
-        </div>
-        {formType !== 'ONL' &&
-          <><div>
-            <span className="checkbox-title" htmlFor="childFriendly">Child Friendly</span>
-            <SemanticField
-              name="childFriendly"
-              component={Checkbox}
             />
 
+            <ErrorMessage name="days" component="div" className="invalid-feedback" />
           </div>
+
+
+          <div className="form-group">
+            <label htmlFor="intergroup">Intergroup</label>
+            <SemanticField
+              name="intergroup"
+              component={Dropdown}
+              options={intergroupOptions}
+              selection
+              placeholder="Intergroup if your group is part of one?"
+              id={"intergroup"}
+              className={'form-control' + (errors.intergroup && touched.intergroup ? ' is-invalid' : '')}
+            />
+            <ErrorMessage name="intergroup" component="div" className="invalid-feedback" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="startTime">Start Time</label>
+            <Field placeholder="Start time needs to be in 24 hour format e.g. 13:30" name="startTime" type="text" className={'form-control' + (errors.startTime && touched.startTime ? ' is-invalid' : '')} />
+            <ErrorMessage name="startTime" component="div" className="invalid-feedback" />
+          </div>
+          {formType !== 'F2F' &&
+            <><div className="form-group">
+              <label htmlFor="link">Online Meeting Link</label>
+              <Field placeholder="Please enter online meeting link. Zoom,Skype etc" name="link" type="text" className={'form-control' + (errors.link && touched.link ? ' is-invalid' : '')} />
+              <ErrorMessage name="link" component="div" className="invalid-feedback" />
+            </div>
+
+              <div className="form-group">
+                <label htmlFor="password">Online Meeting Password</label>
+                <Field placeholder="Please enter password" name="password" type="text" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
+                <ErrorMessage name="password" component="password" className="invalid-feedback" />
+              </div></>}
+          {formType !== 'ONL' &&
+            <><div className="form-group">
+              <label htmlFor="address">Address</label>
+              <Field name="address" type="text" className={'form-control' + (errors.address && touched.address ? ' is-invalid' : '')} />
+              <ErrorMessage name="address" component="div" className="invalid-feedback" />
+            </div>
+              <div className="form-group">
+                <label htmlFor="postcode">Postcode</label>
+                <Field name="postcode" type="text" className={'form-control' + (errors.postcode && touched.postcode ? ' is-invalid' : '')} />
+                <ErrorMessage name="postcode" component="div" className="invalid-feedback" />
+              </div></>}
+          <div className="form-group">
+            <label htmlFor="paymentLink">Payment Link</label>
+            <Field placeholder="Paypal,Cashapp,Square... etc link" name="paymentLink" type="text" className={'form-control' + (errors.paymentLink && touched.paymentLink ? ' is-invalid' : '')} />
+            <ErrorMessage name="paymentLink" component="div" className="invalid-feedback" />
+          </div>
+          {formType !== 'ONL' &&
+            <div className="form-group">
+              <label htmlFor="whatThreeWords">What Three Words(<a target="_blank" href="https://what3words.com/">Click here</a>)</label>
+              <Field placeholder="What Three Words from https://what3words.com/ " name="whatThreeWords" type="text" className={'form-control' + (errors.whatThreeWords && touched.whatThreeWords ? ' is-invalid' : '')} />
+              <ErrorMessage name="whatThreeWords" component="div" className="invalid-feedback" />
+            </div>}
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <Field placeholder="Please use a generic group email address." name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+            <ErrorMessage name="email" component="div" className="invalid-feedback" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <Field name="description" component="textarea" type="text" className={'form-control' + (errors.description && touched.description ? ' is-invalid' : '')} />
+            <ErrorMessage name="description" component="div" className="invalid-feedback" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="notes">Notes</label>
+            <Field name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
+            <ErrorMessage name="notes" component="div" className="invalid-feedback" />
+          </div>
+
+          <div className="auto-grid" role="group" aria-labelledby="checkbox-group">
+            {formType !== 'ONL' &&
+              <><div><span className="checkbox-title" htmlFor="wheelchair">Wheelchair accessible</span>
+                <SemanticField
+                  name="wheelchair"
+                  component={Checkbox}
+                />
+              </div>
+                <div>
+                  <span className="checkbox-title" htmlFor="creche">Creche</span>
+                  <SemanticField
+                    name="creche"
+                    component={Checkbox}
+                  />
+
+                </div></>}
             <div>
-              <span className="checkbox-title" htmlFor="outdoors">Outdoors</span>
+              <span className="checkbox-title" htmlFor="signed">Sign Language interpreted</span>
               <SemanticField
-                name="outdoors"
+                name="signed"
                 component={Checkbox}
               />
 
             </div>
             <div>
-              <span className="checkbox-title" htmlFor="temporaryClosure">Temporary Closure</span>
+              <span className="checkbox-title" htmlFor="lgbt">LGBT</span>
               <SemanticField
-                name="temporaryClosure"
+                name="lgbt"
                 component={Checkbox}
               />
 
-            </div></>}
-      </div>
+            </div>
+            <div>
+              <span className="checkbox-title" htmlFor="chits">Chits</span>
+              <SemanticField
+                name="chits"
+                component={Checkbox}
+              />
 
-   
+            </div>
+            {formType !== 'ONL' &&
+              <><div>
+                <span className="checkbox-title" htmlFor="childFriendly">Child Friendly</span>
+                <SemanticField
+                  name="childFriendly"
+                  component={Checkbox}
+                />
 
-      </>}
+              </div>
+                <div>
+                  <span className="checkbox-title" htmlFor="outdoors">Outdoors</span>
+                  <SemanticField
+                    name="outdoors"
+                    component={Checkbox}
+                  />
+
+                </div>
+                <div>
+                  <span className="checkbox-title" htmlFor="temporaryClosure">Temporary Closure</span>
+                  <SemanticField
+                    name="temporaryClosure"
+                    component={Checkbox}
+                  />
+
+                </div></>}
+          </div>
+
+
+
+        </>}
     </React.Fragment>
   );
 }

@@ -1,5 +1,5 @@
 from meetings.models import Meeting
-from meetings.api.serializers import  MeetingDaySerializer
+from meetings.api.serializers import MeetingDaySerializer,MeetingSubTypeSerializer
 from online.models import OnlineMeeting
 from rest_framework.reverse import reverse
 from rest_framework import serializers
@@ -17,12 +17,40 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
     covid_open_status = serializers.SerializerMethodField()
     code = serializers.SerializerMethodField()
     place = serializers.SerializerMethodField()
-    days =  MeetingDaySerializer(many=True)
-   
+    days = MeetingDaySerializer(many=True)
+    sub_types = MeetingSubTypeSerializer(many=True)
+
     class Meta:
         model = Meeting
-        fields = ['code', 'title', 'time', 'address','days', 'actual_datetime', 'postcode', 'slug', 'lat', 'lng',
-                  'day_rank', 'friendly_time', 'postcode_prefix', 'day_number', 'intergroup', 'distance_from_client', 'time_band', 'covid_open_status', 'place','type' ]
+        fields = [
+            "code",
+            "title",
+            "time",
+            "address",
+            "days",
+            "actual_datetime",
+            "postcode",
+            "online_link",
+            "online_password",
+            "payment_details",
+            "slug",
+            "lat",
+            "lng",
+            "day_rank",
+            "friendly_time",
+            "postcode_prefix",
+            "day_number",
+            "intergroup",
+            "distance_from_client",
+            "time_band",
+            "covid_open_status",
+            "place",
+            "type",
+            "description",
+            "what_three_words",
+            "sub_types",
+            "type",
+        ]
 
     def get_actual_datetime(self, obj):
         now = datetime.now()
@@ -42,23 +70,23 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
         return actual_datetime
 
     def get_friendly_time(self, obj):
-        time = obj.time.strftime('%H:%M')
-        return f'{time}'
+        time = obj.time.strftime("%H:%M")
+        return f"{time}"
 
     def get_postcode_prefix(self, obj):
         if obj.postcode:
-            return obj.postcode.split(' ')[0]
-        return ''
+            return obj.postcode.split(" ")[0]
+        return ""
 
     def get_distance_from_client(self, obj):
-        qp = self.context['request'].query_params
-        origin = (qp.get('clientLat', 0), qp.get('clientLng', 0))
+        qp = self.context["request"].query_params
+        origin = (qp.get("clientLat", 0), qp.get("clientLng", 0))
         destination = (obj.lat, obj.lng)
         return round(geodesic(origin, destination).miles, 2)
 
     def get_day_number(self, obj):
 
-        return 0#time.strptime(obj.day, '%A').tm_wday
+        return 0  # time.strptime(obj.day, '%A').tm_wday
 
     def get_covid_open_status(self, obj):
 
@@ -69,13 +97,13 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
 
     def get_code(self, obj):
 
-        return 'physical_'+str(obj.id)
+        return "physical_" + str(obj.id)
 
     def get_place(self, obj):
 
         if obj.postcode:
-            return obj.postcode.split(' ')[0]
-        return ''
+            return obj.postcode.split(" ")[0]
+        return ""
 
 
 class OnlineMeetingSerializer(serializers.ModelSerializer):
@@ -88,8 +116,21 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Meeting
-        fields = ['id', 'title', 'time', 'days', 'actual_datetime', 'online_link', 'description', 'slug',
-                  'friendly_time', 'zoom_password', 'code', 'place', 'day_number']
+        fields = [
+            "id",
+            "title",
+            "time",
+            "days",
+            "actual_datetime",
+            "online_link",
+            "description",
+            "slug",
+            "friendly_time",
+            "zoom_password",
+            "code",
+            "place",
+            "day_number",
+        ]
 
     def get_actual_datetime(self, obj):
         now = datetime.now()
@@ -109,28 +150,28 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
         return actual_datetime
 
     def get_friendly_time(self, obj):
-        time = obj.time.strftime('%H:%M')
-        return f'{time}'
+        time = obj.time.strftime("%H:%M")
+        return f"{time}"
 
     def get_zoom_password(self, obj):
 
-        #link = obj.online_link
-        description = obj.description or ''
+        # link = obj.online_link
+        description = obj.description or ""
 
         return 0
 
     def get_code(self, obj):
 
-        return 'online_'+str(obj.id)
+        return "online_" + str(obj.id)
 
     def get_place(self, obj):
 
-        return 'zoom'
+        return "zoom"
 
     def get_day_number(self, obj):
-       # if obj.day == 'All':
+        # if obj.day == 'All':
         #    return -1
-        return -1#time.strptime(obj.day, '%A').tm_wday
+        return -1  # time.strptime(obj.day, '%A').tm_wday
 
 
 class MeetingGuideSerializer(serializers.ModelSerializer):
@@ -178,15 +219,51 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Meeting
-        fields = ['id', 'name', 'slug', 'notes', 'updated', 'location_id', 'url', 'day',
-                           'time', 'end_time', 'time_formatted', 'conference_url',
-                          'conference_phone', 'types', 'location', 'location_notes',
-                       'region_id', 'region', 'sub_region', 'group_id', 'group', 'district',
-                       'district_id', 'sub_district', 'group_notes', 'website', 'website_2',
-                         'location_url', 'formatted_address', 'latitude', 'longitude',
-                        'email', 'phone', 'mailing_address', 'venmo', 'square', 'paypal',
-                       'last_contact','postal_code', 'city', 'state', 'country', 'timezone']
-                  
+        fields = [
+            "id",
+            "name",
+            "slug",
+            "notes",
+            "updated",
+            "location_id",
+            "url",
+            "day",
+            "time",
+            "end_time",
+            "time_formatted",
+            "conference_url",
+            "conference_phone",
+            "types",
+            "location",
+            "location_notes",
+            "region_id",
+            "region",
+            "sub_region",
+            "group_id",
+            "group",
+            "district",
+            "district_id",
+            "sub_district",
+            "group_notes",
+            "website",
+            "website_2",
+            "location_url",
+            "formatted_address",
+            "latitude",
+            "longitude",
+            "email",
+            "phone",
+            "mailing_address",
+            "venmo",
+            "square",
+            "paypal",
+            "last_contact",
+            "postal_code",
+            "city",
+            "state",
+            "country",
+            "timezone",
+        ]
 
     def get_id(self, obj):
         return obj.code
@@ -208,67 +285,116 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     def get_url(self, obj):
 
         request = self.context.get("request")
-        url = reverse("meeting-detail",
-                      kwargs={"slug": obj.slug}, request=request)
+        url = reverse("meeting-detail", kwargs={"slug": obj.slug}, request=request)
         return url
 
     def get_day(self, obj):
-        days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
-                'Thursday', 'Friday', 'Saturday', ]
+        days = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+        ]
 
-        #day_number = days.index(obj.days)
-        return -1#day_number
-    
+        # day_number = days.index(obj.days)
+        return -1  # day_number
+
     def get_time(self, obj):
-        time = obj.time.strftime('%H:%M')
-        return f'{time}'
-    
+        time = obj.time.strftime("%H:%M")
+        return f"{time}"
+
     def get_end_time(self, obj):
-        
+
         return ""
 
     def get_time_formatted(self, obj):
-        
+
         return ""
 
-    def get_conference_phone(self, obj): return ""
+    def get_conference_phone(self, obj):
+        return ""
 
     def get_types(self, obj):
         return obj.get_types()
 
-    def get_location(self, obj): return ""
-    def get_location_notes(self, obj): return ""
-    def get_region_id(self, obj): return ""
-    def get_region(self, obj): return ""
-    def get_sub_region(self, obj): return ""
+    def get_location(self, obj):
+        return ""
+
+    def get_location_notes(self, obj):
+        return ""
+
+    def get_region_id(self, obj):
+        return ""
+
+    def get_region(self, obj):
+        return ""
+
+    def get_sub_region(self, obj):
+        return ""
+
     def get_group_id(self, obj):
         return obj.code
+
     def get_group(self, obj):
         return obj.title
+
     def get_district(self, obj):
         return obj.intergroup
+
     def get_district_id(self, obj):
         return obj.intergroup_id
-    def get_sub_district(self, obj): return ""
-    def get_group_notes(self, obj): return ""
-    def get_website(self, obj): return ""
-    def get_website_2(self, obj): return ""
-    def get_location_url(self, obj): return ""
-    def get_formatted_address(self, obj): return ""
-    def get_latitude(self, obj): 
+
+    def get_sub_district(self, obj):
+        return ""
+
+    def get_group_notes(self, obj):
+        return ""
+
+    def get_website(self, obj):
+        return ""
+
+    def get_website_2(self, obj):
+        return ""
+
+    def get_location_url(self, obj):
+        return ""
+
+    def get_formatted_address(self, obj):
+        return ""
+
+    def get_latitude(self, obj):
         return obj.lat
-    def get_longitude(self, obj): 
+
+    def get_longitude(self, obj):
         return obj.lng
-    def get_email(self, obj): return ""
-    def get_phone(self, obj): return ""
-    def get_mailing_address(self, obj): return ""
-    def get_venmo(self, obj): return ""
-    def get_square(self, obj): return ""
-    def get_paypal(self, obj): return ""
-    def get_last_contact(self, obj): return ""
-    def get_postal_code(self, obj): 
-        if 'online' in obj.title.lower():
-            return ''
+
+    def get_email(self, obj):
+        return ""
+
+    def get_phone(self, obj):
+        return ""
+
+    def get_mailing_address(self, obj):
+        return ""
+
+    def get_venmo(self, obj):
+        return ""
+
+    def get_square(self, obj):
+        return ""
+
+    def get_paypal(self, obj):
+        return ""
+
+    def get_last_contact(self, obj):
+        return ""
+
+    def get_postal_code(self, obj):
+        if "online" in obj.title.lower():
+            return ""
         return obj.postcode
 
     def get_city(self, obj):
@@ -276,8 +402,8 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
 
     def get_state(self, obj):
         return "London"
-    
-    def get_country(self, obj): 
+
+    def get_country(self, obj):
         return "UK"
 
     def get_timezone(self, obj):

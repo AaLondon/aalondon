@@ -42,6 +42,10 @@
       <div class="meeting-detail-text">CATEGORIES</div>
       <div>{% for sub_type in object.sub_types.all %}{{ sub_type.value }}<br/>{% endfor %}</div>
       {% endif %}
+      {% if object.payment_details%}
+      <div class="meeting-detail-text">PAYMENT LINK</div>
+      <div><a href="{{object.payment_details}}" target="_blank">{{object.payment_details}}</a></div>
+      {% endif%}
       {% if object.type == 'HYB'%}
       <div class="meeting-detail-text">ONLINE LINK</div>
       <div><a href="{{object.online_link}}" target="_blank">{{object.online_link}}</a></div>

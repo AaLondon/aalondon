@@ -37,7 +37,7 @@ class OnlineMeetingSearch extends Component {
 
 
   componentDidMount() {
-    console.log('window.topRecords'+window.topRecords);
+ 
     let top = window.topRecords || 0;
     let day = new Date().toLocaleString('en-us', { weekday: 'long' });
 
@@ -140,7 +140,7 @@ class OnlineMeetingSearch extends Component {
       queryString = `/api/onlinemeetingsearch/?day=${query_day}&now=${now}&clientLat=${this.state.clientLat}&clientLng=${this.state.clientLng}`;
       this.setState({ showPostcode: 0 })
     }
-    console.log("DayChange:"+queryString);
+
     axios.get(queryString)
       .then(response => {
         const totalMeetings = response.data.count;
@@ -170,7 +170,7 @@ class OnlineMeetingSearch extends Component {
     }
 
     let dayForm = <OnlineMeetingSearchForm value={this.state.day} onInputChange={this.handleInputChange}  onDayChange={this.onDayChange}  day={this.state.day}  /> ;
-    console.log('top:'+top);
+   
     if (top !== 0){
       dayForm = null;
     }

@@ -92,11 +92,13 @@ class Meeting(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(f'{self.title} {self.time} {self.type} {self.id}')
         meeting_time = self.time
-        geocoder = what3words.Geocoder(WHAT_THREE_WORDS_API_KEY)
-        res = geocoder.convert_to_coordinates(self.what_three_words)
-        if 'coordinates' in res:
-            self.lat = res['coordinates']['lat']
-            self.lng = res['coordinates']['lng']
+        #We only want wagtail backend to do a what3words lookup
+        if self.published:
+            geocoder = what3words.Geocoder(WHAT_THREE_WORDS_API_KEY)
+            res = geocoder.convert_to_coordinates(self.what_three_words)
+            if 'coordinates' in res:
+                self.lat = res['coordinates']['lat']
+                self.lng = res['coordinates']['lng']
         
         if meeting_time > time(0, 0) and meeting_time <= time(12,0):
             self.time_band = 'morning'

@@ -64,7 +64,18 @@ class MeetingsList(generics.ListAPIView):
         return Meeting.objects.all()
 
  
+class MeetingAutofillSearch(generics.ListAPIView):
+    model = Meeting
+    serializer_class = MeetingSearchSerializer
 
+    def get_queryset(self):
+        
+        title = self.request.query_params.get('title','').lower()
+        type = self.request.query_params.get('type','')
+        return Meeting.objects.filter(type=type).filter(published=True).filter(title__iexact=title).order_by('-created')
+        
+
+    
 
 class MeetingSearch(generics.ListAPIView):
    
@@ -78,7 +89,7 @@ class MeetingSearch(generics.ListAPIView):
 
     def get_queryset(self):
         
-        queryset =  Meeting.objects.annotate(search=SearchVector('postcode', 'detail','title'),)
+        queryset =  Meeting.objects.filter(published=True).annotate(search=SearchVector('postcode', 'detail','title'),)
         search = self.request.query_params.get('search', None)
        
         if search is not None and len(search) > 0:
