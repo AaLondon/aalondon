@@ -13,7 +13,7 @@ jobs:
         python-version: [3.7]
     services:
       postgres:
-        image: postgres:11
+        image: postgres:12
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -24,7 +24,7 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
     - name: psycopg2 prerequisites
-      run: sudo apt-get install python-dev libpq-dev
+      run: sudo apt-get install python3-dev libpq-dev
     - uses: actions/checkout@v1
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
