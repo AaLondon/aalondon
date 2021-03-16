@@ -155,12 +155,4 @@ class Reflections(models.Model):
         return self.title
     
 
-class EmailContact(models.Model):
-    first_name=models.CharField(null=False,blank=False, max_length=100)
-    last_name=models.CharField(null=False,blank=False, max_length=100)
-    organisation=models.CharField(null=False,blank=False, max_length=200)
-    email = models.EmailField(null=False,blank=False,default='doesnotexist@aalondon.com')
-    update_to_gso = models.BooleanField(null=False,blank=False, default=False) 
 
-    def __str__(self):
-        return f'{self.first_name} {self.last_name} {self.organisation}'
