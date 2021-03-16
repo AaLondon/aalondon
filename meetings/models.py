@@ -6,122 +6,193 @@ from django_extensions.db.fields import AutoSlugField
 from datetime import time
 import json
 import what3words
-
+from django.core.mail import EmailMessage
+from django.template import Context
+from django.template.loader import get_template
 
 WHAT_THREE_WORDS_API_KEY = settings.WHAT_THREE_WORDS_API_KEY
 # Create your models here.
 class MeetingDay(models.Model):
-    value = models.CharField(max_length=10,null=False,blank=False)
+    value = models.CharField(max_length=10, null=False, blank=False)
 
     def __str__(self):
         return self.value
-    
+
+
 class MeetingIntergroup(models.Model):
-    value = models.CharField(max_length=100,null=False,blank=False)
+    value = models.CharField(max_length=100, null=False, blank=False)
 
     def __str__(self):
         return self.value
+
 
 class MeetingSubType(models.Model):
-    code = models.CharField(max_length=5,null=False,blank=False)
-    value = models.CharField(max_length=100,null=False,blank=False)
-    
+    code = models.CharField(max_length=5, null=False, blank=False)
+    value = models.CharField(max_length=100, null=False, blank=False)
+
     def __str__(self):
-        return f'{self.code} - {self.value}'
+        return f"{self.code} - {self.value}"
+
+
+def get_time_band(meeting_time):
+    time_band = ""
+    if meeting_time > time(0, 0) and meeting_time <= time(12, 0):
+        time_band = "morning"
+    elif meeting_time > time(12, 0) and meeting_time <= time(18, 0):
+        time_band = "afternoon"
+    else:
+        time_band = "evening"
+    return time_band
+
+
+def get_longitude_latitude(what_three_words):
+    lat, lng = None, None
+    geocoder = what3words.Geocoder(WHAT_THREE_WORDS_API_KEY)
+    res = geocoder.convert_to_coordinates(what_three_words)
+    if "coordinates" in res:
+        lat = res["coordinates"]["lat"]
+        lng = res["coordinates"]["lng"]
+    return lat, lng
 
 
 class Meeting(models.Model):
     MEETING_TYPES = [
-    ('F2F', 'Face To Face'),
-    ('ONL', 'Online'),
-    ('HYB', 'Hybrid'),    
+        ("F2F", "Face To Face"),
+        ("ONL", "Online"),
+        ("HYB", "Hybrid"),
     ]
     type = models.CharField(
-        max_length=3,
-        choices=MEETING_TYPES,
-        null=False,
-        blank=False,default='F2F'
-        
+        max_length=3, choices=MEETING_TYPES, null=False, blank=False, default="F2F"
     )
-    submission = models.CharField(max_length=10,null=False,blank=False,default='existing')
-    address = models.TextField(blank=True,max_length=300)
-    code = models.IntegerField(blank=True,null=True,default=-1)
-    days = models.ManyToManyField(to=MeetingDay,related_name='meeting_days')
-    intergroup = models.ForeignKey(to=MeetingIntergroup,related_name='meeting_intergroup',null=True,blank=True,on_delete=models.CASCADE)
-    time = models.TimeField(null=False,blank=False)
-    online_link = models.URLField(max_length=1000,null=True,blank=True)
-    online_password = models.CharField(max_length=50,null=True,blank=True)
-    payment_details = models.TextField(null=True,blank=True)
-    what_three_words = models.CharField(max_length=100,null=True,blank=True)
-    email = models.EmailField(null=False,blank=False,default='doesnotexist@aalondon.com')
-    hearing = models.BooleanField(null=True,default=False)
-    lat = models.FloatField(blank=True,null=True)
-    lng = models.FloatField(blank=True,null=True)
-    postcode = models.TextField(max_length=10,null=True,blank=True)
+    submission = models.CharField(
+        max_length=10, null=False, blank=False, default="existing"
+    )
+    address = models.TextField(blank=True, max_length=300)
+    code = models.IntegerField(blank=True, null=True, default=-1)
+    days = models.ManyToManyField(to=MeetingDay, related_name="meeting_days")
+    intergroup = models.ForeignKey(
+        to=MeetingIntergroup,
+        related_name="meeting_intergroup",
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+    )
+    time = models.TimeField(null=False, blank=False)
+    online_link = models.URLField(max_length=1000, null=True, blank=True)
+    online_password = models.CharField(max_length=50, null=True, blank=True)
+    payment_details = models.TextField(null=True, blank=True)
+    what_three_words = models.CharField(max_length=100, null=True, blank=True)
+    email = models.EmailField(
+        null=False, blank=False, default="doesnotexist@aalondon.com"
+    )
+    hearing = models.BooleanField(null=True, default=False)
+    lat = models.FloatField(blank=True, null=True)
+    lng = models.FloatField(blank=True, null=True)
+    postcode = models.TextField(max_length=10, null=True, blank=True)
     time = models.TimeField()
-    duration = models.TextField(blank=True,max_length=20)
+    duration = models.TextField(blank=True, max_length=20)
     title = models.TextField()
-    wheelchair = models.BooleanField(null=True,default=False)
-    day_number = models.IntegerField(blank=True,null=True)
-    slug = AutoSlugField(populate_from=['title','postcode','time'], max_length=100)
-    day_rank = models.IntegerField(blank=True,null=True)
-    group = models.TextField(blank=True,null=True)
-    group_id = models.IntegerField(blank=True,null=True)
-    intergroup = models.CharField(blank=True,max_length=100,null=True)
-    intergroup_id = models.IntegerField(blank=True,null=True)
-    detail = models.TextField(blank=True,null=True)
-    time_band = models.CharField(blank=True,max_length=10,null=True)
-    covid_open_status = models.BooleanField(null=False,default=False)    
+    wheelchair = models.BooleanField(null=True, default=False)
+    day_number = models.IntegerField(blank=True, null=True)
+    slug = AutoSlugField(populate_from=["title", "postcode", "time"], max_length=100)
+    day_rank = models.IntegerField(blank=True, null=True)
+    group = models.TextField(blank=True, null=True)
+    group_id = models.IntegerField(blank=True, null=True)
+    intergroup = models.CharField(blank=True, max_length=100, null=True)
+    intergroup_id = models.IntegerField(blank=True, null=True)
+    detail = models.TextField(blank=True, null=True)
+    time_band = models.CharField(blank=True, max_length=10, null=True)
+    covid_open_status = models.BooleanField(null=False, default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    conference_url = models.URLField(max_length=1000,blank=True,null=True)
-    types = models.CharField(max_length=200,blank=True,null=True)
-    description = models.TextField(null=True,blank=True)
-    notes = models.TextField(null=True,blank=True)
-    sub_types = models.ManyToManyField(to=MeetingSubType,blank=True)
-    published = models.BooleanField(null=False,blank=False,default=False)
+    conference_url = models.URLField(max_length=1000, blank=True, null=True)
+    types = models.CharField(max_length=200, blank=True, null=True)
+    description = models.TextField(null=True, blank=True)
+    notes = models.TextField(null=True, blank=True)
+    sub_types = models.ManyToManyField(to=MeetingSubType, blank=True)
+    published = models.BooleanField(null=False, blank=False, default=False)
 
     def __str__(self):
 
         return self.title
 
+    @property
     def meeting_days(self):
         return ",".join([str(p) for p in self.days.all()])
-    
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(f'{self.title} {self.time} {self.type} {self.id}')
-        meeting_time = self.time
-        #We only want wagtail backend to do a what3words lookup
-        if self.published:
-            geocoder = what3words.Geocoder(WHAT_THREE_WORDS_API_KEY)
-            res = geocoder.convert_to_coordinates(self.what_three_words)
-            if 'coordinates' in res:
-                self.lat = res['coordinates']['lat']
-                self.lng = res['coordinates']['lng']
-        
-        if meeting_time > time(0, 0) and meeting_time <= time(12,0):
-            self.time_band = 'morning'
-        elif meeting_time > time(12,0) and meeting_time <= time(18,0):
-            self.time_band = 'afternoon'
-        else:
-            self.time_band = 'evening'
-        
-        
-        super(Meeting, self).save(*args, **kwargs)
 
-    def get_absolute_url(self):  
+    @classmethod
+    def from_db(cls, db, field_names, values):
+        instance = super().from_db(db, field_names, values)
+
+        # save original values, when model is loaded from database,
+        # in a separate attribute on the model
+        instance._loaded_values = dict(zip(field_names, values))
+
+        return instance
+
+    @property
+    def call_what_three_words(self):
+        """Works out whether we need to call what_three_words"""
+        if not self._state.adding and self.published:
+            if self.what_three_words:
+                if (
+                    self._loaded_values["what_three_words"] != self.what_three_words
+                    or not self.lat
+                ):
+                    return True
+        return False
+
+    def send_mail_to_gso_contacts(self):
+        gso_contacts = EmailContact.objects.filter(update_to_gso=True)
+        title = self.title
+        type = self.type
+        intergroup = self.intergroup
+        days = self.meeting_days
+        time = self.time
+        latitude = self.lat
+        longitude = self.lng
+
+        message = get_template("meetings/gso_email.html").render(
+            {"meeting": {}}
+        )
+        
+        if gso_contacts:
+            to_emails = [obj.email for obj in gso_contacts]
+            email_message = EmailMessage(
+                subject="Meeting Added/Updated to aa-london.com",
+                body=message,
+                from_email="info@aa-london.com",
+                to=to_emails,
+                reply_to=["info@aa-london.com"],
+            )
+            email_message.content_subtype = "html"
+            email_message.send()
+
+    def save(self, *args, **kwargs):
+       
+        self.slug = slugify(f"{self.title} {self.time} {self.type} {self.id}")
+        self.time_band = get_time_band(self.time)
+        if self.call_what_three_words:
+            self.lat, self.lng = get_longitude_latitude(self.what_three_words)
+        super(Meeting, self).save(*args, **kwargs)
+        # send email to gso
+        if self.published:
+            self.send_mail_to_gso_contacts()
+
+
+    def get_absolute_url(self):
 
         return reverse("meeting-detail", kwargs={"pk": self.pk})
 
 
-    def set_types(self, x):
-        self.types = json.dumps(x)
+class EmailContact(models.Model):
+    first_name = models.CharField(null=False, blank=False, max_length=100)
+    last_name = models.CharField(null=False, blank=False, max_length=100)
+    organisation = models.CharField(null=False, blank=False, max_length=200)
+    email = models.EmailField(
+        null=False, blank=False, default="doesnotexist@aalondon.com"
+    )
+    update_to_gso = models.BooleanField(null=False, blank=False, default=False)
 
-    def get_types(self):
-        # JSON only supports double-quoted values
-        if self.types:
-            return json.loads(self.types.replace("'", "\""))
-        else:
-            return []
-
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} {self.organisation}"
