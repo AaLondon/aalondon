@@ -81,3 +81,9 @@ if SENTRY_DSN:
         send_default_pii=True
     )
 
+ANYMAIL = {
+   
+    "MAILGUN_API_KEY": env("MAILGUN_API_KEY",default=""),
+    "MAILGUN_API_URL": env("MAILGUN_API_URL",default="")
+}
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...

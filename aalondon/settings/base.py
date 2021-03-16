@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'wagtail.contrib.modeladmin',
     'wagtailmenus',
+    'anymail',
 ]
 
 MIDDLEWARE = [
@@ -205,3 +206,6 @@ REST_FRAMEWORK = {
 WHAT_THREE_WORDS_API_KEY = env('WHAT_THREE_WORDS_API_KEY',default="")
 
 
+
+DEFAULT_FROM_EMAIL = "info@aa-london.com"  # if you don't already have this in settings
+SERVER_EMAIL = "developer@aa-london.com"  # ditto (default from-email for Django errors)
