@@ -9,6 +9,11 @@ import what3words
 from django.core.mail import EmailMessage
 from django.template import Context
 from django.template.loader import get_template
+from django.core import serializers
+
+
+
+
 
 WHAT_THREE_WORDS_API_KEY = settings.WHAT_THREE_WORDS_API_KEY
 # Create your models here.
@@ -31,7 +36,7 @@ class MeetingSubType(models.Model):
     value = models.CharField(max_length=100, null=False, blank=False)
 
     def __str__(self):
-        return f"{self.code} - {self.value}"
+        return f"{self.value}"
 
 
 def get_time_band(meeting_time):
@@ -61,11 +66,15 @@ class Meeting(models.Model):
         ("ONL", "Online"),
         ("HYB", "Hybrid"),
     ]
+    SUBMISSION_TYPES = [
+        ("new", "new"),
+        ("existing", "existing"),
+    ]
     type = models.CharField(
         max_length=3, choices=MEETING_TYPES, null=False, blank=False, default="F2F"
     )
     submission = models.CharField(
-        max_length=10, null=False, blank=False, default="existing"
+        max_length=10,choices=SUBMISSION_TYPES, null=False, blank=False, default="existing"
     )
     address = models.TextField(blank=True, max_length=300)
     code = models.IntegerField(blank=True, null=True, default=-1)
@@ -109,7 +118,7 @@ class Meeting(models.Model):
     types = models.CharField(max_length=200, blank=True, null=True)
     description = models.TextField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
-    sub_types = models.ManyToManyField(to=MeetingSubType, blank=True)
+    sub_types = models.ManyToManyField(to=MeetingSubType, blank=True,related_name="meeting_categ")
     published = models.BooleanField(null=False, blank=False, default=False)
 
     def __str__(self):
@@ -118,7 +127,12 @@ class Meeting(models.Model):
 
     @property
     def meeting_days(self):
-        return ",".join([str(p) for p in self.days.all()])
+        return ", ".join([str(p) for p in self.days.all()])
+
+    @property
+    def meeting_categories(self):
+        return ", ".join([str(p) for p in self.sub_types.all()])
+
 
     @classmethod
     def from_db(cls, db, field_names, values):
@@ -141,19 +155,13 @@ class Meeting(models.Model):
                 ):
                     return True
         return False
-
+    
+    
     def send_mail_to_gso_contacts(self):
         gso_contacts = EmailContact.objects.filter(update_to_gso=True)
-        title = self.title
-        type = self.type
-        intergroup = self.intergroup
-        days = self.meeting_days
-        time = self.time
-        latitude = self.lat
-        longitude = self.lng
-
+        
         message = get_template("meetings/gso_email.html").render(
-            {"meeting": {}}
+            {"meeting": self}
         )
         
         if gso_contacts:
@@ -161,12 +169,28 @@ class Meeting(models.Model):
             email_message = EmailMessage(
                 subject="Meeting Added/Updated to aa-london.com",
                 body=message,
-                from_email="info@aa-london.com",
+                from_email="AA-LONDON<info@aa-london.com>",
                 to=to_emails,
                 reply_to=["info@aa-london.com"],
             )
             email_message.content_subtype = "html"
             email_message.send()
+
+
+    def send_mail_to_user(self):
+        
+        message = get_template("meetings/user_submission_email.html").render(
+            {"meeting": self}
+        )
+        email_message = EmailMessage(
+            subject="Meeting Added/Updated to aa-london.com",
+            body=message,
+            from_email="AA-LONDON<info@aa-london.com>",
+            to=[self.email],
+            reply_to=["info@aa-london.com"],
+        )
+        email_message.content_subtype = "html"
+        email_message.send()
 
     def save(self, *args, **kwargs):
        
@@ -178,6 +202,12 @@ class Meeting(models.Model):
         # send email to gso
         if self.published:
             self.send_mail_to_gso_contacts()
+            try:
+                if self._loaded_values["published"] != self.published:
+                    self.send_mail_to_user()
+            except AttributeError:
+                pass
+            
 
 
     def get_absolute_url(self):

@@ -23,6 +23,11 @@ class MeetingTests(TestCase):
     def setUp(self):
         self.meeting = MeetingFactory(title="Thursday Big Book",what_three_words="bish.bang.bong")
         self.meeting_day = MeetingDayFactory(value="Monday")
+        self.published_meeting = MeetingFactory(published=True)
+        self.unpublished_meeting = MeetingFactory(title="unpublished",published=False,email='billw@meeting.com')
+        self.new_meeting = MeetingFactory(title="new",submission="new")
+        self.existing_meeting = MeetingFactory(title="existing",submission="existing")
+        
         EmailContact.objects.create(
             first_name="Homer",
             last_name="Simpson",
@@ -55,6 +60,7 @@ class MeetingTests(TestCase):
     def test_what_three_words_returns_lng_lat(self,mock_convert_to_coordinates):
         mock_convert_to_coordinates.return_value ={"coordinates":{"lng":-0.195521,"lat":51.520847}}
         meeting = Meeting.objects.get(title="Thursday Big Book")
+        meeting.published =True
         meeting.save()
         assert meeting.lng == -0.195521
         assert meeting.lat == 51.520847
@@ -68,11 +74,12 @@ class MeetingTests(TestCase):
         assert not meeting.lat 
 
     @patch('what3words.Geocoder.convert_to_coordinates')
-    def test_what_three_words_updates_long_lat_when_changed(self,mock_convert_to_coordinates):
+    def test_what_three_words_updates_long_lat_when_changed_and_published(self,mock_convert_to_coordinates):
         mock_convert_to_coordinates.return_value ={"coordinates":{"lng":-0.195521,"lat":51.520847}}
-        MeetingFactory(what_three_words="one.two.three",lng=1,lat=1)
+        MeetingFactory(what_three_words="one.two.three")
         meeting = Meeting.objects.get(what_three_words="one.two.three")
-        meeting.what_three_words = "four.five.six"      
+        meeting.what_three_words = "four.five.six"   
+        meeting.published = True   
         meeting.save()
         assert meeting.lng == -0.195521
         assert meeting.lat == 51.520847
@@ -87,16 +94,45 @@ class MeetingTests(TestCase):
         assert evening_meeting.time_band == "evening"
 
     
-    def test_meeting_email_sent_susccessfully_to_gso(self):
+    def test_meeting_email_sent_to_gso_on_save_if_published(self):
        
-        meeting = Meeting.objects.get(title="Thursday Big Book")
-        meeting.save()
+        self.published_meeting.save()
       
         assert len(mail.outbox) == 1, "Outbox is empty"
         assert mail.outbox[0].subject == "Meeting Added/Updated to aa-london.com"
         assert mail.outbox[0].to == ["homerjsimpson@gso.com","margesimpson@gso.com"]
 
         
+    def test_meeting_email_sent_to_user_and_gso_when_publish_goes_false_to_true(self):
+        meeting = Meeting.objects.get(title="unpublished")
+        meeting.published = True
+        meeting.save()
+
+        assert len(mail.outbox) == 2, "Outbox should have two emails and does not"
+        assert mail.outbox[0].to == ["homerjsimpson@gso.com","margesimpson@gso.com"]
+        assert mail.outbox[1].to == ["billw@meeting.com"]
+
+    
+    def test_emails_for_new_meeting_contains_text(self):
+        meeting = Meeting.objects.get(title="new")
+        meeting.published = True
+        meeting.save()
+
+        assert "Here are the details of a new meeting" in mail.outbox[0].body
+        assert "Thank you for letting us know about your new meeting." in mail.outbox[1].body
+
+    def test_emails_for_existing_meeting_contains_text(self):
+        meeting = Meeting.objects.get(title="existing")
+        meeting.published = True
+        meeting.save()
+
+        assert "details of meeting changes" in mail.outbox[0].body
+        assert "Thank you for letting us know about the changes to your meeting." in mail.outbox[1].body
+       
+       
+        
+
+
 
     
 

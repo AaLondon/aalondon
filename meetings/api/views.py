@@ -31,11 +31,7 @@ class MeetingList(generics.ListCreateAPIView):
             )
 
 
-    def create(self, request, *args, **kwargs):
-        response = super(MeetingList, self).create(request, *args, **kwargs)
-        data = response.data
-        self._send_mail_to_wagtail_moderators(data)
-        return response
+   
 
 
 class MeetingDetail(generics.RetrieveUpdateDestroyAPIView):

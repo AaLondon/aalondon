@@ -79,22 +79,9 @@ class MeetingTests(APITestCase,WagtailTestUtils):
         }
         return data
 
-    def test_meeting_update_sends_email(self):
-        url = reverse("meeting-list")
-        meeting = MeetingFactory.build()
-        data = self.get_meeting_data(meeting)
-        response = self.client.post(url, data, format="json")
-        assert response.status_code == status.HTTP_201_CREATED
-        assert len(mail.outbox) == 1, "Outbox is empty"
+    
 
-    def test_meeting_email_sent_susccessfully_to_moderators(self):
-        url = reverse("meeting-list")
-        meeting = MeetingFactory.build()
-        data = self.get_meeting_data(meeting)
-        self.client.post(url, data, format="json")
-        assert len(mail.outbox) == 1, "Outbox is empty"
-        assert mail.outbox[0].subject == "Meeting Added/Updated to aa-london.com"
-        assert mail.outbox[0].to == ["moderatorone@example.com","moderatortwo@example.com"]
+  
 
 
 

@@ -1,48 +1,122 @@
 <!DOCTYPE html>
 <html>
-    <body>
-        <br>
 
-        <h2>Thank you for your order {{ order.full_name }}</h2>
-        <h3>Your Order ID: {{ order.short_uuid }}</h3>
+<head>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    </style>
+</head>
 
+<body>
+    <br>
+    <div>Chris</div>
+    <br>
+    <p>Hope all’s well with you.</p>
+    {% if meeting.submission == 'new' %}
+    <p>Here are the details of a new meeting which we have added to
+        <a class="blue-text" href="https://aa-london.com" target="_blank"
+            rel="noopener noreferrer">https://aa-london.com</a>
+    </p>
+    {% else %}
+    <p>Here are the details of meeting changes which we have uploaded to
+        <a class="blue-text" href="https://aa-london.com" target="_blank"
+            rel="noopener noreferrer">https://aa-london.com</a>
+    </p>
+    {% endif %}
+    <p>
 
-        <h3>Shipping Details:</h3>
+    <div>Alan M, Chair</div>
+    <div>Website team</div>
+    </p>
+    <div><a class="blue-text" href="https://aa-london.com" target="_blank"
+            rel="noopener noreferrer">https://aa-london.com</a></div>
+    <div><a href="tel:+4477 0353 7748">+4477 0353 7748</a></div>
+    <h2>Meeting Details:</h2>
+    <table>
+        <tbody>
+            <tr>
+                <th align="left">Title</th>
+                <td>{{ meeting.title }}</td>
+            </tr>
+            <tr>
+                <th align="left">Submission</th>
+                <td>{{ meeting.submission }}</td>
+            </tr>
+            <tr>
+                <th align="left">Type</th>
+                <td>{{ meeting.get_type_display }}</td>
+            </tr>
+            <tr>
+                <th align="left">Address</th>
+                <td>{{ meeting.address }}</td>
+            </tr>
+            <tr>
+                <th align="left">Days</th>
+                <td>{{ meeting.meeting_days }}</td>
+            </tr>
+            <tr>
+                <th align="left">Intergroup</th>
+                <td>{{ meeting.intergroup }}</td>
+            </tr>
+            <tr>
+                <th align="left">Time</th>
+                <td>{{ meeting.time }}</td>
+            </tr>
+            <tr>
+                <th align="left">Online Link</th>
+                <td>{{ meeting.online_link }}</td>
+            </tr>
+            <tr>
+                <th align="left">Online Password</th>
+                <td>{{ meeting.online_password }}</td>
+            </tr>
+            <tr>
+                <th align="left">Payment Details</th>
+                <td>{{ meeting.payment_details }}</td>
+            </tr>
+            <tr>
+                <th align="left">What three Words</th>
+                <td>{{ meeting.what_three_words }}</td>
+            </tr>
+            <tr>
+                <th align="left">Email</th>
+                <td>{{ meeting.email }}</td>
+            </tr>
+            <tr>
+                <th align="left">Latitude</th>
+                <td>{{ meeting.lat }}</td>
+            </tr>
+            <tr>
+                <th align="left">Longitude</th>
+                <td>{{ meeting.lng }}</td>
+            </tr>
+            <tr>
+                <th align="left">Postcode</th>
+                <td>{{ meeting.postcode }}</td>
+            </tr>
+            <tr>
+                <th align="left">Detail</th>
+                <td>{{ meeting.detail }}</td>
+            </tr>
+            <tr>
+                <th align="left">Notes</th>
+                <td>{{ meeting.notes }}</td>
+            </tr>
+            <tr>
+                <th align="left">Categories</th>
+                <td>{{ meeting.meeting_categories }}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
 
-        {{ order.full_name }} </br>
-        {{ order.shipping_address.street }} <br/>
-        {{ order.shipping_address.city }} <br/>
-        {{ order.shipping_address.postcode }}
+</html>
 
-        <h3>
-            Contact Details:
-        </h3>
-        Email: {{ order.email }} <br/>
-        Phone: {{ order.phone }}
-
-        <h2>Order Details:</h2>
-
-        <table>
-
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total Price</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for item in order.order_items %}
-                    <tr>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ item.price }}</td>
-                        <td>{{ item.total_price }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </body>
 </html>
