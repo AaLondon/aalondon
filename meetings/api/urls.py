@@ -6,7 +6,7 @@ from .views import MeetingList, MeetingDetail
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path("", MeetingList.as_view()),
+    path("", MeetingList.as_view(),name='meeting-list'),
     path("<int:pk>/", MeetingDetail.as_view()),
     
 ]
