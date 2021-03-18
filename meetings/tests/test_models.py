@@ -95,7 +95,7 @@ class MeetingTests(TestCase):
 
     
     def test_meeting_email_sent_to_gso_on_save_if_published(self):
-       
+        self.published_meeting.gso_opt_in = True
         self.published_meeting.save()
       
         assert len(mail.outbox) == 1, "Outbox is empty"
@@ -105,6 +105,7 @@ class MeetingTests(TestCase):
         
     def test_meeting_email_sent_to_user_and_gso_when_publish_goes_false_to_true(self):
         meeting = Meeting.objects.get(title="unpublished")
+        meeting.gso_opt_in = True
         meeting.published = True
         meeting.save()
 
@@ -115,6 +116,7 @@ class MeetingTests(TestCase):
     
     def test_emails_for_new_meeting_contains_text(self):
         meeting = Meeting.objects.get(title="new")
+        meeting.gso_opt_in = True
         meeting.published = True
         meeting.save()
 
@@ -123,6 +125,7 @@ class MeetingTests(TestCase):
 
     def test_emails_for_existing_meeting_contains_text(self):
         meeting = Meeting.objects.get(title="existing")
+        meeting.gso_opt_in = True
         meeting.published = True
         meeting.save()
 
