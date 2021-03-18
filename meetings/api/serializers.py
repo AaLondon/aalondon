@@ -28,6 +28,7 @@ class MeetingSerializer(serializers.ModelSerializer):
             "intergroup",
             "days",
             "time",
+            "end_time",
             "online_link",
             "online_password",
             "address",
@@ -37,7 +38,8 @@ class MeetingSerializer(serializers.ModelSerializer):
             "email",
             "description",
             "notes",
-            "sub_types"
+            "sub_types",
+            "gso_opt_in",
         ]
 
     def create(self, validated_data):

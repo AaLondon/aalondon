@@ -87,6 +87,7 @@ class Meeting(models.Model):
         on_delete=models.CASCADE,
     )
     time = models.TimeField(null=False, blank=False)
+    end_time = models.TimeField(null=True, blank=False)
     online_link = models.URLField(max_length=1000, null=True, blank=True)
     online_password = models.CharField(max_length=50, null=True, blank=True)
     payment_details = models.TextField(null=True, blank=True)
@@ -98,7 +99,6 @@ class Meeting(models.Model):
     lat = models.FloatField(blank=True, null=True)
     lng = models.FloatField(blank=True, null=True)
     postcode = models.TextField(max_length=10, null=True, blank=True)
-    time = models.TimeField()
     duration = models.TextField(blank=True, max_length=20)
     title = models.TextField()
     wheelchair = models.BooleanField(null=True, default=False)
@@ -118,8 +118,9 @@ class Meeting(models.Model):
     types = models.CharField(max_length=200, blank=True, null=True)
     description = models.TextField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
-    sub_types = models.ManyToManyField(to=MeetingSubType, blank=True,related_name="meeting_categ")
+    sub_types = models.ManyToManyField(to=MeetingSubType, blank=True,related_name="meeting_categories")
     published = models.BooleanField(null=False, blank=False, default=False)
+    gso_opt_in = models.BooleanField(null=False, blank=False, default=False)
 
     def __str__(self):
 
@@ -201,7 +202,9 @@ class Meeting(models.Model):
         super(Meeting, self).save(*args, **kwargs)
         # send email to gso
         if self.published:
-            self.send_mail_to_gso_contacts()
+            if self.gso_opt_in:
+                self.send_mail_to_gso_contacts()
+            
             try:
                 if self._loaded_values["published"] != self.published:
                     self.send_mail_to_user()
