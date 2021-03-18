@@ -11,19 +11,20 @@ scrapy-djangoitem==1.1.1
 pandas==0.25.3
 psycopg2-binary==2.8.6
 django-storages
-boto3==1.17.17
+boto3==1.17.31
 geopy==1.21.0
 whitenoise[brotli]==5.0.1
 wagtailmenus==3.0.2
 sentry-sdk==0.14.3
 pytest==6.2.1
 pytest-django==3.7.0
-ipython==7.16.0
+ipython==7.20.0
 what3words==3.1.1
 webdriver-manager==3.3.0
 selenium==3.141.0
 coverage==5.4
 factory-boy==3.2.0
+django-anymail==8.2
 
 
 
