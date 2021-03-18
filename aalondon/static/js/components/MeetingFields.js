@@ -265,7 +265,7 @@ export default function MeetingFields(props) {
 
   return (
     <React.Fragment>
-      <label htmlFor="notes">Meeting Type(Hybrid,Online or Face to Face)</label>
+      <label htmlFor="notes">Meeting Type (Hybrid, Online or Face to Face)*</label>
       <Dropdown
         placeholder='Please choose meeting type'
         // fluid
@@ -289,7 +289,7 @@ export default function MeetingFields(props) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="submission">Is this a new entry to AALondon, or an update to an existing entry? </label>
+            <label htmlFor="submission">Is this a new entry to AA-London.com, or an update to an existing entry? </label>
             <SemanticField
               name="submission"
               component={Dropdown}
@@ -311,7 +311,7 @@ export default function MeetingFields(props) {
               options={dayOptions}
               multiple
               selection
-              placeholder="Please select day of week"
+              placeholder="Please select day(s) of the week"
               id={"days"}
               value={[]}
               className={'form-control' + (errors.day && touched.day ? ' is-invalid' : '')}
@@ -329,7 +329,7 @@ export default function MeetingFields(props) {
               component={Dropdown}
               options={intergroupOptions}
               selection
-              placeholder="Intergroup if your group is part of one?"
+              placeholder="Intergroup - if any?"
               id={"intergroup"}
               className={'form-control' + (errors.intergroup && touched.intergroup ? ' is-invalid' : '')}
             />
@@ -337,7 +337,7 @@ export default function MeetingFields(props) {
           </div>
           <div className="form-group">
             <label htmlFor="startTime">Start Time</label>
-            <Field placeholder="Start time needs to be in 24 hour format e.g. 13:30" name="startTime" type="text" className={'form-control' + (errors.startTime && touched.startTime ? ' is-invalid' : '')} />
+            <Field placeholder="Start time in 24 hour format e.g. 13:30" name="startTime" type="text" className={'form-control' + (errors.startTime && touched.startTime ? ' is-invalid' : '')} />
             <ErrorMessage name="startTime" component="div" className="invalid-feedback" />
           </div>
           {formType !== 'F2F' &&
@@ -365,7 +365,7 @@ export default function MeetingFields(props) {
               </div></>}
           <div className="form-group">
             <label htmlFor="paymentLink">Payment Link</label>
-            <Field placeholder="Paypal,Cashapp,Square... etc link" name="paymentLink" type="text" className={'form-control' + (errors.paymentLink && touched.paymentLink ? ' is-invalid' : '')} />
+            <Field placeholder="Paypal, Cashapp, Square... etc link" name="paymentLink" type="text" className={'form-control' + (errors.paymentLink && touched.paymentLink ? ' is-invalid' : '')} />
             <ErrorMessage name="paymentLink" component="div" className="invalid-feedback" />
           </div>
           {formType !== 'ONL' &&
@@ -376,7 +376,7 @@ export default function MeetingFields(props) {
             </div>}
           <div className="form-group">
             <label htmlFor="email">Email</label>
-            <Field placeholder="Please use a generic group email address." name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+            <Field placeholder="Please use a generic group email address" name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
             <ErrorMessage name="email" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
