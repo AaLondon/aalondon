@@ -212,49 +212,54 @@ export default function MeetingFields(props) {
     let title = props.values.title
     let type = formType
     let submission = data
-    
+
 
     if (submission === 'existing') {
       axios.get(`/api/meetingautofill/?title=${title}&type=${type}`)
         .then(response => {
-    
+
           let result = response.data.results[0]
-          if(result){
-          setFieldValue('address', result.address ? result.address :'')
-          setFieldValue('startTime', result.friendly_time)
-          setFieldValue('type', result.type)
-          setFieldValue('postcode', result.postcode ? result.postcode :'' )
-          setFieldValue('intergroup', result.intergroup ? result.intergroup:'')
-          setFieldValue('link', result.online_link ? result.online_link:'')
-          setFieldValue('password', result.online_password ? result.online_password:'')
-          setFieldValue('address', result.address ? result.address :'')
-          setFieldValue('paymentLink', result.payment_details ? result.payment_details:'')
-          setFieldValue('whatThreeWords', result.what_three_words ? result.what_three_words:'')
-          setFieldValue('description', result.description)
-          setFieldValue('days', result.days.map(day => day.value))
-          let subTypes = result.sub_types.map(sub_type => sub_type.value)
+          if (result) {
+            setFieldValue('address', result.address ? result.address : '')
+            setFieldValue('startTime', result.friendly_time)
+            setFieldValue('endTime', result.friendly_end_time)
+            setFieldValue('type', result.type)
+            setFieldValue('postcode', result.postcode ? result.postcode : '')
+            setFieldValue('intergroup', result.intergroup ? result.intergroup : '')
+            setFieldValue('link', result.online_link ? result.online_link : '')
+            setFieldValue('password', result.online_password ? result.online_password : '')
+            setFieldValue('address', result.address ? result.address : '')
+            setFieldValue('paymentLink', result.payment_details ? result.payment_details : '')
+            setFieldValue('whatThreeWords', result.what_three_words ? result.what_three_words : '')
+            setFieldValue('description', result.description)
+            setFieldValue('gsoOptIn', result.gso_opt_in)
+            setFieldValue('days', result.days.map(day => day.value))
 
-          for (const subType of subTypes) {
-            if (subType === "Child-Friendly") {
-              setFieldValue('childFriendly', true)
-            } else if (subType === "LGBTQ") {
-              setFieldValue('lgbt', true)
-            } else if (subType === "Location Temporarily Closed") {
-              setFieldValue('temporaryClosure', true)
-            } else if (subType === "Outdoor") {
-              setFieldValue('outdoors', true)
-            } else if (subType === "Wheelchair Access") {
-              setFieldValue('wheelchair', true)
-            } else if (subType === "British Sign Language") {
-              setFieldValue('signed', true)
-            } else if (subType === "Chits") {
-              setFieldValue('chits', true)
-            } else if (subType === "Creche") {
-              setFieldValue('creche', true)
+            let subTypes = result.sub_types.map(sub_type => sub_type.value)
+
+            for (const subType of subTypes) {
+              if (subType === "Child-Friendly") {
+                setFieldValue('childFriendly', true)
+              } else if (subType === "LGBTQ") {
+                setFieldValue('lgbt', true)
+              } else if (subType === "Location Temporarily Closed") {
+                setFieldValue('temporaryClosure', true)
+              } else if (subType === "Outdoor") {
+                setFieldValue('outdoors', true)
+              } else if (subType === "Wheelchair Access") {
+                setFieldValue('wheelchair', true)
+              } else if (subType === "British Sign Language") {
+                setFieldValue('signed', true)
+              } else if (subType === "Chits") {
+                setFieldValue('chits', true)
+              } else if (subType === "Creche") {
+                setFieldValue('creche', true)
+              }else if (subType === "Closed") {
+                setFieldValue('closed', true)
+              }
             }
-          }
 
-        }
+          }
 
 
         });
@@ -265,7 +270,7 @@ export default function MeetingFields(props) {
 
   return (
     <React.Fragment>
-      <label htmlFor="notes">Meeting Type(Hybrid,Online or Face to Face)</label>
+      <label htmlFor="notes">Meeting Type (Hybrid, Online or Face to Face)*</label>
       <Dropdown
         placeholder='Please choose meeting type'
         // fluid
@@ -283,20 +288,20 @@ export default function MeetingFields(props) {
       { formType &&
         <>
           <div className="form-group">
-            <label htmlFor="title">Title</label>
+            <label htmlFor="title">Title*</label>
             <Field placeholder="Please supply your meeting name" name="title" type="text" className={'form-control' + (errors.title && touched.title ? ' is-invalid' : '')} />
             <ErrorMessage name="title" component="div" className="invalid-feedback" />
           </div>
 
           <div className="form-group">
-            <label htmlFor="submission">Is this a new entry to AALondon, or an update to an existing entry? </label>
+            <label htmlFor="submission">Is this a new entry to AA-London.com, or an update to an existing entry?* </label>
             <SemanticField
               name="submission"
               component={Dropdown}
               options={submitOptions}
               onChange={onSubmissionTypeChangeAutofill}
               selection
-              placeholder="Is this a new meeting or are you updating an existing one?"
+              placeholder="Is this a new entry to AA-London.com?"
               id={"submission"}
               className={'form-control' + (errors.submission && touched.submission ? ' is-invalid' : '')}
             />
@@ -304,14 +309,14 @@ export default function MeetingFields(props) {
             <ErrorMessage name="submission" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
-            <label htmlFor="days">Days</label>
+            <label htmlFor="days">Days*</label>
             <SemanticField
               name="days"
               component={Dropdown}
               options={dayOptions}
               multiple
               selection
-              placeholder="Please select day of week"
+              placeholder="Please select day(s) of the week"
               id={"days"}
               value={[]}
               className={'form-control' + (errors.day && touched.day ? ' is-invalid' : '')}
@@ -329,21 +334,26 @@ export default function MeetingFields(props) {
               component={Dropdown}
               options={intergroupOptions}
               selection
-              placeholder="Intergroup if your group is part of one?"
+              placeholder="Intergroup - if any?"
               id={"intergroup"}
               className={'form-control' + (errors.intergroup && touched.intergroup ? ' is-invalid' : '')}
             />
             <ErrorMessage name="intergroup" component="div" className="invalid-feedback" />
           </div>
-          <div className="form-group">
-            <label htmlFor="startTime">Start Time</label>
-            <Field placeholder="Start time needs to be in 24 hour format e.g. 13:30" name="startTime" type="text" className={'form-control' + (errors.startTime && touched.startTime ? ' is-invalid' : '')} />
-            <ErrorMessage name="startTime" component="div" className="invalid-feedback" />
+          <div className="form-group form-group-time">
+            <span><label htmlFor="startTime">Start Time*</label>
+              <Field placeholder="e.g. 18:00" name="startTime" type="text" className={'form-control' + (errors.startTime && touched.startTime ? ' is-invalid' : '')} />
+              <ErrorMessage name="startTime" component="div" className="invalid-feedback" /></span>
+            <span><label htmlFor="endTime">End Time*</label>
+              <Field placeholder="e.g. 19:00" name="endTime" type="text" className={'form-control' + (errors.endTime && touched.endTime ? ' is-invalid' : '')} />
+              <ErrorMessage name="endTime" component="div" className="invalid-feedback" />
+            </span>
           </div>
+
           {formType !== 'F2F' &&
             <><div className="form-group">
-              <label htmlFor="link">Online Meeting Link</label>
-              <Field placeholder="Please enter online meeting link. Zoom,Skype etc" name="link" type="text" className={'form-control' + (errors.link && touched.link ? ' is-invalid' : '')} />
+              <label htmlFor="link">Online Meeting Link*</label>
+              <Field placeholder="Please enter online meeting link. Zoom, Skype etc" name="link" type="text" className={'form-control' + (errors.link && touched.link ? ' is-invalid' : '')} />
               <ErrorMessage name="link" component="div" className="invalid-feedback" />
             </div>
 
@@ -354,18 +364,18 @@ export default function MeetingFields(props) {
               </div></>}
           {formType !== 'ONL' &&
             <><div className="form-group">
-              <label htmlFor="address">Address</label>
+              <label htmlFor="address">Address*</label>
               <Field name="address" type="text" className={'form-control' + (errors.address && touched.address ? ' is-invalid' : '')} />
               <ErrorMessage name="address" component="div" className="invalid-feedback" />
             </div>
               <div className="form-group">
-                <label htmlFor="postcode">Postcode</label>
+                <label htmlFor="postcode">Postcode*</label>
                 <Field name="postcode" type="text" className={'form-control' + (errors.postcode && touched.postcode ? ' is-invalid' : '')} />
                 <ErrorMessage name="postcode" component="div" className="invalid-feedback" />
               </div></>}
           <div className="form-group">
             <label htmlFor="paymentLink">Payment Link</label>
-            <Field placeholder="Paypal,Cashapp,Square... etc link" name="paymentLink" type="text" className={'form-control' + (errors.paymentLink && touched.paymentLink ? ' is-invalid' : '')} />
+            <Field placeholder="Paypal, Cashapp, Square... etc link" name="paymentLink" type="text" className={'form-control' + (errors.paymentLink && touched.paymentLink ? ' is-invalid' : '')} />
             <ErrorMessage name="paymentLink" component="div" className="invalid-feedback" />
           </div>
           {formType !== 'ONL' &&
@@ -375,8 +385,8 @@ export default function MeetingFields(props) {
               <ErrorMessage name="whatThreeWords" component="div" className="invalid-feedback" />
             </div>}
           <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <Field placeholder="Please use a generic group email address." name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+            <label htmlFor="email">Email*</label>
+            <Field placeholder="Please use a generic group email address" name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
             <ErrorMessage name="email" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
@@ -389,10 +399,24 @@ export default function MeetingFields(props) {
             <Field name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
             <ErrorMessage name="notes" component="div" className="invalid-feedback" />
           </div>
+          <div className="form-group gso-opt-in">
+            <label htmlFor="gsoOptIn">Please share our group information with GSO*</label>
+            <SemanticField
+                  name="gsoOptIn"
+                  component={Checkbox}
+                />
+          </div>
 
           <div className="auto-grid" role="group" aria-labelledby="checkbox-group">
             {formType !== 'ONL' &&
-              <><div><span className="checkbox-title" htmlFor="wheelchair">Wheelchair accessible</span>
+              <>
+              <div><span className="checkbox-title" htmlFor="closed">Closed</span>
+                <SemanticField
+                  name="closed"
+                  component={Checkbox}
+                />
+              </div>
+              <div><span className="checkbox-title" htmlFor="wheelchair">Wheelchair accessible</span>
                 <SemanticField
                   name="wheelchair"
                   component={Checkbox}

@@ -111,7 +111,14 @@ class MeetingSearchForm extends React.Component {
     let covid = this.props.covid;
     let meetingType = this.props.meetingType;
 
-    const accesses = [{
+    const accesses = [
+      
+      {
+        key: 'closed',
+        text: 'Closed',
+        value: 'closed',
+  
+      },{
       key: 'wheelchair',
       text: 'Wheelchair',
       value: 'wheelchair',
@@ -296,11 +303,6 @@ class MeetingSearchForm extends React.Component {
           value={meetingType}
           scrolling={false}
         />
-
-       
-      
-
-
 
       </div>
       <div id='meeting-search-key'>

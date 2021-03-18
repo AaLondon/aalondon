@@ -9,8 +9,28 @@
      max-height: 200px; 
 }
 
+.form-group-time {
+    display: flex;
+    width:50%
+
+}
+
+
+
+.form-group-time > span
+{
+    margin-right:auto;
+}
+
+.form-group-time > span > input{
+
+    background:#ffffff
+
+
+}
 .form-group > input {
     background:#ffffff
+
 }
 
 
@@ -56,3 +76,14 @@ input[type=checkbox] {
   #autosuggest{
       min-width: 100%;
   }
+
+
+  .gso-opt-in{
+      display:flex;
+
+  }
+
+  .gso-opt-in > * {
+    margin-right: 10px;
+
+}

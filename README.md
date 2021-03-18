@@ -124,6 +124,21 @@ and data loaded. Extremely useful for debugging / prototyping.
 python manage.py shell_plus
 ```
 
+### Testing
+
+We try hard to make sure our code has great test coverage and ask that when you provide pull requests
+you also provide tests where appropriate.
+
+To see if your code change is not covered by a test you can use coverage.
+
+```bash
+coverage run -m pytest
+coverage html
+```
+The first line runs the test suite and the second provides an html report of coverage.
+This is located here htmlcov/index.html
+
+
 # Running the unit test testsuite
 
 ```bash
@@ -135,3 +150,5 @@ or if you have GNU Make,
 ```bash
 make test
 ```
+
+

@@ -22,5 +22,11 @@ ipython==7.16.0
 what3words==3.1.1
 webdriver-manager==3.3.0
 selenium==3.141.0
+coverage==5.4
+factory-boy==3.2.0
+django-anymail==8.2
+
+
+
 
 

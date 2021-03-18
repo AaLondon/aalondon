@@ -20,6 +20,7 @@ const Meeting = props => {
       <td xs={5} md={6}><a href={'/meetings/' + props.slug}>{props.title}</a></td>
       <td xs={3} md={3}>{props.distance}</td>
       
+      
     </tr>
   )
 }

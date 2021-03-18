@@ -14,8 +14,6 @@ axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 
 
-
-
 function MeetingForm(props) {
   const [threeWords, setThreeWords] = useState('')
   const [activeStep, setActiveStep] = useState(0);
@@ -29,6 +27,7 @@ function MeetingForm(props) {
           })
 
           let subTypes=[]
+          if (fields.closed) subTypes.push({value:"Closed"})
           if (fields.wheelchair) subTypes.push({value:"Wheelchair Access"})
           if (fields.signed) subTypes.push({value:"British Sign Language"})
           if (fields.lgbt) subTypes.push({value:"LGBTQ"})
@@ -38,10 +37,11 @@ function MeetingForm(props) {
           if (fields.creche) subTypes.push({value:"Creche"})
           if (fields.temporaryClosure) subTypes.push({value:"Location Temporarily Closed"})
 
-          axios.post('/api/meetingadd/', {
+          let data = {
             title: fields.title,
             type: formType,
             time:fields.startTime,
+            end_time:fields.endTime,
             email:fields.email,
             days:days,
             address:fields.address,
@@ -55,7 +55,10 @@ function MeetingForm(props) {
             description: fields.description,
             notes:fields.notes,
             sub_types:subTypes,
-     },
+            gso_opt_in: fields.gsoOptIn
+        }
+          
+          axios.post('/api/meetingadd/', data,
             {
               headers: {
                 'XCSRF-TOKEN': csrftoken,
@@ -107,6 +110,12 @@ function MeetingForm(props) {
       .test("is-valid", "Start time needs to be in 24 hour format e.g. 13:30", function (value) {
         return moment(value, "HH:mm", true).isValid();
       }),
+      endTime: Yup.string()
+      .required('End time is required')
+      .test("is-valid", "End time needs to be in 24 hour format e.g. 14:30", function (value) {
+        return moment(value, "HH:mm", true).isValid();
+      }),
+
     email: Yup.string()
       .email('Email is invalid')
       .required('Email is required'),
@@ -149,6 +158,7 @@ function MeetingForm(props) {
         submission: '',
         intergroup: '',
         startTime: '',
+        endTime: '',
         link: '',
         password: '',
         paymentLink: '',
@@ -158,6 +168,7 @@ function MeetingForm(props) {
         email: '',
         description: '',
         notes: '',
+        closed: false,
         wheelchair: false,
         signed: false,
         lgbt: false,
@@ -165,7 +176,8 @@ function MeetingForm(props) {
         childFriendly: false,
         outdoors: false,
         creche: false,
-        temporaryClosure: false
+        temporaryClosure: false,
+        gsoOptIn: false
       }}
       validationSchema={validationSchema}
       onSubmit={_submitForm}>
@@ -178,6 +190,7 @@ function MeetingForm(props) {
         <div className="form-group">
         <button type="submit" className="btn btn-primary mr-2">Submit</button>
         <button type="reset" className="btn btn-secondary">Reset</button>
+        <div>*Click <b><u><a target="_blank" href="/about-us/terms-service/">here</a></u></b> for more information.</div>
       </div>
       }
       

@@ -4151,6 +4151,11 @@ body.is-menu-visible #menu {
   grid-area: a;
   font-size: 2em;
   font-weight: 900;
+  
+}
+
+.meeting-title h2 {
+  text-transform:none !important;
 }
 
 .meeting-box {
