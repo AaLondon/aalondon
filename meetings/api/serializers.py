@@ -40,6 +40,7 @@ class MeetingSerializer(serializers.ModelSerializer):
             "notes",
             "sub_types",
             "gso_opt_in",
+            "submission"
         ]
 
     def create(self, validated_data):
