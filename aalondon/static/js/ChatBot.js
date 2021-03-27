@@ -169,7 +169,7 @@ const steps = [
 
 ReactDOM.render(
   <div>
-    <ChatBot steps={steps} />
+    <ChatBot steps={steps} headerTitle="Navigate the menu below"/>
   </div>,
   document.getElementById("root")
 );
