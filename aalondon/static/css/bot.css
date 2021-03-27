@@ -7,6 +7,72 @@
     padding: 0px 10px 0px 10px;
     font-size: 10px;
     border-radius: 10px;
-    color: white !important;
-    font-family: "Source Sans Pro, Helvetica, sans-serif";
+    color: black !important;
+    font-family: 'Raleway', sans-serif;
+    background:rgba(230, 236, 255, 1);
+  
 }
+
+.rsc-os-options{
+    margin-left:40px;
+}
+
+.rsc-header{
+    background: rgba(60, 58, 59, 1);
+    
+}
+
+.rsc-header-title{
+    color: white!important;
+    margin:10px;
+}
+
+.rsc-ts-bubble{
+
+    -webkit-animation: chatIn 1s ease forwards;
+    animation: chatIn 1s ease forwards;
+    background: #DADADA;
+    border-radius: 10px 10px 10px 0;
+   
+    box-shadow: 5px 5px 5px rgba(194, 194, 194, 1);
+    color: #000;
+    display: inline-block;
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    font-weight:200;
+    text-align: center;
+    margin: 0 0 12px 0;
+    position: relative;
+    padding: 20px 12px 12px 12px;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    -webkit-transform-origin: bottom left;
+    -ms-transform-origin: bottom left;
+    transform-origin: bottom left;
+}
+
+
+@keyframes chatIn {
+    100%{-webkit-transform:scale(1);-ms-transform:scale(1);transform:scale(1);}
+    }
+  
+    @-webkit-keyframes chatIn{100%{-webkit-transform:scale(1);-ms-transform:scale(1);transform:scale(1);}}
+  
+
+    .chat-bot-title{
+        text-align: left!important;
+        margin-bottom: 20px!important;
+        font-size: 2.0em!important;
+    }
+
+
+    .rsc-input{
+        display:none;
+    }
+
+    .rsc-submit-button{
+        display:none;
+    }
+
+  
