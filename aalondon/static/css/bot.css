@@ -3,6 +3,7 @@
     font-family: "Source Sans Pro, Helvetica, sans-serif"
 }
 
+
 .rsc-os-option-element{
     padding: 0px 10px 0px 10px;
     font-size: 10px;
@@ -12,7 +13,11 @@
     background:rgba(230, 236, 255, 1);
   
 }
+.rsc-os-option-element:hover{
 
+    color: white !important;
+    background: rgb(0, 108, 238);
+}
 .rsc-os-options{
     margin-left:40px;
 }
