@@ -121,7 +121,7 @@ class MeetingTests(TestCase):
         meeting.save()
 
         assert "Here are the details of a new meeting" in mail.outbox[0].body
-        assert "Thank you for letting us know about your new meeting." in mail.outbox[1].body
+        assert "Thank you for letting us know about your new meeting details." in mail.outbox[1].body
 
     def test_emails_for_existing_meeting_contains_text(self):
         meeting = Meeting.objects.get(title="existing")
@@ -130,9 +130,9 @@ class MeetingTests(TestCase):
         meeting.save()
 
         assert "details of meeting changes" in mail.outbox[0].body
-        assert "Thank you for letting us know about the changes to your meeting." in mail.outbox[1].body
+        assert "Thank you for letting us know about the changes to your meeting details." in mail.outbox[1].body
        
-       
+    
         
 
 

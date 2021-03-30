@@ -1,6 +1,7 @@
 {% load static wagtailuserbar %}
 {% load wagtailcore_tags %}
 {% load render_bundle from webpack_loader %}
+
 {% load menu_tags %}
 
 
@@ -36,7 +37,8 @@
         {# Global stylesheets #}
         
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-               
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">       
         
         
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
@@ -113,8 +115,9 @@
                             
                             <header>
                                 <h2>Alcoholics Anonymous London</h2>
-                          {% if page.title != 'Home' %}
-                                <p>Alcoholics Anonymous is a fellowship of men and women who
+                         
+                          
+                          <p class="{% if not page.title == 'Home' %}mobile-display-none{% endif %}">Alcoholics Anonymous is a fellowship of men and women who
 share their experience, strength and hope with each other that
 they may solve their common problem and help others to recover
 from alcoholism. The only requirement for membership is a desire to stop drinking.
@@ -123,14 +126,16 @@ any sect, denomination, politics, organization or institution; does
 not wish to engage in any controversy, neither endorses nor
 opposes any causes. Our primary purpose is to stay sober and
 help other alcoholics to achieve sobriety. </p>
-{% endif%}
+
 
 {% if request.resolver_match.view_name == 'meeting_search' %}
     <div class="resp-container">
         <iframe class="resp-iframe" align="left" src="https://player.vimeo.com/video/471060027" gesture="media"  allow="encrypted-media" allowfullscreen></iframe>
     </div> 
 {% endif %}
+<div class="{% if not page.title == 'Home' %}mobile-display-none{% endif %}">
     <h3 class="side-bar-arrows">New to AA?</h3>
+    
     <div  class="side-bar-arrows arrow-wrapper">
     
     <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span>Call us any time on <a class="blue-text" href="tel:0800 9177 650">0800 9177 650</a></span></div>
@@ -139,7 +144,7 @@ help other alcoholics to achieve sobriety. </p>
     <div class="arrow-wrapper-row"><span class="new-arrow"><img src="{% static 'images/black-arrow.svg' %}" alt="" /></span><span><a class="blue-text" href="https://www.alcoholics-anonymous.org.uk/About-AA/Newcomers" target="_blank" rel="noopener noreferrer">Learn more</a></span></div>
     
     </div>
-    
+</div>
                             </header>
 
     
@@ -154,6 +159,14 @@ help other alcoholics to achieve sobriety. </p>
 
          
                 </aside>
+                 <!-- Chatbot -->
+                
+        {% if  page.title == 'Home' %}
+        <div class="chat-bot-popup">
+            <div><img class="sc-iBPRYJ bhdplU chat-bot-base-img" src="/static/images/Chatbot_bot-icon.svg" alt="avatar"></div>
+            <div class="chat-bot-base-speech-bubble speech-arrow"><a href="/chatbot"  rel="noopener noreferrer">Any questions? I'm here to help</a></div>
+        </div>
+        {% endif %}
         <footer>
         {% include "footer.html" %}
         
@@ -169,7 +182,7 @@ help other alcoholics to achieve sobriety. </p>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>        
        
-        
+     
         
 
         {% block extra_js %}
