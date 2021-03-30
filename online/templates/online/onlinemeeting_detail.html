@@ -30,6 +30,10 @@
     <div class="meeting-details">
       <div class="meeting-detail-text">DETAILS</div>
       <div>{{object.description}}</div>
+      {% if object.online_password%}
+      <div class="meeting-detail-text">PASSWORD</div>
+      <div>{{object.online_password}}</div>
+      {% endif %}
       {% if object.payment_details%}
       <div class="meeting-detail-text">PAYMENT LINK</div>
       <div><a href="{{object.payment_details}}" target="_blank">{{object.payment_details}}</a></div>
