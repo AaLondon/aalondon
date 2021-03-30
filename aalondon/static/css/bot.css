@@ -57,6 +57,11 @@
     transform-origin: bottom left;
 }
 
+.rsc-ts-image{
+    height:90px;
+    box-shadow:none;
+
+}
 
 @keyframes chatIn {
     100%{-webkit-transform:scale(1);-ms-transform:scale(1);transform:scale(1);}
