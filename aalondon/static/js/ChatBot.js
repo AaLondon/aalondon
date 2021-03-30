@@ -182,7 +182,8 @@ const steps = [
 
 ReactDOM.render(
   <div>
-    <ChatBot steps={steps} headerTitle="Navigate the menu below"/>
+    <ChatBot steps={steps} headerTitle="Navigate the menu below" botAvatar="/static/images/Chatbot_bot-icon.svg"
+    userAvatar="/static/images/Chatbot_smiles-icon.svg"/>
   </div>,
   document.getElementById("root")
 );
