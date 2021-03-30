@@ -12,6 +12,7 @@ from wagtail.search import index
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from django.utils.translation import ugettext_lazy as _
+from wagtail.embeds.blocks import EmbedBlock
 
 from wagtail.admin.edit_handlers import (
     FieldPanel,
@@ -64,6 +65,8 @@ class StandardPage(Page):
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
+        ('embed', EmbedBlock()),
+
     ])
     
     content_panels = Page.content_panels + [
