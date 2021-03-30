@@ -49,7 +49,12 @@
       {% if object.type == 'HYB'%}
       <div class="meeting-detail-text">ONLINE LINK</div>
       <div><a href="{{object.online_link}}" target="_blank">{{object.online_link}}</a></div>
+      {% if object.online_password%}
+      <div class="meeting-detail-text">PASSWORD</div>
+      <div>{{object.online_password}}</div>
       {% endif %}
+      {% endif %}
+
     </div>
     
     {% if object.lat %}
