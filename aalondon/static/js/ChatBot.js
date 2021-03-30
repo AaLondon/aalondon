@@ -167,13 +167,13 @@ const steps = [
   },
   {
     id: '21',
-    component: <GoToUrl url={'/quiz'} label={'Taking you to quiz....'} />,
+    component: <GoToUrl url={'/new-to-aa/are-you-alcoholic/'} label={'Taking you to quiz....'} />,
     asMessage: true,
     end: true
   },
   {
     id: '22',
-    component: <GoToUrl url={'/literature'} label={'Taking you to literature....'} />,
+    component: <GoToUrl url={'/resources/aa-literature/'} label={'Taking you to literature....'} />,
     asMessage: true,
     end: true
   },

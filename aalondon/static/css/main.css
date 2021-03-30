@@ -4427,12 +4427,12 @@ body.is-menu-visible #menu {
   z-index: 9999;
 }
 
-
 @keyframes chatIn {
   100%{-webkit-transform:scale(1);-ms-transform:scale(1);transform:scale(1);}
   }
 
   @-webkit-keyframes chatIn{100%{-webkit-transform:scale(1);-ms-transform:scale(1);transform:scale(1);}}
+
 
 
   @media screen and (max-width: 480px) {
@@ -4498,7 +4498,7 @@ body.is-menu-visible #menu {
     
   }
 
-  
+}
   /* Chat Popup End */
 
 
@@ -4507,3 +4507,4 @@ body.is-menu-visible #menu {
       display: none;
     }
   }
+
