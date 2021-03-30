@@ -3,7 +3,9 @@ import ReactDOM from "react-dom";
 import ChatBot from "react-simple-chatbot";
 import "../css/bot.css";
 
-async function GoToUrl(props) {
+
+
+function GoToUrl(props) {
   let url = props.url
   let label = props.label
   window.open(url, "_self");
@@ -37,10 +39,10 @@ const steps = [
       {
         value: 1,
         label: "Am I an alcoholic? Take the short quiz",
-        trigger: "4",
+        trigger: "21",
       },
-      { value: 2, label: "Do you need some AA literature?", trigger: "3" },
-      { value: 3, label: "Find your next AA zoom meeting", trigger: "3" },
+      { value: 2, label: "Do you need some AA literature?", trigger: "22" },
+      { value: 3, label: "Find your next AA zoom meeting", trigger: "14" },
       { value: 4, label: "Show me more options please", trigger: "6" },
     ],
   },
@@ -102,7 +104,7 @@ const steps = [
     id: "4",
     message:
       "Great. Let’s help you to get what you need from our AA-London site.",
-    trigger: "13",
+    trigger: "5",
   },
   {
     id: "13",
@@ -163,7 +165,18 @@ const steps = [
     ],
 
   },
-  
+  {
+    id: '21',
+    component: <GoToUrl url={'/quiz'} label={'Taking you to quiz....'} />,
+    asMessage: true,
+    end: true
+  },
+  {
+    id: '22',
+    component: <GoToUrl url={'/literature'} label={'Taking you to literature....'} />,
+    asMessage: true,
+    end: true
+  },
 
 ];
 
