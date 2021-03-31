@@ -6,9 +6,14 @@ import "../css/bot.css";
 
 
 function GoToUrl(props) {
+  let target = "_self"
   let url = props.url
   let label = props.label
-  window.open(url, "_self");
+  if (props.target) {
+    target = "_blank"
+  }
+
+  window.open(url, target);
   return label
 }
 
@@ -42,7 +47,7 @@ const steps = [
         trigger: "21",
       },
       { value: 2, label: "Do you need some AA literature?", trigger: "22" },
-      { value: 3, label: "Find your next AA zoom meeting", trigger: "14" },
+      { value: 3, label: "Find your next AA meeting", trigger: "14" },
       { value: 4, label: "Show me more options please", trigger: "6" },
     ],
   },
@@ -69,9 +74,9 @@ const steps = [
   {
     id: "9",
     options: [
-      { value: 1, label: "Live Chat(opens in a new window)", trigger: "8" },
-      { value: 2, label: "Send AA an email", trigger: "9" },
-      { value: 3, label: "Call the AA helpline 0800 9177 650", trigger: "12" },
+      { value: 1, label: "Live Chat(opens in a new window)", trigger: "24" },
+      { value: 2, label: "Send AA an email", trigger: "25" },
+      { value: 3, label: "Call the AA helpline 0800 9177 650", trigger: "23" },
 
 
     ],
@@ -86,9 +91,9 @@ const steps = [
   {
     id: "11",
     options: [
-      
-      { value: 1, label: "AA Informational Videos" },
-      { value: 2, label: "Call the AA helpline 0800 9177 650" },
+
+      { value: 1, label: "AA Informational Videos", trigger: "26" },
+      { value: 2, label: "Call the AA helpline 0800 9177 650", trigger: "23" },
 
 
     ],
@@ -156,9 +161,9 @@ const steps = [
   {
     id: "20",
     options: [
-      
-      { value: 1, label: "AA Literature" },
-      { value: 2, label: "AA Infomational Videos" },
+
+      { value: 1, label: "AA Literature", trigger: "22" },
+      { value: 2, label: "AA Infomational Videos", trigger: "26" },
       { value: 3, label: "Phone the AA UK helpline 0800 9177 650" },
 
 
@@ -177,13 +182,38 @@ const steps = [
     asMessage: true,
     end: true
   },
+  {
+    id: '23',
+    component: <GoToUrl url={'tel:08009177650'} label={'Calling AA....'} />,
+    asMessage: true,
+    end: true
+  },
+  {
+    id: '24',
+    component: <GoToUrl target="_blank" url={'https://www.alcoholics-anonymous.org.uk/Home'} label={'Taking you to chat on the national website....'} />,
+    asMessage: true,
+    end: true
+  },
+  {
+    id: '25',
+    component: <GoToUrl url={'mailto:help@aamail.org'} label={'Emailing AA....'} />,
+    asMessage: true,
+    end: true
+  },
+  {
+    id: '26',
+    component: <GoToUrl url={'/videos'} label={'AA Videso'} />,
+    asMessage: true,
+    end: true
+  },
+
 
 ];
 
 ReactDOM.render(
   <div>
     <ChatBot steps={steps} headerTitle="Navigate the menu below" botAvatar="/static/images/Chatbot_bot-icon.svg"
-    userAvatar="/static/images/Chatbot_smiles-icon.svg"/>
+      userAvatar="/static/images/Chatbot_smiles-icon.svg" />
   </div>,
   document.getElementById("root")
 );
