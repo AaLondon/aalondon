@@ -3181,8 +3181,6 @@ table.alt tfoot {
 
 /* Header */
 
-#header {
-}
 
 #header a {
   color: inherit;
@@ -4355,10 +4353,7 @@ body.is-menu-visible #menu {
   background: #E6EDFF;
 }
 
-.rich-text .responsive-object{
-  padding-bottom: 0px!important;
 
-}
 
 
 
@@ -4508,3 +4503,23 @@ body.is-menu-visible #menu {
     }
   }
 
+
+
+  .rich-text img {
+    max-width: 100%;
+    height: auto;
+}
+
+.responsive-object {
+    position: relative;
+}
+
+.responsive-object iframe,
+.responsive-object object,
+.responsive-object embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
