@@ -65,7 +65,7 @@ class StandardPage(Page):
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
-        ('embed', EmbedBlock()),
+        ('embed', EmbedBlock(classname="responsive-object")),
 
     ])
     
