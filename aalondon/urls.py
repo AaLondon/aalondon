@@ -9,7 +9,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 from api import urls as api_urls
 
 from search import views as search_views
-from meetings.views import MeetingSearchView,MeetingDetailView
+from meetings.views import MeetingSearchView,MeetingDetailView,MeetingUpdateView,MeetingCreateView
 
 from online.views import OnlineMeetingDetailView,redirect_view,OnlineMeetingThanksView,OnlineMeetingSearchView
 from wagtail.contrib.sitemaps.views import sitemap
@@ -39,7 +39,8 @@ urlpatterns = [
     
     path('online/zoom-meetings/', redirect_view,name='online-zoom-meetings-redirect'),
     url('^sitemap\.xml$', sitemap),
-    path('update/', TemplateView.as_view(template_name='meetings/meeting_form.html'), name='meeting_form'),
+    path('update/', MeetingCreateView.as_view(template_name='meetings/meeting_form.html'), name='meeting_form'),
+    path('update/<slug:slug>/', MeetingUpdateView.as_view(template_name='meetings/meeting_form.html'), name='meeting_form'),
     path('chatbot/', TemplateView.as_view(template_name='chatbot/chatbot.html'), name='chatbot'),
 
     
