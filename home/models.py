@@ -109,6 +109,12 @@ class HomePage(Page):
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
     ],null=True)
+
+    attention = StreamField([
+        ('heading', blocks.CharBlock(classname="full title")),
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', ImageChooserBlock()),
+    ],null=True)
     
     def get_context(self, request):
         context = super().get_context(request)  
@@ -139,6 +145,8 @@ class HomePage(Page):
     
     content_panels = Page.content_panels + [
     StreamFieldPanel('body'),
+    StreamFieldPanel('attention'),
+    
     InlinePanel('notices', label="notices"),
         
     ]

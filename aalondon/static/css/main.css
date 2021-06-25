@@ -3498,8 +3498,14 @@ body.is-menu-visible #wrapper {
   grid-area: notices;
 }
 
-#main-home > #home-preamble {
-  grid-area: about;
+#main-home > #home-carousel {
+  grid-area: carousel;
+
+}
+
+#main-home > #home-attention {
+  grid-area: attention;
+  background-color: chartreuse;
 }
 
 #main-home > #home-reading {
@@ -3581,11 +3587,12 @@ body.is-menu-visible #wrapper {
     display: grid;
 
     grid-template-areas:
-      "header header"
-      "meetings meetings"
-      "link link"
-      "about notices"
-      "reading notices";
+    "header header"
+    "meetings meetings"
+    "link link"
+    "attention attention"
+    "carousel notices"
+    "reading notices";
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -3595,11 +3602,12 @@ body.is-menu-visible #wrapper {
     display: grid;
 
     grid-template-areas:
-      "header header"
-      "meetings meetings"
-      "link link"
-      "about notices"
-      "reading notices";
+    "header header"
+    "meetings meetings"
+    "link link"
+    "attention attention"
+    "carousel notices"
+    "reading notices";
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -3612,7 +3620,8 @@ body.is-menu-visible #wrapper {
       "header header"
       "meetings meetings"
       "link link"
-      "about notices"
+      "attention attention"
+      "carousel notices"
       "reading notices";
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 50px;
@@ -4531,3 +4540,5 @@ body.is-menu-visible #menu {
     width: 100%;
     height: 100%;
 }
+
+
