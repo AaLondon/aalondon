@@ -3505,7 +3505,22 @@ body.is-menu-visible #wrapper {
 
 #main-home > #home-attention {
   grid-area: attention;
-  background-color: chartreuse;
+  background-color: #E5FDE5;
+  text-align: center;
+  padding:5%
+}
+
+#main-home > #home-attention .block-heading {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+#main-home > #home-attention .block-paragraph {
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 35px;
 }
 
 #main-home > #home-reading {
