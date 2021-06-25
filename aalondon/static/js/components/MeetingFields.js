@@ -271,9 +271,7 @@ export default function MeetingFields(props) {
 
     console.log('onSubmissionTypeChangeAutofill')
   }
-  console.log('formType')
-  console.log(formType)
-  console.log('formType')
+
 
   return (
     <React.Fragment>

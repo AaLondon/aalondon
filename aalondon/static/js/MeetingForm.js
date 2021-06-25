@@ -21,7 +21,7 @@ function MeetingForm(props) {
   const [formType, setFormType] = useState(meetingData.formType)
 
 
-  
+
 
   async function _submitForm(fields, actions) {
 
@@ -154,35 +154,71 @@ function MeetingForm(props) {
   const validationSchema = Yup.object().shape(finalValidationShape);
 
 
+  let closed
+  let wheelchair
+  let signed
+  let lgbt
+  let chits
+  let childFriendly
+  let outdoors
+  let creche
+  let temporaryClosure
+
+
+
+  for (const subType of meetingData.subTypes) {
+    if (subType === "Child-Friendly") {
+      childFriendly = true
+    } else if (subType === "LGBTQ") {
+      lgbt = true
+    } else if (subType === "Location Temporarily Closed") {
+      temporaryClosure = true
+    } else if (subType === "Outdoor") {
+      outdoors = true
+    } else if (subType === "Wheelchair Access") {
+      wheelchair = true
+    } else if (subType === "British Sign Language") {
+      signed = true
+    } else if (subType === "Chits") {
+      chits = true
+    } else if (subType === "Creche") {
+      creche = true
+    } else if (subType === "Closed") {
+      closed = true
+    }
+  }
+
+
+
 
   return (
     <Formik
       initialValues={{
-        formType: '',
-        title: '',
-        days: '',
-        submission: '',
-        intergroup: '',
-        startTime: '',
-        endTime: '',
-        link: '',
-        password: '',
-        paymentLink: '',
-        address: '',
-        postcode: '',
-        whatThreeWords: '',
+        formType: formType,
+        title: meetingData.title,
+        days: meetingData.days,
+        submission: meetingData.submission,
+        intergroup: meetingData.intergroup,
+        startTime: meetingData.startTime,
+        endTime: meetingData.endTime,
+        link: meetingData.link,
+        password: meetingData.password,
+        paymentLink: meetingData.paymentLink,
+        address: meetingData.address,
+        postcode: meetingData.postcode,
+        whatThreeWords: meetingData.whatThreeWords,
         email: '',
-        description: '',
+        description: meetingData.description,
         notes: '',
-        closed: false,
-        wheelchair: false,
-        signed: false,
-        lgbt: false,
-        chits: false,
-        childFriendly: false,
-        outdoors: false,
-        creche: false,
-        temporaryClosure: false,
+        closed: closed,
+        wheelchair: wheelchair,
+        signed: signed,
+        lgbt: lgbt,
+        chits: chits,
+        childFriendly: childFriendly,
+        outdoors: outdoors,
+        creche: creche,
+        temporaryClosure: temporaryClosure,
         gsoOptIn: false
       }}
       validationSchema={validationSchema}
