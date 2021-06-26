@@ -19,33 +19,25 @@
                 {% endwith %}
             {% endblock %}
         </title>
-            <script src="https://kit.fontawesome.com/fb67b2fef3.js" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/fb67b2fef3.js" crossorigin="anonymous"></script>
 
         <meta name="description" content="{% block meta_description %}{% if self.search_description %}{{ self.search_description }}{% else %}aa-london carrying the message to the still suffering alcoholic{% endif %}{% if self.seo_title %} {{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}{% if active %}{{ active }}{% endif %}{% if description %} - {{ description }}{% endif %} "/>
         <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
         <meta property="og:title" content="{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %} - aa-london.com">
         <meta property="og:description" content="{% if self.search_description %}{{ self.search_description }}{% else %}Alcoholics Anonymous London helping people who want to stop drinking to stop drinking{% endif %}{% if self.seo_title %} {{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% if active %}{{ active }}{% endif %}{% if description %} - {{ description }}{% endif %}">
         <meta property="og:image" content="{% static 'images/favicon.ico' %}">
-        
         <meta property="og:url" content="{{ page.full_url }}">
-        
-
-
         <meta name="descriptionx" content="" /> 
         <meta name="viewport" content="width=device-width, initial-scale=0.9" />
 
         {# Global stylesheets #}
         
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">       
-        
-        
+        <link rel="preconnect" href="https://fonts.gstatic.com">        
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">       
+        <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css"> 
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
-
-        
-
-         <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/main.css' %}" />
        
         {% block extra_css %}
             {# Override this in templates to add extra stylesheets #}
@@ -177,7 +169,7 @@ help other alcoholics to achieve sobriety. </p>
         {# Global javascript #}
         
        
-               
+        <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>       
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>        

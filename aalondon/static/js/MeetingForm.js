@@ -15,77 +15,81 @@ axios.defaults.xsrfCookieName = "csrftoken";
 
 
 function MeetingForm(props) {
+
   const [threeWords, setThreeWords] = useState('')
   const [activeStep, setActiveStep] = useState(0);
-  const [formType, setFormType] = useState('')
-  
+  const [formType, setFormType] = useState(meetingData.formType)
+
+
+
+
   async function _submitForm(fields, actions) {
- 
-        let csrftoken = getCookie('csrftoken');
-        let days = fields.days.map((day,index)=>{
-            return {value:day}
-          })
 
-          let subTypes=[]
-          if (fields.closed) subTypes.push({value:"Closed"})
-          if (fields.wheelchair) subTypes.push({value:"Wheelchair Access"})
-          if (fields.signed) subTypes.push({value:"British Sign Language"})
-          if (fields.lgbt) subTypes.push({value:"LGBTQ"})
-          if (fields.chits) subTypes.push({value:"Chits"})
-          if (fields.childFriendly) subTypes.push({value:"Child-Friendly"})
-          if (fields.outdoors) subTypes.push({value:"Outdoor"})
-          if (fields.creche) subTypes.push({value:"Creche"})
-          if (fields.temporaryClosure) subTypes.push({value:"Location Temporarily Closed"})
+    let csrftoken = getCookie('csrftoken');
+    let days = fields.days.map((day, index) => {
+      return { value: day }
+    })
 
-          let data = {
-            title: fields.title,
-            type: formType,
-            time:fields.startTime,
-            end_time:fields.endTime,
-            email:fields.email,
-            days:days,
-            address:fields.address,
-            postcode:fields.postcode,
-            online_link:fields.link,
-            online_password:fields.password,
-            intergroup:fields.intergroup,
-            submission:fields.submission,
-            payment_details:fields.paymentLink,
-            what_three_words:fields.whatThreeWords,
-            description: fields.description,
-            notes:fields.notes,
-            sub_types:subTypes,
-            gso_opt_in: fields.gsoOptIn
-        }
-          
-          axios.post('/api/meetingadd/', data,
-            {
-              headers: {
-                'XCSRF-TOKEN': csrftoken,
-              },
-            }).then(response => {
-              
-              setActiveStep(1);
-              return response.data;
-              
-            })
-            .catch(error => {
-              return error.response;
-            });
+    let subTypes = []
+    if (fields.closed) subTypes.push({ value: "Closed" })
+    if (fields.wheelchair) subTypes.push({ value: "Wheelchair Access" })
+    if (fields.signed) subTypes.push({ value: "British Sign Language" })
+    if (fields.lgbt) subTypes.push({ value: "LGBTQ" })
+    if (fields.chits) subTypes.push({ value: "Chits" })
+    if (fields.childFriendly) subTypes.push({ value: "Child-Friendly" })
+    if (fields.outdoors) subTypes.push({ value: "Outdoor" })
+    if (fields.creche) subTypes.push({ value: "Creche" })
+    if (fields.temporaryClosure) subTypes.push({ value: "Location Temporarily Closed" })
+
+    let data = {
+      title: fields.title,
+      type: formType,
+      time: fields.startTime,
+      end_time: fields.endTime,
+      email: fields.email,
+      days: days,
+      address: fields.address,
+      postcode: fields.postcode,
+      online_link: fields.link,
+      online_password: fields.password,
+      intergroup: fields.intergroup,
+      submission: fields.submission,
+      payment_details: fields.paymentLink,
+      what_three_words: fields.whatThreeWords,
+      description: fields.description,
+      notes: fields.notes,
+      sub_types: subTypes,
+      gso_opt_in: fields.gsoOptIn
+    }
+
+    axios.post('/api/meetingadd/', data,
+      {
+        headers: {
+          'XCSRF-TOKEN': csrftoken,
+        },
+      }).then(response => {
+
+        setActiveStep(1);
+        return response.data;
+
+      })
+      .catch(error => {
+        return error.response;
+      });
   }
 
-  function _renderStepContent(step,errors,touched,values) {
-   
+  function _renderStepContent(step, errors, touched, values) {
+
     switch (step) {
       case 0:
-        return <MeetingFields setFormType={setFormType} setThreeWords={setThreeWords} errors={errors} touched={touched} formType={formType} values={values}/> ;
+        return <MeetingFields setFormType={setFormType} setThreeWords={setThreeWords} errors={errors} touched={touched} formType={formType} values={values} />;
       case 1:
         return <MeetingFormSuccess />;
       default:
         return <div>Not Found</div>;
     }
   }
-  
+
   let validationAllShape = {
 
     days: Yup.array()
@@ -100,7 +104,7 @@ function MeetingForm(props) {
         }
 
       }),
-      title: Yup.string()
+    title: Yup.string()
       .required('Title is required'),
     submission: Yup.string()
       .required('Submission type is required'),
@@ -110,7 +114,7 @@ function MeetingForm(props) {
       .test("is-valid", "Start time needs to be in 24 hour format e.g. 13:30", function (value) {
         return moment(value, "HH:mm", true).isValid();
       }),
-      endTime: Yup.string()
+    endTime: Yup.string()
       .required('End time is required')
       .test("is-valid", "End time needs to be in 24 hour format e.g. 14:30", function (value) {
         return moment(value, "HH:mm", true).isValid();
@@ -149,55 +153,93 @@ function MeetingForm(props) {
   }
   const validationSchema = Yup.object().shape(finalValidationShape);
 
+
+  let closed
+  let wheelchair
+  let signed
+  let lgbt
+  let chits
+  let childFriendly
+  let outdoors
+  let creche
+  let temporaryClosure
+
+
+
+  for (const subType of meetingData.subTypes) {
+    if (subType === "Child-Friendly") {
+      childFriendly = true
+    } else if (subType === "LGBTQ") {
+      lgbt = true
+    } else if (subType === "Location Temporarily Closed") {
+      temporaryClosure = true
+    } else if (subType === "Outdoor") {
+      outdoors = true
+    } else if (subType === "Wheelchair Access") {
+      wheelchair = true
+    } else if (subType === "British Sign Language") {
+      signed = true
+    } else if (subType === "Chits") {
+      chits = true
+    } else if (subType === "Creche") {
+      creche = true
+    } else if (subType === "Closed") {
+      closed = true
+    }
+  }
+
+
+
+
   return (
     <Formik
       initialValues={{
-        formType: '',
-        title:'',
-        days: '',
-        submission: '',
-        intergroup: '',
-        startTime: '',
-        endTime: '',
-        link: '',
-        password: '',
-        paymentLink: '',
-        address: '',
-        postcode: '',
-        whatThreeWords: '',
+        formType: formType,
+        title: meetingData.title,
+        days: meetingData.days,
+        submission: meetingData.submission,
+        intergroup: meetingData.intergroup,
+        startTime: meetingData.startTime,
+        endTime: meetingData.endTime,
+        link: meetingData.link,
+        password: meetingData.password,
+        paymentLink: meetingData.paymentLink,
+        address: meetingData.address,
+        postcode: meetingData.postcode,
+        whatThreeWords: meetingData.whatThreeWords,
         email: '',
-        description: '',
+        description: meetingData.description,
         notes: '',
-        closed: false,
-        wheelchair: false,
-        signed: false,
-        lgbt: false,
-        chits: false,
-        childFriendly: false,
-        outdoors: false,
-        creche: false,
-        temporaryClosure: false,
+        closed: closed,
+        wheelchair: wheelchair,
+        signed: signed,
+        lgbt: lgbt,
+        chits: chits,
+        childFriendly: childFriendly,
+        outdoors: outdoors,
+        creche: creche,
+        temporaryClosure: temporaryClosure,
         gsoOptIn: false
       }}
       validationSchema={validationSchema}
       onSubmit={_submitForm}>
-      {({ errors, status, touched,values }) => (
-       
-        <Form id="new-meeting-form">
-          {_renderStepContent(activeStep,errors,touched,values)}
+      {({ errors, status, touched, values }) => (
 
-     {formType && activeStep===0  &&
-        <div className="form-group">
-        <button type="submit" className="btn btn-primary mr-2">Submit</button>
-        <button type="reset" className="btn btn-secondary">Reset</button>
-        <div>*Click <b><u><a target="_blank" href="/about-us/terms-service/">here</a></u></b> for more information.</div>
-      </div>
-      }
-      
+        <Form id="new-meeting-form">
+          {_renderStepContent(activeStep, errors, touched, values)}
+
+          {formType && activeStep === 0 &&
+            <div className="form-group">
+              <button type="submit" className="btn btn-primary mr-2">Submit</button>
+              <button type="reset" className="btn btn-secondary">Reset</button>
+              <div>*Click <b><u><a target="_blank" href="/about-us/terms-service/">here</a></u></b> for more information.</div>
+            </div>
+          }
+
         </Form>
       )}
     </Formik>
   )
 }
 
-ReactDOM.render(<MeetingForm/>, document.getElementById("root"));
+ReactDOM.render(<MeetingForm />, document.getElementById("root"));

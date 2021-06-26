@@ -1,5 +1,6 @@
 {% load static wagtailcore_tags  %}
 {% load render_bundle from webpack_loader %}
+{% load wagtailembeds_tags %}
 
 
 
@@ -18,18 +19,29 @@
     
 
     <section id="meeting-search"></section>
+    <section id="home-attention">{{ page.attention}}</section>
+
+
     <section id="online-meetings-link"><h2><a href='meetingsearch'>see full list of meetings</a></h2></section>
-   <section id="home-preamble"><h2>About</h2><p>Alcoholics Anonymous is a fellowship of men and women who share 
-   their experience, strength and hope with each other that they may solve their common problem and help others 
-   to recover from alcoholism. 
-   <b>The only requirement for membership is a desire to stop drinking</b>. There are no dues or fees for A.A. membership; we are selfsupporting through our own contributions. A.A. is not allied with any sect, denomination, politics, organization or institution; does not wish to engage in any controversy, neither endorses nor opposes any causes. Our primary purpose is to stay sober and help other alcoholics to achieve sobriety.</p></section>
+  
     
     <section id="home-reading"><h2>Daily reflections - {{today|date:"F jS"}}</h2>
     <p><b>{{reflection.title}}</b></p>
      <p><i>{{reflection.quotation}}</i>  {{reflection.citation}}</p>
      <p><b>{{reflection.reading}}</b></p>
      </section>
-    <section id="notice-board"><h2>noticeboard</h2>
+     
+     <div class="carousel home-videos"
+     data-flickity='{"fullscreen": true }'>
+   
+     {% for video in videos %}
+      <div class="carousel-cell">{% embed video %}</div>
+     {% endfor %}
+    
+    </div>
+   
+    
+     <section id="notice-board"><h2>noticeboard</h2>
    
     {% for notice in notices%}
     <div class="notice-board-row">

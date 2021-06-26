@@ -27,6 +27,8 @@
 </script>
 
 <script src="https://assets.what3words.com/sdk/v3/what3words.js?key={{what_three_words_api_key}}"></script>
+{{ meeting_data|json_script:"meeting-data" }}
+<script>var meetingData = JSON.parse(document.getElementById('meeting-data').textContent);</script>
 {% render_bundle 'meetingform' %}
 
 

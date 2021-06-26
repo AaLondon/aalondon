@@ -259,9 +259,7 @@ textarea {
   .navbar {
     padding-top: 2px;
   }
-  #header .links {
-    /*flex: 0 !important;*/
-  }
+ 
   #header .links ul li {
     border-left: none;
     line-height: 1;
@@ -3459,6 +3457,8 @@ body.is-menu-visible #wrapper {
     "header"
     "meetings"
     "link"
+    "attention"
+    "carousel"
     "about"
     "notices"
     "reading";
@@ -3498,8 +3498,29 @@ body.is-menu-visible #wrapper {
   grid-area: notices;
 }
 
-#main-home > #home-preamble {
-  grid-area: about;
+#main-home > #home-carousel {
+  grid-area: carousel;
+
+}
+
+#main-home > #home-attention {
+  grid-area: attention;
+  background-color: #E5FDE5;
+  text-align: center;
+  padding:5%
+}
+
+#main-home > #home-attention .block-heading {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+#main-home > #home-attention .block-paragraph {
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 35px;
 }
 
 #main-home > #home-reading {
@@ -3581,11 +3602,12 @@ body.is-menu-visible #wrapper {
     display: grid;
 
     grid-template-areas:
-      "header header"
-      "meetings meetings"
-      "link link"
-      "about notices"
-      "reading notices";
+    "header header"
+    "meetings meetings"
+    "link link"
+    "attention attention"
+    "carousel notices"
+    "reading notices";
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -3595,11 +3617,12 @@ body.is-menu-visible #wrapper {
     display: grid;
 
     grid-template-areas:
-      "header header"
-      "meetings meetings"
-      "link link"
-      "about notices"
-      "reading notices";
+    "header header"
+    "meetings meetings"
+    "link link"
+    "attention attention"
+    "carousel notices"
+    "reading notices";
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -3612,7 +3635,8 @@ body.is-menu-visible #wrapper {
       "header header"
       "meetings meetings"
       "link link"
-      "about notices"
+      "attention attention"
+      "carousel notices"
       "reading notices";
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 50px;
@@ -4132,13 +4156,14 @@ body.is-menu-visible #menu {
   width: 100%;
 
   grid-template-areas:
-  "a a"
-  "b b"
-	"c c"
-  "d e"
-  "f f"
-	"g g"
-	"h h";
+  "a a a"
+  "b b b"
+	"c c c"
+  "d e i"
+  "f f f"
+	"g g g"
+	"h h h"
+  ;
     
   grid-auto-rows: minmax(min-content, max-content);
   grid-template-columns: 1fr 1fr;
@@ -4186,6 +4211,7 @@ body.is-menu-visible #menu {
   grid-area: e;
 
   margin-left: 10%;
+  border-right: 3px solid #A1A1A1;
  
 }
 
@@ -4203,6 +4229,12 @@ body.is-menu-visible #menu {
   grid-area: h;
   
 }
+.meeting-edit {
+  margin-left: 20%;
+  grid-area: i;
+  
+}
+
 
 @media only screen and (min-device-width: 768px) {
   .meeting-address-time {
@@ -4218,15 +4250,15 @@ body.is-menu-visible #menu {
     height: 100%;
 
     grid-template-areas:
-      "a a a a a"
-      "b c c d e"
-      ". f f f f"
-	    ". g g g g"
-      ". g g g g"
-      ". g g g g"
-      ". g g g g"
-      ". g g g g"
-        ". h . . .";
+      "a a a a a a"
+      "b c c d e i"
+      ". f f f f f"
+	    ". g g g g g"
+      ". g g g g g"
+      ". g g g g g"
+      ". g g g g g"
+      ". g g g g g"
+        ". h . . . .";
     grid-auto-rows: minmax(min-content, max-content);
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-row-gap: 20px;
@@ -4522,4 +4554,88 @@ body.is-menu-visible #menu {
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+
+
+
+.carousel {
+  background: #EEE;
+  height: 200px;
+
+}
+
+.carousel-cell {
+  
+  top:0px;
+  margin-top:-75px;
+
+}
+
+.carousel-cell iframe {
+  display: absolute;
+  width:280px;
+  margin-right:30px;
+  margin-left:15px;
+  top:0px;
+
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and ( min-width: 768px ) {
+  
+
+
+  .carousel {
+    background: #EEE;
+    height: 400px;
+  
+  }
+  
+  .carousel-cell {
+    
+    top:0px;
+    margin-top:0px;
+  
+  }
+  
+  .carousel-cell iframe {
+    display: absolute;
+
+    width:400px;
+    margin-right:15px;
+    margin-left:15px;
+    top:0px;
+  
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+  
+  
 }
