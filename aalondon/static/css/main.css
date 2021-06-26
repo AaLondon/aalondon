@@ -4557,3 +4557,29 @@ body.is-menu-visible #menu {
 }
 
 
+
+
+.carousel {
+  background: #EEE;
+  height:300px;
+}
+
+.carousel-cell {
+  margin-right: 0px;
+  margin-left:40px;
+ 
+  top:0px;
+}
+
+.carousel-cell iframe {
+  display: block;
+  width:400px;
+
+  
+}
+
+@media screen and ( min-width: 768px ) {
+  .carousel-cell iframe {
+    height: 300px;
+  }
+}

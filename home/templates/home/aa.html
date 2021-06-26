@@ -1,5 +1,6 @@
 {% load static wagtailcore_tags  %}
 {% load render_bundle from webpack_loader %}
+{% load wagtailembeds_tags %}
 
 
 
@@ -20,6 +21,7 @@
     <section id="meeting-search"></section>
     <section id="home-attention">{{ page.attention}}</section>
 
+
     <section id="online-meetings-link"><h2><a href='meetingsearch'>see full list of meetings</a></h2></section>
   
     
@@ -28,7 +30,16 @@
      <p><i>{{reflection.quotation}}</i>  {{reflection.citation}}</p>
      <p><b>{{reflection.reading}}</b></p>
      </section>
-    <section id="notice-board"><h2>noticeboard</h2>
+     <div class="carousel"
+     data-flickity='{"fullscreen": true }'>
+     {% for video in videos %}
+      <div class="carousel-cell">{% embed video %}</div>
+     {% endfor %}
+    
+    </div>
+   
+    
+     <section id="notice-board"><h2>noticeboard</h2>
    
     {% for notice in notices%}
     <div class="notice-board-row">
