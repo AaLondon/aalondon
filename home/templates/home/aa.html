@@ -30,8 +30,10 @@
      <p><i>{{reflection.quotation}}</i>  {{reflection.citation}}</p>
      <p><b>{{reflection.reading}}</b></p>
      </section>
-     <div class="carousel"
+     
+     <div class="carousel home-videos"
      data-flickity='{"fullscreen": true }'>
+   
      {% for video in videos %}
       <div class="carousel-cell">{% embed video %}</div>
      {% endfor %}
