@@ -259,9 +259,7 @@ textarea {
   .navbar {
     padding-top: 2px;
   }
-  #header .links {
-    /*flex: 0 !important;*/
-  }
+ 
   #header .links ul li {
     border-left: none;
     line-height: 1;
