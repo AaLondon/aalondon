@@ -32,15 +32,7 @@
           </a>
       </div>
     </div>
-    <div class="meeting-edit">
-      <div class="meeting-detail-text">EDIT</div>
-      <div>
-        
-        
-        <a class="fa fa-edit fa-2x" href="/update/{{object.slug}}">
-          </a>
-      </div>
-    </div>
+    
     <div class="meeting-details">
       <div class="meeting-detail-text">ADDRESS</div>
       <div>{{object.address}}</div>
@@ -78,7 +70,9 @@
             alt="Get directions with Citymapper"
         /></a>
       </div>
+      
       <div id="map"></div>
+
     </div>
     {% endif %}
 
@@ -105,6 +99,11 @@
         .addTo(map);
     </script>
   </div>
+  <div>
+    <a class="fa fa-edit fa-2x" href="/update/{{object.slug}}">
+      </a><span> Click to notify us of changes</span>
+  </div>
+
 </article>
 
 {% endblock %}
