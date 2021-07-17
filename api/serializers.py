@@ -134,6 +134,7 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
             "code",
             "place",
             "day_number",
+            "type"
         ]
 
     def get_actual_datetime(self, obj):
