@@ -36,25 +36,36 @@ export default class MeetingDataTable extends Component {
     const { column, data, direction } = this.state;
     let tbl = _.map(
       data,
-      ({ id, title, link, slug, friendly_time, zoom_password, platform }) => {
-        let img = "/static/images/zoom.png";
-        if (platform === "Skype") {
-          img = "/static/images/skype.png";
+      ({ id, title, link, slug, friendly_time, zoom_password, platform, type }) => {
+        
+        let zoomImg = '/static/images/zoom.png';
+        let physicalImg = '/static/images/building-location-pin.png'
+        let meetingUrlPath = '/onlinemeetings/' + slug
+        let img = <img src={zoomImg}></img>
+        if (type === 'ONL') {
+          img = <><img src={zoomImg}></img></>
+        }else if(type === 'F2F')
+        {
+          img = <><img src={physicalImg}></img></>
+          meetingUrlPath = '/meetings/' + slug + "/"
+        }else{
+          img = <><img src={zoomImg}></img>+<img src={physicalImg}></img></>
+          meetingUrlPath = '/meetings/' + slug +"/"
         }
-        if (zoom_password === 1) {
-          title = <b>{title + "*"}</b>;
-        }
+          
+
+
         return (
           <Table.Row key={id}>
             <Table.Cell textAlign="center">{friendly_time}</Table.Cell>
             <Table.Cell textAlign="center">
               <div>
-                <a href={"/onlinemeetings/" + slug + "/"}>{title} </a>
+                <a href={meetingUrlPath}>{title} </a>
               </div>
             </Table.Cell>
             <Table.Cell textAlign="center" className="meeting-cell">
-              <a href={link}>
-                <img src={img} alt="Go to meeting"></img>
+              <a href={meetingUrlPath}>
+                {img}
               </a>
             </Table.Cell>
           </Table.Row>

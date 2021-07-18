@@ -171,7 +171,7 @@ class OnlineMeetingSearch(generics.ListAPIView):
 
             tomorrow = dt_now + timedelta(days=1)
 
-            meetings_today = Meeting.objects.filter(
+            meetings_today = Meeting.objects.filter(covid_open_status=True).filter(
                 ((Q(days__value=day_name_today)) & Q(time__gte=dt_now.time()))
             )  # .order_by('time')
 
