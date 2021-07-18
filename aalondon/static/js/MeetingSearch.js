@@ -54,7 +54,7 @@ class MeetingSearch extends Component {
       nowDay = dateObj.toLocaleString("default", { weekday: "long" })
       
     }
-    console.log(nowDay)
+    
     let queryString = `/api/meetingsearch/?search=${search}&day=${daySend}&time_band=${timeBandSend}&type=${meetingType}`;
     if (access === 'wheelchair') {
       queryString += '&wheelchair=1'
