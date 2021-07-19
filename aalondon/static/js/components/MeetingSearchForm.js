@@ -235,12 +235,6 @@ class MeetingSearchForm extends React.Component {
         text: 'Face to Face',
         value: 'F2F',
 
-      },
-      {
-        key: 'HYB',
-        text: 'Hybrid',
-        value: 'HYB',
-
       }]
     let zoomImg = '/static/images/zoom.png';
     let physicalImg = '/static/images/building-location-pin.png'

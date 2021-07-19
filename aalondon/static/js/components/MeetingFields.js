@@ -188,6 +188,10 @@ export default function MeetingFields(props) {
 
   const whatThreeRef = useRef(null);
 
+  console.log('formTypeee')
+  console.log(props.formType)
+  console.log('formTypeeee')
+
   const
     { errors, touched, activeStep, formType, setFormType, setThreeWords, values }
       = props;
@@ -268,6 +272,7 @@ export default function MeetingFields(props) {
     console.log('onSubmissionTypeChangeAutofill')
   }
 
+
   return (
     <React.Fragment>
       <label htmlFor="notes">Meeting Type (Hybrid, Online or Face to Face)*</label>
@@ -277,6 +282,7 @@ export default function MeetingFields(props) {
         selection
         options={formTypes}
         icon='dropdown'
+        value={props.formType}
         onChange={(e, data) => {
 
           setFormType(data.value)
