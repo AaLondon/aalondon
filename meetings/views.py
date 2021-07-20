@@ -30,6 +30,12 @@ class MeetingCreateView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["now"] = timezone.now()
+        meeting_form_data = {
+            "formType":  "",
+            "subTypes": []
+            
+        }
+        context["meeting_data"] = meeting_form_data
         return context
 
 
