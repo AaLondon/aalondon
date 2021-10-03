@@ -58,7 +58,7 @@ class MeetingSearchForm extends React.Component {
     let currentSearchLength = e.target.value.length;
 
     this.setState({ search: e.target.value });
-    if (e.target.value.length > 2 || (lastSearchLength - currentSearchLength === lastSearchLength && currentSearchLength === 0)) {
+    if (e.target.value.length > 1 || (lastSearchLength - currentSearchLength === lastSearchLength && currentSearchLength === 0)) {
       this.props.onSearchChange(e.target.value);
     }
 
@@ -112,24 +112,24 @@ class MeetingSearchForm extends React.Component {
     let meetingType = this.props.meetingType;
 
     const accesses = [
-      
+
       {
         key: 'closed',
         text: 'Closed',
         value: 'closed',
-  
-      },{
-      key: 'wheelchair',
-      text: 'Wheelchair',
-      value: 'wheelchair',
 
-    },
-    {
-      key: 'hearing',
-      text: 'Hearing',
-      value: 'hearing',
+      }, {
+        key: 'wheelchair',
+        text: 'Wheelchair',
+        value: 'wheelchair',
 
-    }]
+      },
+      {
+        key: 'hearing',
+        text: 'Hearing',
+        value: 'hearing',
+
+      }]
     const timeBands = [{
       key: 'all',
       text: 'Anytime',
@@ -243,68 +243,68 @@ class MeetingSearchForm extends React.Component {
 
     return (
       <div>
-      <div className={'meeting-search-form'}>
-        <Input icon='search' placeholder='Search...' onChange={this.handleSearchChange} onKeyDown={this.handleSearchKeyDown} value={search} />
+        <div className={'meeting-search-form'}>
+          <Input icon='search' placeholder='Search...' onChange={this.handleSearchChange} onKeyDown={this.handleSearchKeyDown} value={search} />
 
 
-        <Dropdown
-          placeholder='Day'
-          // fluid
-          selection
-          options={dayOptions}
-          icon='dropdown'
-          onChange={this.handleDayChange}
-          value={day}
-          scrolling={false}
-        />
-        <Dropdown
-          placeholder='Time'
-          // fluid
-          selection
-          options={timeBands}
-          icon='dropdown'
-          onChange={this.handleTimeChange}
-          value={timeBand}
-          scrolling={false}
-        />
-        <Dropdown
-          placeholder='Accessibility'
-          // fluid
-          selection
-          options={accesses}
-          icon='dropdown'
-          onChange={this.handleAccessChange}
-          value={access}
-          scrolling={false}
-        />
-        <Dropdown
-          placeholder='Covid status'
-          // fluid
-          selection
-          options={covids}
-          icon='dropdown'
-          onChange={this.handleCovidChange}
-          value={covid}
-          scrolling={false}
-        />
-        <Dropdown
-          placeholder='Meeting Type'
-          // fluid
-          selection
-          options={meetingTypes}
-          icon='dropdown'
-          onChange={this.handleMeetingTypeChange}
-          value={meetingType}
-          scrolling={false}
-        />
+          <Dropdown
+            placeholder='Day'
+            // fluid
+            selection
+            options={dayOptions}
+            icon='dropdown'
+            onChange={this.handleDayChange}
+            value={day}
+            scrolling={false}
+          />
+          <Dropdown
+            placeholder='Time'
+            // fluid
+            selection
+            options={timeBands}
+            icon='dropdown'
+            onChange={this.handleTimeChange}
+            value={timeBand}
+            scrolling={false}
+          />
+          <Dropdown
+            placeholder='Accessibility'
+            // fluid
+            selection
+            options={accesses}
+            icon='dropdown'
+            onChange={this.handleAccessChange}
+            value={access}
+            scrolling={false}
+          />
+          <Dropdown
+            placeholder='Covid status'
+            // fluid
+            selection
+            options={covids}
+            icon='dropdown'
+            onChange={this.handleCovidChange}
+            value={covid}
+            scrolling={false}
+          />
+          <Dropdown
+            placeholder='Meeting Type'
+            // fluid
+            selection
+            options={meetingTypes}
+            icon='dropdown'
+            onChange={this.handleMeetingTypeChange}
+            value={meetingType}
+            scrolling={false}
+          />
 
-      </div>
-      <div id='meeting-search-key'>
+        </div>
+        <div id='meeting-search-key'>
           <div><a className="clear-filters" onClick={this.handleClearFilters}>Clear Filters</a></div>
           <div className='meeting-key'><span><img src={zoomImg}></img></span><span> = Zoom</span></div>
           <div className='meeting-key'><img src={physicalImg}></img><span> = Face To Face</span></div>
           <div className='meeting-key'><img src={zoomImg}></img>+<img src={physicalImg}></img><span> = Hybrid</span></div>
-      </div>
+        </div>
       </div>
     );
   }
