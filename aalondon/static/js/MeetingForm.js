@@ -120,9 +120,7 @@ function MeetingForm(props) {
         return moment(value, "HH:mm", true).isValid();
       }),
 
-    email: Yup.string()
-      .email('Email is invalid')
-      .required('Email is required'),
+   
     description: Yup.string()
       .required('Description is required'),
 

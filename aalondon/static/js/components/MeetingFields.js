@@ -258,7 +258,7 @@ export default function MeetingFields(props) {
                 setFieldValue('chits', true)
               } else if (subType === "Creche") {
                 setFieldValue('creche', true)
-              }else if (subType === "Closed") {
+              } else if (subType === "Closed") {
                 setFieldValue('closed', true)
               }
             }
@@ -291,7 +291,7 @@ export default function MeetingFields(props) {
         }}
         scrolling={false}
       />
-      { formType &&
+      {formType &&
         <>
           <div className="form-group">
             <label htmlFor="title">Title*</label>
@@ -386,48 +386,48 @@ export default function MeetingFields(props) {
           </div>
           {formType !== 'ONL' &&
             <div className="form-group">
-              <label htmlFor="whatThreeWords">What Three Words(<a target="_blank" href="https://what3words.com/">Click here</a>)</label>
-              <Field placeholder="What Three Words from https://what3words.com/ " name="whatThreeWords" type="text" className={'form-control' + (errors.whatThreeWords && touched.whatThreeWords ? ' is-invalid' : '')} />
+              <label htmlFor="whatthreewords">What3Words(<a target="_blank" href="https://what3words.com/">Click here</a>)</label>
+              <Field placeholder="what3words from what3words.com" name="whatThreeWords" type="text" className={'form-control' + (errors.whatThreeWords && touched.whatThreeWords ? ' is-invalid' : '')} />
               <ErrorMessage name="whatThreeWords" component="div" className="invalid-feedback" />
             </div>}
           <div className="form-group">
-            <label htmlFor="email">Email*</label>
-            <Field placeholder="Please use a generic group email address" name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+            <label htmlFor="email">Email</label>
+            <Field placeholder="Email address will not be shared" name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
             <ErrorMessage name="email" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
             <label htmlFor="description">Description</label>
-            <Field name="description" component="textarea" type="text" className={'form-control' + (errors.description && touched.description ? ' is-invalid' : '')} />
+            <Field placeholder="These will be published on you meeting page" name="description" component="textarea" type="text" className={'form-control' + (errors.description && touched.description ? ' is-invalid' : '')} />
             <ErrorMessage name="description" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
             <label htmlFor="notes">Notes</label>
-            <Field name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
+            <Field placeholder="These will not be published" name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
             <ErrorMessage name="notes" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group gso-opt-in">
-            <label htmlFor="gsoOptIn">Please share our group information with GSO*</label>
+            <label htmlFor="gsoOptIn">Please share our group information with GSO</label>
             <SemanticField
-                  name="gsoOptIn"
-                  component={Checkbox}
-                />
+              name="gsoOptIn"
+              component={Checkbox}
+            />
           </div>
 
           <div className="auto-grid" role="group" aria-labelledby="checkbox-group">
             {formType !== 'ONL' &&
               <>
-              <div><span className="checkbox-title" htmlFor="closed">Closed</span>
-                <SemanticField
-                  name="closed"
-                  component={Checkbox}
-                />
-              </div>
-              <div><span className="checkbox-title" htmlFor="wheelchair">Wheelchair accessible</span>
-                <SemanticField
-                  name="wheelchair"
-                  component={Checkbox}
-                />
-              </div>
+                <div><span className="checkbox-title" htmlFor="closed">Closed</span>
+                  <SemanticField
+                    name="closed"
+                    component={Checkbox}
+                  />
+                </div>
+                <div><span className="checkbox-title" htmlFor="wheelchair">Wheelchair accessible</span>
+                  <SemanticField
+                    name="wheelchair"
+                    component={Checkbox}
+                  />
+                </div>
                 <div>
                   <span className="checkbox-title" htmlFor="creche">Creche</span>
                   <SemanticField
