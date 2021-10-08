@@ -386,7 +386,7 @@ export default function MeetingFields(props) {
           </div>
           {formType !== 'ONL' &&
             <div className="form-group">
-              <label htmlFor="whatthreewords">What3Words(<a target="_blank" href="https://what3words.com/">Click here</a>)</label>
+              <label htmlFor="whatThreeWords">What3Words(<a target="_blank" href="https://what3words.com/">Click here</a>)</label>
               <Field placeholder="what3words from what3words.com" name="whatThreeWords" type="text" className={'form-control' + (errors.whatThreeWords && touched.whatThreeWords ? ' is-invalid' : '')} />
               <ErrorMessage name="whatThreeWords" component="div" className="invalid-feedback" />
             </div>}
