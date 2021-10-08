@@ -119,10 +119,10 @@ function MeetingForm(props) {
       .test("is-valid", "End time needs to be in 24 hour format e.g. 14:30", function (value) {
         return moment(value, "HH:mm", true).isValid();
       }),
-
     email: Yup.string()
       .email('Email is invalid')
       .required('Email is required'),
+
     description: Yup.string()
       .required('Description is required'),
 
@@ -232,7 +232,7 @@ function MeetingForm(props) {
             <div className="form-group">
               <button type="submit" className="btn btn-primary mr-2">Submit</button>
               <button type="reset" className="btn btn-secondary">Reset</button>
-              <div>*Click <b><u><a target="_blank" href="/about-us/terms-service/">here</a></u></b> for more information.</div>
+              <div>*Click <b><u><a target="_blank" href="/about-us/terms-service/">here</a></u></b> for our Privacy Terms.</div>
             </div>
           }
 
