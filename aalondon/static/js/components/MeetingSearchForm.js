@@ -126,7 +126,7 @@ class MeetingSearchForm extends React.Component {
       },
       {
         key: 'hearing',
-        text: 'Hearing',
+        text: 'Loop or BSL',
         value: 'hearing',
 
       }]
@@ -268,6 +268,16 @@ class MeetingSearchForm extends React.Component {
             scrolling={false}
           />
           <Dropdown
+            placeholder='All Types'
+            // fluid
+            selection
+            options={meetingTypes}
+            icon='dropdown'
+            onChange={this.handleMeetingTypeChange}
+            value={meetingType}
+            scrolling={false}
+          />
+          <Dropdown
             placeholder='Accessibility'
             // fluid
             selection
@@ -275,26 +285,6 @@ class MeetingSearchForm extends React.Component {
             icon='dropdown'
             onChange={this.handleAccessChange}
             value={access}
-            scrolling={false}
-          />
-          <Dropdown
-            placeholder='Covid status'
-            // fluid
-            selection
-            options={covids}
-            icon='dropdown'
-            onChange={this.handleCovidChange}
-            value={covid}
-            scrolling={false}
-          />
-          <Dropdown
-            placeholder='Meeting Type'
-            // fluid
-            selection
-            options={meetingTypes}
-            icon='dropdown'
-            onChange={this.handleMeetingTypeChange}
-            value={meetingType}
             scrolling={false}
           />
 
