@@ -4134,52 +4134,20 @@ body.is-menu-visible #menu {
   text-transform: uppercase;
 }
 
-@media (min-width: 700px) {
-  .meeting-search-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-column-gap: 10px;
-  }
-  .ui.selection.dropdown {
-    min-width: 0;
-  }
 
-  #meeting-search-key {
+
+
+
+@media only screen and (min-device-width: 768px)  {
+  .meeting-search-form {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
-    grid-column-gap: 10px;
-    padding-top: 15px;
-  }
-}
-
-@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape) {
-  .meeting-search-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-column-gap: 10px;
   }
-  .ui.selection.dropdown {
-    min-width: 0;
-  }
 
-  #meeting-search-key {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
-    grid-column-gap: 10px;
-    padding-top: 15px;
-  }
-}
-
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-  .meeting-search-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-column-gap: 10px;
+  .meeting-search-form :first-child {
+    grid-column: 1 / -1;
   }
   .ui.selection.dropdown {
     min-width: 0;
@@ -4195,6 +4163,7 @@ body.is-menu-visible #menu {
 
 #meeting_search {
   padding-top: 60px;
+  
 }
 
 /* Meeting Detail*/
