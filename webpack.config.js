@@ -21,7 +21,6 @@ module.exports = {
     path: path.resolve('./aalondon/static/bundles/'),
     filename: "[name]-[hash].js",
     publicPath: '',
-    clean: true,
   },
 
   plugins: [
