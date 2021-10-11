@@ -10,8 +10,8 @@ module.exports = {
     meeting: './aalondon/static/js/MeetingApp.js',
     meetingsearch: './aalondon/static/js/MeetingSearch.js',
     onlinemeetingsearch: './aalondon/static/js/OnlineMeetingSearch.js',
-    meetingform:'./aalondon/static/js/MeetingForm.js',
-    chatbot:'./aalondon/static/js/ChatBot.js'
+    meetingform: './aalondon/static/js/MeetingForm.js',
+    chatbot: './aalondon/static/js/ChatBot.js'
 
 
   }
@@ -20,7 +20,8 @@ module.exports = {
   output: {
     path: path.resolve('./aalondon/static/bundles/'),
     filename: "[name]-[hash].js",
-    publicPath: ''
+    publicPath: '',
+    clean: true,
   },
 
   plugins: [
@@ -31,21 +32,21 @@ module.exports = {
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename: '[name]-[hash].css',
-      }),
+    }),
   ],
   module: {
     rules: [{
       test: /\.js$/,
-      
+
       exclude: /node_modules/,
-      loader:   'babel-loader',
-      
+      loader: 'babel-loader',
+
       options: {
         presets: ['@babel/preset-env',
           '@babel/react', {
-            'plugins': ['@babel/plugin-proposal-class-properties','@babel/transform-runtime']
+            'plugins': ['@babel/plugin-proposal-class-properties', '@babel/transform-runtime']
           },
-          
+
         ]
       }
     },

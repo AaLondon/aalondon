@@ -130,6 +130,8 @@ function MeetingForm(props) {
 
   let validationPhysicalShape =
   {
+    whatThreeWords: Yup.string()
+      .required('What3Words is required'),
     postcode: Yup.string()
       .required('Postcode is required'),
     address: Yup.string()
