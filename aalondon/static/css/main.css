@@ -4647,9 +4647,7 @@ body.is-menu-visible #menu {
   
   
   
-  
-  
-  
+
   
   
   
@@ -4662,3 +4660,17 @@ body.is-menu-visible #menu {
   
   
 }
+
+
+
+
+#meeting-search  a {
+  text-decoration: underline;
+}
+
+
+
+#meeting_search  a {
+  text-decoration: underline;
+}
+
