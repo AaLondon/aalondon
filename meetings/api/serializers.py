@@ -1,14 +1,16 @@
 from rest_framework import serializers
-from meetings.models import MeetingIntergroup, Meeting, MeetingDay,MeetingSubType
+from meetings.models import MeetingIntergroup, Meeting, MeetingDay, MeetingSubType
 
 from django.conf import settings
 
 WHAT_THREE_WORDS_API_KEY = settings.WHAT_THREE_WORDS_API_KEY
 
+
 class MeetingDaySerializer(serializers.ModelSerializer):
     class Meta:
         model = MeetingDay
-        fields = ["id","value"]
+        fields = ["id", "value"]
+
 
 class MeetingSubTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,22 +42,22 @@ class MeetingSerializer(serializers.ModelSerializer):
             "notes",
             "sub_types",
             "gso_opt_in",
-            "submission"
+            "submission",
         ]
 
     def create(self, validated_data):
         days = validated_data.pop("days")
         sub_types = validated_data.pop("sub_types")
-        what_three_words=validated_data['what_three_words']
+        what_three_words = validated_data.get("what_three_words", "")
         meeting = Meeting.objects.create(**validated_data)
         meeting.covid_open_status = True
-        
+
         meeting.save()
         for day in days:
             meeting_day = MeetingDay.objects.get(value=day["value"])
             meeting.days.add(meeting_day)
         for sub_type in sub_types:
-            if sub_type == 'Location Temporarily Closed':
+            if sub_type == "Location Temporarily Closed":
                 meeting.covid_open_status = False
                 meeting.save()
             meeting_sub_type = MeetingSubType.objects.get(value=sub_type["value"])
