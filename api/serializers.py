@@ -1,5 +1,5 @@
 from meetings.models import Meeting
-from meetings.api.serializers import MeetingDaySerializer,MeetingSubTypeSerializer
+from meetings.api.serializers import MeetingDaySerializer, MeetingSubTypeSerializer
 from online.models import OnlineMeeting
 from rest_framework.reverse import reverse
 from rest_framework import serializers
@@ -50,6 +50,7 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
             "what_three_words",
             "sub_types",
             "type",
+            "xmas_open",
         ]
 
     def get_actual_datetime(self, obj):
@@ -134,7 +135,7 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
             "code",
             "place",
             "day_number",
-            "type"
+            "type",
         ]
 
     def get_actual_datetime(self, obj):

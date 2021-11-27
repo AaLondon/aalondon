@@ -16,12 +16,13 @@
     <div class="meeting-type">
       <div class="meeting-detail-text">TYPE</div>
       {% if object.type == 'F2F'%}
-      <div><img src="{% static 'images/building-location-pin.png'%}" /></div>
+      <div><img src="{% static 'images/building-location-pin.png'%}" /><img src="{% static 'images/santa.png'%}" /></div>
+      
       {% elif object.type == 'HYB'  %}
   
-      <div><img src="{% static 'images/building-location-pin.png'%}" /><img src="{% static 'images/zoom.png'%}" /></div>
+      <div><img src="{% static 'images/building-location-pin.png'%}" /><img src="{% static 'images/zoom.png'%}" /><img src="{% static 'images/santa.png'%}" /></div>
       {% else  %}
-      <div><img src="{% static 'images/building-location-pin.png'%}" /><img src="{% static 'images/zoom.png'%}" /></div>
+      <div><img src="{% static 'images/building-location-pin.png'%}" /><img src="{% static 'images/zoom.png'%}" /><img src="{% static 'images/santa.png'%}" /></div>
       {% endif %}
     </div>
     <div class="meeting-whatsapp">

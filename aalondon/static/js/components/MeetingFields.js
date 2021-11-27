@@ -237,6 +237,7 @@ export default function MeetingFields(props) {
             setFieldValue('whatThreeWords', result.what_three_words ? result.what_three_words : '')
             setFieldValue('description', result.description)
             setFieldValue('gsoOptIn', result.gso_opt_in)
+            setFieldValue('xmasOpen', result.xmas_open)
             setFieldValue('days', result.days.map(day => day.value))
 
             let subTypes = result.sub_types.map(sub_type => sub_type.value)
@@ -409,6 +410,13 @@ export default function MeetingFields(props) {
             <label htmlFor="gsoOptIn">Please share our group information with GSO</label>
             <SemanticField
               name="gsoOptIn"
+              component={Checkbox}
+            />
+          </div>
+          <div className="form-group gso-opt-in">
+            <label htmlFor="gsoOptIn">Check this if your meeting is open over the Christmas period</label>
+            <SemanticField
+              name="xmasOpen"
               component={Checkbox}
             />
           </div>

@@ -36,20 +36,24 @@ export default class MeetingDataTable extends Component {
     const { column, data, direction } = this.state;
     let tbl = _.map(
       data,
-      ({ id, title, link, slug, friendly_time, zoom_password, platform, type }) => {
-        
+      ({ id, title, link, slug, friendly_time, zoom_password, platform, type,xmas_open }) => {
+        let santa = '/static/images/santa.png';
+        let santaImg= <></>
+        if (xmas_open){
+          santaImg = <><div class="santa"><img src={santa}></img></div></>
+        }
         let zoomImg = '/static/images/zoom.png';
         let physicalImg = '/static/images/building-location-pin.png'
         let meetingUrlPath = '/onlinemeetings/' + slug
-        let img = <img src={zoomImg}></img>
+        let img = <div><img src={zoomImg}></img></div>
         if (type === 'ONL') {
-          img = <><img src={zoomImg}></img></>
+          img = <><div><img src={zoomImg}></img></div>{santaImg}</>
         }else if(type === 'F2F')
         {
-          img = <><img src={physicalImg}></img></>
+          img = <><div><img src={physicalImg}></img></div>{santaImg}</>
           meetingUrlPath = '/meetings/' + slug + "/"
         }else{
-          img = <><img src={zoomImg}></img>+<img src={physicalImg}></img></>
+          img = <><div><img src={zoomImg}></img>+<img src={physicalImg}></img></div>{santaImg}</>
           meetingUrlPath = '/meetings/' + slug +"/"
         }
           
@@ -64,9 +68,7 @@ export default class MeetingDataTable extends Component {
               </div>
             </Table.Cell>
             <Table.Cell textAlign="center" className="meeting-cell">
-              <a href={meetingUrlPath}>
                 {img}
-              </a>
             </Table.Cell>
           </Table.Row>
         );

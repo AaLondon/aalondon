@@ -42,20 +42,25 @@ export default class MeetingDataTable extends Component {
     const { column, data, direction } = this.state
     let thirdColumnHeader = "Distance(miles)";
     let showPostcode = this.props.showPostcode;
-    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, link, slug, postcode_prefix, day, covid_open_status, place,type }) => {
+    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, link, slug, postcode_prefix, day, covid_open_status, place,type,xmas_open }) => {
       let placeText = '';
       let zoomImg = '/static/images/zoom.png';
+      let santa = '/static/images/santa.png';
       let physicalImg = '/static/images/building-location-pin.png'
       let meetingUrlPath = '/onlinemeetings/'
       let img = <img src={zoomImg}></img>
+      let santaImg= <></>
+      if (xmas_open){
+        santaImg = <><div><img src={santa}></img></div></>
+      }
       if (type === 'ONL') {
-        img = <><img src={zoomImg}></img></>
+        img = <><div><img src={zoomImg}></img></div>{santaImg}</>
       }else if(type === 'F2F')
       {
-        img = <><img src={physicalImg}></img></>
+        img = <><div><img src={physicalImg}></img></div>{santaImg}</>
         meetingUrlPath = '/meetings/'
       }else{
-        img = <><img src={zoomImg}></img>+<img src={physicalImg}></img></>
+        img = <><div><img src={zoomImg}></img>+<img src={physicalImg}></img></div>{santaImg}</>
         meetingUrlPath = '/meetings/'
       }
         
@@ -69,7 +74,7 @@ export default class MeetingDataTable extends Component {
             <Table.Cell textAlign="center">{day}</Table.Cell>
             <Table.Cell textAlign="center">{friendly_time}</Table.Cell>
             <Table.Cell textAlign="center"><a href={meetingUrlPath + slug}>{title}</a></Table.Cell>
-            <Table.Cell textAlign="center" className='meeting-cell'> <div><a href={link}>{img}</a></div><div>{placeText}</div></Table.Cell>
+            <Table.Cell textAlign="center" className='meeting-cell'> {img}</Table.Cell>
             <Table.Cell textAlign="center">{covid_open_status === 0 ? 'Inactive' : 'Active'}</Table.Cell>
 
           </Table.Row>

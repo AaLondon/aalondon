@@ -59,7 +59,8 @@ function MeetingForm(props) {
       description: fields.description,
       notes: fields.notes,
       sub_types: subTypes,
-      gso_opt_in: fields.gsoOptIn
+      gso_opt_in: fields.gsoOptIn,
+      xmas_open: fields.xmasOpen
     }
 
     axios.post('/api/meetingadd/', data,
