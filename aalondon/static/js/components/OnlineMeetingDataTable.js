@@ -38,7 +38,7 @@ export default class MeetingDataTable extends Component {
       data,
       ({ id, title, link, slug, friendly_time, zoom_password, platform, type,xmas_open }) => {
         let santa = '/static/images/santa.png';
-        let santaImg= <><div><img src={santa}></img></div></>
+        let santaImg= <></>
         if (xmas_open){
           santaImg = <><div class="santa"><img src={santa}></img></div></>
         }

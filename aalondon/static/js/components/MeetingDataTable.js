@@ -49,7 +49,7 @@ export default class MeetingDataTable extends Component {
       let physicalImg = '/static/images/building-location-pin.png'
       let meetingUrlPath = '/onlinemeetings/'
       let img = <img src={zoomImg}></img>
-      let santaImg= <><div><img src={santa}></img></div></>
+      let santaImg= <></>
       if (xmas_open){
         santaImg = <><div><img src={santa}></img></div></>
       }

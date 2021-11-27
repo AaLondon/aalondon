@@ -4122,7 +4122,7 @@ body.is-menu-visible #menu {
   display: grid;
   grid-template-columns: 1fr;
 
-  grid-column-gap: 10px;
+  grid-column-gap: 6px;
 }
 
 .clear-filters {
@@ -4154,7 +4154,7 @@ body.is-menu-visible #menu {
   }
   #meeting-search-key {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
     grid-column-gap: 10px;
     padding-top: 15px;
