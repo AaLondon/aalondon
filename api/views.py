@@ -105,10 +105,10 @@ class MeetingSearch(generics.ListAPIView):
         today = datetime.now()
         if 2 <= month <= 12:
             xmas_start = datetime(year, 12, 23)
-            xmas_end = datetime(year + 1, 1, 6)
+            xmas_end = datetime(year + 1, 1, 4)
         else:
             xmas_start = datetime(year - 1, 12, 23)
-            xmas_end = datetime(year, 1, 6)
+            xmas_end = datetime(year, 1, 4)
 
         if xmas_start <= today <= xmas_end:
             queryset = queryset.filter(xmas_closed=False)
