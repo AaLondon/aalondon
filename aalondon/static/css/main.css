@@ -4664,13 +4664,20 @@ body.is-menu-visible #menu {
 
 
 
-#meeting-search  a {
+.meeting-cell  a {
   text-decoration: underline;
 }
 
 
 
-#meeting_search  a {
-  text-decoration: underline;
+
+
+.meeting-cell{
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.meeting-cell > div {
+  margin: 6px;
+}

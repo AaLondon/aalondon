@@ -121,6 +121,7 @@ class Meeting(models.Model):
     sub_types = models.ManyToManyField(to=MeetingSubType, blank=True,related_name="meeting_categories")
     published = models.BooleanField(null=False, blank=False, default=False)
     gso_opt_in = models.BooleanField(null=False, blank=False, default=False)
+    xmas_open = models.BooleanField(null=False, blank=False, default=False)
 
     def __str__(self):
 
