@@ -43,6 +43,7 @@ class MeetingSerializer(serializers.ModelSerializer):
             "sub_types",
             "gso_opt_in",
             "xmas_open",
+            "xmas_closed",
             "submission",
         ]
 

@@ -12,9 +12,6 @@ from django.template.loader import get_template
 from django.core import serializers
 
 
-
-
-
 WHAT_THREE_WORDS_API_KEY = settings.WHAT_THREE_WORDS_API_KEY
 # Create your models here.
 class MeetingDay(models.Model):
@@ -74,7 +71,11 @@ class Meeting(models.Model):
         max_length=3, choices=MEETING_TYPES, null=False, blank=False, default="F2F"
     )
     submission = models.CharField(
-        max_length=10,choices=SUBMISSION_TYPES, null=False, blank=False, default="existing"
+        max_length=10,
+        choices=SUBMISSION_TYPES,
+        null=False,
+        blank=False,
+        default="existing",
     )
     address = models.TextField(blank=True, max_length=300)
     code = models.IntegerField(blank=True, null=True, default=-1)
@@ -118,10 +119,13 @@ class Meeting(models.Model):
     types = models.CharField(max_length=200, blank=True, null=True)
     description = models.TextField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
-    sub_types = models.ManyToManyField(to=MeetingSubType, blank=True,related_name="meeting_categories")
+    sub_types = models.ManyToManyField(
+        to=MeetingSubType, blank=True, related_name="meeting_categories"
+    )
     published = models.BooleanField(null=False, blank=False, default=False)
     gso_opt_in = models.BooleanField(null=False, blank=False, default=False)
     xmas_open = models.BooleanField(null=False, blank=False, default=False)
+    xmas_closed = models.BooleanField(null=False, blank=False, default=False)
 
     def __str__(self):
 
@@ -134,7 +138,6 @@ class Meeting(models.Model):
     @property
     def meeting_categories(self):
         return ", ".join([str(p) for p in self.sub_types.all()])
-
 
     @classmethod
     def from_db(cls, db, field_names, values):
@@ -157,15 +160,12 @@ class Meeting(models.Model):
                 ):
                     return True
         return False
-    
-    
+
     def send_mail_to_gso_contacts(self):
         gso_contacts = EmailContact.objects.filter(update_to_gso=True)
-        
-        message = get_template("meetings/gso_email.html").render(
-            {"meeting": self}
-        )
-        
+
+        message = get_template("meetings/gso_email.html").render({"meeting": self})
+
         if gso_contacts:
             to_emails = [obj.email for obj in gso_contacts]
             email_message = EmailMessage(
@@ -178,9 +178,8 @@ class Meeting(models.Model):
             email_message.content_subtype = "html"
             email_message.send()
 
-
     def send_mail_to_user(self):
-        
+
         message = get_template("meetings/user_submission_email.html").render(
             {"meeting": self}
         )
@@ -195,7 +194,7 @@ class Meeting(models.Model):
         email_message.send()
 
     def save(self, *args, **kwargs):
-       
+
         self.slug = slugify(f"{self.title} {self.time} {self.type} {self.id}")
         self.time_band = get_time_band(self.time)
         if self.call_what_three_words:
@@ -205,14 +204,12 @@ class Meeting(models.Model):
         if self.published:
             if self.gso_opt_in:
                 self.send_mail_to_gso_contacts()
-            
+
             try:
                 if self._loaded_values["published"] != self.published:
                     self.send_mail_to_user()
             except AttributeError:
                 pass
-            
-
 
     def get_absolute_url(self):
 
