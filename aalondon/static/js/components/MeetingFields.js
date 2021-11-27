@@ -238,6 +238,7 @@ export default function MeetingFields(props) {
             setFieldValue('description', result.description)
             setFieldValue('gsoOptIn', result.gso_opt_in)
             setFieldValue('xmasOpen', result.xmas_open)
+            setFieldValue('xmasClosed', result.xmas_closed)
             setFieldValue('days', result.days.map(day => day.value))
 
             let subTypes = result.sub_types.map(sub_type => sub_type.value)
@@ -414,9 +415,16 @@ export default function MeetingFields(props) {
             />
           </div>
           <div className="form-group gso-opt-in">
-            <label htmlFor="gsoOptIn">Check this if your meeting is open over the Christmas period</label>
+            <label htmlFor="xmasOpen">Check this if your meeting is OPEN over the Christmas period</label>
             <SemanticField
               name="xmasOpen"
+              component={Checkbox}
+            />
+          </div>
+          <div className="form-group gso-opt-in">
+            <label htmlFor="xmasClosed">Check this if your meeting is CLOSED over the Christmas period</label>
+            <SemanticField
+              name="xmasClosed"
               component={Checkbox}
             />
           </div>

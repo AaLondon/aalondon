@@ -53,10 +53,10 @@ class MeetingsList(generics.ListAPIView):
 
             meetings_today = Meeting.objects.filter(
                 (Q(day=day_name_today) & Q(time__gte=now.time()))
-            )  
+            )
             meetings_tomorrow = Meeting.objects.filter(
                 (Q(day=day_name_tomorrow) & Q(time__lte=now.time()))
-            )  
+            )
             rank_by_day = Window(
                 expression=Rank(), partition_by=F("day"), order_by=F("time").asc()
             )
@@ -100,6 +100,19 @@ class MeetingSearch(generics.ListAPIView):
         queryset = Meeting.objects.filter(published=True).annotate(
             search=SearchVector("postcode", "detail", "title"),
         )
+        year = datetime.now().date().year
+        month = datetime.now().date().month
+        today = datetime.now()
+        if 2 <= month <= 12:
+            xmas_start = datetime(year, 12, 23)
+            xmas_end = datetime(year + 1, 1, 6)
+        else:
+            xmas_start = datetime(year - 1, 12, 23)
+            xmas_end = datetime(year, 1, 6)
+
+        if xmas_start <= today <= xmas_end:
+            queryset = queryset.filter(xmas_closed=False)
+
         search = self.request.query_params.get("search", None)
 
         if search is not None and len(search) > 0:
@@ -155,6 +168,18 @@ class OnlineMeetingSearch(generics.ListAPIView):
             search=SearchVector("description", "title"),
         )
         queryset = queryset.filter(published=True)
+        year = datetime.now().date().year
+        month = datetime.now().date().month
+        today = datetime.now()
+        if 2 <= month <= 12:
+            xmas_start = datetime(year, 12, 23)
+            xmas_end = datetime(year + 1, 1, 6)
+        else:
+            xmas_start = datetime(year - 1, 12, 23)
+            xmas_end = datetime(year, 1, 6)
+
+        if xmas_start <= today <= xmas_end:
+            queryset = queryset.filter(xmas_closed=False)
 
         search = self.request.query_params.get("search", None)
 
@@ -163,7 +188,7 @@ class OnlineMeetingSearch(generics.ListAPIView):
 
         now = self.request.query_params.get("now", None)
         top = int(self.request.query_params.get("top", 0))
-        
+
         if day == "now" or now == "1":
 
             date_today = dt_now.date()
