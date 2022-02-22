@@ -294,7 +294,7 @@ class MeetingSearchForm extends React.Component {
           <div className='meeting-key'><span><img src={zoomImg}></img></span><span> = Zoom</span></div>
           <div className='meeting-key'><img src={physicalImg}></img><span> = Face To Face</span></div>
           <div className='meeting-key'><img src={zoomImg}></img>+<img src={physicalImg}></img><span> = Hybrid</span></div>
-          <div className='meeting-key'><span><img src={santaImg}></img></span><span> = Open during Xmas</span></div>
+          {/* <div className='meeting-key'><span><img src={santaImg}></img></span><span> = Open during Xmas</span></div> */}
         </div>
       </div>
     );
