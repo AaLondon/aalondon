@@ -4685,3 +4685,7 @@ body.is-menu-visible #menu {
 .meeting-whatsapp a{
   text-decoration: none;
 }
+
+.google-image{
+  width:40px
+}

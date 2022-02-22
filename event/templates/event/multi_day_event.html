@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 {% load render_bundle from webpack_loader %}
+{% load static %}
 
 {% block body_class %}template-evebtpage{% endblock %}
 
@@ -24,7 +25,13 @@
     <div class="row"><div><b>End Date:</b> {{page.end_date}}</div></div>
     <div class="row"><div><b>Details:</b></div></div>
     <div class="row"><div>{{page.body|richtext}}</div></div>
-    <div class="row"><a href="https://citymapper.com/directions?endcoord={{object.lat}}%2C{{object.lng}}&endname={{object.title}}" target="_blank"><img src="https://static.citymapper.com/img/embed/GetMeThere_Citymapper.png" alt="Get directions with Citymapper" /></a></div>
+    <div class="row"><a
+          href="https://maps.google.com/?q={{object.lat}},{{object.lng}}&ll={{object.lat}},{{object.lng}}&z=18"
+          target="_blank"
+          ><img class="google-image"
+            src="{% static 'images/google.png' %}"
+            alt="Get directions with Google"
+        />Click here for directions</a>
     </div></div>
 
 
