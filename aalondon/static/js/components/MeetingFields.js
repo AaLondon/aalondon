@@ -130,6 +130,11 @@ const intergroupOptions = [
     text: 'London South West',
     value: 'London South West',
   },
+  {
+    key: 'Poles in the UK',
+    text: 'Poles in the UK',
+    value: 'Poles in the UK',
+  },
 
 
 ]
