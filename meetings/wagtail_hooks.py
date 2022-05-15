@@ -18,6 +18,9 @@ class MeetingAdmin(ModelAdmin):
         "covid_open_status",
         "published",
         "xmas_open",
+        "created",
+        "updated",    
+
     )
     list_filter = ("days", "published")
     search_fields = ("title",)
