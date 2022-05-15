@@ -5,8 +5,8 @@ from .models import RecurringEventChild,EventType
 
 class RecurringEventChildAdmin(ModelAdmin):
     model = RecurringEventChild
-    list_display = ('date', 'title')
-    ordering = ['date']
+    list_display = ('start_date', 'title')
+    ordering = ['start_date']
     menu_label = 'Recurring Events'
 
 class EventTypeAdmin(ModelAdmin):
