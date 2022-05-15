@@ -188,6 +188,7 @@ class Meeting(models.Model):
             body=message,
             from_email="AA-LONDON<info@aa-london.com>",
             to=[self.email],
+            bcc=['info@aa-london.com'],
             reply_to=["info@aa-london.com"],
         )
         email_message.content_subtype = "html"
