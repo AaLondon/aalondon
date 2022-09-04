@@ -50,6 +50,8 @@ class SingleDayEvent(Page):
     FieldPanel('start_time'),
     FieldPanel('end_time'),
     FieldPanel('type'),
+    FieldPanel('latitude'),
+    FieldPanel('longitude'),
 
     
     ]
@@ -75,6 +77,8 @@ class MultiDayEvent(Page):
     FieldPanel('start_date'),
     FieldPanel('end_date'),
     FieldPanel('type'),
+    FieldPanel('latitude'),
+    FieldPanel('longitude'),
     
     ]
     subpage_types = []
@@ -147,6 +151,8 @@ class RecurringEventParent(Page):
         FieldPanel('start_time'),
         FieldPanel('end_time'),
         FieldPanel('type'),
+        FieldPanel('latitude'),
+        FieldPanel('longitude'),
         
        #InlinePanel('override_dates', label='override dates'),
     ]
@@ -182,6 +188,8 @@ class RecurringEventChild(Page):
         FieldPanel('start_time'),
         FieldPanel('end_time'),
         FieldPanel('type'),
+        FieldPanel('latitude'),
+        FieldPanel('longitude'),
         
     ]
     subpage_types = []
