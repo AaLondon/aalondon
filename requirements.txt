@@ -18,7 +18,7 @@ wagtailmenus==3.0.2
 sentry-sdk==0.14.3
 pytest==6.2.1
 pytest-django==3.7.0
-ipython==7.16.0
+ipython==8.5.0
 what3words==3.1.1
 webdriver-manager==3.3.0
 selenium==3.141.0
