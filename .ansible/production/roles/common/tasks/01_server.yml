@@ -15,7 +15,7 @@
   become: true
 
 - name: curl for nodejs
-  shell: curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -     
+  shell: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -     
   become: true
 
 
