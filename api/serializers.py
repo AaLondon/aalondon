@@ -14,7 +14,6 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
     postcode_prefix = serializers.SerializerMethodField()
     distance_from_client = serializers.SerializerMethodField()
     day_number = serializers.SerializerMethodField()
-    covid_open_status = serializers.SerializerMethodField()
     code = serializers.SerializerMethodField()
     place = serializers.SerializerMethodField()
     days = MeetingDaySerializer(many=True)
@@ -43,7 +42,6 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
             "intergroup",
             "distance_from_client",
             "time_band",
-            "covid_open_status",
             "place",
             "type",
             "description",
@@ -92,13 +90,6 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
     def get_day_number(self, obj):
 
         return 0  # time.strptime(obj.day, '%A').tm_wday
-
-    def get_covid_open_status(self, obj):
-
-        if obj.covid_open_status:
-            return 1
-        else:
-            return 0
 
     def get_code(self, obj):
 

@@ -42,7 +42,7 @@ export default class MeetingDataTable extends Component {
     const { column, data, direction } = this.state
     let thirdColumnHeader = "Distance(miles)";
     let showPostcode = this.props.showPostcode;
-    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, link, slug, postcode_prefix, day, covid_open_status, place,type,xmas_open }) => {
+    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, link, slug, postcode_prefix, day, place,type,xmas_open }) => {
       let placeText = '';
       let zoomImg = '/static/images/zoom.png';
       let santa = '/static/images/santa.png';
@@ -75,7 +75,7 @@ export default class MeetingDataTable extends Component {
             <Table.Cell textAlign="center">{friendly_time}</Table.Cell>
             <Table.Cell textAlign="center"><a href={meetingUrlPath + slug}>{title}</a></Table.Cell>
             <Table.Cell textAlign="center" className='meeting-cell'> {img}</Table.Cell>
-            <Table.Cell textAlign="center">{covid_open_status === 0 ? 'Inactive' : 'Active'}</Table.Cell>
+            <Table.Cell textAlign="center">{postcode_prefix}</Table.Cell>
 
           </Table.Row>
         )
@@ -114,8 +114,8 @@ export default class MeetingDataTable extends Component {
               Place
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'covid_open_status' ? direction : null}
-              onClick={this.handleSort('covid_open_status')}
+              sorted={column === 'postcode' ? direction : null}
+              onClick={this.handleSort('postcode')}
             >
               Covid Open Status
             </Table.HeaderCell>

@@ -15,7 +15,6 @@ class MeetingAdmin(ModelAdmin):
         "meeting_days",
         "submission",
         "time",
-        "covid_open_status",
         "published",
         "xmas_open",
         "created",

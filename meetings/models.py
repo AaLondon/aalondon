@@ -112,7 +112,6 @@ class Meeting(models.Model):
     intergroup_id = models.IntegerField(blank=True, null=True)
     detail = models.TextField(blank=True, null=True)
     time_band = models.CharField(blank=True, max_length=10, null=True)
-    covid_open_status = models.BooleanField(null=False, default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     conference_url = models.URLField(max_length=1000, blank=True, null=True)
