@@ -1,4 +1,6 @@
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
+
+from meetings.views import MeetingWagtailUpdateView
 from .models import Meeting, EmailContact
 
 
@@ -16,13 +18,15 @@ class MeetingAdmin(ModelAdmin):
         "submission",
         "time",
         "published",
-        "xmas_open",
         "created",
-        "updated",    
+        "updated",
+        'updated_by',    
 
     )
     list_filter = ("days", "published")
     search_fields = ("title",)
+    form_fields_exclude = ['updated_by']
+    edit_view_class = MeetingWagtailUpdateView
 
 
 class EmailContactAdmin(ModelAdmin):

@@ -5,6 +5,9 @@ from .models import Meeting
 from django.utils import timezone
 from service.models import ServicePage
 import datetime
+from wagtail.contrib.modeladmin.views import EditView
+from wagtail.admin import messages
+from django.shortcuts import redirect
 
 
 class MeetingSearchView(TemplateView):
@@ -75,3 +78,16 @@ class MeetingUpdateView(DetailView):
 
         context["meeting_data"] = meeting_form_data
         return context
+
+
+
+class MeetingWagtailUpdateView(EditView):
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.updated_by = self.request.user
+        instance.save()
+        messages.success(
+            self.request, self.get_success_message(instance),
+            buttons=self.get_success_message_buttons(instance)
+        )
+        return redirect(self.get_success_url())

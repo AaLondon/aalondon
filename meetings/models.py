@@ -10,7 +10,9 @@ from django.core.mail import EmailMessage
 from django.template import Context
 from django.template.loader import get_template
 from django.core import serializers
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 WHAT_THREE_WORDS_API_KEY = settings.WHAT_THREE_WORDS_API_KEY
 # Create your models here.
@@ -125,6 +127,7 @@ class Meeting(models.Model):
     gso_opt_in = models.BooleanField(null=False, blank=False, default=False)
     xmas_open = models.BooleanField(null=False, blank=False, default=False)
     xmas_closed = models.BooleanField(null=False, blank=False, default=False)
+    updated_by = models.ForeignKey(to=User,null=True,on_delete=models.SET_NULL)
 
     def __str__(self):
 
