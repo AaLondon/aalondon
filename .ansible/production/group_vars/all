@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 $ANSIBLE_VAULT;1.1;AES256
 36663433383064323964313264373538356363633734626162386630623130376233613634636662
 3835646662383138343763356535336463656235393363360a613865363334383931656363306163
@@ -75,3 +76,58 @@ $ANSIBLE_VAULT;1.1;AES256
 39383237323532313734663637633230336137643337666633396562376462653135333366316562
 66353139363561633530383336316436306466633861383563313064373236346439316234376230
 61396232643637336134
+=======
+# App Name
+app_name: aalondon
+
+# Deployer User and Groups
+deployer_user: deployer
+deployer_group: deployer
+
+db_user: aalondon
+
+# SSH Keys Directory
+ssh_dir: '~/.ssh'
+
+# DB Configuration
+#db_url: postgresql://{{deployer_user}}:{{db_password}}@localhost/{{app_name}}
+#db_url: postgresql://doadmin:ma2su03chr79ry2h@db-postgresql-lon1-98623-do-user-3192717-0.db.ondigitalocean.com:25060/pcndoder?sslmode=require
+login_password: ma2su03chr79ry2h
+login_host: db-postgresql-lon1-98623-do-user-3192717-0.db.ondigitalocean.com
+login_user: doadmin
+port: 25060
+
+db_password: k4zwv5qx2xsbgzrt
+#db_name: "{{ app_name }}"
+#db_user: "{{ app_name }}"
+
+# Application Dependencies Setup
+venv_dir: '/home/{{ deployer_user }}/envs/{{ app_name }}'
+venv_python: '{{ venv_dir }}/bin/python3.8'
+
+# Remote Server Details
+server_ip: 134.209.188.164
+wsgi_server_port: 80
+
+# Deploy Dir in App Directory
+deploy_dir: '{{ app_dir }}/deploy'
+
+# WSGI Vars
+django_wsgi_module: aalondon.wsgi
+django_settings_module: aalondon.settings.production
+django_secret_key: '?V[a&Ov?QaqiB*pQ_H@,#]Lygm!}5O1$N}_0>nm8f%4X_h3124h2jk'
+#database_url: '{{ db_url }}'
+
+
+# Github Code's Repo URL
+code_repository_url: https://github.com/AaLondon/aalondon
+
+# App Directory
+app_dir: /home/{{ deployer_user }}/{{app_name}}
+
+gunicorn_access_log: "{{app_dir}}/gunicorn_access.log"
+gunicorn_error_log: "{{app_dir}}/gunicorn_error.log"
+
+ansible_python_interpreter: '/usr/bin/python3.8'
+
+>>>>>>> c34a22e7e9e330040cac7d4ce44866af53de2238
