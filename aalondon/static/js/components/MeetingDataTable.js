@@ -86,9 +86,9 @@ export default class MeetingDataTable extends Component {
     let third_column_field = showPostcode === 0 ? 'distance_from_client' : 'postcode_prefix';
 
     return (
-      <Table sortable celled >
+      <Table sortable celled  >
         <Table.Header>
-          <Table.Row>
+          <Table.Row textAlign='center'>
             <Table.HeaderCell
               sorted={column === 'day' ? direction : null}
               onClick={this.handleSort('day')}
