@@ -22,7 +22,7 @@
 
 - name: Install required packages
   apt: 
-    name: ['software-properties-common','build-essential' ,'libssl-dev','libffi-dev' ,'python3.6','postgresql','postgresql-contrib'
+    name: ['software-properties-common','build-essential' ,'libssl-dev','libffi-dev' ,'python3.8','postgresql','postgresql-contrib'
       ,'virtualenv'
       ,'redis-server'
       ,'nodejs','python3-psycopg2'
