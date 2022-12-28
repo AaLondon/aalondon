@@ -41,7 +41,7 @@ class MeetingSerializer(serializers.ModelSerializer):
             "description",
             "notes",
             "sub_types",
-            "gso_opt_in",
+            "gso_opt_out",
             "xmas_open",
             "xmas_closed",
             "submission",
@@ -58,7 +58,7 @@ class MeetingSerializer(serializers.ModelSerializer):
             meeting_day = MeetingDay.objects.get(value=day["value"])
             meeting.days.add(meeting_day)
         for sub_type in sub_types:
-            meeting_sub_type = MeetingSubType.objects.get(value=sub_type["value"])
+            meeting_sub_type, created = MeetingSubType.objects.get_or_create(value=sub_type["value"])
             meeting.sub_types.add(meeting_sub_type)
         return meeting
 

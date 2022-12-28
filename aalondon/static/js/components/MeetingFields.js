@@ -241,10 +241,10 @@ export default function MeetingFields(props) {
             setFieldValue('link', result.online_link ? result.online_link : '')
             setFieldValue('password', result.online_password ? result.online_password : '')
             setFieldValue('address', result.address ? result.address : '')
-            setFieldValue('paymentLink', result.payment_details ? result.payment_details : '')
+            setFieldValue('tradition7Details', result.tradition_7_details ? result.tradition_7_details : '')
             setFieldValue('whatThreeWords', result.what_three_words ? result.what_three_words : '')
             setFieldValue('description', result.description)
-            setFieldValue('gsoOptIn', result.gso_opt_in)
+            setFieldValue('gsoOptOut', result.gso_opt_out)
             setFieldValue('xmasOpen', result.xmas_open)
             setFieldValue('xmasClosed', result.xmas_closed)
             setFieldValue('days', result.days.map(day => day.value))
@@ -268,8 +268,8 @@ export default function MeetingFields(props) {
                 setFieldValue('chits', true)
               } else if (subType === "Creche") {
                 setFieldValue('creche', true)
-              } else if (subType === "Closed") {
-                setFieldValue('closed', true)
+              } else if (subType === "Open") {
+                setFieldValue('open', true)
               }
             }
 
@@ -390,9 +390,9 @@ export default function MeetingFields(props) {
                 <ErrorMessage name="postcode" component="div" className="invalid-feedback" />
               </div></>}
           <div className="form-group">
-            <label htmlFor="paymentLink">Payment Link</label>
-            <Field placeholder="Paypal, Cashapp, Square... etc link" name="paymentLink" type="text" className={'form-control' + (errors.paymentLink && touched.paymentLink ? ' is-invalid' : '')} />
-            <ErrorMessage name="paymentLink" component="div" className="invalid-feedback" />
+            <label htmlFor="tradition7Details">Payment Link</label>
+            <Field placeholder="Paypal, Cashapp, Square... etc link" name="tradition7Details" type="text" className={'form-control' + (errors.paymentLink && touched.paymentLink ? ' is-invalid' : '')} />
+            <ErrorMessage name="tradition7Details" component="div" className="invalid-feedback" />
           </div>
           {formType !== 'ONL' &&
             <div className="form-group">
@@ -415,21 +415,21 @@ export default function MeetingFields(props) {
             <Field placeholder="These will not be published" name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
             <ErrorMessage name="notes" component="div" className="invalid-feedback" />
           </div>
-          <div className="form-group gso-opt-in">
-            <label htmlFor="gsoOptIn">By submitting this form your group agrees to have the listing information shared with the General Service Office (GSO) and the meeting details updated there. Untick to opt out</label>
+          <div className="form-group gso-opt-out">
+            <label htmlFor="gsoOptOut">By submitting this form your group agrees to have the listing information shared with the General Service Office (GSO) and the meeting details updated there. Tick to opt out</label>
             <SemanticField
-              name="gsoOptIn"
-              component={CheckboxExampleChecked}
+              name="gsoOptOut"
+              component={Checkbox}
             />
           </div>
-          <div className="form-group gso-opt-in">
+          <div className="form-group gso-opt-out">
             <label htmlFor="xmasOpen">Check this if your meeting is OPEN over the Christmas period</label>
             <SemanticField
               name="xmasOpen"
               component={Checkbox}
             />
           </div>
-          <div className="form-group gso-opt-in">
+          <div className="form-group gso-opt-out">
             <label htmlFor="xmasClosed">Check this if your meeting is CLOSED over the Christmas period</label>
             <SemanticField
               name="xmasClosed"
@@ -440,9 +440,9 @@ export default function MeetingFields(props) {
           <div className="auto-grid" role="group" aria-labelledby="checkbox-group">
             {formType !== 'ONL' &&
               <>
-                <div><span className="checkbox-title" htmlFor="closed">Closed</span>
+                <div><span className="checkbox-title" htmlFor="open">Open</span>
                   <SemanticField
-                    name="closed"
+                    name="open"
                     component={Checkbox}
                   />
                 </div>
@@ -469,11 +469,13 @@ export default function MeetingFields(props) {
 
             </div>
             <div>
-              <span className="checkbox-title" htmlFor="lgbt">LGBT</span>
-              <SemanticField
-                name="lgbt"
-                component={Checkbox}
-              />
+            <span className="checkbox-title" htmlFor="hearingLoop">Hearing Loop</span>
+                  <SemanticField
+                    name="hearingLoop"
+                    component={Checkbox}
+                  />
+
+              
 
             </div>
             <div>
@@ -494,11 +496,11 @@ export default function MeetingFields(props) {
 
               </div>
                 <div>
-                  <span className="checkbox-title" htmlFor="outdoors">Outdoors</span>
-                  <SemanticField
-                    name="outdoors"
-                    component={Checkbox}
-                  />
+                <span className="checkbox-title" htmlFor="lgbt">LGBT</span>
+              <SemanticField
+                name="lgbt"
+                component={Checkbox}
+              />
 
                 </div>
                 <div>

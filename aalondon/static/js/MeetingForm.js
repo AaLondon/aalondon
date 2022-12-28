@@ -31,13 +31,13 @@ function MeetingForm(props) {
     })
 
     let subTypes = []
-    if (fields.closed) subTypes.push({ value: "Closed" })
+    if (fields.open) subTypes.push({ value: "Open" })
     if (fields.wheelchair) subTypes.push({ value: "Wheelchair Access" })
     if (fields.signed) subTypes.push({ value: "British Sign Language" })
     if (fields.lgbt) subTypes.push({ value: "LGBTQ" })
     if (fields.chits) subTypes.push({ value: "Chits" })
     if (fields.childFriendly) subTypes.push({ value: "Child-Friendly" })
-    if (fields.outdoors) subTypes.push({ value: "Outdoor" })
+    if (fields.hearingLoop) subTypes.push({ value: "Hearing Loop" })
     if (fields.creche) subTypes.push({ value: "Creche" })
     if (fields.temporaryClosure) subTypes.push({ value: "Location Temporarily Closed" })
 
@@ -54,12 +54,12 @@ function MeetingForm(props) {
       online_password: fields.password,
       intergroup: fields.intergroup,
       submission: fields.submission,
-      payment_details: fields.paymentLink,
+      tradition_7_details: fields.tradition7Details,
       what_three_words: fields.whatThreeWords,
       description: fields.description,
       notes: fields.notes,
       sub_types: subTypes,
-      gso_opt_in: fields.gsoOptIn,
+      gso_opt_out: fields.gsoOptOut,
       xmas_open: fields.xmasOpen,
       xmas_closed: fields.xmasClosed
     }
@@ -137,12 +137,14 @@ function MeetingForm(props) {
     postcode: Yup.string()
       .required('Postcode is required')
       .test("is-valid","postcode needs to be from UK", function(value){
+        let value_str = value || '';
         let regex = new RegExp('^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})$')
-        return regex.test(value.replace(/\s+/g, ''))
+        return regex.test(value_str.replaceAll(' ', ''))
         
       })
       .test("is-valid","postcode has maximum 1 space", function(value){
-       let spaces = value.length - value.replaceAll(' ', '').length;
+       let value_str = value || '';
+       let spaces = value_str.length - value_str.replaceAll(' ', '').length;
         return spaces < 2
       })
       ,
@@ -168,13 +170,13 @@ function MeetingForm(props) {
   const validationSchema = Yup.object().shape(finalValidationShape);
 
 
-  let closed
+  let open
   let wheelchair
   let signed
   let lgbt
   let chits
   let childFriendly
-  let outdoors
+  let hearingLoop
   let creche
   let temporaryClosure
 
@@ -187,8 +189,8 @@ function MeetingForm(props) {
       lgbt = true
     } else if (subType === "Location Temporarily Closed") {
       temporaryClosure = true
-    } else if (subType === "Outdoor") {
-      outdoors = true
+    } else if (subType === "Hearinh Loop") {
+      hearingLoop = true
     } else if (subType === "Wheelchair Access") {
       wheelchair = true
     } else if (subType === "British Sign Language") {
@@ -197,8 +199,8 @@ function MeetingForm(props) {
       chits = true
     } else if (subType === "Creche") {
       creche = true
-    } else if (subType === "Closed") {
-      closed = true
+    } else if (subType === "Open") {
+      open = true
     }
   }
 
@@ -217,23 +219,23 @@ function MeetingForm(props) {
         endTime: meetingData.endTime,
         link: meetingData.link,
         password: meetingData.password,
-        paymentLink: meetingData.paymentLink,
+        tradition7Details: meetingData.tradition7Details,
         address: meetingData.address,
         postcode: meetingData.postcode,
         whatThreeWords: meetingData.whatThreeWords,
         email: '',
         description: meetingData.description,
         notes: '',
-        closed: closed,
+        open: open,
         wheelchair: wheelchair,
         signed: signed,
         lgbt: lgbt,
         chits: chits,
         childFriendly: childFriendly,
-        outdoors: outdoors,
+        hearingLoop: hearingLoop,
         creche: creche,
         temporaryClosure: temporaryClosure,
-        gsoOptIn: false
+        gsoOptOut: false
       }}
       validationSchema={validationSchema}
       onSubmit={_submitForm}>

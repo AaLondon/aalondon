@@ -78,12 +78,12 @@ input[type=checkbox] {
   }
 
 
-  .gso-opt-in{
+  .gso-opt-out{
       display:flex;
 
   }
 
-  .gso-opt-in > * {
+  .gso-opt-out > * {
     margin-right: 10px;
 
 }

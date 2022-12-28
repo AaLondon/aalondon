@@ -113,7 +113,7 @@ class Meeting(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     published = models.BooleanField(null=False, blank=False, default=False)
-    gso_opt_in = models.BooleanField(null=False, blank=False, default=False)
+    gso_opt_out = models.BooleanField(null=False, blank=False, default=False)
     xmas_open = models.BooleanField(null=False, blank=False, default=False)
     xmas_closed = models.BooleanField(null=False, blank=False, default=False)
     updated_by = models.ForeignKey(to=User,null=True,on_delete=models.SET_NULL)
@@ -196,7 +196,7 @@ class Meeting(models.Model):
         super(Meeting, self).save(*args, **kwargs)
         # send email to gso
         if self.published:
-            if self.gso_opt_in:
+            if not self.gso_opt_out:
                 self.send_mail_to_gso_contacts()
 
             try:

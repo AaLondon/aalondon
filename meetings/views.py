@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, DetailView, UpdateView
 from django.views.generic.detail import SingleObjectMixin
-from .models import Meeting
+from .models import Meeting, MeetingSubType
 from django.utils import timezone
 from service.models import ServicePage
 import datetime
@@ -64,7 +64,7 @@ class MeetingUpdateView(DetailView):
             "endTime": end_time,
             "link": self.object.online_link or "",
             "password": self.object.online_password or "",
-            "paymentLink": self.object.payment_details or "",
+            "tradition7Details": self.object.tradition_7_details or "",
             "address": self.object.address or "",
             "postcode": self.object.postcode or "",
             "whatThreeWords": self.object.what_three_words or "",
@@ -73,7 +73,7 @@ class MeetingUpdateView(DetailView):
             "notes": "",
             "subTypes": [sub_type.value for sub_type in self.object.sub_types.all()]
             or "",
-            "gsoOptIn": False,
+            "gsoOptOut": False,
         }
 
         context["meeting_data"] = meeting_form_data
@@ -83,9 +83,15 @@ class MeetingUpdateView(DetailView):
 
 class MeetingWagtailUpdateView(EditView):
     def form_valid(self, form):
+        open = form.cleaned_data['sub_types'].filter(value='Open')
+        if not open:
+            form.cleaned_data['sub_types']=form.cleaned_data['sub_types'] | MeetingSubType.objects.filter(value='Closed')
         instance = form.save(commit=False)
         instance.updated_by = self.request.user
+        
         instance.save()
+        
+        form.save_m2m()
         messages.success(
             self.request, self.get_success_message(instance),
             buttons=self.get_success_message_buttons(instance)
