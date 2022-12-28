@@ -63,12 +63,7 @@ class MeetingSearch extends Component {
       queryString += '&hearing=1'
     }
 
-    if (covid == 'active') {
-      queryString += '&covid_open_status=true'
-    } else if (covid == 'inactive') {
-      queryString += '&covid_open_status=false'
-    }
-
+    
     let currentPage = 1
 
     const physicalMeetingRequest = axios.get(queryString);

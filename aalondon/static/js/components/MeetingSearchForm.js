@@ -114,9 +114,9 @@ class MeetingSearchForm extends React.Component {
     const accesses = [
 
       {
-        key: 'closed',
-        text: 'Closed',
-        value: 'closed',
+        key: 'open',
+        text: 'Open',
+        value: 'open',
 
       }, {
         key: 'wheelchair',

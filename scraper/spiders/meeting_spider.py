@@ -94,10 +94,7 @@ class AASpider(scrapy.Spider):
             
             marker_meeting_status = meeting.get('ms')
 
-            if marker_meeting_status == MEETING_STATUS_CODES["Back Open Again"]:
-                covid_open_status = True
-            else:
-                covid_open_status = False
+            
                 
             hour = int(marker_time[:2])
             minute = int(marker_time[3:5]) 

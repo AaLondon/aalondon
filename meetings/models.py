@@ -10,7 +10,9 @@ from django.core.mail import EmailMessage
 from django.template import Context
 from django.template.loader import get_template
 from django.core import serializers
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 WHAT_THREE_WORDS_API_KEY = settings.WHAT_THREE_WORDS_API_KEY
 # Create your models here.
@@ -70,6 +72,9 @@ class Meeting(models.Model):
     type = models.CharField(
         max_length=3, choices=MEETING_TYPES, null=False, blank=False, default="F2F"
     )
+    notes = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    
     submission = models.CharField(
         max_length=10,
         choices=SUBMISSION_TYPES,
@@ -77,55 +82,41 @@ class Meeting(models.Model):
         blank=False,
         default="existing",
     )
+    title = models.TextField()
     address = models.TextField(blank=True, max_length=300)
-    code = models.IntegerField(blank=True, null=True, default=-1)
+    postcode = models.TextField(max_length=10, null=True, blank=True)
+    postcode_prefix = models.TextField(max_length=10, null=True, blank=True)
+    intergroup = models.CharField(blank=True, max_length=100, null=True)
+    what_three_words = models.CharField(max_length=100, null=True, blank=True)
     days = models.ManyToManyField(to=MeetingDay, related_name="meeting_days")
-    intergroup = models.ForeignKey(
-        to=MeetingIntergroup,
-        related_name="meeting_intergroup",
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE,
-    )
+    code = models.IntegerField(blank=True, null=True, default=-1)
     time = models.TimeField(null=False, blank=False)
     end_time = models.TimeField(null=True, blank=False)
-    online_link = models.URLField(max_length=1000, null=True, blank=True)
-    online_password = models.CharField(max_length=50, null=True, blank=True)
-    payment_details = models.TextField(null=True, blank=True)
-    what_three_words = models.CharField(max_length=100, null=True, blank=True)
     email = models.EmailField(
         null=False, blank=False, default="doesnotexist@aalondon.com"
     )
-    hearing = models.BooleanField(null=True, default=False)
+    tradition_7_details = models.TextField(null=True, blank=True)
+    online_link = models.URLField(max_length=1000, null=True, blank=True)
+    online_password = models.CharField(max_length=50, null=True, blank=True)
+    sub_types = models.ManyToManyField(
+        to=MeetingSubType, blank=True, related_name="meeting_categories"
+    )
     lat = models.FloatField(blank=True, null=True)
     lng = models.FloatField(blank=True, null=True)
-    postcode = models.TextField(max_length=10, null=True, blank=True)
     duration = models.TextField(blank=True, max_length=20)
-    title = models.TextField()
-    wheelchair = models.BooleanField(null=True, default=False)
     day_number = models.IntegerField(blank=True, null=True)
     slug = AutoSlugField(populate_from=["title", "postcode", "time"], max_length=100)
     day_rank = models.IntegerField(blank=True, null=True)
     group = models.TextField(blank=True, null=True)
     group_id = models.IntegerField(blank=True, null=True)
-    intergroup = models.CharField(blank=True, max_length=100, null=True)
-    intergroup_id = models.IntegerField(blank=True, null=True)
-    detail = models.TextField(blank=True, null=True)
     time_band = models.CharField(blank=True, max_length=10, null=True)
-    covid_open_status = models.BooleanField(null=False, default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    conference_url = models.URLField(max_length=1000, blank=True, null=True)
-    types = models.CharField(max_length=200, blank=True, null=True)
-    description = models.TextField(null=True, blank=True)
-    notes = models.TextField(null=True, blank=True)
-    sub_types = models.ManyToManyField(
-        to=MeetingSubType, blank=True, related_name="meeting_categories"
-    )
     published = models.BooleanField(null=False, blank=False, default=False)
-    gso_opt_in = models.BooleanField(null=False, blank=False, default=False)
+    gso_opt_out = models.BooleanField(null=False, blank=False, default=False)
     xmas_open = models.BooleanField(null=False, blank=False, default=False)
     xmas_closed = models.BooleanField(null=False, blank=False, default=False)
+    updated_by = models.ForeignKey(to=User,null=True,on_delete=models.SET_NULL)
 
     def __str__(self):
 
@@ -200,10 +191,12 @@ class Meeting(models.Model):
         self.time_band = get_time_band(self.time)
         if self.call_what_three_words:
             self.lat, self.lng = get_longitude_latitude(self.what_three_words)
+        if self.postcode:
+            self.postcode_prefix = self.postcode[:-3].strip()
         super(Meeting, self).save(*args, **kwargs)
         # send email to gso
         if self.published:
-            if self.gso_opt_in:
+            if not self.gso_opt_out:
                 self.send_mail_to_gso_contacts()
 
             try:

@@ -13,6 +13,7 @@ from wagtail.core.models import Page ,Site
 from home.models import HomePage
 from wagtailmenus.models import MainMenuItem, MainMenu
 from modelcluster.fields import ParentalKey
+from meetings.tests.factories import MeetingFactory
 
 
 import calendar
@@ -69,8 +70,10 @@ class Command(BaseCommand):
         MainMenuItem.objects.get_or_create(link_page=event_index, menu=main_menu, link_text='Events' )
         MainMenuItem.objects.get_or_create(link_url='/meetingsearch', menu=main_menu, link_text='Find a Meeting')
         MainMenuItem.objects.get_or_create(link_page=home_page, menu=main_menu)
+
  
-        
+        for _ in range(100):
+            MeetingFactory()
         
 
 

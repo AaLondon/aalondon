@@ -92,13 +92,13 @@ class MeetingSearch(generics.ListAPIView):
     model = Meeting
     serializer_class = MeetingSearchSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = ["time_band", "hearing", "wheelchair", "covid_open_status"]
+    filterset_fields = ["time_band"]
     ordering_fields = ["day_number", "time"]
 
     def get_queryset(self):
 
         queryset = Meeting.objects.filter(published=True).annotate(
-            search=SearchVector("postcode", "detail", "title"),
+            search=SearchVector("postcode", "title"),
         )
         year = datetime.now().date().year
         month = datetime.now().date().month
@@ -196,7 +196,7 @@ class OnlineMeetingSearch(generics.ListAPIView):
 
             tomorrow = dt_now + timedelta(days=1)
 
-            meetings_today = Meeting.objects.filter(covid_open_status=True).filter(
+            meetings_today = Meeting.objects.filter(
                 ((Q(days__value=day_name_today)) & Q(time__gte=dt_now.time()))
             )  # .order_by('time')
 

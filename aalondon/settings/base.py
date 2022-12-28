@@ -211,3 +211,5 @@ DEFAULT_FROM_EMAIL = "info@aa-london.com"  # if you don't already have this in s
 SERVER_EMAIL = "developer@aa-london.com"  # ditto (default from-email for Django errors)
 
 WAGTAILEMBEDS_RESPONSIVE_HTML = True
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

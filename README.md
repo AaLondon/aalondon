@@ -32,7 +32,7 @@ docker-compose -f docker-compose.yml build
 docker-compose -f docker-compose.yml up -d
 docker-compose -f docker-compose.yml run web python manage.py migrate
 docker-compose -f docker-compose.yml run web python manage.py createsuperuser
-docker-compose -f docker-compose.yml run web python manage.py cms_setup
+docker-compose -f docker-compose.yml run web python manage.py site_setup
 docker-compose -f docker-compose.yml run web python manage.py loaddata physical_meetings
 docker-compose -f docker-compose.yml run web python manage.py loaddata online_meetings
 npm install
