@@ -86,7 +86,7 @@ export default class MeetingDataTable extends Component {
     let third_column_field = showPostcode === 0 ? 'distance_from_client' : 'postcode_prefix';
 
     return (
-      <Table sortable celled fixed >
+      <Table sortable celled >
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell

@@ -5,6 +5,9 @@ import { Dropdown, TextArea, Checkbox } from 'semantic-ui-react'
 import axios from 'axios'
 
 
+const CheckboxExampleChecked = () => (
+  <Checkbox defaultChecked />
+)
 
 
 const formTypes = [
@@ -413,10 +416,10 @@ export default function MeetingFields(props) {
             <ErrorMessage name="notes" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group gso-opt-in">
-            <label htmlFor="gsoOptIn">Please share our group information with GSO</label>
+            <label htmlFor="gsoOptIn">By submitting this form your group agrees to have the listing information shared with the General Service Office (GSO) and the meeting details updated there. Untick to opt out</label>
             <SemanticField
               name="gsoOptIn"
-              component={Checkbox}
+              component={CheckboxExampleChecked}
             />
           </div>
           <div className="form-group gso-opt-in">

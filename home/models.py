@@ -165,8 +165,7 @@ class HomePage(Page):
         context["day_name_today"] = day_name_today
 
         context["notices"] = context["page"].notices.all()
-
-        videos = [video.url.stream_data[0]['value'] for video in context["page"].videos.all()]
+        videos = [video.url.raw_data[0]['value'] for video in context["page"].videos.all()] 
         context["videos"] = videos
         return context
 
