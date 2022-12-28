@@ -35,7 +35,6 @@ class MeetingSerializer(serializers.ModelSerializer):
             "online_password",
             "address",
             "postcode",
-            "postcode_prefix",
             "tradition_7_details",
             "what_three_words",
             "email",
@@ -51,10 +50,7 @@ class MeetingSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         days = validated_data.pop("days")
         sub_types = validated_data.pop("sub_types")
-        postcode = validated_data.pop("postcode")
         what_three_words = validated_data.get("what_three_words", "")
-        postcode_prefix = postcode[:-3].strip()
-        validated_data['postcode_prefix'] = postcode_prefix
         meeting = Meeting.objects.create(**validated_data)
 
         meeting.save()

@@ -86,13 +86,7 @@ class Meeting(models.Model):
     address = models.TextField(blank=True, max_length=300)
     postcode = models.TextField(max_length=10, null=True, blank=True)
     postcode_prefix = models.TextField(max_length=10, null=True, blank=True)
-    intergroup = models.ForeignKey(
-        to=MeetingIntergroup,
-        related_name="meeting_intergroup",
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE,
-    )
+    intergroup = models.CharField(blank=True, max_length=100, null=True)
     what_three_words = models.CharField(max_length=100, null=True, blank=True)
     days = models.ManyToManyField(to=MeetingDay, related_name="meeting_days")
     code = models.IntegerField(blank=True, null=True, default=-1)
@@ -197,6 +191,8 @@ class Meeting(models.Model):
         self.time_band = get_time_band(self.time)
         if self.call_what_three_words:
             self.lat, self.lng = get_longitude_latitude(self.what_three_words)
+        if self.postcode:
+            self.postcode_prefix = self.postcode[:-3].strip()
         super(Meeting, self).save(*args, **kwargs)
         # send email to gso
         if self.published:
