@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### Define script variables
-
+ 
 # Name of the app
 NAME='{{ app_name }}'
 # Path to virtualenv
