@@ -31,7 +31,7 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
             "postcode",
             "online_link",
             "online_password",
-            "payment_details",
+            "tradition_7_details",
             "slug",
             "lat",
             "lng",

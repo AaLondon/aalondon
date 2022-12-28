@@ -25,7 +25,7 @@ class MeetingAdmin(ModelAdmin):
     )
     list_filter = ("days", "published")
     search_fields = ("title",)
-    form_fields_exclude = ['updated_by']
+    form_fields_exclude = ['updated_by','lat','lng','duration','slug','day_rank','group','group_id','time_band','code','day_number']
     edit_view_class = MeetingWagtailUpdateView
 
 

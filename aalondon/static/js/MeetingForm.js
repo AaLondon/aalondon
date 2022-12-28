@@ -135,7 +135,17 @@ function MeetingForm(props) {
     whatThreeWords: Yup.string()
       .required('What3Words is required'),
     postcode: Yup.string()
-      .required('Postcode is required'),
+      .required('Postcode is required')
+      .test("is-valid","postcode needs to be from UK", function(value){
+        let regex = new RegExp('^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})$')
+        return regex.test(value.replace(/\s+/g, ''))
+        
+      })
+      .test("is-valid","postcode has maximum 1 space", function(value){
+       let spaces = value.length - value.replaceAll(' ', '').length;
+        return spaces < 2
+      })
+      ,
     address: Yup.string()
       .required('Address is required'),
   }

@@ -117,7 +117,7 @@ export default class MeetingDataTable extends Component {
               sorted={column === 'postcode' ? direction : null}
               onClick={this.handleSort('postcode')}
             >
-              Covid Open Status
+              Postcode
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
