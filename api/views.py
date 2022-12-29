@@ -98,7 +98,7 @@ class MeetingSearch(generics.ListAPIView):
     def get_queryset(self):
 
         queryset = Meeting.objects.filter(published=True).annotate(
-            search=SearchVector("postcode", "title"),
+            search=SearchVector("postcode", "title","postcode"),
         )
         year = datetime.now().date().year
         month = datetime.now().date().month
