@@ -1,4 +1,7 @@
 from django.test import TestCase
+from rest_framework.test import APITestCase
+
+from meetings.tests.factories import MeetingFactory
 
 class TestURLSuccess(TestCase):
     """
@@ -22,3 +25,19 @@ class TestURLSuccess(TestCase):
     def test_visit_meetingguide_json(self):
         response = self.client.get('/api/meetingguide.json')
         assert response.status_code == 200
+
+
+class TestMeetingAPI(APITestCase):
+
+    def setUp(self):
+        self.meeting_count = 100
+        # create meeting test data.
+        for _ in range(self.meeting_count):
+            MeetingFactory()
+            
+        self.api_meetings_url = "/api/meetings/"
+    
+    def test_api_meetings_count(self):
+        response = self.client.get(self.api_meetings_url, format="json") # call `/api/meetings/` api.
+        count = response.json()['count'] # get total meetings.
+        self.assertEquals(int(count), self.meeting_count)
