@@ -39,5 +39,5 @@ class TestMeetingAPI(APITestCase):
     
     def test_api_meetings_count(self):
         response = self.client.get(self.api_meetings_url, format="json") # call `/api/meetings/` api.
-        count = response.json()['count'] # get total meetings.
-        self.assertEquals(int(count), self.meeting_count)
+        count = int(response.json()['count']) # get total meetings.
+        self.assertEquals(count, self.meeting_count)
