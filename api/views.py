@@ -131,7 +131,7 @@ class MeetingSearch(generics.ListAPIView):
                 queryset = queryset.filter(days__value=day)
 
         meeting_type = self.request.query_params.get("type", None)
-        if meeting_type:
+        if meeting_type and meeting_type != 'undefined':
             queryset = queryset.filter(((Q(type=meeting_type)) | Q(type="HYB")))
 
         return queryset.order_by("day_number", "time")
