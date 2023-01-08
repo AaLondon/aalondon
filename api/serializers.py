@@ -172,95 +172,61 @@ class OnlineMeetingSerializer(serializers.ModelSerializer):
 
 
 class MeetingGuideSerializer(serializers.ModelSerializer):
-    id = serializers.SerializerMethodField()
+    
     name = serializers.SerializerMethodField()
     notes = serializers.SerializerMethodField()
     updated = serializers.SerializerMethodField()
-    location_id = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
+    conference_url = serializers.SerializerMethodField()
+    conference_url_notes = serializers.SerializerMethodField()
     day = serializers.SerializerMethodField()
     time = serializers.SerializerMethodField()
     end_time = serializers.SerializerMethodField()
-    time_formatted = serializers.SerializerMethodField()
-    conference_phone = serializers.SerializerMethodField()
+    timezone = serializers.SerializerMethodField()
     types = serializers.SerializerMethodField()
     location = serializers.SerializerMethodField()
     location_notes = serializers.SerializerMethodField()
-    region_id = serializers.SerializerMethodField()
     region = serializers.SerializerMethodField()
-    sub_region = serializers.SerializerMethodField()
-    group_id = serializers.SerializerMethodField()
     group = serializers.SerializerMethodField()
-    district = serializers.SerializerMethodField()
-    district_id = serializers.SerializerMethodField()
-    sub_district = serializers.SerializerMethodField()
-    group_notes = serializers.SerializerMethodField()
-    website = serializers.SerializerMethodField()
-    website_2 = serializers.SerializerMethodField()
-    location_url = serializers.SerializerMethodField()
     formatted_address = serializers.SerializerMethodField()
     latitude = serializers.SerializerMethodField()
     longitude = serializers.SerializerMethodField()
-    email = serializers.SerializerMethodField()
-    phone = serializers.SerializerMethodField()
-    mailing_address = serializers.SerializerMethodField()
-    venmo = serializers.SerializerMethodField()
-    square = serializers.SerializerMethodField()
-    paypal = serializers.SerializerMethodField()
-    last_contact = serializers.SerializerMethodField()
     postal_code = serializers.SerializerMethodField()
     city = serializers.SerializerMethodField()
     state = serializers.SerializerMethodField()
     country = serializers.SerializerMethodField()
-    timezone = serializers.SerializerMethodField()
+    
 
     class Meta:
         model = Meeting
         fields = [
-            "id",
             "name",
             "slug",
-            "notes",
-            "updated",
-            "location_id",
-            "url",
             "day",
             "time",
             "end_time",
-            "time_formatted",
-            "conference_url",
-            "conference_phone",
+            "timezone",
             "types",
+            "notes",
+            "conference_url",
+            "conference_url_notes",
             "location",
             "location_notes",
-            "region_id",
-            "region",
-            "sub_region",
-            "group_id",
-            "group",
-            "district",
-            "district_id",
-            "sub_district",
-            "group_notes",
-            "website",
-            "website_2",
-            "location_url",
             "formatted_address",
+            "address", 
+            "city", 
+            "state", 
+            "postal_code", 
+            "country", 
             "latitude",
             "longitude",
-            "email",
-            "phone",
-            "mailing_address",
-            "venmo",
-            "square",
-            "paypal",
-            "last_contact",
-            "postal_code",
-            "city",
-            "state",
-            "country",
-            "timezone",
+            "region",
+            "updated",
+            "group",
+            "url"
+
         ]
+
 
     def get_id(self, obj):
         return obj.code
@@ -269,7 +235,7 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
         return obj.title
 
     def get_notes(self, obj):
-        return obj.detail
+        return obj.description
 
     def get_updated(self, obj):
         updated = obj.updated.strftime("%Y-%m-%d %H:%M:%S")
@@ -315,7 +281,7 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
         return ""
 
     def get_types(self, obj):
-        return obj.get_types()
+        return ""
 
     def get_location(self, obj):
         return ""
@@ -342,7 +308,7 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
         return obj.intergroup
 
     def get_district_id(self, obj):
-        return obj.intergroup_id
+        return ""
 
     def get_sub_district(self, obj):
         return ""
@@ -356,8 +322,11 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     def get_website_2(self, obj):
         return ""
 
-    def get_location_url(self, obj):
-        return ""
+    def get_conference_url(self, obj):
+        return obj.online_link
+    
+    def get_conference_url_notes(self, obj):
+        return obj.notes
 
     def get_formatted_address(self, obj):
         return ""
