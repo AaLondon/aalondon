@@ -191,9 +191,6 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
     formatted_address = serializers.SerializerMethodField()
     latitude = serializers.SerializerMethodField()
     longitude = serializers.SerializerMethodField()
-    postal_code = serializers.SerializerMethodField()
-    city = serializers.SerializerMethodField()
-    state = serializers.SerializerMethodField()
     country = serializers.SerializerMethodField()
     
 
@@ -213,10 +210,6 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
             "location",
             "location_notes",
             "formatted_address",
-            "address", 
-            "city", 
-            "state", 
-            "postal_code", 
             "country", 
             "latitude",
             "longitude",
@@ -262,8 +255,8 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
             "Saturday",
         ]
 
-        # day_number = days.index(obj.days)
-        return -1  # day_number
+        day_number = days.index(obj.days.first().value)
+        return day_number
 
     def get_time(self, obj):
         time = obj.time.strftime("%H:%M")
@@ -281,7 +274,7 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
         return ""
 
     def get_types(self, obj):
-        return ""
+        return [type.code for type in obj.sub_types.all()]
 
     def get_location(self, obj):
         return ""
@@ -329,8 +322,8 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
         return obj.notes
 
     def get_formatted_address(self, obj):
-        return ""
-
+        return f"{obj.address},London,United Kingdom,{obj.postcode}" 
+        
     def get_latitude(self, obj):
         return obj.lat
 
