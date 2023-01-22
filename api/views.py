@@ -230,7 +230,7 @@ class MeetingGuideListView(generics.ListAPIView):
 
     model = Meeting
     serializer_class = MeetingGuideSerializer
-    queryset = Meeting.objects.all()
+    queryset = Meeting.objects.filter(published=True)
     pagination_class = None
 
 
@@ -240,6 +240,6 @@ class MeetingGuideViewSet(viewsets.ModelViewSet):
     can be accessed with `.json` suffix.
     """
 
-    queryset = Meeting.objects.all()
+    queryset = Meeting.filter(published=True)
     serializer_class = MeetingGuideSerializer
     pagination_class = None
