@@ -240,6 +240,6 @@ class MeetingGuideViewSet(viewsets.ModelViewSet):
     can be accessed with `.json` suffix.
     """
 
-    queryset = Meeting.filter(published=True)
+    queryset = Meeting.objects.filter(published=True)
     serializer_class = MeetingGuideSerializer
     pagination_class = None
