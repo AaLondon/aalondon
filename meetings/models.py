@@ -83,6 +83,7 @@ class Meeting(models.Model):
         default="existing",
     )
     title = models.TextField()
+    location = models.TextField(blank=True, max_length=300)
     address = models.TextField(blank=True, max_length=300)
     postcode = models.TextField(max_length=10, null=True, blank=True)
     postcode_prefix = models.TextField(max_length=10, null=True, blank=True)
