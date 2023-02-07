@@ -277,7 +277,7 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
         return [type.code for type in obj.sub_types.all()]
 
     def get_location(self, obj):
-        return ""
+        return obj.location
 
     def get_location_notes(self, obj):
         return ""
