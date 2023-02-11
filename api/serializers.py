@@ -319,7 +319,7 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
         return obj.online_link
     
     def get_conference_url_notes(self, obj):
-        return obj.notes
+        return obj.description
 
     def get_formatted_address(self, obj):
         return f"{obj.address},London,United Kingdom,{obj.postcode}" 
