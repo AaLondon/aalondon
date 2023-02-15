@@ -228,7 +228,8 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
         return obj.title
 
     def get_notes(self, obj):
-        return obj.description
+        if obj.address and not obj.online_link:
+            return obj.description
 
     def get_updated(self, obj):
         updated = obj.updated.strftime("%Y-%m-%d %H:%M:%S")
@@ -319,7 +320,8 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
         return obj.online_link
     
     def get_conference_url_notes(self, obj):
-        return obj.description
+        if obj.online_link: 
+            return obj.description
 
     def get_formatted_address(self, obj):
         return f"{obj.address},London,United Kingdom,{obj.postcode}" 
