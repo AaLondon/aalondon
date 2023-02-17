@@ -139,7 +139,7 @@ function MeetingForm(props) {
       .required('Postcode is required')
       .test("is-valid","postcode needs to be from UK", function(value){
         let value_str = value || '';
-        let regex = new RegExp('^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})$')
+        let regex = new RegExp(/^([A-Z]{1,2}\d{1,2}[A-Z]?)\s*(\d[A-Z]{2})$/)
         return regex.test(value_str.replaceAll(' ', ''))
         
       })
