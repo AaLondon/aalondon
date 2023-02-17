@@ -48,6 +48,7 @@ function MeetingForm(props) {
       end_time: fields.endTime,
       email: fields.email,
       days: days,
+      location: fields.location,
       address: fields.address,
       postcode: fields.postcode,
       online_link: fields.link,
@@ -148,7 +149,9 @@ function MeetingForm(props) {
         return spaces < 2
       })
       ,
-    address: Yup.string()
+      location: Yup.string()
+      .required('Location is required'),
+      address: Yup.string()
       .required('Address is required'),
   }
 
@@ -220,6 +223,7 @@ function MeetingForm(props) {
         link: meetingData.link,
         password: meetingData.password,
         tradition7Details: meetingData.tradition7Details,
+        location: meetingData.location,
         address: meetingData.address,
         postcode: meetingData.postcode,
         whatThreeWords: meetingData.whatThreeWords,
