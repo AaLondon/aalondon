@@ -379,9 +379,15 @@ export default function MeetingFields(props) {
                 <ErrorMessage name="password" component="password" className="invalid-feedback" />
               </div></>}
           {formType !== 'ONL' &&
-            <><div className="form-group">
+            <>
+            <div className="form-group">
+              <label htmlFor="location">Location*</label>
+              <Field name="location" placeholder="e.g. Hinde Street Methodist Church" type="text" className={'form-control' + (errors.location && touched.location ? ' is-invalid' : '')} />
+              <ErrorMessage name="location" component="div" className="invalid-feedback" />
+            </div>
+            <div className="form-group">
               <label htmlFor="address">Address*</label>
-              <Field name="address" type="text" className={'form-control' + (errors.address && touched.address ? ' is-invalid' : '')} />
+              <Field name="address" placeholder="e.g. 19 Hinde Street" type="text" className={'form-control' + (errors.address && touched.address ? ' is-invalid' : '')} />
               <ErrorMessage name="address" component="div" className="invalid-feedback" />
             </div>
               <div className="form-group">

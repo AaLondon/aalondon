@@ -65,6 +65,7 @@ class MeetingUpdateView(DetailView):
             "link": self.object.online_link or "",
             "password": self.object.online_password or "",
             "tradition7Details": self.object.tradition_7_details or "",
+            "location": self.object.location or "",
             "address": self.object.address or "",
             "postcode": self.object.postcode or "",
             "whatThreeWords": self.object.what_three_words or "",
