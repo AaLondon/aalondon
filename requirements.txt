@@ -11,7 +11,7 @@ scrapy-djangoitem==1.1.1
 pandas
 psycopg2-binary==2.9.5
 django-storages
-boto3==1.17.17
+boto3==1.26.77
 geopy==1.21.0
 whitenoise[brotli]==5.0.1
 wagtailmenus==3.1.3
