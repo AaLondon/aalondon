@@ -4689,3 +4689,41 @@ body.is-menu-visible #menu {
 .google-image{
   width:40px
 }
+
+
+@media screen and (min-width: 768px ) {
+
+  .download-app-container{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .m-space-x {
+    margin-left: 25px;
+    margin-right: 25px;
+  }
+}
+
+
+.aa-app-image{
+  height: 115px;
+  width: 115px;
+}
+
+
+.font-bold {
+  font-weight: bold;
+}
+
+
+.text-lg{
+  font-weight: bold;
+  font-size: 22.5px
+}
+
+
+.app-store {
+  height: 45px;
+  width: 155px;
+}
