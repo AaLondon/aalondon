@@ -19,7 +19,11 @@
     
 
     <section id="meeting-search"></section>
-    <section id="home-attention">{{ page.attention}}</section>
+    <section id="home-attention">
+      {% include "download-app.html" %}
+      <hr>
+      {{ page.attention}}
+    </section>
 
 
     <section id="online-meetings-link"><h2><a href='meetingsearch'>see full list of meetings</a></h2></section>
