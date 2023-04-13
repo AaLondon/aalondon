@@ -33,6 +33,7 @@ class MeetingSerializer(serializers.ModelSerializer):
             "end_time",
             "online_link",
             "online_password",
+            "location",
             "address",
             "postcode",
             "tradition_7_details",
