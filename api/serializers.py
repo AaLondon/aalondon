@@ -256,7 +256,8 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
             "Saturday",
         ]
 
-        return days
+        day_number = days.index(obj.days.first().value)
+        return day_number
 
     def get_time(self, obj):
         time = obj.time.strftime("%H:%M")
