@@ -1,4 +1,5 @@
 from meetings.models import Meeting
+from django.db.models import F
 from meetings.api.serializers import MeetingDaySerializer, MeetingSubTypeSerializer
 from online.models import OnlineMeeting
 from rest_framework.reverse import reverse
@@ -255,9 +256,10 @@ class MeetingGuideSerializer(serializers.ModelSerializer):
             "Friday",
             "Saturday",
         ]
-
-        day_number = days.index(obj.days.first().value)
-        return day_number
+        days_qs = obj.days.all().annotate(days=F("value")).values_list("days", flat=True)
+        sorted_days = [ days.index(day) for day in days_qs ]
+        sorted_days.sort()
+        return sorted_days
 
     def get_time(self, obj):
         time = obj.time.strftime("%H:%M")
