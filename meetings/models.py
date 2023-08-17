@@ -117,7 +117,6 @@ class Meeting(models.Model):
     updated = models.DateTimeField(auto_now=True)
     published = models.BooleanField(null=False, blank=False, default=False)
     gso_opt_out = models.BooleanField(null=False, blank=False, default=False)
-    xmas_open = models.BooleanField(null=False, blank=False, default=False)
     updated_by = models.ForeignKey(to=User,null=True,on_delete=models.SET_NULL)
 
     def __str__(self):
