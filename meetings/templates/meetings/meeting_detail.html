@@ -41,6 +41,12 @@
       <div>{{object.postcode}}</div>
       <div class="meeting-detail-text">DETAILS</div>
       <div>{{object.description|linebreaks}}</div>
+
+      {% if object.temporary_changes %}
+        <div class="meeting-detail-text">TEMPORARY CHANGES</div>
+        <div>{{ object.temporary_changes|linebreaks }}</div>
+      {% endif %}
+      
       {% if object.sub_types.all%}
       <div class="meeting-detail-text">CATEGORIES</div>
       <div>{% for sub_type in object.sub_types.all %}{{ sub_type.value }}<br/>{% endfor %}</div>
