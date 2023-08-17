@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = 'Update meeting temporary changes...'
 
     def handle(self, *args, **options):
-        today = datetime.datetime.now().date().day
+        today = datetime.datetime.now().date().day+1
         Meeting.objects.filter(note_expiry_date__day__lt=today).update(
             temporary_changes=None, note_expiry_date=None)
         

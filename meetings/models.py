@@ -97,7 +97,7 @@ class Meeting(models.Model):
         null=False, blank=False, default="doesnotexist@aalondon.com"
     )
     temporary_changes = models.TextField(max_length=1000, help_text="e.g. Please note that this meeting is closed on this day.", null=True, blank=True)
-    note_expiry_date = models.DateTimeField(null=True, blank=True)
+    note_expiry_date = models.DateField(null=True, blank=True)
     tradition_7_details = models.TextField(null=True, blank=True)
     online_link = models.URLField(max_length=1000, null=True, blank=True)
     online_password = models.CharField(max_length=50, null=True, blank=True)
