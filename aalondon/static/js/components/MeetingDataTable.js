@@ -42,7 +42,7 @@ export default class MeetingDataTable extends Component {
     const { column, data, direction } = this.state
     let thirdColumnHeader = "Distance(miles)";
     let showPostcode = this.props.showPostcode;
-    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, link, slug, postcode_prefix, day, place,type,xmas_open }) => {
+    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, link, slug, postcode_prefix, day, place,type }) => {
       let placeText = '';
       let zoomImg = '/static/images/zoom.png';
       let santa = '/static/images/santa.png';
@@ -50,9 +50,6 @@ export default class MeetingDataTable extends Component {
       let meetingUrlPath = '/onlinemeetings/'
       let img = <img src={zoomImg}></img>
       let santaImg= <></>
-      if (xmas_open){
-        santaImg = <><div><img src={santa}></img></div></>
-      }
       if (type === 'ONL') {
         img = <><div><img src={zoomImg}></img></div>{santaImg}</>
       }else if(type === 'F2F')
