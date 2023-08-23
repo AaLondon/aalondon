@@ -56,6 +56,7 @@ INSTALLED_APPS = [
 
     'modelcluster',
     'taggit',
+    'django_crontab',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -201,6 +202,10 @@ REST_FRAMEWORK = {
     
 }
 
+
+CRONJOBS = [
+    ('0 1 * * *', 'django.core.management.call_command', ['notice_expired']),
+]
 
 
 WHAT_THREE_WORDS_API_KEY = env('WHAT_THREE_WORDS_API_KEY',default="")

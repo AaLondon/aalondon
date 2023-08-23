@@ -16,13 +16,13 @@
     <div class="meeting-type">
       <div class="meeting-detail-text">TYPE</div>
       {% if object.type == 'F2F'%}
-      <div><img src="{% static 'images/building-location-pin.png'%}" />{% if object.xmas_open %}<img src="{% static 'images/santa.png'%}" />{% endif %}</div>
+      <div><img src="{% static 'images/building-location-pin.png'%}" /></div>
       
       {% elif object.type == 'HYB'  %}
   
-      <div><img src="{% static 'images/building-location-pin.png'%}" /><img src="{% static 'images/zoom.png'%}" />{% if object.xmas_open %}<img src="{% static 'images/santa.png'%}" />{% endif %}</div>
+      <div><img src="{% static 'images/building-location-pin.png'%}" /><img src="{% static 'images/zoom.png'%}" /></div>
       {% else  %}
-      <div><img src="{% static 'images/building-location-pin.png'%}" /><img src="{% static 'images/zoom.png'%}" />{% if object.xmas_open %}<img src="{% static 'images/santa.png'%}" />{% endif %}</div>
+      <div><img src="{% static 'images/building-location-pin.png'%}" /><img src="{% static 'images/zoom.png'%}" /></div>
       {% endif %}
     </div>
     <div class="meeting-whatsapp">
@@ -41,6 +41,12 @@
       <div>{{object.postcode}}</div>
       <div class="meeting-detail-text">DETAILS</div>
       <div>{{object.description|linebreaks}}</div>
+
+      {% if object.temporary_changes %}
+        <div class="meeting-detail-text">TEMPORARY CHANGES</div>
+        <div>{{ object.temporary_changes|linebreaks }}</div>
+      {% endif %}
+      
       {% if object.sub_types.all%}
       <div class="meeting-detail-text">CATEGORIES</div>
       <div>{% for sub_type in object.sub_types.all %}{{ sub_type.value }}<br/>{% endfor %}</div>

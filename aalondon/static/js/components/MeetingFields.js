@@ -245,8 +245,6 @@ export default function MeetingFields(props) {
             setFieldValue('whatThreeWords', result.what_three_words ? result.what_three_words : '')
             setFieldValue('description', result.description)
             setFieldValue('gsoOptOut', result.gso_opt_out)
-            setFieldValue('xmasOpen', result.xmas_open)
-            setFieldValue('xmasClosed', result.xmas_closed)
             setFieldValue('days', result.days.map(day => day.value))
 
             let subTypes = result.sub_types.map(sub_type => sub_type.value)

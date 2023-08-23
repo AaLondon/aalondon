@@ -96,6 +96,8 @@ class Meeting(models.Model):
     email = models.EmailField(
         null=False, blank=False, default="doesnotexist@aalondon.com"
     )
+    temporary_changes = models.TextField(max_length=1000, help_text="e.g. Please note that this meeting is closed on this day.", null=True, blank=True)
+    note_expiry_date = models.DateField(null=True, blank=True)
     tradition_7_details = models.TextField(null=True, blank=True)
     online_link = models.URLField(max_length=1000, null=True, blank=True)
     online_password = models.CharField(max_length=50, null=True, blank=True)
@@ -115,8 +117,6 @@ class Meeting(models.Model):
     updated = models.DateTimeField(auto_now=True)
     published = models.BooleanField(null=False, blank=False, default=False)
     gso_opt_out = models.BooleanField(null=False, blank=False, default=False)
-    xmas_open = models.BooleanField(null=False, blank=False, default=False)
-    xmas_closed = models.BooleanField(null=False, blank=False, default=False)
     updated_by = models.ForeignKey(to=User,null=True,on_delete=models.SET_NULL)
 
     def __str__(self):

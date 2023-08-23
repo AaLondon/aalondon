@@ -39,12 +39,12 @@ class MeetingSerializer(serializers.ModelSerializer):
             "tradition_7_details",
             "what_three_words",
             "email",
+            "temporary_changes",
+            "note_expiry_date",
             "description",
             "notes",
             "sub_types",
             "gso_opt_out",
-            "xmas_open",
-            "xmas_closed",
             "submission",
         ]
 
