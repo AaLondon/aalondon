@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from meetings.models import Meeting,EmailContact
 from meetings.api.serializers import MeetingSerializer
 from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.core import mail
@@ -37,3 +38,11 @@ class MeetingList(generics.ListCreateAPIView):
 class MeetingDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Meeting.objects.all()
     serializer_class = MeetingSerializer
+
+
+
+class EmailConfirmationView(APIView):
+
+    def get(self, request, uid64):
+        pass 
+    

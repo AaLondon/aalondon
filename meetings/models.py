@@ -12,6 +12,9 @@ from django.template.loader import get_template
 from django.core import serializers
 from django.contrib.auth import get_user_model
 
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+
 User = get_user_model()
 
 WHAT_THREE_WORDS_API_KEY = settings.WHAT_THREE_WORDS_API_KEY
@@ -153,6 +156,17 @@ class Meeting(models.Model):
                     return True
         return False
 
+    @property
+    def confirmation_link(self):
+        domain = "http://localhost:8000"
+        uid64 = urlsafe_base64_encode(force_bytes(self.pk))
+
+        link = reverse("email-confirmation", kwargs={
+            "uid64": uid64
+        })
+
+        return domain + f"/{link}"
+
     def send_mail_to_gso_contacts(self):
         gso_contacts = EmailContact.objects.filter(update_to_gso=True)
 
@@ -186,6 +200,26 @@ class Meeting(models.Model):
         email_message.content_subtype = "html"
         email_message.send()
 
+    def send_confirmation_mail(self):
+        """
+            NOTE: Send confirmation email to given email address.
+        """
+
+        message = get_template("meetings/email_confirmation.html").render(
+            {"meeting": self,
+            "confirmation_link": self.confirmation_link}
+        )
+        email_message = EmailMessage(
+            subject="Meeting Email Confirmation to aa-london.com",
+            body=message,
+            from_email="AA-LONDON<info@aa-london.com>",
+            to=[self.email],
+            bcc=["info@aa-london.com"],
+            reply_to=["info@aa-london.com"],
+        )
+        email_message.content_subtype = "html"
+        email_message.send()
+
     def save(self, *args, **kwargs):
 
         self.slug = slugify(f"{self.title} {self.time} {self.type} {self.id}")
@@ -199,6 +233,9 @@ class Meeting(models.Model):
         if self.published:
             if not self.gso_opt_out:
                 self.send_mail_to_gso_contacts()
+            
+            if self.email != "donotexist@aalondon.com":
+                self.send_confirmation_mail()
 
             try:
                 if self._loaded_values["published"] != self.published:

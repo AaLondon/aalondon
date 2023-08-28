@@ -10,12 +10,12 @@ SECRET_KEY = "0!nlm7rcj1l43(z+&wr%d&usb05o93eiej26@6tr^ozj0@$t7e"
 ALLOWED_HOSTS = ["*"]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 # install mailhog to use these settings
 # TODO document this in readme
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 EMAIL_HOST = "127.0.0.1"
 EMAIL_PORT = 1025
 
