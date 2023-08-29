@@ -5,6 +5,7 @@ from django.utils.text import slugify
 from django_extensions.db.fields import AutoSlugField
 from datetime import time
 import json
+import base64
 import what3words
 from django.core.mail import EmailMessage
 from django.template import Context
@@ -12,8 +13,6 @@ from django.template.loader import get_template
 from django.core import serializers
 from django.contrib.auth import get_user_model
 
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
 
 User = get_user_model()
 
@@ -62,6 +61,27 @@ def get_longitude_latitude(what_three_words):
     return lat, lng
 
 
+def confirmation_link(pk, title):
+    """
+        NOTE: generate confirmation link containing meeting data. 
+
+        @params
+            pk - Meeting primary key.
+            title - Meeting title.  
+
+        @returns
+            str - confirmation link. 
+    """
+    domain = "http://localhost:8000"
+    token = base64.urlsafe_b64encode(json.dumps({"pk": pk, "title": title}).encode()).decode().rstrip("=")
+
+    link = reverse("email-confirmation", kwargs={
+        "token": token
+    })
+
+    return domain + f"{link}"
+
+
 class Meeting(models.Model):
     MEETING_TYPES = [
         ("F2F", "Face To Face"),
@@ -71,6 +91,11 @@ class Meeting(models.Model):
     SUBMISSION_TYPES = [
         ("new", "new"),
         ("existing", "existing"),
+    ]
+    EMAIL_CONFIRMED_TYPES = [
+        ("CONFIRMED", "confirmed"),
+        ("UNCONFIRMED", "unconfirmed"),
+        ("PRE", "pre")
     ]
     type = models.CharField(
         max_length=3, choices=MEETING_TYPES, null=False, blank=False, default="F2F"
@@ -99,6 +124,8 @@ class Meeting(models.Model):
     email = models.EmailField(
         null=False, blank=False, default="doesnotexist@aalondon.com"
     )
+    email_confirmed = models.CharField(
+        max_length=50, choices=EMAIL_CONFIRMED_TYPES, default="PRE")
     temporary_changes = models.TextField(max_length=1000, help_text="e.g. Please note that this meeting is closed on this day.", null=True, blank=True)
     note_expiry_date = models.DateField(null=True, blank=True)
     tradition_7_details = models.TextField(null=True, blank=True)
@@ -156,17 +183,6 @@ class Meeting(models.Model):
                     return True
         return False
 
-    @property
-    def confirmation_link(self):
-        domain = "http://localhost:8000"
-        uid64 = urlsafe_base64_encode(force_bytes(self.pk))
-
-        link = reverse("email-confirmation", kwargs={
-            "uid64": uid64
-        })
-
-        return domain + f"/{link}"
-
     def send_mail_to_gso_contacts(self):
         gso_contacts = EmailContact.objects.filter(update_to_gso=True)
 
@@ -200,28 +216,7 @@ class Meeting(models.Model):
         email_message.content_subtype = "html"
         email_message.send()
 
-    def send_confirmation_mail(self):
-        """
-            NOTE: Send confirmation email to given email address.
-        """
-
-        message = get_template("meetings/email_confirmation.html").render(
-            {"meeting": self,
-            "confirmation_link": self.confirmation_link}
-        )
-        email_message = EmailMessage(
-            subject="Meeting Email Confirmation to aa-london.com",
-            body=message,
-            from_email="AA-LONDON<info@aa-london.com>",
-            to=[self.email],
-            bcc=["info@aa-london.com"],
-            reply_to=["info@aa-london.com"],
-        )
-        email_message.content_subtype = "html"
-        email_message.send()
-
     def save(self, *args, **kwargs):
-
         self.slug = slugify(f"{self.title} {self.time} {self.type} {self.id}")
         self.time_band = get_time_band(self.time)
         if self.call_what_three_words:
@@ -233,9 +228,6 @@ class Meeting(models.Model):
         if self.published:
             if not self.gso_opt_out:
                 self.send_mail_to_gso_contacts()
-            
-            if self.email != "donotexist@aalondon.com":
-                self.send_confirmation_mail()
 
             try:
                 if self._loaded_values["published"] != self.published:

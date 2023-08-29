@@ -20,7 +20,7 @@ export default function MeetingFormSuccess(props) {
   return (
     <React.Fragment>
       <div ref={resultsRef}>
-        Thank you for submitting your meeting details. One of our team will review your submission and will publish your changes within 48 hours. If you need any more assistance or have questions please email ecomm.ln@aamail.org.
+        Thank you for submitting your meeting details. You will receive an email with a confirmation link, Once confirmed one of our team members will review your submission and will publish your changes within 48 hours. If you need any more assistance or have questions please email ecomm.ln@aamail.org.
         </div>
     </React.Fragment>
   );
