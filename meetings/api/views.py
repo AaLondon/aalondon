@@ -2,11 +2,7 @@ from django.contrib.auth.models import User
 from meetings.models import Meeting,EmailContact, confirmation_link
 from meetings.api.serializers import MeetingSerializer
 from rest_framework import generics
-from rest_framework.views import APIView
 from django.core import mail
-from django.http import HttpResponse
-import base64
-import json
 
 
 class MeetingList(generics.ListCreateAPIView):
@@ -37,13 +33,3 @@ class MeetingDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = MeetingSerializer
 
 
-
-class EmailConfirmationView(APIView):
-
-    def get(self, request, token):
-        # token contains meeting data.
-        data = json.loads(base64.urlsafe_b64decode(token+"==").decode())
-        if Meeting.objects.filter(**data).exists():
-            Meeting.objects.filter(**data).update(email_confirmed="CONFIRMED")
-        return HttpResponse(json.dumps(data))
-    

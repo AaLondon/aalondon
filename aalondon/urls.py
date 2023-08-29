@@ -7,7 +7,7 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from api import urls as api_urls
-from meetings.api.views import EmailConfirmationView
+from meetings.views import EmailConfirmationView
 
 from search import views as search_views
 from meetings.views import MeetingSearchView,MeetingDetailView,MeetingUpdateView,MeetingCreateView
@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^search/$', search_views.search, name='search'),
     path('api/meetingadd/', include('meetings.api.urls')), 
     url(r'^api/', include(api_urls)),
-    path("meetings/email-confirmation/<slug:token>/", EmailConfirmationView.as_view(), name="email-confirmation"),
+    path("meetings/email-confirmation/<slug:token>/", EmailConfirmationView.as_view(template_name='meetings/meeting_email_confirmed.html'), name="email-confirmation"),
     path('meetingsearch/', MeetingSearchView.as_view(), name='meeting_search'),
     path('onlinemeetingsearch/', OnlineMeetingSearchView.as_view(), name='online_meeting_search'),
     path('meetings/<slug:slug>/', MeetingDetailView.as_view(), name='meeting-detail'),
