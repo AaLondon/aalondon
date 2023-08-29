@@ -61,18 +61,19 @@ def get_longitude_latitude(what_three_words):
     return lat, lng
 
 
-def confirmation_link(pk, title):
+def confirmation_link(pk, title, request):
     """
         NOTE: generate confirmation link containing meeting data. 
 
         @params
             pk - Meeting primary key.
             title - Meeting title.  
+            request - HttpRequest
 
         @returns
             str - confirmation link. 
     """
-    domain = "http://localhost:8000"
+    domain = request.build_absolute_uri('/')[:-1]
     token = base64.urlsafe_b64encode(json.dumps({"pk": pk, "title": title}).encode()).decode().rstrip("=")
 
     link = reverse("email-confirmation", kwargs={
