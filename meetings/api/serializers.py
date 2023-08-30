@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from meetings.models import MeetingIntergroup, Meeting, MeetingDay, MeetingSubType
+from meetings.models import MeetingIntergroup, Meeting, MeetingDay, MeetingSubType, confirmation_link
+from django.core import mail
 
 from django.conf import settings
 
@@ -52,7 +53,10 @@ class MeetingSerializer(serializers.ModelSerializer):
         days = validated_data.pop("days")
         sub_types = validated_data.pop("sub_types")
         what_three_words = validated_data.get("what_three_words", "")
-        meeting = Meeting.objects.create(**validated_data)
+        title = validated_data.get("title")
+        email = validated_data.get("email")
+        meeting = Meeting.objects.create(**validated_data, email_confirmed="UNCONFIRMED")
+        
 
         meeting.save()
         for day in days:
@@ -61,6 +65,13 @@ class MeetingSerializer(serializers.ModelSerializer):
         for sub_type in sub_types:
             meeting_sub_type, created = MeetingSubType.objects.get_or_create(value=sub_type["value"])
             meeting.sub_types.add(meeting_sub_type)
+
+        mail.send_mail(
+            f"aa-london.com | {title} Email Confirmation.",
+            f"Hi\n\nPlease confirm this email by clicking the link below.\n\n{confirmation_link(meeting.pk, title, self.context.get('request'))}\n\nKind Regards\nAA LondonWebsite team",
+            'info@aa-london.com',
+            [email]
+        )
         return meeting
 
     

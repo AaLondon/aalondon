@@ -2,6 +2,7 @@ from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 
 from meetings.views import MeetingWagtailUpdateView
 from .models import Meeting, EmailContact,MeetingSubType
+from django.db.models import Q
 
 
 class MeetingAdmin(ModelAdmin):
@@ -27,6 +28,10 @@ class MeetingAdmin(ModelAdmin):
     search_fields = ("title",)
     form_fields_exclude = ['updated_by','lat','lng','duration','slug','day_rank','group','group_id','time_band','code','day_number']
     edit_view_class = MeetingWagtailUpdateView
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(Q(email_confirmed="PRE") | Q(email_confirmed="CONFIRMED"))
 
 
 class EmailContactAdmin(ModelAdmin):
