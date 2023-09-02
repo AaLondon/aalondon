@@ -20,7 +20,7 @@ export default function MeetingFormSuccess(props) {
   return (
     <React.Fragment>
       <div ref={resultsRef} className="text-center">
-        <p>Thank you for submitting your meeting details. You will receive an email with a confirmation link. If you need any more assistance or have questions please email ecomm.ln@aamail.org.</p>
+        <p>Thank you for submitting your details. You will receive an email with a confirmation links shortly - please check your spam or junk folders if not received in your inbox. PLEASE NOTE: you will need to click on the link to verify your email address before we can publish your updates. If you need any more assistance or have questions, please email info@aa-london.com</p>
         </div>
     </React.Fragment>
   );
