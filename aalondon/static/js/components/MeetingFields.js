@@ -426,20 +426,7 @@ export default function MeetingFields(props) {
               component={Checkbox}
             />
           </div>
-          <div className="form-group gso-opt-out">
-            <label htmlFor="xmasOpen">Check this if your meeting is OPEN over the Christmas period</label>
-            <SemanticField
-              name="xmasOpen"
-              component={Checkbox}
-            />
-          </div>
-          <div className="form-group gso-opt-out">
-            <label htmlFor="xmasClosed">Check this if your meeting is CLOSED over the Christmas period</label>
-            <SemanticField
-              name="xmasClosed"
-              component={Checkbox}
-            />
-          </div>
+          
 
           <div className="auto-grid" role="group" aria-labelledby="checkbox-group">
             {formType !== 'ONL' &&
@@ -507,14 +494,7 @@ export default function MeetingFields(props) {
               />
 
                 </div>
-                <div>
-                  <span className="checkbox-title" htmlFor="temporaryClosure">Temporary Closure</span>
-                  <SemanticField
-                    name="temporaryClosure"
-                    component={Checkbox}
-                  />
-
-                </div></>}
+                </>}
           </div>
 
 
