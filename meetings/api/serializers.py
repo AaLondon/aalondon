@@ -53,10 +53,11 @@ class MeetingSerializer(serializers.ModelSerializer):
         days = validated_data.pop("days")
         sub_types = validated_data.pop("sub_types")
         what_three_words = validated_data.get("what_three_words", "")
+        temporary_changes = validated_data.get("notes", "")
         title = validated_data.get("title")
         email = validated_data.get("email")
-        meeting = Meeting.objects.create(**validated_data, email_confirmed="UNCONFIRMED")
-        
+        meeting = Meeting.objects.create(
+            **validated_data, temporary_changes=temporary_changes, email_confirmed="UNCONFIRMED")
 
         meeting.save()
         for day in days:
