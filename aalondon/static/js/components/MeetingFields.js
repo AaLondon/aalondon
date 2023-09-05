@@ -415,7 +415,7 @@ export default function MeetingFields(props) {
             <ErrorMessage name="description" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
-            <label htmlFor="notes">Notes</label>
+            <label htmlFor="notes">Notes & Temporary Changes (e.g. Christmas, venue change, etc)</label>
             <Field placeholder="These will not be published" name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
             <ErrorMessage name="notes" component="div" className="invalid-feedback" />
           </div>
