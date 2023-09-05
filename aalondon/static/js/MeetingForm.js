@@ -244,6 +244,17 @@ function MeetingForm(props) {
       {({ errors, status, touched, values }) => (
 
         <Form id="new-meeting-form">
+          
+          { activeStep === 0 &&
+            <div className="text-sm pb-5 space-y-2">
+              <p>If you are starting a new meeting or need to make changes to an existing meeting, please click <a href="">here.</a></p>
+      
+              <p>To retrieve your existing meeting details input the name of your meeting (exactly as it's listed in our inactive meetings) and choose `existing` from the drop down menu.</p>
+            </div>
+          }
+          
+
+
           {_renderStepContent(activeStep, errors, touched, values)}
 
           {formType && activeStep === 0 &&
