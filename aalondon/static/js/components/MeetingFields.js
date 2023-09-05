@@ -405,8 +405,8 @@ export default function MeetingFields(props) {
               <ErrorMessage name="whatThreeWords" component="div" className="invalid-feedback" />
             </div>}
           <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <Field placeholder="Email address will not be shared" name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+            <label htmlFor="email">Email*</label>
+            <Field placeholder="A valid email address is required to successfully list your meeting - used for admin purposes only" name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
             <ErrorMessage name="email" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
