@@ -4690,6 +4690,14 @@ body.is-menu-visible #menu {
   width:40px
 }
 
+.temporary-changes-background {
+  position: relative;
+  width: fit-content;
+  padding: 10px 8px 10px 8px;
+  background-color: yellow;
+  margin-bottom: 15px;
+}
+
 
 .temporary-changes-background {
   position: relative;

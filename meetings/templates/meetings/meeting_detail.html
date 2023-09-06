@@ -41,18 +41,12 @@
           <div>{{ object.temporary_changes|linebreaks }}</div>
         </div>
       {% endif %}
-      
       <div class="meeting-detail-text">ADDRESS</div>
       <div>{{object.location}}</div>
       <div>{{object.address}}</div>
       <div>{{object.postcode}}</div>
       <div class="meeting-detail-text">DETAILS</div>
       <div>{{object.description|linebreaks}}</div>
-
-      {% if object.temporary_changes %}
-        <div class="meeting-detail-text">TEMPORARY CHANGES</div>
-        <div>{{ object.temporary_changes|linebreaks }}</div>
-      {% endif %}
       
       {% if object.sub_types.all%}
       <div class="meeting-detail-text">CATEGORIES</div>
