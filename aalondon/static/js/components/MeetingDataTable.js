@@ -70,16 +70,15 @@ export default class MeetingDataTable extends Component {
           <Table.Row key={code} className='p-10'>
             <Table.Cell textAlign="center">{day}</Table.Cell>
             <Table.Cell textAlign="center">{friendly_time}</Table.Cell>
-            <Table.Cell textAlign="center">
-              <a href={meetingUrlPath + slug}>{title}</a>
+            <Table.Cell textAlign="center"><a href={meetingUrlPath + slug}>{title}
 
-              { temporary_changes == ''? '' :
+            { temporary_changes == ''? '' :
                 <div>
                   <span className="text-center text-sm">*Temporary changes - Click to view</span>
                 </div>
               }
+              </a></Table.Cell>
 
-            </Table.Cell>
             <Table.Cell textAlign="center" className='meeting-cell'> {img}</Table.Cell>
             <Table.Cell textAlign="center">{postcode_prefix}</Table.Cell>
           </Table.Row>

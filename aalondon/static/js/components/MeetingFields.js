@@ -415,7 +415,7 @@ export default function MeetingFields(props) {
             <ErrorMessage name="description" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
-            <label htmlFor="notes">Notes</label>
+            <label htmlFor="notes">Notes & Temporary Changes (e.g. Christmas, venue change, etc)</label>
             <Field placeholder="These will not be published" name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
             <ErrorMessage name="notes" component="div" className="invalid-feedback" />
           </div>
@@ -426,20 +426,7 @@ export default function MeetingFields(props) {
               component={Checkbox}
             />
           </div>
-          <div className="form-group gso-opt-out">
-            <label htmlFor="xmasOpen">Check this if your meeting is OPEN over the Christmas period</label>
-            <SemanticField
-              name="xmasOpen"
-              component={Checkbox}
-            />
-          </div>
-          <div className="form-group gso-opt-out">
-            <label htmlFor="xmasClosed">Check this if your meeting is CLOSED over the Christmas period</label>
-            <SemanticField
-              name="xmasClosed"
-              component={Checkbox}
-            />
-          </div>
+          
 
           <div className="auto-grid" role="group" aria-labelledby="checkbox-group">
             {formType !== 'ONL' &&
@@ -507,14 +494,7 @@ export default function MeetingFields(props) {
               />
 
                 </div>
-                <div>
-                  <span className="checkbox-title" htmlFor="temporaryClosure">Temporary Closure</span>
-                  <SemanticField
-                    name="temporaryClosure"
-                    component={Checkbox}
-                  />
-
-                </div></>}
+                </>}
           </div>
 
 

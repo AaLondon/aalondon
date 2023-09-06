@@ -4699,6 +4699,14 @@ body.is-menu-visible #menu {
 }
 
 
+.temporary-changes-background {
+  position: relative;
+  width: fit-content;
+  padding: 10px 8px 10px 8px;
+  background-color: yellow;
+  margin-bottom: 15px;
+}
+
 @media screen and (min-width: 768px ) {
 
   .download-app-container{
