@@ -127,7 +127,7 @@ class Meeting(models.Model):
     )
     email_confirmed = models.CharField(
         max_length=50, choices=EMAIL_CONFIRMED_TYPES, default="PRE")
-    temporary_changes = models.TextField(max_length=1000, help_text="e.g. Please note that this meeting is closed on this day.", null=True, blank=True)
+    temporary_changes = models.TextField(max_length=1000, help_text="e.g. Please note that this meeting is closed on this day.", default="", blank=True)
     note_expiry_date = models.DateField(null=True, blank=True)
     tradition_7_details = models.TextField(null=True, blank=True)
     online_link = models.URLField(max_length=1000, null=True, blank=True)
