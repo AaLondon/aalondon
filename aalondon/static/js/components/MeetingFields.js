@@ -416,7 +416,7 @@ export default function MeetingFields(props) {
           </div>
           <div className="form-group">
             <label htmlFor="notes">Notes & Temporary Changes (e.g. Christmas, venue change, etc)</label>
-            <Field placeholder="These will not be published" name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
+            <Field placeholder="These will be published on your meeting page" name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
             <ErrorMessage name="notes" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group gso-opt-out">
