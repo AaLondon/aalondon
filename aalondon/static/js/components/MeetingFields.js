@@ -405,8 +405,8 @@ export default function MeetingFields(props) {
               <ErrorMessage name="whatThreeWords" component="div" className="invalid-feedback" />
             </div>}
           <div className="form-group">
-            <label htmlFor="email">Email*</label>
-            <Field placeholder="A valid email address is required to successfully list your meeting - used for admin purposes only" name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+            <label htmlFor="email">Email* (A valid email address is required to successfully list your meeting - used for admin purposes only)</label>
+            <Field placeholder="Email Address" name="email" type="text" className={'form-control placeholder:text-[10px]' + (errors.email && touched.email ? ' is-invalid' : '')} />
             <ErrorMessage name="email" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
@@ -415,8 +415,8 @@ export default function MeetingFields(props) {
             <ErrorMessage name="description" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
-            <label htmlFor="notes">Notes & Temporary Changes (e.g. Christmas, venue change, etc)</label>
-            <Field placeholder="These will not be published" name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
+            <label htmlFor="notes">Notes & Temporary Changes (e.g. Christmas closure dates, venue change, etc)</label>
+            <Field placeholder="These will be published on your meeting page" name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
             <ErrorMessage name="notes" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group gso-opt-out">
