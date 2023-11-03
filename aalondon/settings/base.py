@@ -202,7 +202,6 @@ REST_FRAMEWORK = {
 }
 
 
-
 WHAT_THREE_WORDS_API_KEY = env('WHAT_THREE_WORDS_API_KEY',default="")
 
 

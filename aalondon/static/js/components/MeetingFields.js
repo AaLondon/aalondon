@@ -245,8 +245,6 @@ export default function MeetingFields(props) {
             setFieldValue('whatThreeWords', result.what_three_words ? result.what_three_words : '')
             setFieldValue('description', result.description)
             setFieldValue('gsoOptOut', result.gso_opt_out)
-            setFieldValue('xmasOpen', result.xmas_open)
-            setFieldValue('xmasClosed', result.xmas_closed)
             setFieldValue('days', result.days.map(day => day.value))
 
             let subTypes = result.sub_types.map(sub_type => sub_type.value)
@@ -407,8 +405,8 @@ export default function MeetingFields(props) {
               <ErrorMessage name="whatThreeWords" component="div" className="invalid-feedback" />
             </div>}
           <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <Field placeholder="Email address will not be shared" name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+            <label htmlFor="email">Email* (A valid email address is required to successfully list your meeting - used for admin purposes only)</label>
+            <Field placeholder="Email Address" name="email" type="text" className={'form-control placeholder:text-[10px]' + (errors.email && touched.email ? ' is-invalid' : '')} />
             <ErrorMessage name="email" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
@@ -417,8 +415,8 @@ export default function MeetingFields(props) {
             <ErrorMessage name="description" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group">
-            <label htmlFor="notes">Notes</label>
-            <Field placeholder="These will not be published" name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
+            <label htmlFor="notes">Notes & Temporary Changes (e.g. Christmas closure dates, venue change, etc)</label>
+            <Field placeholder="These will be published on your meeting page" name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
             <ErrorMessage name="notes" component="div" className="invalid-feedback" />
           </div>
           <div className="form-group gso-opt-out">
@@ -428,20 +426,7 @@ export default function MeetingFields(props) {
               component={Checkbox}
             />
           </div>
-          <div className="form-group gso-opt-out">
-            <label htmlFor="xmasOpen">Check this if your meeting is OPEN over the Christmas period</label>
-            <SemanticField
-              name="xmasOpen"
-              component={Checkbox}
-            />
-          </div>
-          <div className="form-group gso-opt-out">
-            <label htmlFor="xmasClosed">Check this if your meeting is CLOSED over the Christmas period</label>
-            <SemanticField
-              name="xmasClosed"
-              component={Checkbox}
-            />
-          </div>
+          
 
           <div className="auto-grid" role="group" aria-labelledby="checkbox-group">
             {formType !== 'ONL' &&
@@ -509,14 +494,7 @@ export default function MeetingFields(props) {
               />
 
                 </div>
-                <div>
-                  <span className="checkbox-title" htmlFor="temporaryClosure">Temporary Closure</span>
-                  <SemanticField
-                    name="temporaryClosure"
-                    component={Checkbox}
-                  />
-
-                </div></>}
+                </>}
           </div>
 
 

@@ -36,12 +36,9 @@ export default class MeetingDataTable extends Component {
     const { column, data, direction } = this.state;
     let tbl = _.map(
       data,
-      ({ id, title, link, slug, friendly_time, zoom_password, platform, type,xmas_open }) => {
+      ({ id, title, link, slug, friendly_time, zoom_password, platform, type }) => {
         let santa = '/static/images/santa.png';
         let santaImg= <></>
-        if (xmas_open){
-          santaImg = <><div class="santa"><img src={santa}></img></div></>
-        }
         let zoomImg = '/static/images/zoom.png';
         let physicalImg = '/static/images/building-location-pin.png'
         let meetingUrlPath = '/onlinemeetings/' + slug

@@ -69,9 +69,9 @@ class MeetingApp extends Component {
             // Return the element. Also pass key
         
             if (meeting.day_rank === 1 || i === 0) {
-              return (<Row><Col><Row><Col>{meeting.day}</Col></Row><Row><Col><Meeting key={meeting.code} title={meeting.title} time={meeting.friendly_time} code={meeting.code} day={meeting.day} postcode={meeting.postcode_prefix} slug={meeting.slug} dayRank={meeting.day_rank} /></Col></Row></Col></Row>)
+              return (<Row><Col><Row><Col>{meeting.day}</Col></Row><Row><Col><Meeting key={meeting.code} title={meeting.title} time={meeting.friendly_time} code={meeting.code} day={meeting.day} postcode={meeting.postcode_prefix} slug={meeting.slug} dayRank={meeting.day_rank} temporary_changes={meeting.temporary_changes}/></Col></Row></Col></Row>)
             }else {
-              return (<Row><Col><Meeting key={meeting.code} title={meeting.title} time={meeting.friendly_time} code={meeting.code} day={meeting.day} postcode={meeting.postcode_prefix} slug={meeting.slug} dayRank={meeting.day_rank} /></Col></Row>)
+              return (<Row><Col><Meeting key={meeting.code} title={meeting.title} time={meeting.friendly_time} code={meeting.code} day={meeting.day} postcode={meeting.postcode_prefix} slug={meeting.slug} dayRank={meeting.day_rank} temporary_changes={meeting.temporary_changes}/></Col></Row>)
             }
           })}
           {/* Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop */}

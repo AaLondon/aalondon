@@ -103,15 +103,6 @@ class MeetingSearch(generics.ListAPIView):
         year = datetime.now().date().year
         month = datetime.now().date().month
         today = datetime.now()
-        if 2 <= month <= 12:
-            xmas_start = datetime(year, 12, 23)
-            xmas_end = datetime(year + 1, 1, 4)
-        else:
-            xmas_start = datetime(year - 1, 12, 23)
-            xmas_end = datetime(year, 1, 4)
-
-        if xmas_start <= today <= xmas_end:
-            queryset = queryset.filter(xmas_closed=False)
 
         search = self.request.query_params.get("search", None)
 
@@ -171,15 +162,6 @@ class OnlineMeetingSearch(generics.ListAPIView):
         year = datetime.now().date().year
         month = datetime.now().date().month
         today = datetime.now()
-        if 2 <= month <= 12:
-            xmas_start = datetime(year, 12, 23)
-            xmas_end = datetime(year + 1, 1, 6)
-        else:
-            xmas_start = datetime(year - 1, 12, 23)
-            xmas_end = datetime(year, 1, 6)
-
-        if xmas_start <= today <= xmas_end:
-            queryset = queryset.filter(xmas_closed=False)
 
         search = self.request.query_params.get("search", None)
 

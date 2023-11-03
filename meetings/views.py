@@ -8,6 +8,9 @@ import datetime
 from wagtail.contrib.modeladmin.views import EditView
 from wagtail.admin import messages
 from django.shortcuts import redirect
+from django.http import HttpResponse
+import base64
+import json
 
 
 class MeetingSearchView(TemplateView):
@@ -98,3 +101,16 @@ class MeetingWagtailUpdateView(EditView):
             buttons=self.get_success_message_buttons(instance)
         )
         return redirect(self.get_success_url())
+
+
+
+class EmailConfirmationView(TemplateView):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        token = self.kwargs["token"]
+        # token contains meeting data.
+        data = json.loads(base64.urlsafe_b64decode(token+"==").decode())
+        if Meeting.objects.filter(**data).exists():
+            Meeting.objects.filter(**data).update(email_confirmed="CONFIRMED")
+        return context

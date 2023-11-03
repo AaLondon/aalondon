@@ -5,12 +5,14 @@ from django.utils.text import slugify
 from django_extensions.db.fields import AutoSlugField
 from datetime import time
 import json
+import base64
 import what3words
 from django.core.mail import EmailMessage
 from django.template import Context
 from django.template.loader import get_template
 from django.core import serializers
 from django.contrib.auth import get_user_model
+
 
 User = get_user_model()
 
@@ -59,6 +61,28 @@ def get_longitude_latitude(what_three_words):
     return lat, lng
 
 
+def confirmation_link(pk, title, request):
+    """
+        NOTE: generate confirmation link containing meeting data. 
+
+        @params
+            pk - Meeting primary key.
+            title - Meeting title.  
+            request - HttpRequest
+
+        @returns
+            str - confirmation link. 
+    """
+    domain = request.build_absolute_uri('/')[:-1]
+    token = base64.urlsafe_b64encode(json.dumps({"pk": pk, "title": title}).encode()).decode().rstrip("=")
+
+    link = reverse("email-confirmation", kwargs={
+        "token": token
+    })
+
+    return domain + f"{link}"
+
+
 class Meeting(models.Model):
     MEETING_TYPES = [
         ("F2F", "Face To Face"),
@@ -68,6 +92,11 @@ class Meeting(models.Model):
     SUBMISSION_TYPES = [
         ("new", "new"),
         ("existing", "existing"),
+    ]
+    EMAIL_CONFIRMED_TYPES = [
+        ("CONFIRMED", "confirmed"),
+        ("UNCONFIRMED", "unconfirmed"),
+        ("PRE", "pre")
     ]
     type = models.CharField(
         max_length=3, choices=MEETING_TYPES, null=False, blank=False, default="F2F"
@@ -96,6 +125,10 @@ class Meeting(models.Model):
     email = models.EmailField(
         null=False, blank=False, default="doesnotexist@aalondon.com"
     )
+    email_confirmed = models.CharField(
+        max_length=50, choices=EMAIL_CONFIRMED_TYPES, default="PRE")
+    temporary_changes = models.TextField(max_length=1000, help_text="e.g. Please note that this meeting is closed on this day.", default="", blank=True)
+    note_expiry_date = models.DateField(null=True, blank=True)
     tradition_7_details = models.TextField(null=True, blank=True)
     online_link = models.URLField(max_length=1000, null=True, blank=True)
     online_password = models.CharField(max_length=50, null=True, blank=True)
@@ -115,8 +148,6 @@ class Meeting(models.Model):
     updated = models.DateTimeField(auto_now=True)
     published = models.BooleanField(null=False, blank=False, default=False)
     gso_opt_out = models.BooleanField(null=False, blank=False, default=False)
-    xmas_open = models.BooleanField(null=False, blank=False, default=False)
-    xmas_closed = models.BooleanField(null=False, blank=False, default=False)
     updated_by = models.ForeignKey(to=User,null=True,on_delete=models.SET_NULL)
 
     def __str__(self):
@@ -187,7 +218,6 @@ class Meeting(models.Model):
         email_message.send()
 
     def save(self, *args, **kwargs):
-
         self.slug = slugify(f"{self.title} {self.time} {self.type} {self.id}")
         self.time_band = get_time_band(self.time)
         if self.call_what_three_words:

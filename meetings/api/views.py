@@ -1,9 +1,7 @@
 from django.contrib.auth.models import User
-from meetings.models import Meeting,EmailContact
+from meetings.models import Meeting,EmailContact, confirmation_link
 from meetings.api.serializers import MeetingSerializer
 from rest_framework import generics
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
 from django.core import mail
 
 
@@ -18,9 +16,6 @@ class MeetingList(generics.ListCreateAPIView):
         intergroup = data['intergroup']
         days = ",".join([obj['value'] for obj in data['days']])
         time = data['time']
-        
-       
-
         if moderators:
             to_emails = [obj.email for obj in moderators]
             mail.send_mail(
@@ -30,10 +25,11 @@ class MeetingList(generics.ListCreateAPIView):
                 to_emails,
             )
 
-
    
 
 
 class MeetingDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Meeting.objects.all()
     serializer_class = MeetingSerializer
+
+
