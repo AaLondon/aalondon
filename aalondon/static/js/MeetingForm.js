@@ -61,6 +61,8 @@ function MeetingForm(props) {
       notes: fields.notes,
       sub_types: subTypes,
       gso_opt_out: fields.gsoOptOut,
+      temporary_changes: fields.temporaryChanges,
+      note_expiry_date: fields.noteExpiryDate,
     }
 
     axios.post('/api/meetingadd/', data,
@@ -224,6 +226,8 @@ function MeetingForm(props) {
         location: meetingData.location,
         address: meetingData.address,
         postcode: meetingData.postcode,
+        temporaryChanges: meetingData.temporaryChanges,
+        noteExpiryDate: meetingData.noteExpiryDate,
         whatThreeWords: meetingData.whatThreeWords,
         email: '',
         description: meetingData.description,
@@ -237,7 +241,7 @@ function MeetingForm(props) {
         hearingLoop: hearingLoop,
         creche: creche,
         temporaryClosure: temporaryClosure,
-        gsoOptOut: false
+        gsoOptOut: false,
       }}
       validationSchema={validationSchema}
       onSubmit={_submitForm}>

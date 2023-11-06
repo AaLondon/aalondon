@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from meetings.models import Meeting,EmailContact, confirmation_link
+from meetings.models import Meeting
 from meetings.api.serializers import MeetingSerializer
 from rest_framework import generics
 from django.core import mail
