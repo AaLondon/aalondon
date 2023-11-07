@@ -1,12 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Field, ErrorMessage } from 'formik';
 import SemanticField from './SemanticField'
-import ReactDatePicker from 'react-datepicker';
 import { Dropdown, TextArea, Checkbox } from 'semantic-ui-react'
 import axios from 'axios'
-
-
-import 'react-datepicker/dist/react-datepicker.css'
+import DatePickerField from './DatePickerField';
 
 
 const CheckboxExampleChecked = () => (
@@ -196,8 +193,6 @@ const dayOptions = [
 
 
 export default function MeetingFields(props) {
-  const [ startDate, setStartDate ] = useState(new Date());
-
 
   const whatThreeRef = useRef(null);
 
@@ -224,7 +219,7 @@ export default function MeetingFields(props) {
       };
     }
 
-  }, [formType, startDate]);
+  }, [formType]);
 
   function onSubmissionTypeChangeAutofill(e, data, setFieldValue) {
     let title = props.values.title
@@ -427,15 +422,15 @@ export default function MeetingFields(props) {
 
           <div className="form-group">
             <label htmlFor="temporaryChanges">Notes & Temporary Changes (e.g. Christmas closure dates, venue change, etc)</label>
-            <Field placeholder="These will be published on your meeting page" name="temporaryChanges" component="textarea" type="text" className={'form-control'} />
+            <Field placeholder="These will be published on your meeting page" name="temporaryChanges" component="textarea" type="text" className={'form-control'}/>
             <ErrorMessage name="notes" component="div" className="invalid-feedback" />
           </div>
 
 
           <div className="form-group">
             <label htmlFor="noteExpiryDate">Temporary Changes Expiry Date</label>
-            <Field type="text" className={'form-control'} name="noteExpiryDate" value={startDate.toLocaleDateString()} />
-            <ReactDatePicker dateFormat="yyyy-MM-dd" selected={startDate} onChange={(date) => setStartDate(date)} />
+            <DatePickerField name="noteExpiryDate" />
+            {/* <ReactDatePicker dateFormat="yyyy-MM-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> */}
           </div>
 
 

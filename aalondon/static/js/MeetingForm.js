@@ -62,7 +62,7 @@ function MeetingForm(props) {
       sub_types: subTypes,
       gso_opt_out: fields.gsoOptOut,
       temporary_changes: fields.temporaryChanges,
-      note_expiry_date: fields.noteExpiryDate,
+      note_expiry_date: new Date(fields.noteExpiryDate).toISOString().substring(0,10),
     }
 
     axios.post('/api/meetingadd/', data,

@@ -64,9 +64,8 @@ class MeetingSerializer(serializers.ModelSerializer):
             **validated_data, email_confirmed="UNCONFIRMED")
         meeting.save()
         
-        print(f"\n\n{note_expiry_date}\n\n")
         if len(note_expiry_date) > 0:
-            convert_date = datetime.datetime.strptime(note_expiry_date, "%d/%m/%Y").date()
+            convert_date = datetime.datetime.strptime(note_expiry_date, "%Y-%m-%d").date()
             meeting.note_expiry_date=convert_date
 
         for day in days:
