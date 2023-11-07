@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { Field, ErrorMessage } from 'formik';
+import React, { useEffect, useRef, useState } from 'react';
+import { Field, ErrorMessage, useFormikContext } from 'formik';
 import SemanticField from './SemanticField'
 import { Dropdown, TextArea, Checkbox } from 'semantic-ui-react'
 import axios from 'axios'
@@ -193,8 +193,12 @@ const dayOptions = [
 
 
 export default function MeetingFields(props) {
+  const [temporaryChangesState, setTemporaryChangesState] = useState("");
+  // const { setFieldValue } = useFormikContext();
 
   const whatThreeRef = useRef(null);
+
+  const checkTemporaryChanges = temporaryChangesState.trim().length > 0;
 
   console.log('formTypeee')
   console.log(props.formType)
@@ -205,7 +209,6 @@ export default function MeetingFields(props) {
       = props;
 
   useEffect(() => {
-
     if (whatThreeRef && whatThreeRef.current) {
       const autosuggest = window.document.querySelector('what3words-autosuggest')
       autosuggest.addEventListener('change', e => {
@@ -219,7 +222,9 @@ export default function MeetingFields(props) {
       };
     }
 
-  }, [formType]);
+    // checkTemporaryChanges? null : setFieldValue("noteExpiryDate", "");
+
+  }, [formType, ]);
 
   function onSubmissionTypeChangeAutofill(e, data, setFieldValue) {
     let title = props.values.title
@@ -283,6 +288,11 @@ export default function MeetingFields(props) {
 
     console.log('onSubmissionTypeChangeAutofill')
   }
+
+
+  // const handleTemporaryChanges = event => {
+  //   setTemporaryChangesState(event.target.value);
+  // }
 
 
   return (
@@ -422,16 +432,15 @@ export default function MeetingFields(props) {
 
           <div className="form-group">
             <label htmlFor="temporaryChanges">Notes & Temporary Changes (e.g. Christmas closure dates, venue change, etc)</label>
-            <Field placeholder="These will be published on your meeting page" name="temporaryChanges" component="textarea" type="text" className={'form-control'}/>
+            <Field placeholder="These will be published on your meeting page" name="temporaryChanges" component="textarea" type="text" className={'form-control'} />
             <ErrorMessage name="notes" component="div" className="invalid-feedback" />
           </div>
 
 
-          <div className="form-group">
-            <label htmlFor="noteExpiryDate">Temporary Changes Expiry Date</label>
-            <DatePickerField name="noteExpiryDate" />
-            {/* <ReactDatePicker dateFormat="yyyy-MM-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> */}
-          </div>
+            <div className="form-group">
+              <label htmlFor="noteExpiryDate">Temporary Changes Expiry Date</label>
+              <DatePickerField name="noteExpiryDate"/>
+            </div>
 
 
           <div className="form-group gso-opt-out">

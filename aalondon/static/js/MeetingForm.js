@@ -41,6 +41,18 @@ function MeetingForm(props) {
     if (fields.creche) subTypes.push({ value: "Creche" })
     if (fields.temporaryClosure) subTypes.push({ value: "Location Temporarily Closed" })
 
+    // format date (YYYY-mm-dd)
+    let date = "";
+    if (fields.noteExpiryDate){
+      let formatNoteExpiryDate = new Date(fields.noteExpiryDate).toLocaleDateString().split("/");
+      const day = formatNoteExpiryDate[0];
+      const month = formatNoteExpiryDate[1];
+      const year = formatNoteExpiryDate[2];
+      date = `${year}-${month}-${day}`;
+    }
+
+    console.log(date)
+
     let data = {
       title: fields.title,
       type: formType,
@@ -62,7 +74,7 @@ function MeetingForm(props) {
       sub_types: subTypes,
       gso_opt_out: fields.gsoOptOut,
       temporary_changes: fields.temporaryChanges,
-      note_expiry_date: new Date(fields.noteExpiryDate).toISOString().substring(0,10),
+      note_expiry_date: date,
     }
 
     axios.post('/api/meetingadd/', data,
