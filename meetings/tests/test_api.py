@@ -39,6 +39,8 @@ class MeetingTests(APITestCase,WagtailTestUtils):
             "description": "adsdsd",
             "notes": "asdsad",
             "sub_types": [{"value": "British Sign Language"}],
+            "temporary_changes": "New changes",
+            "note_expiry_date": "2023-12-25"
         }
         response = self.client.post(url, data, format="json")
         assert response.status_code == status.HTTP_201_CREATED
