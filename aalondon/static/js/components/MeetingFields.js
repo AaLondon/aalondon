@@ -194,7 +194,6 @@ const dayOptions = [
 
 export default function MeetingFields(props) {
   const [temporaryChangesState, setTemporaryChangesState] = useState("");
-  // const { setFieldValue } = useFormikContext();
 
   const whatThreeRef = useRef(null);
 
@@ -222,9 +221,7 @@ export default function MeetingFields(props) {
       };
     }
 
-    // checkTemporaryChanges? null : setFieldValue("noteExpiryDate", "");
-
-  }, [formType, ]);
+  }, [formType]);
 
   function onSubmissionTypeChangeAutofill(e, data, setFieldValue) {
     let title = props.values.title
@@ -290,9 +287,9 @@ export default function MeetingFields(props) {
   }
 
 
-  // const handleTemporaryChanges = event => {
-  //   setTemporaryChangesState(event.target.value);
-  // }
+  const handleTemporaryChanges = event => {
+    setTemporaryChangesState(event.target.value);
+  }
 
 
   return (
@@ -431,16 +428,16 @@ export default function MeetingFields(props) {
 
 
           <div className="form-group">
-            <label htmlFor="temporaryChanges">Notes & Temporary Changes (e.g. Christmas closure dates, venue change, etc)</label>
-            <Field placeholder="These will be published on your meeting page" name="temporaryChanges" component="textarea" type="text" className={'form-control'} />
-            <ErrorMessage name="notes" component="div" className="invalid-feedback" />
+            <label htmlFor="temporaryChanges">Notes & Temporary Changes (e.g. If the meeting is open or closed for Christmas and other special dates, if there's a venue change, etc; PLUS the relevant dates or time frame that he temporary changes refer to)</label>
+            <Field placeholder="These will be published on your meeting page" name="temporaryChanges" component="textarea" type="text" className={'form-control ' + (errors.temporaryChanges && touched.temporaryChanges ? ' is-invalid' : '')} onKeyUp={handleTemporaryChanges} />
           </div>
 
-
+          { checkTemporaryChanges?
             <div className="form-group">
-              <label htmlFor="noteExpiryDate">Temporary Changes Expiry Date</label>
-              <DatePickerField name="noteExpiryDate"/>
-            </div>
+              <label htmlFor="noteExpiryDate">Temporary Changes Expiration Date</label>
+              <DatePickerField name="noteExpiryDate" css={'form-control ' + (errors.noteExpiryDate && touched.noteExpiryDate ? ' is-invalid' : '')} />
+              <ErrorMessage name="noteExpiryDate" component="div" className="invalid-feedback" />
+            </div> : ""}
 
 
           <div className="form-group gso-opt-out">

@@ -43,6 +43,7 @@ function MeetingForm(props) {
 
     // format date (YYYY-mm-dd)
     let date = "";
+    let expiryDate = "";
     if (fields.noteExpiryDate){
       let formatNoteExpiryDate = new Date(fields.noteExpiryDate).toLocaleDateString().split("/");
       const day = formatNoteExpiryDate[0];
@@ -51,7 +52,7 @@ function MeetingForm(props) {
       date = `${year}-${month}-${day}`;
     }
 
-    console.log(date)
+    if (fields.temporaryChanges === undefined) date = "";
 
     let data = {
       title: fields.title,
@@ -141,6 +142,18 @@ function MeetingForm(props) {
     description: Yup.string()
       .required('Description is required'),
 
+    noteExpiryDate: Yup.string()
+      .test("is-valid", "Temporary changes requires a expiration date", (value, context) => {
+        const temporaryChangesValue = context.parent.temporaryChanges; // get note expiry date value.
+        if (temporaryChangesValue !== undefined) {
+          if (value === undefined) { 
+            context.createError("Temporary changes requires a expiration date")
+            return false
+          }
+        }
+        return true
+      })
+      
   };
 
   let validationPhysicalShape =

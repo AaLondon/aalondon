@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 // Styles
 import "react-datepicker/dist/react-datepicker.css";
 
-const DatePickerField = ({ name = "" }) => {
+const DatePickerField = ({css="", name = "" }) => {
     const [field, meta, helpers] = useField(name);
   
     const { value } = meta;
@@ -14,6 +14,8 @@ const DatePickerField = ({ name = "" }) => {
     return (
       <DatePicker
         {...field}
+        id="meetingCalendarInput"
+        className={css}
         selected={value}
         dateFormat="yyyy-MM-dd"
         onChange={(date) => setValue(date)}
