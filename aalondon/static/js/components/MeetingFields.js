@@ -428,7 +428,7 @@ export default function MeetingFields(props) {
 
 
           <div className="form-group">
-            <label htmlFor="temporaryChanges">Notes & Temporary Changes (e.g. If the meeting is open or closed for Christmas and other special dates, if there's a venue change, etc; PLUS the relevant dates or time frame that he temporary changes refer to)</label>
+            <label htmlFor="temporaryChanges">Notes & Temporary Changes (e.g. If the meeting is open or closed for Christmas and other special dates, if there's a venue change, etc; PLUS the relevant dates or time frame that the temporary changes refer to)</label>
             <Field placeholder="These will be published on your meeting page" name="temporaryChanges" component="textarea" type="text" className={'form-control ' + (errors.temporaryChanges && touched.temporaryChanges ? ' is-invalid' : '')} onKeyUp={handleTemporaryChanges} />
           </div>
 
