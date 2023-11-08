@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Field, ErrorMessage } from 'formik';
+import React, { useEffect, useRef, useState } from 'react';
+import { Field, ErrorMessage, useFormikContext } from 'formik';
 import SemanticField from './SemanticField'
 import { Dropdown, TextArea, Checkbox } from 'semantic-ui-react'
 import axios from 'axios'
+import DatePickerField from './DatePickerField';
 
 
 const CheckboxExampleChecked = () => (
@@ -192,9 +193,11 @@ const dayOptions = [
 
 
 export default function MeetingFields(props) {
-
+  const [temporaryChangesState, setTemporaryChangesState] = useState("");
 
   const whatThreeRef = useRef(null);
+
+  const checkTemporaryChanges = temporaryChangesState.trim().length > 0;
 
   console.log('formTypeee')
   console.log(props.formType)
@@ -205,7 +208,6 @@ export default function MeetingFields(props) {
       = props;
 
   useEffect(() => {
-
     if (whatThreeRef && whatThreeRef.current) {
       const autosuggest = window.document.querySelector('what3words-autosuggest')
       autosuggest.addEventListener('change', e => {
@@ -218,6 +220,7 @@ export default function MeetingFields(props) {
         autosuggest.removeEventListener('change', e => { })
       };
     }
+
   }, [formType]);
 
   function onSubmissionTypeChangeAutofill(e, data, setFieldValue) {
@@ -244,8 +247,11 @@ export default function MeetingFields(props) {
             setFieldValue('tradition7Details', result.tradition_7_details ? result.tradition_7_details : '')
             setFieldValue('whatThreeWords', result.what_three_words ? result.what_three_words : '')
             setFieldValue('description', result.description)
+            setFieldValue('temporaryChanges', result.temporary_changes)
             setFieldValue('gsoOptOut', result.gso_opt_out)
             setFieldValue('days', result.days.map(day => day.value))
+            setFieldValue('noteExpiryDate', result.note_expiry_date)
+
 
             let subTypes = result.sub_types.map(sub_type => sub_type.value)
 
@@ -278,6 +284,11 @@ export default function MeetingFields(props) {
     }
 
     console.log('onSubmissionTypeChangeAutofill')
+  }
+
+
+  const handleTemporaryChanges = event => {
+    setTemporaryChangesState(event.target.value);
   }
 
 
@@ -414,11 +425,21 @@ export default function MeetingFields(props) {
             <Field placeholder="These will be published on you meeting page" name="description" component="textarea" type="text" className={'form-control' + (errors.description && touched.description ? ' is-invalid' : '')} />
             <ErrorMessage name="description" component="div" className="invalid-feedback" />
           </div>
+
+
           <div className="form-group">
-            <label htmlFor="notes">Notes & Temporary Changes (e.g. Christmas closure dates, venue change, etc)</label>
-            <Field placeholder="These will be published on your meeting page" name="notes" component="textarea" type="text" className={'form-control' + (errors.notes && touched.notes ? ' is-invalid' : '')} />
-            <ErrorMessage name="notes" component="div" className="invalid-feedback" />
+            <label htmlFor="temporaryChanges">Notes & Temporary Changes (e.g. If the meeting is open or closed for Christmas and other special dates, if there's a venue change, etc; PLUS the relevant dates or time frame that he temporary changes refer to)</label>
+            <Field placeholder="These will be published on your meeting page" name="temporaryChanges" component="textarea" type="text" className={'form-control ' + (errors.temporaryChanges && touched.temporaryChanges ? ' is-invalid' : '')} onKeyUp={handleTemporaryChanges} />
           </div>
+
+          { checkTemporaryChanges?
+            <div className="form-group">
+              <label htmlFor="noteExpiryDate">Temporary Changes Expiration Date</label>
+              <DatePickerField name="noteExpiryDate" css={'form-control ' + (errors.noteExpiryDate && touched.noteExpiryDate ? ' is-invalid' : '')} />
+              <ErrorMessage name="noteExpiryDate" component="div" className="invalid-feedback" />
+            </div> : ""}
+
+
           <div className="form-group gso-opt-out">
             <label htmlFor="gsoOptOut">By submitting this form your group agrees to have the listing information shared with the General Service Office (GSO) and the meeting details updated there. Tick to opt out</label>
             <SemanticField

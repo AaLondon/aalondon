@@ -1,3 +1,5 @@
+import datetime
+from email.utils import parsedate_to_datetime
 from rest_framework import serializers
 from meetings.models import MeetingIntergroup, Meeting, MeetingDay, MeetingSubType, confirmation_link
 from django.core import mail
@@ -22,6 +24,7 @@ class MeetingSubTypeSerializer(serializers.ModelSerializer):
 class MeetingSerializer(serializers.ModelSerializer):
     days = MeetingDaySerializer(many=True)
     sub_types = MeetingSubTypeSerializer(many=True)
+    note_expiry_date = serializers.CharField(allow_blank=True)
 
     class Meta:
         model = Meeting
@@ -53,13 +56,20 @@ class MeetingSerializer(serializers.ModelSerializer):
         days = validated_data.pop("days")
         sub_types = validated_data.pop("sub_types")
         what_three_words = validated_data.get("what_three_words", "")
-        temporary_changes = validated_data.get("notes", "")
+        note_expiry_date = validated_data.pop("note_expiry_date")
+        
         title = validated_data.get("title")
         email = validated_data.get("email")
-        meeting = Meeting.objects.create(
-            **validated_data, temporary_changes=temporary_changes, email_confirmed="UNCONFIRMED")
+
+        meeting = Meeting.objects.create( 
+            **validated_data, email_confirmed="UNCONFIRMED")
+        
+        if len(note_expiry_date) > 0:
+            convert_date = datetime.datetime.strptime(note_expiry_date, "%Y-%m-%d").date()
+            meeting.note_expiry_date=convert_date
 
         meeting.save()
+
         for day in days:
             meeting_day = MeetingDay.objects.get(value=day["value"])
             meeting.days.add(meeting_day)
