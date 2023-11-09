@@ -15,6 +15,9 @@ const DatePickerField = ({css="", name = "" }) => {
       <DatePicker
         {...field}
         id="meetingCalendarInput"
+        onKeyDown={(e) => {
+          e.preventDefault();
+       }}
         className={css}
         selected={value}
         dateFormat="yyyy-MM-dd"
