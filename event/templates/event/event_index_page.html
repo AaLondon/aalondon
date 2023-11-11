@@ -21,7 +21,7 @@
     <div id='event-loc' class='event-types'>
 
         {% for key, value in event_counts.items %}
-        <div><a href="/events/?event_type={{key}}#event-loc" {% ifequal key active %} style="color: #2ebaae !important;" {% endifequal%}>{{key}}({{value}})</a></div>
+        <div><a href="/events/?event_type={{key}}#event-loc" {% if key == active %} style="color: #2ebaae !important;" {% endif %}>{{key}}({{value}})</a></div>
         
         {% endfor %}
     </div>
