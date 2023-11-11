@@ -41,6 +41,19 @@ function MeetingForm(props) {
     if (fields.creche) subTypes.push({ value: "Creche" })
     if (fields.temporaryClosure) subTypes.push({ value: "Location Temporarily Closed" })
 
+    // format date (YYYY-mm-dd)
+    let date = "";
+    let expiryDate = "";
+    if (fields.noteExpiryDate){
+      let formatNoteExpiryDate = new Date(fields.noteExpiryDate).toLocaleDateString().split("/");
+      const day = formatNoteExpiryDate[0];
+      const month = formatNoteExpiryDate[1];
+      const year = formatNoteExpiryDate[2];
+      date = `${year}-${month}-${day}`;
+    }
+
+    if (fields.temporaryChanges === undefined) date = "";
+
     let data = {
       title: fields.title,
       type: formType,
@@ -61,6 +74,8 @@ function MeetingForm(props) {
       notes: fields.notes,
       sub_types: subTypes,
       gso_opt_out: fields.gsoOptOut,
+      temporary_changes: fields.temporaryChanges,
+      note_expiry_date: date,
     }
 
     axios.post('/api/meetingadd/', data,
@@ -127,6 +142,18 @@ function MeetingForm(props) {
     description: Yup.string()
       .required('Description is required'),
 
+    noteExpiryDate: Yup.string()
+      .test("is-valid", "Temporary changes requires a expiration date", (value, context) => {
+        const temporaryChangesValue = context.parent.temporaryChanges; // get note expiry date value.
+        if (temporaryChangesValue !== undefined) {
+          if (value === undefined) { 
+            context.createError("Temporary changes requires a expiration date")
+            return false
+          }
+        }
+        return true
+      })
+      
   };
 
   let validationPhysicalShape =
@@ -224,6 +251,8 @@ function MeetingForm(props) {
         location: meetingData.location,
         address: meetingData.address,
         postcode: meetingData.postcode,
+        temporaryChanges: meetingData.temporaryChanges,
+        noteExpiryDate: meetingData.noteExpiryDate,
         whatThreeWords: meetingData.whatThreeWords,
         email: '',
         description: meetingData.description,
@@ -237,7 +266,7 @@ function MeetingForm(props) {
         hearingLoop: hearingLoop,
         creche: creche,
         temporaryClosure: temporaryClosure,
-        gsoOptOut: false
+        gsoOptOut: false,
       }}
       validationSchema={validationSchema}
       onSubmit={_submitForm}>

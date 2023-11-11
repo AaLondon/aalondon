@@ -77,6 +77,8 @@ class MeetingUpdateView(DetailView):
             "notes": "",
             "subTypes": [sub_type.value for sub_type in self.object.sub_types.all()]
             or "",
+            "temporary_changes": self.object.temporary_changes or "",
+            "note_expiry_date": self.object.note_expiry_date or "",
             "gsoOptOut": False,
         }
 
