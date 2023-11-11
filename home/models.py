@@ -15,17 +15,15 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.embeds.blocks import EmbedBlock
 
 from wagtail.admin.edit_handlers import (
-    FieldPanel,
     FieldRowPanel,
     InlinePanel,
     MultiFieldPanel,
-    PageChooserPanel,
-    StreamFieldPanel,
+    PageChooserPanel
 )
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Collection, Page
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
-from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images.edit_handlers import FieldPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 from wagtail.core import blocks
@@ -68,8 +66,8 @@ class StandardPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel("introduction", classname="full"),
-        StreamFieldPanel("body"),
-        ImageChooserPanel("image"),
+        FieldPanel("body"),
+        FieldPanel("image"),
     ]
 
 
@@ -112,7 +110,7 @@ class Video(models.Model):
     )
 
     panels =  [
-        StreamFieldPanel("url"),
+        FieldPanel("url"),
     ]
 
 
@@ -170,8 +168,8 @@ class HomePage(Page):
         return context
 
     content_panels = Page.content_panels + [
-        StreamFieldPanel("body"),
-        StreamFieldPanel("attention"),
+        FieldPanel("body"),
+        FieldPanel("attention"),
         InlinePanel("notices", label="notices"),
         InlinePanel("videos", label="videos"),
     ]
