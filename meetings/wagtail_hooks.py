@@ -3,6 +3,7 @@ from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 from meetings.views import MeetingWagtailUpdateView
 from .models import Meeting, EmailContact,MeetingSubType
 from django.db.models import Q
+from wagtail.core.models import Page
 
 
 class MeetingAdmin(ModelAdmin):
@@ -25,7 +26,7 @@ class MeetingAdmin(ModelAdmin):
 
     )
     list_filter = ("days", "published")
-    search_fields = ("title",)
+    search_fields = Page.search_fields + ["title",]
     form_fields_exclude = ['updated_by','lat','lng','duration','slug','day_rank','group','group_id','time_band','code','day_number']
     edit_view_class = MeetingWagtailUpdateView
 
@@ -50,7 +51,7 @@ class EmailContactAdmin(ModelAdmin):
         "update_to_gso",
     )
     list_filter = ("organisation", "update_to_gso")
-    search_fields = ("first_name", "last_name")
+    search_fields = Page.search_fields + ["first_name", "last_name"]
 
 
 class MeetingSubTypeAdmin(ModelAdmin):
