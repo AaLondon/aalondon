@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls import include, url
+from django.urls import include, path, re_path
 from django.contrib import admin
 from django.urls import path
 
@@ -24,14 +24,14 @@ def trigger_error(request):
 
 urlpatterns = [
     path('sentry-debug/', trigger_error),
-    url(r'^django-admin/', admin.site.urls),
+    re_path(r'^django-admin/', admin.site.urls),
 
-    url(r'^admin/', include(wagtailadmin_urls)),
-    url(r'^documents/', include(wagtaildocs_urls)),
+    path('admin/', include(wagtailadmin_urls)),
+    path('documents/', include(wagtaildocs_urls)),
 
-    url(r'^search/$', search_views.search, name='search'),
+    path('search/', search_views.search, name='search'),
     path('api/meetingadd/', include('meetings.api.urls')), 
-    url(r'^api/', include(api_urls)),
+    path('api/', include(api_urls)),
     path("meetings/email-confirmation/<slug:token>/", EmailConfirmationView.as_view(template_name='meetings/meeting_email_confirmed.html'), name="email-confirmation"),
     path('meetingsearch/', MeetingSearchView.as_view(), name='meeting_search'),
     path('onlinemeetingsearch/', OnlineMeetingSearchView.as_view(), name='online_meeting_search'),
@@ -40,7 +40,7 @@ urlpatterns = [
     path('onlinemeetings/<slug:slug>/', OnlineMeetingDetailView.as_view(), name='online-meeting-detail'),
     
     path('online/zoom-meetings/', redirect_view,name='online-zoom-meetings-redirect'),
-    url('^sitemap\.xml$', sitemap),
+    re_path('^sitemap\.xml$', sitemap),
     path('update/', MeetingCreateView.as_view(template_name='meetings/meeting_form.html'), name='meeting_form'),
     path('update/<slug:slug>/', MeetingUpdateView.as_view(template_name='meetings/meeting_form.html'), name='meeting_form'),
     path('chatbot/', TemplateView.as_view(template_name='chatbot/chatbot.html'), name='chatbot'),
@@ -49,7 +49,7 @@ urlpatterns = [
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:
-    url(r'', include(wagtail_urls)),
+    path('', include(wagtail_urls)),
 
     # Alternatively, if you want Wagtail pages to be served from a subpath
     # of your site, rather than the site root:
