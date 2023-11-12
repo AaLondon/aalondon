@@ -6,6 +6,6 @@ from wagtail.core.models import Page
 
 @admin.register(Meeting)
 class MeetingAdmin(admin.ModelAdmin):
-    search_fields = Page.search_fields + ['title']
+    search_fields = ['title']
 
 
