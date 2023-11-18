@@ -209,9 +209,9 @@ class EventIndexPage(Page):
         event_type = request.GET.get('event_type', None)
 
         # get event counts
-        type_counts_recurring = list(RecurringEventChild.objects.values('type__value').annotate(total=Count('type__value')).order_by())
-        type_counts_multi = list(MultiDayEvent.objects.values('type__value').annotate(total=Count('type__value')).order_by()) 
-        type_counts_single = list(SingleDayEvent.objects.values('type__value').annotate(total=Count('type__value')).order_by()) 
+        type_counts_recurring = list(RecurringEventChild.objects.filter(start_date__gte=today).values('type__value').annotate(total=Count('type__value')).order_by())
+        type_counts_multi = list(MultiDayEvent.objects.filter(end_date__gte=today).values('type__value').annotate(total=Count('type__value')).order_by()) 
+        type_counts_single = list(SingleDayEvent.objects.filter(start_date__gte=today).values('type__value').annotate(total=Count('type__value')).order_by()) 
         event_counts = {}
         all_counts = type_counts_recurring + type_counts_multi + type_counts_single
 
