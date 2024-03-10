@@ -193,7 +193,7 @@ const dayOptions = [
 
 
 export default function MeetingFields(props) {
-  const [temporaryChangesState, setTemporaryChangesState] = useState("");
+  const [temporaryChangesState, setTemporaryChangesState] = useState(props.values.temporaryChanges);
 
   const whatThreeRef = useRef(null);
 
@@ -286,10 +286,6 @@ export default function MeetingFields(props) {
     console.log('onSubmissionTypeChangeAutofill')
   }
 
-
-  const handleTemporaryChanges = event => {
-    setTemporaryChangesState(event.target.value);
-  }
 
 
   return (
@@ -429,7 +425,7 @@ export default function MeetingFields(props) {
 
           <div className="form-group">
             <label htmlFor="temporaryChanges">Notes & Temporary Changes (e.g. If the meeting is open or closed for Christmas and other special dates, if there's a venue change, etc; PLUS the relevant dates or time frame that the temporary changes refer to)</label>
-            <Field placeholder="These will be published on your meeting page" name="temporaryChanges" component="textarea" type="text" className={'form-control ' + (errors.temporaryChanges && touched.temporaryChanges ? ' is-invalid' : '')} onKeyUp={handleTemporaryChanges} />
+            <Field placeholder="These will be published on your meeting page" name="temporaryChanges" component="textarea" type="text" className={'form-control ' + (errors.temporaryChanges && touched.temporaryChanges ? ' is-invalid' : '')} onKeyUp={e => setTemporaryChangesState(e.target.value)} />
           </div>
 
           { checkTemporaryChanges?
