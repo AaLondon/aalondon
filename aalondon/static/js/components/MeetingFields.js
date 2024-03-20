@@ -193,7 +193,7 @@ const dayOptions = [
 
 
 export default function MeetingFields(props) {
-  const [temporaryChangesState, setTemporaryChangesState] = useState(props.values.temporaryChanges);
+  const [temporaryChangesState, setTemporaryChangesState] = useState(props.values.temporaryChanges || "");
 
   const whatThreeRef = useRef(null);
 

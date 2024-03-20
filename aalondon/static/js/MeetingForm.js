@@ -233,7 +233,12 @@ function MeetingForm(props) {
   }
 
 
-
+let noteExpiryDateText = meetingData.note_expiry_date;
+if (noteExpiryDateText != undefined) {
+  noteExpiryDateText = (meetingData.note_expiry_date.length > 0? new Date(meetingData.note_expiry_date) : "");
+}else {
+  noteExpiryDateText = "";
+}
 
   return (
     <Formik
@@ -252,7 +257,7 @@ function MeetingForm(props) {
         address: meetingData.address,
         postcode: meetingData.postcode,
         temporaryChanges: meetingData.temporary_changes,
-        noteExpiryDate: (meetingData.note_expiry_date.length > 0? new Date(meetingData.note_expiry_date) : ""),
+        noteExpiryDate: noteExpiryDateText,
         whatThreeWords: meetingData.whatThreeWords,
         email: '',
         description: meetingData.description,
