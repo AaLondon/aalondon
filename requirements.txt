@@ -27,6 +27,7 @@ factory-boy==3.2.0
 django-anymail==8.2
 django-test-plus==2.2.0
 apscheduler==3.10.4
+django-queryset-csv==1.1.0
 
 
 
