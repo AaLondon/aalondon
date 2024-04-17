@@ -3,7 +3,7 @@ wagtail>=4.1,<4.2
 django-environ==0.4.5
 django-extensions==3.2.3
 django-webpack-loader==1.8.0
-gunicorn==19.9.0
+gunicorn==22.0.0
 djangorestframework==3.14.0
 django-filter==2.4.0
 Scrapy==1.8.0
