@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from meetings.models import Meeting
+from meetings.models import Meeting, MeetingSubType
 from online.models import OnlineMeeting
 from rest_framework import viewsets, generics, views
 from api.serializers import (
@@ -124,6 +124,10 @@ class MeetingSearch(generics.ListAPIView):
         meeting_type = self.request.query_params.get("type", None)
         if meeting_type and meeting_type != 'undefined':
             queryset = queryset.filter(((Q(type=meeting_type)) | Q(type="HYB")))
+
+        wheelchair = self.request.query_params.get("wheelchair", None)
+        if wheelchair:
+            queryset = queryset.filter(sub_types__value="Wheelchair Access")
 
         return queryset.order_by("day_number", "time")
 
