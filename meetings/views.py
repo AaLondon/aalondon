@@ -58,6 +58,7 @@ class MeetingUpdateView(DetailView):
             end_time = end_time.strftime("%H:%M")
 
         meeting_form_data = {
+            "slug": self.object.slug or "",
             "formType": self.object.type or "",
             "title": self.object.title or "",
             "days": [day.value for day in self.object.days.all()] or "",
