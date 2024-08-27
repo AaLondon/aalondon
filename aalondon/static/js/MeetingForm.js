@@ -55,6 +55,7 @@ function MeetingForm(props) {
     if (fields.temporaryChanges === undefined) date = "";
 
     let data = {
+      slug: fields.slug,
       title: fields.title,
       type: formType,
       time: fields.startTime,
@@ -243,6 +244,7 @@ if (noteExpiryDateText != undefined) {
   return (
     <Formik
       initialValues={{
+        slug: meetingData.slug,
         formType: formType,
         title: meetingData.title,
         days: meetingData.days,

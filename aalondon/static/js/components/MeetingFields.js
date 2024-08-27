@@ -235,6 +235,7 @@ export default function MeetingFields(props) {
 
           let result = response.data.results[0]
           if (result) {
+            setFieldValue('slug', result.slug ? result.slug : '')
             setFieldValue('address', result.address ? result.address : '')
             setFieldValue('startTime', result.friendly_time)
             setFieldValue('endTime', result.friendly_end_time)
