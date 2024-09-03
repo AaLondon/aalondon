@@ -1,5 +1,6 @@
 import datetime
 from email.utils import parsedate_to_datetime
+from pickle import TRUE
 from rest_framework import serializers
 from meetings.models import MeetingIntergroup, Meeting, MeetingDay, MeetingSubType, confirmation_link
 from django.core import mail
@@ -25,10 +26,12 @@ class MeetingSerializer(serializers.ModelSerializer):
     days = MeetingDaySerializer(many=True)
     sub_types = MeetingSubTypeSerializer(many=True)
     note_expiry_date = serializers.CharField(allow_blank=True)
+    slug = serializers.CharField(max_length=100, required=False)
 
     class Meta:
         model = Meeting
         fields = [
+            "slug",
             "type",
             "title",
             "intergroup",
@@ -59,16 +62,20 @@ class MeetingSerializer(serializers.ModelSerializer):
         note_expiry_date = validated_data.pop("note_expiry_date")
         
         title = validated_data.get("title")
+        slug = validated_data.get("slug", "")
         email = validated_data.get("email")
 
-        meeting = Meeting.objects.create( 
-            **validated_data, email_confirmed="UNCONFIRMED")
-        
-        if len(note_expiry_date) > 0:
-            convert_date = datetime.datetime.strptime(note_expiry_date, "%Y-%m-%d").date()
-            meeting.note_expiry_date=convert_date
-
-        meeting.save()
+        convert_date = datetime.datetime.strptime(note_expiry_date, "%Y-%m-%d").date() if len(note_expiry_date) > 0 else None
+        meeting = None
+        if Meeting.objects.filter(slug=slug).exists():
+            meeting_pk = Meeting.objects.filter(slug=slug).update(
+                **validated_data, email_confirmed="UNCONFIRMED", note_expiry_date=convert_date
+            )
+            meeting = Meeting.objects.get(pk=meeting_pk)
+        else:
+            meeting = Meeting.objects.create( 
+                **validated_data, email_confirmed="UNCONFIRMED", note_expiry_date=convert_date)
+            meeting.save()
 
         for day in days:
             meeting_day = MeetingDay.objects.get(value=day["value"])
