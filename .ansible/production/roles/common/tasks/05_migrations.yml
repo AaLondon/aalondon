@@ -25,4 +25,12 @@
   shell: ". {{ app_dir }}/.env; {{ venv_python }} {{ app_dir }}/manage.py collectstatic --noinput "
   become: yes
 
+- name: Remove django cronjob
+  shell: ". {{ app_dir }}/.env; {{ venv_python }} {{ app_dir }}/manage.py crontab remove"
+
+- name: Add django cronjob
+  shell: ". {{ app_dir }}/.env; {{ venv_python }} {{ app_dir }}/manage.py crontab add"
+
+
+
 
