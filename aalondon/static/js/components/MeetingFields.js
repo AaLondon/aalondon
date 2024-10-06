@@ -48,6 +48,11 @@ const submitOptions = [
 
 const intergroupOptions = [
   {
+    key: 'London Online Intergroup',
+    text: 'London Online Intergroup',
+    value: 'London Online Intergroup',
+  },
+  {
     key: 'City Of London',
     text: 'City Of London',
     value: 'City Of London',
