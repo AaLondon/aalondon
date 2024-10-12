@@ -438,7 +438,6 @@ export default function MeetingFields(props) {
             <div className="form-group">
               <label htmlFor="noteExpiryDate">Temporary Changes Expiration Date</label>
               <DatePickerField name="noteExpiryDate" css={'form-control ' + (errors.noteExpiryDate && touched.noteExpiryDate ? ' is-invalid' : '')} />
-              <ErrorMessage name="noteExpiryDate" component="div" className="invalid-feedback" />
             </div> : ""}
 
 
