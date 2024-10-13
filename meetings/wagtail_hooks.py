@@ -191,7 +191,7 @@ class MeetingAdmin(ExportModelAdminMixin, ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.filter(Q(email_confirmed="PRE") | Q(email_confirmed="CONFIRMED"))
+        return qs.filter(Q(email_confirmed="PRE") | Q(email_confirmed="CONFIRMED")).order_by("-updated")
 
 
 

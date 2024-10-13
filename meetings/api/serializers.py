@@ -67,15 +67,14 @@ class MeetingSerializer(serializers.ModelSerializer):
 
         convert_date = datetime.datetime.strptime(note_expiry_date, "%Y-%m-%d").date() if len(note_expiry_date) > 0 else None
         meeting = None
-        if Meeting.objects.filter(slug=slug).exists():
-            meeting_pk = Meeting.objects.filter(slug=slug).update(
-                **validated_data, email_confirmed="UNCONFIRMED", note_expiry_date=convert_date
+        if Meeting.objects.filter(title=title).exists():
+            Meeting.objects.filter(title=title).update(
+            updated=datetime.datetime.now()
             )
-            meeting = Meeting.objects.get(slug=slug)
-        else:
-            meeting = Meeting.objects.create( 
-                **validated_data, email_confirmed="UNCONFIRMED", note_expiry_date=convert_date)
-            meeting.save()
+            
+        meeting = Meeting.objects.create( 
+            **validated_data, email_confirmed="UNCONFIRMED", note_expiry_date=convert_date)
+        meeting.save()
 
         for day in days:
             meeting_day = MeetingDay.objects.get(value=day["value"])
@@ -83,6 +82,8 @@ class MeetingSerializer(serializers.ModelSerializer):
         for sub_type in sub_types:
             meeting_sub_type, created = MeetingSubType.objects.get_or_create(value=sub_type["value"])
             meeting.sub_types.add(meeting_sub_type)
+
+        print(confirmation_link(meeting.pk, title, self.context.get('request')))
 
         mail.send_mail(
             f"aa-london.com | {title} Email Confirmation.",
