@@ -85,12 +85,12 @@ class MeetingSerializer(serializers.ModelSerializer):
 
         print(confirmation_link(meeting.pk, title, self.context.get('request')))
 
-        # mail.send_mail(
-        #     f"aa-london.com | {title} Email Confirmation.",
-        #     f"Hi\n\nSo that we can publish your meeting please confirm by clicking the link below.\n\n{confirmation_link(meeting.pk, title, self.context.get('request'))}\n\nIn fellowship,\nAA London Website Team",
-        #     'info@aa-london.com',
-        #     [email]
-        # )
+        mail.send_mail(
+            f"aa-london.com | {title} Email Confirmation.",
+            f"Hi\n\nSo that we can publish your meeting please confirm by clicking the link below.\n\n{confirmation_link(meeting.pk, title, self.context.get('request'))}\n\nIn fellowship,\nAA London Website Team",
+            'info@aa-london.com',
+            [email]
+        )
         return meeting
 
     
