@@ -12,6 +12,7 @@ from geopy.distance import geodesic
 class MeetingSearchSerializer(serializers.ModelSerializer):
     actual_datetime = serializers.SerializerMethodField()
     friendly_time = serializers.SerializerMethodField()
+    friendly_end_time = serializers.SerializerMethodField()
     postcode_prefix = serializers.SerializerMethodField()
     distance_from_client = serializers.SerializerMethodField()
     day_number = serializers.SerializerMethodField()
@@ -38,6 +39,7 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
             "lng",
             "day_rank",
             "friendly_time",
+            "friendly_end_time",
             "postcode_prefix",
             "day_number",
             "intergroup",

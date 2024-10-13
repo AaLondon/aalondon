@@ -67,8 +67,8 @@ class MeetingSerializer(serializers.ModelSerializer):
 
         convert_date = datetime.datetime.strptime(note_expiry_date, "%Y-%m-%d").date() if len(note_expiry_date) > 0 else None
         meeting = None
-        if Meeting.objects.filter(title=title).exists():
-            Meeting.objects.filter(title=title).update(
+        if Meeting.objects.filter(title__iexact=title).exists():
+            Meeting.objects.filter(title__iexact=title).update(
             updated=datetime.datetime.now()
             )
             
@@ -85,12 +85,12 @@ class MeetingSerializer(serializers.ModelSerializer):
 
         print(confirmation_link(meeting.pk, title, self.context.get('request')))
 
-        mail.send_mail(
-            f"aa-london.com | {title} Email Confirmation.",
-            f"Hi\n\nSo that we can publish your meeting please confirm by clicking the link below.\n\n{confirmation_link(meeting.pk, title, self.context.get('request'))}\n\nIn fellowship,\nAA London Website Team",
-            'info@aa-london.com',
-            [email]
-        )
+        # mail.send_mail(
+        #     f"aa-london.com | {title} Email Confirmation.",
+        #     f"Hi\n\nSo that we can publish your meeting please confirm by clicking the link below.\n\n{confirmation_link(meeting.pk, title, self.context.get('request'))}\n\nIn fellowship,\nAA London Website Team",
+        #     'info@aa-london.com',
+        #     [email]
+        # )
         return meeting
 
     
