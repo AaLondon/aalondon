@@ -77,8 +77,9 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
         return f"{time}"
 
     def get_friendly_end_time(self, obj):
-        end_time = obj.end_time.strftime("%H:%M")
-        return f"{end_time}"
+        if obj.end_time:
+            return obj.end_time.strftime("%H:%M")
+        return None
 
     def get_postcode_prefix(self, obj):
         if obj.postcode:
