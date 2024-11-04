@@ -29,6 +29,12 @@
     </div>
    
     <div class="meeting-details">
+      {% if object.temporary_changes and object.note_expiry_date|date:"U" > now|date:"U" %}
+        <div class="temporary-changes-background">
+          <div class="meeting-detail-text">TEMPORARY CHANGES</div>
+          <div>{{ object.temporary_changes|linebreaks }}</div>
+        </div>
+      {% endif %}
       <div class="meeting-detail-text">DETAILS</div>
       <div>{{object.description|linebreaks}}</div>
       {% if object.sub_types.all%}

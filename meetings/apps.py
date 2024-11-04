@@ -6,4 +6,4 @@ class MeetingsConfig(AppConfig):
 
     def ready(self):
         from meetings import updater 
-        updater.start()
+        #updater.start()
