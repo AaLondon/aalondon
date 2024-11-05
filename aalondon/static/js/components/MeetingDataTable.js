@@ -42,7 +42,7 @@ export default class MeetingDataTable extends Component {
     const { column, data, direction } = this.state
     let thirdColumnHeader = "Distance(miles)";
     let showPostcode = this.props.showPostcode;
-    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, link, slug, postcode_prefix, day, place,type, temporary_changes }) => {
+    let tbl = _.map(data, ({ code, friendly_time, title, distance_from_client, link, slug, postcode_prefix, day, place,type, temporary_changes, temporary_changes_visible }) => {
       let placeText = '';
       let zoomImg = '/static/images/zoom.png';
       let santa = '/static/images/santa.png';
@@ -71,8 +71,8 @@ export default class MeetingDataTable extends Component {
             <Table.Cell textAlign="center">{day}</Table.Cell>
             <Table.Cell textAlign="center">{friendly_time}</Table.Cell>
             <Table.Cell textAlign="center"><a href={meetingUrlPath + slug}>{title}
-
-            { temporary_changes == ''? '' :
+            {temporary_changes_visible}
+            { temporary_changes_visible == false ? '' :
                 <div>
                   <span className="text-center text-sm">*Temporary changes - Click to view</span>
                 </div>

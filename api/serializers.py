@@ -20,6 +20,7 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
     place = serializers.SerializerMethodField()
     days = MeetingDaySerializer(many=True)
     sub_types = MeetingSubTypeSerializer(many=True)
+    temporary_changes_visible = serializers.SerializerMethodField()
 
     class Meta:
         model = Meeting
@@ -52,8 +53,17 @@ class MeetingSearchSerializer(serializers.ModelSerializer):
             "sub_types",
             "type",
             "temporary_changes",
-            "note_expiry_date"
+            "note_expiry_date",
+            "temporary_changes_visible",
+            
         ]
+
+    def get_temporary_changes_visible(self,obj):
+        if obj.temporary_changes and obj.note_expiry_date:
+            if obj.note_expiry_date > datetime.now().date():
+                return True
+        return False
+
 
     def get_actual_datetime(self, obj):
         now = datetime.now()
