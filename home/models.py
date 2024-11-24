@@ -13,6 +13,7 @@ from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from django.utils.translation import gettext_lazy as _
 from wagtail.embeds.blocks import EmbedBlock
+from wagtail.images.models import Image
 
 from wagtail.admin.edit_handlers import (
     FieldRowPanel,
@@ -165,6 +166,10 @@ class HomePage(Page):
         context["notices"] = context["page"].notices.all()
         videos = [video.url.raw_data[0]['value'] for video in context["page"].videos.all()] 
         context["videos"] = videos
+        
+
+# Search for images by title
+        context["xmas_flyer"]=Image.objects.get(title="xmas_flyer")
         return context
 
     content_panels = Page.content_panels + [

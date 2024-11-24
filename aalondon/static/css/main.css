@@ -4707,6 +4707,62 @@ body.is-menu-visible #menu {
   margin-bottom: 15px;
 }
 
+.modal header h1 {
+  font-size: 1.3em;
+  font-weight: 900;
+  text-align: center;
+}
+
+.modal h2 {
+  font-size: 1.1em;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0px;
+  margin-top: 5px;
+}
+.modal ul {
+  list-style-position: inside;
+  margin: 0px;
+  padding:0px;
+  
+}
+.modal li {
+
+  margin: 0px;
+  padding:0px;
+  
+}
+
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Overlay background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 90%; /* Default width for smaller devices */
+  max-width: 80%; /* Limit width to 80% on larger devices */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+  .modal-content {
+      width: 80%; /* Set width for devices larger than phones */
+  }
+}
+
+
 @media screen and (min-width: 768px ) {
 
   .download-app-container{
@@ -4718,6 +4774,10 @@ body.is-menu-visible #menu {
   .m-space-x {
     margin-left: 25px;
     margin-right: 25px;
+  }
+  .modal
+  {
+    width:80%;
   }
 }
 
