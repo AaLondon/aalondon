@@ -4745,6 +4745,7 @@ body.is-menu-visible #menu {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  overflow: hidden; /* Ensure scrolling happens within the modal content */
 }
 
 .modal-content {
@@ -4753,7 +4754,9 @@ body.is-menu-visible #menu {
   padding: 20px;
   width: 90%; /* Default width for smaller devices */
   max-width: 80%; /* Limit width to 80% on larger devices */
+  max-height: 80%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }
 
 @media (min-width: 768px) {
