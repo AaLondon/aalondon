@@ -20,27 +20,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up Python (Ansible requires Python)
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'  # Specify Python version
+      # # Step 2: Set up Python (Ansible requires Python)
+      # - name: Set up Python
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '3.9'  # Specify Python version
 
-      # Step 3: Install Ansible
-      - name: Install Ansible
-        run: |
-          python -m pip install --upgrade pip
-          pip install ansible
+      # # Step 3: Install Ansible
+      # - name: Install Ansible
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     pip install ansible
 
-      # Step 4: Set up Ansible Vault password
-      - name: Configure Ansible Vault Password
-        run: echo "${{ secrets.KEYFILE_VAULT_PASS_PRODUCTION }}" > ~/.ansible_vault_password
-        env:
-          ANSIBLE_VAULT_PASSWORD: ${{ secrets.KEYFILE_VAULT_PASS_PRODUCTION }}
+      # # Step 4: Set up Ansible Vault password
+      # - name: Configure Ansible Vault Password
+      #   run: echo "${{ secrets.KEYFILE_VAULT_PASS_PRODUCTION }}" > ~/.ansible_vault_password
+      #   env:
+      #     ANSIBLE_VAULT_PASSWORD: ${{ secrets.KEYFILE_VAULT_PASS_PRODUCTION }}
 
-      # Step 5: Run the Ansible playbook
-      - name: Run Ansible Playbook
-        run: |
-          ansible-playbook -i .ansible/production/hosts .ansible/production/deploy.yml --vault-password-file ~/.ansible_vault_password
+      # # Step 5: Run the Ansible playbook
+      # - name: Run Ansible Playbook
+      #   run: |
+      #     ansible-playbook -i .ansible/production/hosts .ansible/production/deploy.yml --vault-password-file ~/.ansible_vault_password
 
 
