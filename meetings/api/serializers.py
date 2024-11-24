@@ -65,11 +65,11 @@ class MeetingSerializer(serializers.ModelSerializer):
         slug = validated_data.get("slug", "")
         email = validated_data.get("email")
 
+        meeting_qs = Meeting.objects.filter(title__iexact=title)
         convert_date = datetime.datetime.strptime(note_expiry_date, "%Y-%m-%d").date() if len(note_expiry_date) > 0 else None
-        meeting = None
-        if Meeting.objects.filter(title__iexact=title).exists():
-            Meeting.objects.filter(title__iexact=title).update(
-            updated=datetime.datetime.now()
+        if meeting_qs.exists():
+            meeting_qs.update(
+                updated=datetime.datetime.now()
             )
             
         meeting = Meeting.objects.create( 

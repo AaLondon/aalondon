@@ -38,6 +38,47 @@
         <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css"> 
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
         <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+        <style>
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                justify-content: center;
+                align-items: center;
+            }
+        
+            .modal-content {
+                background-color: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                text-align: center;
+            }
+        
+            .btn {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                border-radius: 4px;
+                font-weight: 900;
+            }
+        
+            .btn:hover {
+                background-color: #45a049;
+                color: black;
+            }
+        
+            .hidden {
+                display: none;
+            }
+        </style>
+        
        
         {% block extra_css %}
             {# Override this in templates to add extra stylesheets #}
@@ -194,10 +235,57 @@ help other alcoholics to achieve sobriety. </p>
             <div class="chat-bot-base-speech-bubble speech-arrow"><a href="/chatbot"  rel="noopener noreferrer">Any questions? I'm here to help</a></div>
         </div>
         {% endif %}
+        
         <footer>
         {% include "footer.html" %}
         
       </footer>
+      <div id="cookieModal" class="modal hidden">
+        <div class="modal-content">
+            <header><h1>FESTIVE SEASON UPDATES</h1></header>
+            
+    <h2>TO GSR & GROUP REPS</h2>
+    <p>
+        Update your meeting opening/closure status during Christmas and New Years on 
+        <a href="https://aa-london.com">aa-london.com</a> and GSO websites, as well as with the London telephone office team.
+    </p>
+
+    <h2>PHYSICAL MEETINGS</h2>
+    <p>
+        Use this online form: 
+        <a href="https://tinyurl.com/xmas-meetings">https://tinyurl.com/xmas-meetings</a>
+    </p>
+    <p>Key details needed:</p>
+    <ul>
+        <li>Days the meeting will be active/inactive</li>
+        <li>Any events/celebrations during this period</li>
+    </ul>
+
+    <h2>ONLINE MEETINGS</h2>
+    <p>
+        Use this online form: 
+        <a href="https://aa-london.com/updates">https://aa-london.com/updates</a>
+    </p>
+    <p>Instructions:</p>
+    <ul>
+        <li>Select either hybrid or online meeting option</li>
+        <li>Use the ‘Notes & Temporary Changes’ field to inform us about the meeting status</li>
+    </ul>
+
+    <h2>INFORM GSO FOR THE NATIONAL WEBSITE</h2>
+    <p>
+        Email GSO directly at 
+        <a href="mailto:help@aamail.org">help@aamail.org</a>
+    </p>
+    <h2><strong>HELP SPREAD THE WORD</strong></h2>
+<p>Please let your contacts in AA know about this by sharing this <a href="{{xmas_flyer.file.url}}">e-flyer</a>.</p>
+<p>Any questions? Get in touch via <a href="mailto:info@aa-london.com">info@aa-london.com</a>.</p>
+
+            <button id="acceptCookies" class="btn">Continue</button>
+        </div>
+    </div>
+    
+    
         </div>
        
 
@@ -216,6 +304,33 @@ help other alcoholics to achieve sobriety. </p>
             {# Override this in templates to add extra javascript #}
         {% endblock %}
        
+          
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const modal = document.getElementById('cookieModal');
+                const acceptButton = document.getElementById('acceptCookies');
+        
+                // Function to check if a cookie exists
+                function getCookie(name) {
+                    const value = `; ${document.cookie}`;
+                    const parts = value.split(`; ${name}=`);
+                    if (parts.length === 2) return parts.pop().split(';').shift();
+                }
+        
+                // Show modal if the cookie is not set
+                if (!getCookie('cookiesAccepted')) {
+                    modal.style.display = 'flex'; // Show modal as a flexbox
+                }
+        
+                // Set a cookie and hide the modal when accepted
+                acceptButton.addEventListener('click', function () {
+                    document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 365; // 1 year
+                    modal.style.display = 'none';
+                });
+            });
+        </script>
+        
+        
        
     </body>
 </html>
