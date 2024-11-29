@@ -129,8 +129,14 @@
 
             <!-- Main -->
                 <main id="main">
-
-                            
+                    {% block xmas %}
+                    <div class="link-container">
+                        🎄🎄 
+                        Christmas meeting changes 
+                        <a href="/xmas">click here</a>
+                        🎄🎄
+                    </div>
+                    {% endblock %}
                             {% block content %}{% endblock %}
                   
 
@@ -264,7 +270,7 @@ help other alcoholics to achieve sobriety. </p>
 <p>Please let your contacts in AA know about this by sharing this <a href="{{xmas_flyer.file.url}}">e-flyer</a>.</p>
 <p>Any questions? Get in touch via <a href="mailto:info@aa-london.com">info@aa-london.com</a>.</p>
 
-            <button id="acceptCookies" class="btn">Continue</button>
+            <button id="acceptCookies" class="btn">Close</button>
         </div>
     </div>
     

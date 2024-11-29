@@ -22,6 +22,9 @@ class MeetingSearchView(TemplateView):
 
         return context
 
+class XmasView(TemplateView):
+    template_name = "meetings/xmas.html"
+
 
 class MeetingDetailView(DetailView):
     model = Meeting
