@@ -35,4 +35,5 @@ jobs:
         run: |
           ansible-playbook .ansible/production/deploy.yml \
            --private-key=.ansible/production/connect.pem  \
-            -u deployer -i .ansible/production/hosts
+            -u deployer -i .ansible/production/hosts \
+            --vault-password-file ~/.vault_password_file
