@@ -31,9 +31,12 @@ jobs:
       - name: Set Permissions for PEM File
         run: chmod 600 .ansible/production/connect.pem
 
-      - name: Add Host Key from File to Known Hosts
-        run: cat .ansible/production/hosts >> ~/.ssh/known_hosts
+      - name: Prepare SSH Directory
+        run: mkdir -p ~/.ssh
 
+      - name: Add Multiple Hosts to Known Hosts
+        run: ssh-keyscan -H $(cat .ansible/production/hosts) >> ~/.ssh/known_hosts
+      
       - name: Run Ansible Playbook
         run: |
           ansible-playbook .ansible/production/deploy.yml \
