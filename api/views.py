@@ -184,7 +184,7 @@ class OnlineMeetingSearch(generics.ListAPIView):
 
             meetings_today = Meeting.objects.filter(
                 ((Q(days__value=day_name_today)) & Q(time__gte=dt_now.time()))
-            )  # .order_by('time')
+            ).filter(published=True)
 
             all = meetings_today  # | meetings_tomorrow
             if day_name_today == "sunday":
