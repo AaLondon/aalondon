@@ -49,6 +49,7 @@
                 background-color: rgba(0, 0, 0, 0.5);
                 justify-content: center;
                 align-items: center;
+                cursor: pointer;
             }
         
             .modal-content {
@@ -57,6 +58,10 @@
                 border-radius: 8px;
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
                 text-align: center;
+                cursor: default;
+                max-width: 90%;
+                max-height: 90vh;
+                overflow-y: auto;
             }
         
             .btn {
@@ -298,22 +303,36 @@ help other alcoholics to achieve sobriety. </p>
             document.addEventListener('DOMContentLoaded', function () {
                 const modal = document.getElementById('cookieModal');
                 const acceptButton = document.getElementById('acceptCookies');
-        
+                const modalContent = modal.querySelector('.modal-content');
+
                 // Function to check if a cookie exists
                 function getCookie(name) {
                     const value = `; ${document.cookie}`;
                     const parts = value.split(`; ${name}=`);
                     if (parts.length === 2) return parts.pop().split(';').shift();
                 }
-        
+
                 // Show modal if the cookie is not set
                 if (!getCookie('cookiesAccepted')) {
-                    modal.style.display = 'flex'; // Show modal as a flexbox
+                    modal.style.display = 'flex';
                 }
-        
+
+                // Close modal when clicking outside
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 365;
+                        modal.style.display = 'none';
+                    }
+                });
+
+                // Prevent clicks inside modal content from closing the modal
+                modalContent.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+
                 // Set a cookie and hide the modal when accepted
                 acceptButton.addEventListener('click', function () {
-                    document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 365; // 1 year
+                    document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 365;
                     modal.style.display = 'none';
                 });
             });
