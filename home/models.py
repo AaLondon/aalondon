@@ -138,38 +138,12 @@ class HomePage(Page):
         null=True,
     )
 
-    def get_context(self, request):
-        context = super().get_context(request)
-
-        # Add extra variables and return the updated context
-        now = datetime.now()
-        day_name_today = now.strftime("%A")
-        tomorrow = now + timedelta(days=1)
-        day_name_tomorrow = tomorrow.strftime("%A")
-        # meetings = Meeting.objects.filter((Q(day=day_name_now) & Q(time__gte=now.time()))|(Q(day=day_name_tomorrow) & Q(time__lte=now.time())))
-
-        meetings_today = Meeting.objects.filter(
-            (Q(days__value=day_name_today) & Q(time__gte=now.time()))
-        ).order_by("time")
-        meetings_tomorrow = Meeting.objects.filter(
-            (Q(days__value=day_name_tomorrow) & Q(time__lte=now.time()))
-        ).order_by("time")
-
-        data = serializers.serialize(
-            "json", list(meetings_today), fields=("title", "time")
-        )
-        context["meetings_today"] = data
-        context["meetings_tomorrow"] = meetings_tomorrow
-        context["day_name_tomorrow"] = day_name_tomorrow
-        context["day_name_today"] = day_name_today
-
-        context["notices"] = context["page"].notices.all()
-        videos = [video.url.raw_data[0]['value'] for video in context["page"].videos.all()] 
-        context["videos"] = videos
-        
-
-# Search for images by title
-        context["xmas_flyer"]=Image.objects.get(title="xmas_flyer")
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        try:
+            context["xmas_flyer"] = Image.objects.get(title="xmas_flyer")
+        except Image.DoesNotExist:
+            context["xmas_flyer"] = None
         return context
 
     content_panels = Page.content_panels + [
