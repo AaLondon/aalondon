@@ -68,9 +68,9 @@ const intergroupOptions = [
     value: 'Chelsea',
   },
   {
-    key: 'Chelsea & Fulham',
-    text: 'Chelsea & Fulham',
-    value: 'Chelsea & Fulham',
+    key: 'Kensington & Fulham',
+    text: 'Kensington & Fulham',
+    value: 'Kensington & Fulham',
   },
   {
     key: 'London North East',

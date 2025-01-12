@@ -129,14 +129,7 @@
 
             <!-- Main -->
                 <main id="main">
-                    {% block xmas %}
-                    <div class="link-container">
-                        🎄🎄 
-                        Christmas meeting changes 
-                        <a href="/xmas">click here</a>
-                        🎄🎄
-                    </div>
-                    {% endblock %}
+                   
                             {% block content %}{% endblock %}
                   
 
@@ -246,7 +239,7 @@ help other alcoholics to achieve sobriety. </p>
         {% include "footer.html" %}
         
       </footer>
-      <div id="cookieModal" class="modal hidden">
+     
         <div class="modal-content">
             <header><h1>FESTIVE SEASON UPDATES</h1></header>
             
@@ -294,30 +287,7 @@ help other alcoholics to achieve sobriety. </p>
         {% endblock %}
        
           
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const modal = document.getElementById('cookieModal');
-                const acceptButton = document.getElementById('acceptCookies');
         
-                // Function to check if a cookie exists
-                function getCookie(name) {
-                    const value = `; ${document.cookie}`;
-                    const parts = value.split(`; ${name}=`);
-                    if (parts.length === 2) return parts.pop().split(';').shift();
-                }
-        
-                // Show modal if the cookie is not set
-                if (!getCookie('cookiesAccepted')) {
-                    modal.style.display = 'flex'; // Show modal as a flexbox
-                }
-        
-                // Set a cookie and hide the modal when accepted
-                acceptButton.addEventListener('click', function () {
-                    document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 365; // 1 year
-                    modal.style.display = 'none';
-                });
-            });
-        </script>
         
         
        

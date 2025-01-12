@@ -99,7 +99,7 @@ class MeetingSearchForm extends React.Component {
   render() {
 
     let igs = {
-      117: "City Of London", 36: "East London", 123: "Chelsea", 124: "Chelsea & Fulham", 118: "London North East", 51: "London North", 64: "London North Middlesex",
+      117: "City Of London", 36: "East London", 123: "Chelsea", 124: "Kensington & Fulham", 118: "London North East", 51: "London North", 64: "London North Middlesex",
       63: "London North West", 62: "London South Middlesex", 119: "London West End", 120: "London Westway", 75: "London Croydon Epsom & Sutton", 55: "London North Kent",
       122: "London South East (East)", 121: "London South East (West)", 77: "London South", 42: "London South West"
     };
