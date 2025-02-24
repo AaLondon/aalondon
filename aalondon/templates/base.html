@@ -240,31 +240,37 @@ help other alcoholics to achieve sobriety. </p>
         
       </footer>
      
-        <!-- <div class="modal-content">
-            <header><h1>FESTIVE SEASON UPDATES</h1></header>
-            
-    <h2>TO GSR & GROUP REPS</h2>
+      <div id="cookieModal" class="modal hidden">
+        <div class="modal-content">
+            <header><h1>QUESTIONS FOR CONFERENCE 2025 </h1></header>
+
+    <h2>London Groups and Intergroups, 
+    </h2>
     <p>
-        Update your meeting opening/closure status during Christmas and New Years on 
-        <a href="https://aa-london.com">aa-london.com</a> and GSO websites, as well as with the London telephone office team.
+        Please submit your responses to the Questions for Conference 2025 using the online forms.  
+
     </p>
 
-    <h2>ALL MEETINGS</h2>
+    <h2>Responses for London Region North (for Groups / Intergroups north of the river)</h2>
     <p>
-        Use this online form: 
-        <a href="https://tinyurl.com/xmas-meetings">https://tinyurl.com/xmas-meetings</a>
+        <a href="https://tinyurl.com/qfc-london-2025">https://tinyurl.com/qfc-london-2025</a>
     </p>
-    <p>Key details needed:</p>
-    <ul>
-        <li>Days the meeting will be active/inactive</li>
-        <li>Any events/celebrations during this period</li>
-    </ul>
-    <h2><strong>HELP SPREAD THE WORD</strong></h2>
-<p>Please let your contacts in AA know about this by sharing this <a href="{{xmas_flyer.file.url}}">e-flyer</a>.</p>
-<p>Any questions? Get in touch via <a href="mailto:info@aa-london.com">info@aa-london.com</a>.</p>
+   
+    <h2>Responses for London Region South (for Groups / Intergroups south of the river) 
+    </h2>
+    <p>
+        <a href="http://tinyurl.com/Conference-Questions-2025">http://tinyurl.com/Conference-Questions-2025</a>
+    </p>
 
-            <button id="acceptCookies" class="btn">Close</button>
-        </div> -->
+    <h2>ONLINE MEETINGS</h2>
+    <p>
+      Please use your discretion. For those outside London, contact your local Intergroups for more information.
+
+    </p>
+   
+            <button id="acceptCookies" class="btn">Continue to site</button>
+        </div>
+    </div>
     </div>
     
     
@@ -286,7 +292,30 @@ help other alcoholics to achieve sobriety. </p>
             {# Override this in templates to add extra javascript #}
         {% endblock %}
        
-          
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const modal = document.getElementById('cookieModal');
+                const acceptButton = document.getElementById('acceptCookies');
+
+                // Function to check if a cookie exists
+                function getCookie(name) {
+                    const value = `; ${document.cookie}`;
+                    const parts = value.split(`; ${name}=`);
+                    if (parts.length === 2) return parts.pop().split(';').shift();
+                }
+
+                // Show modal if the cookie is not set
+                if (!getCookie('cookiesAccepted')) {
+                    modal.style.display = 'flex'; // Show modal as a flexbox
+                }
+
+                // Set a cookie and hide the modal when accepted
+                acceptButton.addEventListener('click', function () {
+                    document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 365; // 1 year
+                    modal.style.display = 'none';
+                });
+            });
+        </script>
         
         
         
