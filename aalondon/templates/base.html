@@ -77,6 +77,16 @@
             .hidden {
                 display: none;
             }
+
+            #cookieModal .modal-content h2 {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333; /* You can customize this color */
+    line-height: 1.4;
+}
+
         </style>
         
        
@@ -311,7 +321,7 @@ help other alcoholics to achieve sobriety. </p>
 
                 // Set a cookie and hide the modal when accepted
                 acceptButton.addEventListener('click', function () {
-                    document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 365; // 1 year
+                    document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 3; // 1 year
                     modal.style.display = 'none';
                 });
             });
