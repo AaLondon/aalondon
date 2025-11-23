@@ -4761,7 +4761,7 @@ body.is-menu-visible #menu {
 
 @media (min-width: 768px) {
   .modal-content {
-      width: 80%; /* Set width for devices larger than phones */
+      width: 50%; /* Set width for devices larger than phones */
   }
 }
 
