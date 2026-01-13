@@ -43,4 +43,4 @@ jobs:
            --private-key=.ansible/production/connect.pem  \
             -u deployer -i .ansible/production/hosts \
             --vault-password-file ~/.vault_password_file \
-            -e "github_token=${{ secrets.GITHUB_TOKEN }}"
+            -e "github_token=${{ secrets.GITHUB_TOKEN }} -vvv"
