@@ -2,6 +2,11 @@
 # This playbook deploys the whole app stack
 ##
 
+- hosts: all
+  gather_facts: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3.9
+
 
 - name: apply common configuration to server
   hosts: all
