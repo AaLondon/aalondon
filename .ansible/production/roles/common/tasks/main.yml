@@ -1,20 +1,13 @@
-##
-# Configure the server for the Django app
-##
-
 - hosts: all
   gather_facts: true
   vars:
     ansible_python_interpreter: /usr/bin/python3.9
-  tasks:
-    - name: Verify Python version
-      command: python3.9 --version
 
-- include_tasks: 01_server.yml
-- include_tasks: 02_git.yml
-- include_tasks: 03_dependencies.yml
-###### DB is managed instance so no need to provision
-- include_tasks: 05_migrations.yml
-- include_tasks: 06_nginx.yml
-- include_tasks: 07_gunicorn.yml
-- include_tasks: 09_systemd.yml
+  tasks:
+    - include_tasks: 01_server.yml
+    - include_tasks: 02_git.yml
+    - include_tasks: 03_dependencies.yml
+    - include_tasks: 05_migrations.yml
+    - include_tasks: 06_nginx.yml
+    - include_tasks: 07_gunicorn.yml
+    - include_tasks: 09_systemd.yml
