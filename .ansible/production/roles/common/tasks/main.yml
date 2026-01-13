@@ -1,6 +1,15 @@
 ##
 # Configure the server for the Django app
 ##
+
+- hosts: all
+  gather_facts: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3.9
+  tasks:
+    - name: Verify Python version
+      command: python3.9 --version
+
 - include_tasks: 01_server.yml
 - include_tasks: 02_git.yml
 - include_tasks: 03_dependencies.yml
