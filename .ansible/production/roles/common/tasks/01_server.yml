@@ -2,6 +2,11 @@
 # Update the DNF package cache and install packages as a root user
 ##
 
+- name: Bootstrap python3-apt for Python 3.9
+  raw: apt-get install -y python3-apt python3.9-distutils 2>/dev/null; python3.9 -c "import apt" 2>/dev/null || apt-get install --reinstall -y python3-apt
+  become: true
+  changed_when: false
+
 - name: Update and upgrade apt packages
   become: true
   apt:

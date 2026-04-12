@@ -6,5 +6,7 @@
   hosts: all
   gather_facts: true
   user: deployer
+  vars:
+    ansible_python_interpreter: /usr/bin/python3.9
   roles:
     - common
