@@ -8,18 +8,32 @@
   gather_facts: false
   user: deployer
   tasks:
-    - name: Install Python 3.11 via deadsnakes
-      raw: |
-        apt-get install -y software-properties-common
-        add-apt-repository -y ppa:deadsnakes/ppa
-        apt-get update
-        apt-get install -y python3.11 python3.11-distutils python3-apt
-        SITE311=$(python3.11 -c "import site; print(site.getsitepackages()[0])" 2>/dev/null || true)
-        if [ -n "$SITE311" ]; then
-          echo "/usr/lib/python3/dist-packages" > "$SITE311/python3-apt.pth"
-        fi
+    - name: Install software-properties-common
+      raw: apt-get install -y software-properties-common
       become: true
-      changed_when: false
+
+    - name: Add deadsnakes PPA
+      raw: add-apt-repository -y ppa:deadsnakes/ppa
+      become: true
+
+    - name: apt-get update
+      raw: apt-get update
+      become: true
+
+    - name: Install Python 3.11
+      raw: apt-get install -y python3.11 python3.11-distutils
+      become: true
+
+    - name: Install python3-apt and expose to Python 3.11
+      raw: |
+        apt-get install -y python3-apt
+        SITE311=$(python3.11 -c "import site; print(site.getsitepackages()[0])")
+        echo "/usr/lib/python3/dist-packages" > "$SITE311/python3-apt.pth"
+      become: true
+
+    - name: Verify Python 3.11 is available
+      raw: /usr/bin/python3.11 --version
+      become: false
 
 # Play 2: full deployment with Python 3.11 now available
 - name: Apply common configuration to server
