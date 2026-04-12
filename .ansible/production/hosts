@@ -1,4 +1,7 @@
 [common]
 134.209.188.164
 
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3.9
+
 
