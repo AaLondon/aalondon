@@ -8,12 +8,14 @@
   gather_facts: false
   user: deployer
   tasks:
-    - name: Install software-properties-common
-      raw: apt-get install -y software-properties-common
-      become: true
-
-    - name: Add deadsnakes PPA
-      raw: add-apt-repository -y ppa:deadsnakes/ppa
+    - name: Add deadsnakes GPG key and sources list
+      raw: |
+        apt-get install -y gnupg curl
+        CODENAME=$(lsb_release -cs)
+        curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF23C5A6CF475977595C89F51BA6932366A755776" \
+          | gpg --dearmor -o /usr/share/keyrings/deadsnakes.gpg
+        echo "deb [signed-by=/usr/share/keyrings/deadsnakes.gpg] https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu $CODENAME main" \
+          > /etc/apt/sources.list.d/deadsnakes.list
       become: true
 
     - name: apt-get update
