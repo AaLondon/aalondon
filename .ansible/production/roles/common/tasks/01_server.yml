@@ -2,28 +2,6 @@
 # Update the DNF package cache and install packages as a root user
 ##
 
-- name: Fix sitecustomize.py and make python3-apt available to Python 3.11
-  raw: |
-    set -e
-    # Truncate any sitecustomize.py that has a syntax error
-    for f in $(find /usr/lib/python3.11 /usr/local/lib/python3.11 -name sitecustomize.py 2>/dev/null); do
-      python3.11 -c "
-import ast
-try:
-    ast.parse(open('$f').read())
-except SyntaxError:
-    open('$f', 'w').close()
-" 2>/dev/null || true
-    done
-    # Install python3-apt for the system Python
-    apt-get install -y python3-apt
-    # Drop a .pth file so Python 3.9 can find the apt module in system dist-packages
-    SITE39=$(python3.11 -c "import site; print(site.getsitepackages()[0])" 2>/dev/null || true)
-    if [ -n "$SITE39" ]; then
-      echo "/usr/lib/python3/dist-packages" > "$SITE39/python3-apt.pth"
-    fi
-  become: true
-  changed_when: false
 
 - name: Update and upgrade apt packages
   become: true

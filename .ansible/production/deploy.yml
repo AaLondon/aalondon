@@ -1,50 +1,9 @@
-##
-# This playbook deploys the whole app stack
-##
 
-# Play 1: install Python 3.11 before gather_facts tries to use it
-- name: Bootstrap Python 3.11
-  hosts: all
-  gather_facts: false
-  user: deployer
-  tasks:
-    - name: Add deadsnakes GPG key and sources list
-      raw: |
-        apt-get install -y gnupg curl
-        CODENAME=$(lsb_release -cs)
-        # Remove any existing deadsnakes sources that may conflict
-        rm -f /etc/apt/sources.list.d/deadsnakes*.list /etc/apt/sources.list.d/*deadsnakes*
-        curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF23C5A6CF475977595C89F51BA6932366A755776" \
-          | gpg --dearmor -o /usr/share/keyrings/deadsnakes.gpg
-        echo "deb [signed-by=/usr/share/keyrings/deadsnakes.gpg] https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu $CODENAME main" \
-          > /etc/apt/sources.list.d/deadsnakes.list
-      become: true
-
-    - name: apt-get update
-      raw: apt-get update
-      become: true
-
-    - name: Install Python 3.11
-      raw: apt-get install -y python3.11 python3.11-distutils
-      become: true
-
-    - name: Install python3-apt and expose to Python 3.11
-      raw: |
-        apt-get install -y python3-apt
-        SITE311=$(python3.11 -c "import site; print(site.getsitepackages()[0])")
-        echo "/usr/lib/python3/dist-packages" > "$SITE311/python3-apt.pth"
-      become: true
-
-    - name: Verify Python 3.11 is available
-      raw: /usr/bin/python3.11 --version
-      become: false
-
-# Play 2: full deployment with Python 3.11 now available
 - name: Apply common configuration to server
   hosts: all
   gather_facts: true
   user: deployer
   vars:
-    ansible_python_interpreter: /usr/bin/python3.11
+    ansible_python_interpreter: /usr/bin/python3.9
   roles:
     - common
