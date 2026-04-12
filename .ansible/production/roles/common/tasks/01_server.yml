@@ -6,8 +6,8 @@
   raw: |
     set -e
     # Truncate any sitecustomize.py that has a syntax error
-    for f in $(find /usr/lib/python3.9 /usr/local/lib/python3.9 -name sitecustomize.py 2>/dev/null); do
-      python3.9 -c "
+    for f in $(find /usr/lib/python3.10 /usr/local/lib/python3.10 -name sitecustomize.py 2>/dev/null); do
+      python3.10 -c "
 import ast
 try:
     ast.parse(open('$f').read())
@@ -18,7 +18,7 @@ except SyntaxError:
     # Install python3-apt for the system Python
     apt-get install -y python3-apt
     # Drop a .pth file so Python 3.9 can find the apt module in system dist-packages
-    SITE39=$(python3.9 -c "import site; print(site.getsitepackages()[0])" 2>/dev/null || true)
+    SITE39=$(python3.10 -c "import site; print(site.getsitepackages()[0])" 2>/dev/null || true)
     if [ -n "$SITE39" ]; then
       echo "/usr/lib/python3/dist-packages" > "$SITE39/python3-apt.pth"
     fi
