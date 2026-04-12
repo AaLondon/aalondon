@@ -26,8 +26,7 @@
       - build-essential
       - libssl-dev
       - libffi-dev
-      - python3
-      - python3-apt
+
       - postgresql
       - postgresql-contrib
       - virtualenv
