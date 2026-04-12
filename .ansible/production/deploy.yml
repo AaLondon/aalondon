@@ -2,7 +2,27 @@
 # This playbook deploys the whole app stack
 ##
 
-- name: apply common configuration to server
+# Play 1: install Python 3.11 before gather_facts tries to use it
+- name: Bootstrap Python 3.11
+  hosts: all
+  gather_facts: false
+  user: deployer
+  tasks:
+    - name: Install Python 3.11 via deadsnakes
+      raw: |
+        apt-get install -y software-properties-common
+        add-apt-repository -y ppa:deadsnakes/ppa
+        apt-get update
+        apt-get install -y python3.11 python3.11-distutils python3-apt
+        SITE311=$(python3.11 -c "import site; print(site.getsitepackages()[0])" 2>/dev/null || true)
+        if [ -n "$SITE311" ]; then
+          echo "/usr/lib/python3/dist-packages" > "$SITE311/python3-apt.pth"
+        fi
+      become: true
+      changed_when: false
+
+# Play 2: full deployment with Python 3.11 now available
+- name: Apply common configuration to server
   hosts: all
   gather_facts: true
   user: deployer
