@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
 {% load static %}
 
 {% block body_class %}template-evebtpage{% endblock %}
@@ -14,6 +15,7 @@
       
   </header>
 <h1>{{page.title}}</h1>
+{% if page.image %}<div class="mb-4">{% image page.image width-800 class="img-fluid" %}</div>{% endif %}
     <div class="container">
   
     
@@ -44,7 +46,7 @@ console.log(lng);
 
 
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3ZWRnd29vZCIsImEiOiJjazJ3M2xyOGkwYXppM29xbGlreGxtZWk1In0.wB4JKWEScmQogF0I9aSNoA';
+mapboxgl.accessToken = '{{ mapbox_access_token }}';
 var map = new mapboxgl.Map({
 container: 'map',
 style: 'mapbox://styles/mapbox/streets-v11',
