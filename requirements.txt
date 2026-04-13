@@ -6,7 +6,7 @@ django-webpack-loader==1.8.0
 gunicorn==22.0.0
 djangorestframework==3.14.0
 django-filter==2.4.0
-Scrapy==1.8.0
+Scrapy==2.8.0
 scrapy-djangoitem==1.1.1
 pandas
 psycopg2-binary==2.9.5
